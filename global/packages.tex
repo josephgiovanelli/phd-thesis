@@ -134,7 +134,7 @@
 
 % *****************************************************************************
 % ******************* Better enumeration my MB*************
-\usepackage{enumitem}
+% \usepackage{enumitem}
 \usepackage{tabularx}
 \usepackage{rotating}
 \usepackage{pdfpages}
@@ -159,7 +159,9 @@
 \usepackage{cleveref}
 \usepackage{epigraph}
 \usepackage[flushleft]{threeparttable}
-\usepackage{subfig}
+% \usepackage{subfig}
+\usepackage{subcaption}
+\usepackage[shortlabels]{enumitem}
 
 \newtheorem{example}{Example}
 \newtheorem{definition}{Definition}
@@ -167,8 +169,9 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 
-\newenvironment{proof}{{\bf Proof:}}{}
+% \newenvironment{proof}{{\bf Proof:}}{}
 
+\newcommand{\cupdot}{\mathbin{\mathaccent\cdot\cup}}
 \newcommand{\cmark}{\ding{51}}
 \newcommand{\xmark}{\ding{55}}
 \newcommand{\eop}{\hfill $\Box$}
@@ -190,6 +193,42 @@
 
 \newif\ifproofread
 \proofreadtrue % commentare questo per disattivare \mf \mg \eg \sr
+
+\usepackage{listings}
+
+\crefname{lstlisting}{listing}{listings}
+\Crefname{lstlisting}{Listing}{Listings}
+
+\lstset{%
+    basicstyle=\small\ttfamily,
+    frame=single,
+    morecomment=[f][\color{Green}][0]{\#},
+    tabsize = 4, %% set tab space width
+    commentstyle = \color{green}, %% set comment color
+    keywordstyle = \color{blue}, %% set keyword color
+    stringstyle = \color{red}, %% set string color
+    rulecolor = \color{black}, %% set frame color to avoid being affected by text color
+    basicstyle = \small \ttfamily , %% set listing font and size
+    breaklines = true, %% enable line breaking
+    numberstyle = \tiny,
+}
+
+% \usepackage{booktabs}
+% \usepackage{comment}
+% \usepackage{amsmath}
+% \usepackage{amsthm}
+% \usepackage{amssymb}
+% \usepackage{listings}
+% \usepackage{hyperref}
+% \usepackage{cleveref}
+% \usepackage{caption}
+% \usepackage{threeparttable,booktabs}
+% \usepackage{algpseudocode}
+% \usepackage{algorithm}
+% \usepackage{balance}
+% \usepackage[normalem]{ulem}
+% \usepackage[dvipsnames]{xcolor}
+
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Uncomment to check unused bibitems from here
