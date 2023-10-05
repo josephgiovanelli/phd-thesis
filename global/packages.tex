@@ -1,0 +1,249 @@
+% ******************************************************************************
+% ****************************** Custom Margin *********************************
+
+% Add `custommargin' in the document class options to use this section
+% Set {innerside margin / outerside margin / topmargin / bottom margin}  and
+% other page dimensions
+\ifsetCustomMargin
+  \RequirePackage[left=37mm,right=30mm,top=35mm,bottom=30mm]{geometry}
+  \setFancyHdr % To apply fancy header after geometry package is loaded
+\fi
+
+% Add spaces between paragraphs
+%\setlength{\parskip}{0.5em}
+% Ragged bottom avoids extra whitespaces between paragraphs
+\raggedbottom
+% To remove the excess top spacing for enumeration, list and description
+%\usepackage{enumitem}
+%\setlist[enumerate,itemize,description]{topsep=0em}
+
+% *****************************************************************************
+% ******************* Fonts (like different typewriter fonts etc.)*************
+
+% Add `customfont' in the document class option to use this section
+
+\ifsetCustomFont
+  % Set your custom font here and use `customfont' in options. Leave empty to
+  % load computer modern font (default LaTeX font).
+  %\RequirePackage{helvet}
+
+  % For use with XeLaTeX
+  %  \setmainfont[
+  %    Path              = ./libertine/opentype/,
+  %    Extension         = .otf,
+  %    UprightFont = LinLibertine_R,
+  %    BoldFont = LinLibertine_RZ, % Linux Libertine O Regular Semibold
+  %    ItalicFont = LinLibertine_RI,
+  %    BoldItalicFont = LinLibertine_RZI, % Linux Libertine O Regular Semibold Italic
+  %  ]
+  %  {libertine}
+  %  % load font from system font
+  %  \newfontfamily\libertinesystemfont{Linux Libertine O}
+\fi
+
+% *****************************************************************************
+% **************************** Custom Packages ********************************
+
+%\usepackage{algpseudocode}
+% \RequirePackage[labelsep=space,tableposition=top]{caption}
+% \renewcommand{\figurename}{Fig.} %to support older versions of captions.sty
+
+% ******************************* Line Spacing *********************************
+
+% Choose linespacing as appropriate. Default is one-half line spacing as per the
+% University guidelines
+
+% \doublespacing
+% \onehalfspacing
+% \singlespacing
+
+
+% ************************ Formatting / Footnote *******************************
+% Don't break enumeration (etc.) across pages in an ugly manner (default 10000)
+%\clubpenalty=500
+%\widowpenalty=500
+%\usepackage[perpage]{footmisc} %Range of footnote options
+
+
+% *****************************************************************************
+% *************************** Bibliography  and References ********************
+
+%\usepackage{cleveref} %Referencing without need to explicitly state fig /table
+
+% Add `custombib' in the document class option to use this section
+\ifuseCustomBib
+   \RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
+
+% If you would like to use biblatex for your reference management, as opposed to the default `natbibpackage` pass the option `custombib` in the document class. Comment out the previous line to make sure you don't load the natbib package. Uncomment the following lines and specify the location of references.bib file
+
+%\RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=nty, natbib=true]{biblatex}
+%\addbibresource{References/references} %Location of references.bib only for biblatex, Do not omit the .bib extension from the filename.
+
+\fi
+
+% ******************************************************************************
+% ************************* User Defined Commands ******************************
+% ******************************************************************************
+
+% *********** To change the name of Table of Contents / LOF and LOT ************
+
+%\renewcommand{\contentsname}{My Table of Contents}
+%\renewcommand{\listfigurename}{My List of Figures}
+%\renewcommand{\listtablename}{My List of Tables}
+
+
+% ********************** TOC depth and numbering depth *************************
+
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+
+
+% ******************************* Nomenclature *********************************
+
+% To change the name of the Nomenclature section, uncomment the following line
+
+%\renewcommand{\nomname}{Symbols}
+
+
+% ********************************* Appendix ***********************************
+
+% The default value of both \appendixtocname and \appendixpagename is `Appendices'. These names can all be changed via:
+
+%\renewcommand{\appendixtocname}{List of appendices}
+%\renewcommand{\appendixname}{Appndx}
+
+% *********************** Configure Draft Mode **********************************
+
+% Uncomment to disable figures in `draft'
+%\setkeys{Gin}{draft=true}  % set draft to false to enable figures in `draft'
+
+% These options are active only during the draft mode
+% Default text is "Draft"
+%\SetDraftText{DRAFT}
+
+% Default Watermark location is top. Location (top/bottom)
+%\SetDraftWMPosition{bottom}
+
+% Draft Version - default is v1.0
+%\SetDraftVersion{v1.1}
+
+% Draft Text grayscale value (should be between 0-black and 1-white)
+% Default value is 0.75
+%\SetDraftGrayScale{0.8}
+
+
+% *****************************************************************************
+% ******************* Better enumeration my MB*************
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{rotating}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{cleveref}
+\usepackage{booktabs}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{caption}
+% \usepackage{float}
+\usepackage{floatrow}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{colortbl}
+% \usepackage{subcaption}
+\usepackage{algorithm}
+% \usepackage{algorithmic}
+\usepackage[noend]{algpseudocode}
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{pifont}
+\usepackage{quoting}
+\usepackage{cleveref}
+\usepackage{epigraph}
+\usepackage[flushleft]{threeparttable}
+\usepackage{subfig}
+\renewcommand{\pm}{\mathbin{\smash{\raisebox{0.35ex}{$\underset{\raisebox{0.5ex}{$\smash -$}}{\smash+}$}}}}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+\renewcommand{\sf}[1]{\textsf{\textup{#1}}}  
+\renewcommand{\tt}[1]{\texttt{\textup{#1}}}
+\newcommand{\eop}{\hfill $\Box$}
+\newif\ifproofread
+\proofreadtrue % commentare questo per disattivare \mf \mg \eg \sr
+\newtheorem{example}{Example}
+\newtheorem{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newenvironment{proof}{{\bf Proof:}}{}
+
+\newcommand{\mf}[1]{\textcolor{red}{\textbf{#1} ??}}
+\newcommand{\argmax}{\mathop{\mathrm{argmax}}}
+\newcommand{\argmin}{\mathop{\mathrm{argmin}}}
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+\newcommand{\veryshortarrow}[1][3pt]{\mathrel{%
+		\hbox{\rule[\dimexpr\fontdimen22\textfont2-.2pt\relax]{#1}{.4pt}}%
+		\mkern-4mu\hbox{\usefont{U}{lasy}{m}{n}\symbol{41}}}}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Uncomment to check unused bibitems from here
+% \usepackage{refcheck}
+% \makeatletter
+% \newcommand{\refcheckize}[1]{%
+%   \expandafter\let\csname @@\string#1\endcsname#1%
+%   \expandafter\DeclareRobustCommand\csname relax\string#1\endcsname[1]{%
+%     \csname @@\string#1\endcsname{##1}\wrtusdrf{##1}}%
+%   \expandafter\let\expandafter#1\csname relax\string#1\endcsname
+% }
+% \makeatother
+% \refcheckize{\cref}
+% \refcheckize{\Cref}
+% ... to here
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% \usepackage{booktabs} % For formal tables
+
+% \usepackage{fancyhdr,amsmath}             % AMS Math
+% \usepackage[utf8]{inputenc}
+% \usepackage{xr}
+% \usepackage{fullpage}
+% \usepackage{times}
+% %\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+% \usepackage{mathrsfs}
+% \usepackage{listings,xcolor}
+% \usepackage{color}
+
+
+% \usepackage{blindtext}
+
+% %\usepackage{makeidx}  % allows for indexgeneration
+% \usepackage{graphicx}
+% \usepackage{natbib}
+% \usepackage{rotating}
+% %\usepackage[noend]{algpseudocode}
+% \usepackage{paralist}
+% \usepackage{tabularx}
+% \usepackage{url}
+% \usepackage{soul}
+% %\usepackage[disable]{todonotes}
+% \usepackage{todonotes}
+% \usepackage{enumitem}
+% \usepackage{tikz,fullpage}
+% \usepackage{hyperref}
+% \usepackage{amssymb}
+% %\usepackage{tkz-berge}
+% %\usetikzlibrary{shapes.geometric}
+% \usepackage{caption}
+% \usepackage{subcaption}
+% \usepackage{stmaryrd}
+% \usepackage{courier}
+% \usepackage{algorithm}
+% \usepackage{eqparbox}
+
+% \newcommand{\veryshortarrow}[1][3pt]{\mathrel{%
+% 		\hbox{\rule[\dimexpr\fontdimen22\textfont2-.2pt\relax]{#1}{.4pt}}%
+% 		\mkern-4mu\hbox{\usefont{U}{lasy}{m}{n}\symbol{41}}}}

@@ -1,0 +1,408 @@
+% ******************************* PhD Thesis Template **************************
+% Please have a look at the README.md file for info on how to use the template
+
+\documentclass[a4paper,12pt,times,numbered,print,index]{Classes/PhDThesisPSnPDF}
+
+\usepackage[T1]{fontenc}
+
+% ******************************************************************************
+% ******************************* Class Options ********************************
+% *********************** See README for more details **************************
+% ******************************************************************************
+
+% `a4paper'(The University of Cambridge PhD thesis guidelines recommends a page
+% size a4 - default option) or `a5paper': A5 Paper size is also allowed as per
+% the Cambridge University Engineering Department guidelines for PhD thesis
+%
+% `11pt' or `12pt'(default): Font Size 10pt is NOT recommended by the University
+% guidelines
+%
+% `oneside' or `twoside'(default): Printing double side (twoside) or single
+% side.
+%
+% `print': Use `print' for print version with appropriate margins and page
+% layout. Leaving the options field blank will activate Online version.
+%
+% `index': For index at the end of the thesis
+%
+% `draftclassic': For draft mode without loading any images (same as draft in book)
+%
+% `draft': Special draft mode with line numbers, images, and water mark with
+% timestamp and custom text. Position of the text can also be modified.
+%
+% `abstract': To generate only the title page and abstract page with
+% dissertation title and name, to submit to the Student Registry
+%
+% `chapter`: This option enables only the specified chapter and it's references
+%  Useful for review and corrections.
+%
+% ************************* Custom Page Margins ********************************
+%
+% `custommargin`: Use `custommargin' in options to activate custom page margins,
+% which can be defined in the preamble.tex. Custom margin will override
+% print/online margin setup.
+%
+% *********************** Choosing the Fonts in Class Options ******************
+%
+% `times' : Times font with math support. (The Cambridge University guidelines
+% recommend using times)
+%
+% `fourier': Utopia Font with Fourier Math font (Font has to be installed)
+%            It's a free font.
+%
+% `customfont': Use `customfont' option in the document class and load the
+% package in the preamble.tex
+%
+% default or leave empty: `Latin Modern' font will be loaded.
+%
+% ********************** Choosing the Bibliography style ***********************
+%
+% `authoryear': For author-year citation eg., Krishna (2013)
+%
+% `numbered': (Default Option) For numbered and sorted citation e.g., [1,5,2]
+%
+% `custombib': Define your own bibliography style in the `preamble.tex' file.
+%              `\RequirePackage[square, sort, numbers, authoryear]{natbib}'.
+%              This can be also used to load biblatex instead of natbib
+%              (See Preamble)
+%
+% **************************** Choosing the Page Style *************************
+%
+% `default (leave empty)': For Page Numbers in Header (Left Even, Right Odd) and
+% Chapter Name in Header (Right Even) and Section Name (Left Odd). Blank Footer.
+%
+% `PageStyleI': Chapter Name next & Page Number on Even Side (Left Even).
+% Section Name & Page Number in Header on Odd Side (Right Odd). Footer is empty.
+%
+% `PageStyleII': Chapter Name on Even Side (Left Even) in Header. Section Number
+% and Section Name in Header on Odd Side (Right Odd). Page numbering in footer
+
+% Uncomment to change page style
+%\pagestyle{PageStyleII}
+
+% ********************************** Preamble **********************************
+% Preamble: Contains packages and user-defined commands and settings
+\input{global/packages}
+
+% ************************ Thesis Information & Meta-data **********************
+% Thesis title and author information, reference file for biblatex
+% \input{fronte}
+
+% ***************************** Abstract Separate ******************************
+% To printout only the titlepage and the abstract with the PhD title and the
+% author name for submission to the Student Registry, use the `abstract' option in
+% the document class.
+
+\ifdefineAbstract
+ \pagestyle{empty}
+ \includeonly{Declaration/declaration, Abstract/abstract}
+\fi
+
+% ***************************** Chapter Mode ***********************************
+% The chapter mode allows user to only print particular chapters with references
+% Title, Contents, Frontmatter are disabled by default
+% Useful option to review a particular chapter or to send it to supervisor.
+% To use choose `chapter' option in the document class
+
+\ifdefineChapter
+ \includeonly{Chapter3/chapter3}
+\fi
+
+% ******************************** Front Matter ********************************
+\begin{document}
+
+\frontmatter
+\include{global/fronte}
+% \includepdf[pages=-]{global/frontespizio.pdf}
+\newpage
+% \includepdf[pages=-]{global/researchactivity.pdf}
+\include{global/dedication}
+% \include{global/declaration}
+\include{global/quote}
+\include{global/acknowledgement}
+\include{global/abstract}
+\tableofcontents
+% \listoffigures
+% \listoftables
+% \printnomenclature%[3em]
+
+% ******************************** Main Matter *********************************
+\mainmatter
+\sloppy
+% \include{global/preamble}
+
+\chapter{Introduction}
+
+Artificial intelligence (AI) is currently the buzzword on everybody's lips.
+%, often used without a clear understanding, with only a minority possessing in-depth knowledge.
+% with the majority of people not knowing what is actually about and only a few possessing the knowledge. 
+% This thesis contributes towards a democratization of AI, i.e. making it accessible to both experts and non-experts alike.
+Riding the wave of recent groundbreaking achievements, from self-driving cars \citep{} to intelligent chat bots \citep{}, AI is transforming industries and reshaping our daily lives.
+Several interpretations and definitions have been provided over the years, yet the seminal perspective given by the Turing test \citep{turing1980computing} is still one worth mentioning. 
+\begin{definition}[Artificial Intelligence \citep{turing1980computing}]
+A machine that shows intelligence indistinguishable from that of human beings is qualified to be labeled as artificial intelligence.
+\end{definition}
+This translates into understanding what falls under the umbrella of \textit{intelligence}, which is defined differently across the research areas as reasoning, planning, and learning.
+
+% Building upon the notion of intelligence as learning has emerged as the cornerstone due to its disruptive advancements.
+\begin{definition}[Machine Learning \citep{samuel2000some}]
+A machine with the ability to learn without being explicitly programmed.
+\end{definition}
+% Machine learning (ML) represents the pinnacle of this learning process. 
+% Machine learning (ML) emerged as the pinnacle of this learning process due to its disruptive advancements.
+Building upon the notion of intelligence as learning, i.e. Machine Learning (ML), emerged as the pinnacle of AI due to its disruptive advancements.
+At its core, ML aims at addressing problems for which the development of algorithms by humans is not feasible, because the algorithm itself is either not known or cost-prohibitive.
+Examples include face recognition, fraud detection, sale forecasting, and object ranking. 
+The problems are solved instead by letting the algorithms (e.g., neural networks \cite{}) \textit{discover their own solutions}: they perform a training process atop a sample of historical data, borrowing techniques from disciplines such as numerical analysis, statistics, and information theory.
+The training process consists of fitting internal parameters (e.g., weights and bias) and providing ML practitioners with a model, which is ready to ingest new data and tackle the problem at hand.
+
+There exists a plethora of different algorithms solving the same problem with different strengths and weaknesses, confirming theoretical results proving that there is \textit{no silver bullet} \cite{kerschke2019automated}---no algorithm dominates all others in all respects.
+Besides, algorithms often expose some hyperparameters controlling the learning behavior (e.g., learning rate). 
+To unleash the full potential of ML, practitioners have to carefully tune such hyperparameters but get easily overwhelmed by the showcased problem of combined algorithm selection and hyperparameter (CASH) optimization.
+
+Automated machine learning (AutoML) demonstrates to play a crucial role in this landscape by tackling the CASH problem and, going beyond, by handling ever-larger search spaces in surprisingly small time budgets \cite{}.
+Remarkable milestones include bayesian optimization (BO) to explore promising configurations based on prior evaluations,
+meta-learning (i.e., learning atop learning) to warm-start BO (i.e., to boost the convergence process) by suggesting configurations that worked well in previous similar cases, and multi-fidelity methods to partially evaluate time-consuming configurations.
+Besides, off-the-shelf solutions \cite{} are provided to tune entire ML pipelines, achieving -- in some cases -- higher performance than experts.
+
+By lowering the barrier of access, AutoML emerged as promising for democratization of AI, i.e. making it accessible to both experts and non-experts alike.
+Yet, when it comes to real-case scenarios, the journey of learning is riddled with challenges, ranging from the need for human intervention to mitigate harnessing, to the need for physical simulators. 
+% and heterogeneity of the data to constraints that may apply to the problem, from need for domain knowledge to . 
+While investigating these challenges, this thesis evolves into two parts.
+
+
+
+
+\paragraph{Part I: Towards Human-centered AutoML}
+
+The original promise of AutoML was to automate certain ML tasks to a significant extent, thereby democratizing it and enabling non-experts to apply it in their respective domains.
+However, despite their success, many current AutoML tools were not built around the user but rather around algorithmic ideas.
+The stacking of complex mechanisms on top of each other unavoidably led to a less understanding of the process by the user -- even ML experts -- and allowing for very limited interaction.
+Parts of the community have hence pushed towards a more human-centered AutoML process aimed at complementing, instead of replacing, human intelligence. 
+% This becomes even more crucial nowadays
+% Motivated by ethical concerns and social bias issues arising at each step of the ML process, this becomes imperative in such a mitigating call nowadays.
+Besides, motivated by ethical concerns and social bias issues arising at each step of the ML process, this approach becomes even imperative in such a mitigating call nowadays.
+By placing the user back in the loop, it would be possible to revise and supervise the entire process, ensuring fairness, transparency, and ethical compliance. 
+
+In this part, we devise human-centered AutoML solutions for the main categories of ML. 
+\Cref{automl-chap:background} provides the necessary background and formalization in ML and AutoML.
+\Cref{automl-chap:supervised} and \Cref{automl-chap:unsupervised} address -- respectively -- supervised and unsupervised learning. 
+The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
+Then, \Cref{automl-chap:moo} delves to multi-objective ML, i.e. optimization of more than one loss or objective function.
+Lastly, \Cref{automl-chap:llm} showcases the potential challenges, opportunities, and risks of novel (human-centered) AutoML interfaces with large language models, i.e. AI models trained on large corpora of text to understand and produce human-like answers.
+
+\paragraph{Part II: Towards Physics-coupled AutoML}
+
+% As application areas go, there are fields in which forecasts and analyses are mostly conducted with non-ML models but rather rely on knowledge provided by domain experts and simulators that encode well-known physical laws.
+% As application areas go, there are fields in which forecasts and analyses are currently conducted with non-ML models but rather rely on numerical simulators that encode well-known physical laws. 
+% Such domains are usually related to earth observations and tend to be particularly high-impact, mitigating challenges such as climate change by delivering (more) eco-friendly systems. 
+% Examples include weather forecasts, crop lifecycles, and energy consumption reductions.
+% Domain experts leverage their knowledge to periodically tune the simulator parameters and deliver 
+% Yet, 
+% Traditionally, such research fields have relied on domain knowledge provided by experts to make predictions about our planet, such as weather forecasts and crop lifecycles.
+
+As application areas go, there are domains in which ML models are not yet widespread.
+Usually related to earth observations, the deployed applications tend to be particularly high-impact, trying to mitigate challenges such as climate change by delivering (more) eco-friendly systems. 
+Examples include weather forecasts and crop life-cycle management.
+Domain experts leverage their knowledge to tune numerical simulators -- which encode well-known physical laws -- and deliver forecasts and analyses.
+However, this process faces several challenges. 
+% several issues jeopardize this process. 
+The non-existence of universal well-defined practices translates to several trials and errors, with domain experts manually configuring the simulator parameters until an acceptable solution is found.
+Yet, as variables involved in physics phenomena are subject to constant change, such numerical solution must undergo periodic (re-)calibration.
+Besides, with the torrent of remotely sensed data available today, opportunities to integrate real-time observations in predictive models have emerged that traditional methods are not equipped to handle. 
+This is where advances in AI can push forward to enhance our understanding, provide support and, if necessary, steer the course of resolving global concerns to a more favorable future.
+For instance, ML models exhibit singular performance in adapting themselves to handle scenarios different from the one they were trained on (e.g., fine-tuning of network parameters) and AutoML can significantly impact in automating several stages (e.g., tuning simulators and ML models).
+% At the same time, relying on fully-automated data-driven methods for problems as complex and impactful as these is doomed to result in biased and unreliable. 
+% This underscores the ongoing importance of domain experts in this endeavor, highlighting their crucial role, with AI serving as a powerful tool.
+% This is why domain experts, as always, remain crucial in this process, and why AI should be there as a powerful tool that supports them in fully taking advantage of the new opportunities we are presented with.
+
+In this part, we focus on precision farming, which plays a pivotal role in addressing water wastage and improving crop efficiency.
+\Cref{precision-chap:background} provides the necessary background and formalization in precision farming.
+\Cref{precision-chap:architecture} overviews the architecture of our big-data smart-irrigation platform.
+\Cref{precision-chap:orchard} deepens on Orchard3D-Lab, a well-known crop and soil simulator enhanced with auto-tuning and data assimilation capabilities, i.e. ingestion of sensor data for more reliable estimations.
+\Cref{precision-chap:pluto} and \Cref{precision-chap:forecasting} delve -- respectively -- into the modules of real-time soil moisture monitoring and forecasting.
+Finally, \Cref{precision-chap:smart-irrigation} deepens the smart-irrigation algorithm.
+% , leveraging predictive models for smart irrigation, aligning them with the specific stages of the crop lifecycle.
+% Our approach enhance a well-known crop and soil simulator with data assimilation capabilities and integrate it into a end-to-end ML workflow for agronomists.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OLD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% cash
+% pre-processing
+% meta-learning + multifidelity 
+% AutoML emerged as the beacon of hope, casting a light on the path to democratizing AI and bringing its transformative potential within reach for all.
+% AutoML emerged as promising, casting a light on the path to democratizing AI and bringing its transformative potential within reach for all.
+% armed with cutting-edge optimization techniques that promised to unlock the full potential of machine learning
+% In the last decade, automated machine learning (AutoML) has played a crucial role in this landscape, by lowering the barrier of access to AI.
+
+% At its dawn, AutoML boldly tackles the CASH optimization problem achieving -- in some cases -- higher performance than experts\cite{}.
+% Following improvements have yielded to address ever-larger search space in a remarkably small time budget .
+% First, as data quality issues can significantly influence the success of ML endeavors, data pre-processing (i.e., cleaning and shaping data ad-hoc for the ML algorithm) has been included. 
+% Then, to cope with ever larger research spaces, meta-learning (i.e., ) was leveraged to boost the convergence the optimization process, and multy-fidelity
+% Following improvements in AutoML have yielded to tune entire ML pipelines (i.e., including data pre-processing to shape data ad-hoc for the algorithm) in remarkably small time budget \cite{}, yet leading to a lack of understanding.
+
+% stacking then not able to interact
+% pezzo mancante è l'interazione e l'understanding
+% wave che meglio complementary piuttosto che 
+
+% is committed to relieve practitioners of a range of burdensome throughout the whole ML process.
+% Indeed, when it comes to real-case scenarios, the journey of learning is far from over.
+% First, as data quality issues can significantly influence the success of ML endeavors, data pre-processing is paramount. 
+% It is a meticulous process of cleaning, transforming, and engineering to ensure that the shape of data is suitable for the algorithms.
+% The aim is to democratize AI, i.e. making it accessible to both experts and non-experts alike.
+
+% In this thesis, we share the aim of AutoML in democratizing AI, contributing towards a \textit{pervasive} adoption of analytics.
+% On the one hand, we commit in improving the automation of the discovery process.
+% This eases the deploy of analytics platforms, and hence helps the pervasive spread of them.
+% On the other hand, in certain domains there is a particular need of building such comprehensive analytics solutions; we focus on precision farming.
+
+
+% his becomes even more critical nowadays
+% In today's historical period, where social issues such as bias and ethical concerns can manifest at each step of the ML process, this human-centered approach becomes even more critical. 
+% It underscores the importance of involving the user in revising and supervising the entire process to ensure fairness, transparency, and ethical compliance. 
+% By placing the user back in the loop, we can mitigate the potential risks and harness the full potential of AI in a responsible and accountable manner.
+
+% this is extremely important in this historical period in which social harnessing can arise in each step, example social bias
+% it is important that the user revise and supervise the whole process
+
+
+% Before delving to the actual contributions of this thesis, Chapter 2 provides the AutoML background necessary to understand both Part I and Part II.
+
+
+% When it comes to real-case problems, the problem exacerbates
+% The journey of learning is far from over. 
+% In real-case problems, ML practitioners have to overcome a range of challenges.
+% that AutoML plays a crucial role in this landscape, providing state-of-the-art methods to solve, not only the CASH problem but, also, to tune the entire ML pipeline (i.e., including data pre-processing transformations that shape the data until the algorithm is fed), suggesting . 
+
+
+% \cite{albrecht2020}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Table of contents %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \begin{itemize}
+%     \item AI importance (it is now on everyone's lips),  ML importance in AI, and examples
+%     \begin{itemize}
+%         \item Artificial Intelligence (AI) is currently on everyone's lips due to the recent series of rapid breakthroughs achieved,
+%         \item AI definition with learning -> ML, data,  meta-learning
+%         \item AI as learning to solve a problem, machine learning as the most important sub-field (got attraction for the performance), not clear -- given a problem -- which algorithm is the best and how to tune it (distance measure in knn, pruning in decision tree, architecture in neural network), field of automl comes to help: automatically selecting performing configurations, demonstrate itself successful/achieved great performance
+%         \item this shares the aim of democratizing ml (to spread) and involving more people to use it to solve real-case problems
+%         \item to effectively deliver AI and reduce the risks and mitigate potential harness and social impact, we need humans to be able to understand and interact with the AI system
+%         \item We believe in AI that complements, rather than replaces, human intelligence
+%         \item this thesis focuses on two complementary parts
+%         \begin{itemize}
+%             \item improve 
+%             \item When it comes to application areas,
+%                     % As application areas go,
+%                     fields related to Earth Observation tend to be particularly high-impact. The aim is to mitigate challenges such as climate change by delivering more eco-friendly systems. Traditionally, such research fields have relied on domain knowledge provided by experts to make predictions about our planet, such as weather forecasts and crop lifecycles. With the torrent of remotely sensed data available today, new opportunities to take advantage of massive remote sensing datasets have emerged that traditional methods are not equipped to handle. This is where advances in AI (particularly Machine Learning and Deep Learning) can push forward humanity’s abilities to understand, support and, if necessary, steer the course of our planet to a better future. At the same time, a naïve application of data-driven methods for problems as complex and impactful as these is doomed to result in biased and unreliable models. This is why domain experts, as always, remain crucial in this process, and why AI should be there as a powerful tool that supports them in fully taking advantage of the exciting new opportunities we are presented with.
+%         \end{itemize}
+%         \item we pass from aiming the full automation to put the human back to the loop, because there is no silver bullet, the user should revise and supervise the whole process and be aware of what is going on (otherwise risks)
+%     \end{itemize}
+%     \item important things: data, meta-learning, 
+%     \item AutoML as important 
+%     \item Data scientists do not scale
+%     \item 
+% \end{itemize}
+
+
+
+\part{Towards Human-centered AutoML}\label{part:automl}
+
+
+\chapter{Background and Formalization}
+\label{automl-chap:background}
+\begin{itemize}
+    \item Qui ci va sicuramente la formalizzazione
+    \item la motivation è dubbia, forse ripeteremmo quello che è scritto sopra nell'Introduction
+\end{itemize}
+
+% \include{part-automl/chapter-background/main}
+\include{part-automl/chapter-supervised/main}
+% \include{part-automl/chapter-unsupervised/main}
+% \include{part-automl/chapter-moo/main}
+% \include{part-automl/chapter-llm/main}
+
+
+\chapter{Unsupervised Learning}
+\label{automl-chap:unsupervised}
+
+\chapter{Multi-objective Optimization}
+\label{automl-chap:moo}
+
+\chapter{AutoML in the Age of Large Language Models}
+\label{automl-chap:llm}
+\begin{itemize}
+    \item Questo qua o lo mettiamo a parte??
+\end{itemize}
+
+\part{Towards Physics-coupled AutoML}\label{part:farming}
+
+\chapter{Background and Formalization}
+\label{precision-chap:background}
+% \section{Motivation and contributions}
+% \section{Structure}
+
+\chapter{Data Platform Architecture}
+\label{precision-chap:architecture}
+
+\chapter{Orchard3dLab}
+\label{precision-chap:orchard}
+
+\chapter{PLUTO}
+\label{precision-chap:pluto}
+
+\chapter{Forecasting ???}
+\label{precision-chap:forecasting}
+
+\chapter{Smart-irrigation ???}
+\label{precision-chap:smart-irrigation}
+
+% \part{Unconventional Data}\label{part:trajectory}
+% \include{part-trajectory/chapter-introduction/main}
+% \include{part-trajectory/chapter-mapmatching/main}
+% \include{part-trajectory/chapter-survey/main}
+% \include{part-trajectory/chapter-dart/main}
+% \include{part-trajectory/chapter-conclusion/main}
+
+% \part{Advanced Analytics}\label{part:olap}
+% \include{part-olap/chapter-introandback/main}
+% \include{part-olap/chapter-augmented/main}
+% \include{part-olap/chapter-conversational/main}
+% \include{part-olap/chapter-describe/main}
+% \include{part-olap/chapter-summarization/main}
+% \include{part-olap/chapter-conclusion/main}
+
+% Backmatter should be commented out, if you are using appendices after References
+%\backmatter
+
+% ********************************** Bibliography ******************************
+\begin{spacing}{.8}
+% To use the conventional natbib style referencing
+% Bibliography style previews: http://nodonn.tipido.net/bibstyle.php
+% Reference styles: http://sites.stat.psu.edu/~surajit/present/bib.htm
+\bibliographystyle{apalike}
+%\bibliographystyle{unsrt} % Use for unsorted references  
+%\bibliographystyle{plainnat} % use this to have URLs listed in References
+\cleardoublepage
+% \nocite{*}
+\bibliography{global/refs} % Path to your References.bib file
+
+% If you would like to use BibLaTeX for your references, pass `custombib' as
+% an option in the document class. The location of 'reference.bib' should be
+% specified in the preamble.tex file in the custombib section.
+% Comment out the lines related to natbib above and uncomment the following line.
+%\printbibliography[heading=bibintoc, title={References}]
+\end{spacing}
+
+% ********************************** Appendices ********************************
+% \begin{appendices} % Using appendices environment for more functunality
+% \include{Appendix1/appendix1}
+% \include{Appendix2/appendix2}
+% \end{appendices}
+
+% *************************************** Index ********************************
+% \printthesisindex % If index is present
+\end{document}

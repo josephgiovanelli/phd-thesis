@@ -1,0 +1,4464 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MY PAPERS
+@article{FRANCIA2020102634,
+    title = "DART: De-Anonymization of personal gazetteers through social trajectories",
+    journal = "Journal of Information Security and Applications",
+    volume = "55",
+    pages = "102634",
+    year = "2020",
+    issn = "2214-2126",
+    doi = "https://doi.org/10.1016/j.jisa.2020.102634",
+    url = "http://www.sciencedirect.com/science/article/pii/S2214212620307973",
+    author = "Matteo Francia and Enrico Gallinucci and Matteo Golfarelli and Nicola Santolini",
+    keywords = "Trajectory, Personal gazetteer, De-Anonymization, GPS, Social data, Privacy",
+}
+@inproceedings{DBLP:conf/er/OutaFMPV20,
+  author    = {Faten El Outa and
+               Matteo Francia and
+               Patrick Marcel and
+               Ver{\'{o}}nika Peralta and
+               Panos Vassiliadis},
+  editor    = {Gillian Dobbie and
+               Ulrich Frank and
+               Gerti Kappel and
+               Stephen W. Liddle and
+               Heinrich C. Mayr},
+  title     = {Towards a Conceptual Model for Data Narratives},
+  booktitle = {Proc. {ER}},
+  address   = {Vienna, Austria},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {12400},
+  pages     = {261--270},
+  publisher = {Springer},
+  year      = {2020},
+  url       = {https://doi.org/10.1007/978-3-030-62522-1\_19},
+  doi       = {10.1007/978-3-030-62522-1\_19},
+  timestamp = {Thu, 29 Oct 2020 15:52:27 +0100},
+  biburl    = {https://dblp.org/rec/conf/er/OutaFMPV20.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+@inproceedings{DBLP:conf/adbis/ChedinFMPR20,
+  author    = {Antoine Ch{\'{e}}din and
+               Matteo Francia and
+               Patrick Marcel and
+               Ver{\'{o}}nika Peralta and
+               Stefano Rizzi},
+  title     = {The Tell-Tale Cube},
+  booktitle = {Proc. {ADBIS}},
+  address   = {Lyon, France},
+  series    = {LNCS},
+  volume    = {12245},
+  pages     = {204--218},
+  publisher = {Springer},
+  year      = {2020},
+}
+@inproceedings{DBLP:conf/sebd/FranciaGGR20,
+  author    = {Matteo Francia and
+               Enrico Gallinucci and
+               Matteo Golfarelli and
+               Stefano Rizzi},
+  title     = {{OLAP} Querying of Document Stores in the Presence of Schema Variety},
+  booktitle = {Proc. SEBD},
+  address   = {Villasimius, Sud Sardegna, Italy},
+  series    = {{CEUR} Workshop Proceedings},
+  volume    = {2646},
+  pages     = {128--135},
+  publisher = {CEUR-WS.org},
+  year      = {2020},
+}
+@article{DBLP:journals/is/FranciaGR20,
+  author    = {Matteo Francia and
+               Matteo Golfarelli and
+               Stefano Rizzi},
+  title     = {{A-BI}\({}^{\mbox{+}}\): {A} framework for Augmented Business Intelligence},
+  journal   = {Inf. Syst.},
+  volume    = {92},
+  pages     = {101520},
+  year      = {2020},
+}
+@article{DBLP:journals/isci/FranciaGR20,
+  author    = {Matteo Francia and
+               Matteo Golfarelli and
+               Stefano Rizzi},
+  title     = {Summarization and visualization of multi-level and multi-dimensional
+               itemsets},
+  journal   = {Inf. Sci.},
+  volume    = {520},
+  pages     = {63--85},
+  year      = {2020},
+}
+@inproceedings{DBLP:conf/dolap/FranciaGG20,
+  author    = {Matteo Francia and
+               Enrico Gallinucci and
+               Matteo Golfarelli},
+  title     = {Towards Conversational {OLAP}},
+  booktitle = {Proc. DOLAP@EDBT/ICDT},
+  address   = {Copenhagen, Denmark},
+  series    = {{CEUR} Workshop Proceedings},
+  volume    = {2572},
+  pages     = {6--15},
+  publisher = {CEUR-WS.org},
+  year      = {2020},
+}
+@article{DBLP:journals/snam/FranciaGG19,
+  author    = {Matteo Francia and
+               Enrico Gallinucci and
+               Matteo Golfarelli},
+  title     = {Social {BI} to understand the debate on vaccines on the Web and social media: unraveling the anti-, free-, and pro-vax communities in {I}taly},
+  journal   = {Social Netw. Analys. Mining},
+  volume    = {9},
+  number    = {1},
+  pages     = {46:1--46:16},
+  year      = {2019},
+}
+@inproceedings{DBLP:conf/dolap/FranciaGR19,
+  author    = {Matteo Francia and
+               Matteo Golfarelli and
+               Stefano Rizzi},
+  title     = {Augmented Business Intelligence},
+  booktitle = {Proc. DOLAP@EDBT/ICDT},
+  address   = {Lisbon, Portugal},
+  series    = {{CEUR} Workshop Proceedings},
+  pages     = {1--10},
+  volume    = {2324},
+  publisher = {CEUR-WS.org},
+  year      = {2019},
+}
+@inproceedings{DBLP:conf/mipro/FranciaGV19,
+  author    = {Matteo Francia and
+               Enrico Gallinucci and
+               Federico Vitali},
+  title     = {Map-Matching on Big Data: a Distributed and Efficient Algorithm with a Hidden Markov Model},
+  booktitle = {Proc. {MIPRO}},
+  address   = {Opatija, Croatia},
+  pages     = {1238--1243},
+  publisher = {{IEEE}},
+  year      = {2019},
+}
+@inproceedings{DBLP:conf/sebd/FranciaGR18,
+  author    = {Matteo Francia and
+               Matteo Golfarelli and
+               Stefano Rizzi},
+  title     = {A Similarity Function for Multi-Level and Multi-Dimensional Itemsets},
+  booktitle = {Proc. SEBD},
+  address   = {Castellaneta Marina, Taranto, Italy},
+  series    = {{CEUR} Workshop Proceedings},
+  volume    = {2161},
+  pages     = {1--8},
+  publisher = {CEUR-WS.org},
+  year      = {2018},
+}
+@inproceedings{DBLP:conf/saso/FranciaPBV17,
+  author    = {Matteo Francia and
+               Danilo Pianini and
+               Jacob Beal and
+               Mirko Viroli},
+  title     = {Towards a Foundational {API} for Resilient Distributed Systems Design},
+  booktitle = {Proc. FAS*W@SASO/ICCAC},
+  address   = {Tucson, AZ, USA},
+  pages     = {27--32},
+  publisher = {{IEEE} Computer Society},
+  year      = {2017},
+}
+% END - MY PAPERS
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PhD Thesis
+@misc{IBM4V,
+  title     = {Extracting business value from the 4 V's of big data},
+  howpublished = {\url{https://www.ibmbigdatahub.com/infographic/extracting-business-value-4-vs-big-data}},
+  note = {[Online; accessed 21-June-2019]},
+  year      = {2018},
+}
+@article{DBLP:journals/oir/Stuart15b,
+  author    = {David Stuart},
+  title     = {The Data Revolution: Big Data, Open Data, Data Infrastructures and
+               Their Consequences},
+  journal   = {Online Inf. Rev.},
+  volume    = {39},
+  number    = {2},
+  pages     = {272},
+  year      = {2015},
+}
+@book{kelleher2018data,
+  title={Data science},
+  author={Kelleher, John D and Tierney, Brendan},
+  year={2018},
+  publisher={MIT Press}
+}
+@inbook{vanderAalst2016,
+    author="van der Aalst, Wil",
+    title="Data Science in Action",
+    bookTitle="Process Mining: Data Science in Action",
+    year="2016",
+    publisher="Springer Berlin Heidelberg",
+    address="Berlin, Heidelberg",
+    pages="3--23",
+    isbn="978-3-662-49851-4",
+}
+@article{DBLP:journals/jdwm/RizziGG15,
+  author    = {Stefano Rizzi and
+               Matteo Golfarelli and
+               Simone Graziani},
+  title     = {An {OLAM} Operator for Multi-Dimensional Shrink},
+  journal   = {{IJDWM}},
+  volume    = {11},
+  number    = {3},
+  pages     = {68--97},
+  year      = {2015},
+}
+@book{inmon2005building,
+  title={Building the data warehouse},
+  author={Inmon, William H},
+  year={2005},
+  publisher={John wiley \& sons}
+}
+@article{DBLP:journals/sigmod/Colliat96,
+  author    = {George Colliat},
+  title     = {OLAP, Relational, and Multidimensional Database Systems},
+  journal   = {{SIGMOD} Rec.},
+  volume    = {25},
+  number    = {3},
+  pages     = {64--69},
+  year      = {1996},
+}
+@book{golfarelli2009data,
+  title={Data warehouse design: Modern principles and methodologies},
+  author={Golfarelli, Matteo and Rizzi, Stefano},
+  year={2009},
+  publisher={McGraw-Hill, Inc.}
+}
+@article{DBLP:journals/is/VassiliadisMR19,
+  author    = {Panos Vassiliadis and
+               Patrick Marcel and
+               Stefano Rizzi},
+  title     = {Beyond roll-up's and drill-down's: An intentional analytics model
+               to reinvent {OLAP}},
+  journal   = {Inf. Syst.},
+  volume    = {85},
+  pages     = {68--91},
+  year      = {2019},
+}
+% END - PhD Thesis
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THESIS PROPOSAL
+% TOCHECK
+@article{tao2018digital,
+    title={Digital twin-driven product design, manufacturing and service with big data},
+    author={Tao, Fei and Cheng, Jiangfeng and Qi, Qinglin and Zhang, Meng and Zhang, He and Sui, Fangyuan},
+    journal={The International Journal of Advanced Manufacturing Technology},
+    volume={94},
+    number={9-12},
+    pages={3563--3576},
+    year={2018},
+    publisher={Springer}
+}
+@ARTICLE{8423172,
+    author={S. {Dobson} and M. {Golfarelli} and S. {Graziani} and S. {Rizzi}},
+    journal={IEEE Sensors J.},
+    title={A Reference Architecture and Model for Sensor Data Warehousing},
+    year={2018},
+    volume={18},
+    number={18},
+    pages={7659-7670},
+}
+@inproceedings{rizzi2003view,
+    title={View materialization vs. indexing: Balancing space constraints in data warehouse design},
+    author={Rizzi, Stefano and Saltarelli, Ettore},
+    booktitle={Proc. CAiSE},
+    pages={502--519},
+    year={2003}
+}
+@inproceedings{DBLP:conf/vl/Shneiderman96,
+    author    = {Ben Shneiderman},
+    title     = {The Eyes Have It: {A} Task by Data Type Taxonomy for Information Visualizations},
+    booktitle = {Proc. IEEE Symposium on Visual Languages}, 
+    address = {Boulder, USA},
+    pages     = {336--343},
+    year      = {1996},
+}
+@inproceedings{negre2013cold,
+  author    = {Elsa Negre and
+               Franck Ravat and
+               Olivier Teste and
+               Ronan Tournier},
+  title     = {Cold-start recommender system problem within a multidimensional data
+               warehouse},
+  booktitle = {Proc. {RCIS}},
+  address   = {Paris, France},
+  pages     = {1--8},
+  year      = {2013},
+}
+@article{DBLP:journals/jdwm/GiacomettiMNS11,
+    author    = {Arnaud Giacometti and
+    Patrick Marcel and
+    Elsa Negre and
+    Arnaud Soulet},
+    title     = {Query Recommendations for {OLAP} Discovery-Driven Analysis},
+    journal   = {{IJDWM}},
+    volume    = {7},
+    number    = {2},
+    pages     = {1--25},
+    year      = {2011}
+}
+@inproceedings{DBLP:conf/eda/MarcelN11,
+    author    = {Patrick Marcel and
+    Elsa Negre},
+    title    = {A survey of query recommendation techniques for data warehouse exploration},
+    booktitle  = {Proc. EDA},
+    address = {Clermont-Ferrand, France},
+    pages     = {119--134},
+    year      = {2011},
+}
+@INPROCEEDINGS{5589228,
+    author={A. Ajanki and M. Billinghurst and T. Jrvenpaa and M. Kandemir and S. Kaski and M. Koskela and M. Kurimo and J. Laaksonen and K. Puolamaki and T. Ruokolainen and T. Tossavainen},
+    booktitle={Proc. Int. Work. on Machine Learning for Signal Processing},
+    title={Contextual information access with Augmented Reality},
+    year={2010},
+    pages={95-100},
+}
+@inproceedings{DBLP:conf/chiir/BuschelMD18,
+    author    = {Wolfgang B{\"{u}}schel and
+    Annett Mitschick and
+    Raimund Dachselt},
+    title     = {Here and Now: Reality-Based Information Retrieval: Perspective Paper},
+    booktitle = {Proc. CHIIR},
+    address = {New Brunswick, USA},
+    pages     = {171--180},
+    year      = {2018}
+}
+@inproceedings{DBLP:conf/icsa/CroattiR17,
+    author    = {Angelo Croatti and
+    Alessandro Ricci},
+    title     = {Towards the Web of Augmented Things},
+    booktitle = {Proc. {ICSA}},
+    address = {Gothenburg, Sweden},
+    pages     = {80--87},
+    year      = {2017},
+}
+@article{DBLP:journals/presence/Azuma97,
+    author    = {Ronald Azuma},
+    title     = {A Survey of Augmented Reality},
+    journal   = {Presence},
+    volume    = {6},
+    number    = {4},
+    pages     = {355--385},
+    year      = {1997},
+}
+@inproceedings{DBLP:conf/ambisys/XuZZG08,
+    author    = {Kaijian Xu and
+    Manli Zhu and
+    Daqing Zhang and
+    Tao Gu},
+    title     = {Context-aware content filtering {\&} presentation for pervasive
+    {\&} mobile information systems},
+    booktitle = {Proc. ICST},
+    address = {Quebec, Canada},
+    pages     = {20},
+    year      = {2008},
+}
+@article{DBLP:journals/kais/ZhengWQLG17,
+    author    = {Kaiping Zheng and
+    Hongzhi Wang and
+    Zhixin Qi and
+    Jianzhong Li and
+    Hong Gao},
+    title     = {A survey of query result diversification},
+    journal   = {Knowl. Inf. Syst.},
+    volume    = {51},
+    number    = {1},
+    pages     = {1--36},
+    year      = {2017}
+}
+@article{DBLP:journals/kais/AligonGMRT14,
+    author    = {Julien Aligon and
+    Matteo Golfarelli and
+    Patrick Marcel and
+    Stefano Rizzi and
+    Elisa Turricchia},
+    title     = {Similarity measures for {OLAP} sessions},
+    journal   = {Knowl. Inf. Syst.},
+    volume    = {39},
+    number    = {2},
+    pages     = {463--489},
+    year      = {2014},
+}
+@inproceedings{DBLP:conf/icde/VieiraRBHSTT11,
+    author    = {Marcos R. Vieira and
+    Humberto Luiz Razente and
+    Maria Camila Nardini Barioni and
+    Marios Hadjieleftheriou and
+    Divesh Srivastava and
+    Caetano Traina Jr. and
+    Vassilis J. Tsotras},
+    title     = {On query result diversification},
+    booktitle = {Proc. ICDE},
+    address = {Hannover, Germany},
+    pages     = {1163--1174},
+    year      = {2011},
+}
+@inproceedings{DBLP:conf/dolap/GolfarelliS03,
+    author    = {Matteo Golfarelli and
+    Ettore Saltarelli},
+    title     = {The workload you have, the workload you would like},
+    booktitle = {Proc. DOLAP},
+    address = {New Orleans, USA},
+    pages     = {79--85},
+    year      = {2003},
+}
+@inproceedings{DBLP:conf/sigmod/SelingerACLP79,
+    author    = {Patricia G. Selinger and
+    Morton M. Astrahan and
+    Donald D. Chamberlin and
+    Raymond A. Lorie and
+    Thomas G. Price},
+    title     = {Access Path Selection in a Relational Database Management System},
+    booktitle = {Proc. SIGMOD},
+    address = {Boston, USA},
+    pages     = {23--34},
+    year      = {1979},
+}
+@inbook{DBLP:conf/ebiss/LlavoriN15,
+    author    = {Rafael Berlanga Llavori and
+    Victoria Nebot},
+    title     = {Context-Aware Business Intelligence},
+    booktitle = {Tutorial Lectures of eBISS},
+    pages     = {87--110},
+    year      = {2015},
+    publisher = {Springer},
+}
+@article{DBLP:journals/ijpcc/StefanidisPV07,
+    author    = {Kostas Stefanidis and
+    Evaggelia Pitoura and
+    Panos Vassiliadis},
+    title     = {A context-aware preference database system},
+    journal   = {Int. J. Pervasive Computing and Communications},
+    volume    = {3},
+    number    = {4},
+    pages     = {439--460},
+    year      = {2007},
+}
+@article{DBLP:journals/tois/AdomaviciusSST05,
+    author    = {Gediminas Adomavicius and
+    Ramesh Sankaranarayanan and
+    Shahana Sen and
+    Alexander Tuzhilin},
+    title     = {Incorporating contextual information in recommender systems using
+    a multidimensional approach},
+    journal   = {{ACM} Trans. Inf. Syst.},
+    volume    = {23},
+    number    = {1},
+    pages     = {103--145},
+    year      = {2005},
+}
+@article{DBLP:journals/vlc/ElSayedTMPS16,
+    author    = {Neven A. M. ElSayed and
+    Bruce H. Thomas and
+    Kim Marriott and
+    Julia Piantadosi and
+    Ross T. Smith},
+    title     = {Situated Analytics: Demonstrating immersive analytical tools with
+    Augmented Reality},
+    journal   = {J. Vis. Lang. Comput.},
+    volume    = {36},
+    pages     = {13--23},
+    year      = {2016},
+}
+@article{DBLP:journals/pvldb/KhoussainovaKBS11,
+    author    = {Nodira Khoussainova and
+    YongChul Kwon and
+    Magdalena Balazinska and
+    Dan Suciu},
+    title     = {SnipSuggest: Context-Aware Autocompletion for {SQL}},
+    journal   = {{PVLDB}},
+    volume    = {4},
+    number    = {1},
+    pages     = {22--33},
+    year      = {2010},
+}
+@inproceedings{DBLP:conf/cikm/ChenSNC11,
+    author    = {Minmin Chen and
+    Jian{-}Tao Sun and
+    Xiaochuan Ni and
+    Yixin Chen},
+    title     = {Improving context-aware query classification via adaptive self-training},
+    booktitle = {Proc. CIKM},
+    address = {Glasgow, United Kingdom},
+    pages     = {115--124},
+    year      = {2011},
+}
+@inproceedings{DBLP:conf/cikm/YanGC11,
+    author    = {Xiaohui Yan and
+    Jiafeng Guo and
+    Xueqi Cheng},
+    title     = {Context-aware query recommendation by learning high-order relation
+    in query logs},
+    booktitle = {Proc. CIKM},
+    address = {Glasgow, United Kingdom},
+    pages     = {2073--2076},
+    year      = {2011},
+}
+@article{DBLP:journals/corr/abs-1802-02872,
+    author    = {Marie Le Guilly and
+    Jean{-}Marc Petit and
+    Vasile{-}Marian Scuturici},
+    title     = {{SQL} Query Completion for Data Exploration},
+    journal   = {CoRR},
+    volume    = {abs/1802.02872},
+    year      = {2018},
+}
+@inproceedings{DBLP:conf/icde/JiangLVN14,
+    author    = {Di Jiang and
+    Kenneth Wai{-}Ting Leung and
+    Jan Vosecky and
+    Wilfred Ng},
+    title     = {Personalized Query Suggestion With Diversity Awareness},
+    booktitle = {Proc. ICDE},
+    address = {Chicago, USA},
+    pages     = {400--411},
+    year      = {2014},
+}
+@article{DBLP:journals/tkde/QiWM16,
+    author    = {Shuyao Qi and
+    Dingming Wu and
+    Nikos Mamoulis},
+    title     = {Location Aware Keyword Query Suggestion Based on Document Proximity},
+    journal   = {{IEEE} Trans. Knowl. Data Eng.},
+    volume    = {28},
+    number    = {1},
+    pages     = {82--97},
+    year      = {2016},
+}
+@inproceedings{DBLP:conf/huc/XuePPG08,
+    author    = {Wenwei Xue and
+    Hung Keng Pung and
+    Paulito P. Palmes and
+    Tao Gu},
+    title     = {Schema matching for context-aware computing},
+    booktitle = {Proc. UbiComp},
+    address = {Seoul, Korea},
+    pages     = {292--301},
+    year      = {2008},
+}
+@article{DBLP:journals/tkde/DimitriadouPD16,
+    author    = {Kyriaki Dimitriadou and
+    Olga Papaemmanouil and
+    Yanlei Diao},
+    title     = {{AIDE:} An Active Learning-Based Approach for Interactive Data Exploration},
+    journal   = {{IEEE} Trans. Knowl. Data Eng.},
+    volume    = {28},
+    number    = {11},
+    pages     = {2842--2856},
+    year      = {2016},
+}
+@inproceedings{DBLP:conf/edbt/CuminPSS17,
+    author    = {Julien Cumin and
+    Jean{-}Marc Petit and
+    Vasile{-}Marian Scuturici and
+    Sabina Surdu},
+    title     = {Data Exploration with {SQL} using Machine Learning Techniques},
+    booktitle = {Proc. EDBT},
+    address = {Venice, Italy},
+    pages     = {96--107},
+    year      = {2017},
+}
+@inproceedings{DBLP:conf/dasfaa/ThollotKA12,
+    author    = {Rapha{\"{e}}l Thollot and
+    Nicolas Kuchmann{-}Beauger and
+    Marie{-}Aude Aufaure},
+    title     = {Semantics and Usage Statistics for Multi-dimensional Query Expansion},
+    booktitle = {Proc. DASFAA},
+    address = {Busan, South Korea},
+    pages     = {250--260},
+    year      = {2012},
+}
+@article{DBLP:journals/pvldb/VartakRMPP15,
+    author    = {Manasi Vartak and
+    Sajjadur Rahman and
+    Samuel Madden and
+    Aditya G. Parameswaran and
+    Neoklis Polyzotis},
+    title     = {{SEEDB:} Efficient Data-Driven Visualization Recommendations to Support
+    Visual Analytics},
+    journal   = {{PVLDB}},
+    volume    = {8},
+    number    = {13},
+    pages     = {2182--2193},
+    year      = {2015},
+}
+@inproceedings{DBLP:conf/dawak/JerbiRTZ09,
+    author    = {Houssem Jerbi and
+    Franck Ravat and
+    Olivier Teste and
+    Gilles Zurfluh},
+    title     = {Preference-Based Recommendations for {OLAP} Analysis},
+    booktitle = {Proc. DaWaK}, 
+    address = {Linz, Austria},
+    pages     = {467--478},
+    year      = {2009},
+}
+@article{DBLP:journals/dss/AligonGGMR15,
+    author    = {Julien Aligon and
+    Enrico Gallinucci and
+    Matteo Golfarelli and
+    Patrick Marcel and
+    Stefano Rizzi},
+    title     = {A collaborative filtering approach for recommending {OLAP} sessions},
+    journal   = {Decis. Support Syst.},
+    volume    = {69},
+    pages     = {20--30},
+    year      = {2015},
+}
+@article{DBLP:journals/kais/IbrahimAL17,
+    author    = {Ibrahim A. Ibrahim and
+    Abdullah M. Albarrak and
+    Xue Li},
+    title     = {Constrained recommendations for query visualizations},
+    journal   = {Knowl. Inf. Syst.},
+    volume    = {51},
+    number    = {2},
+    pages     = {499--529},
+    year      = {2017}
+}
+@inproceedings{DBLP:conf/ictir/BahrainianC17,
+  author    = {Seyed Ali Bahrainian and
+               Fabio Crestani},
+  title     = {Towards the Next Generation of Personal Assistants: Systems that Know
+               When You Forget},
+  booktitle = {Proc. {ICTIR}},
+  address   = {Amsterdam, The Netherlands},
+  pages     = {169--176},
+  year      = {2017}
+}
+@article{DBLP:journals/cacm/GilPBBBBCEGHHHK19,
+    author    = {Yolanda Gil and
+    Suzanne A. Pierce and
+    Hassan A. Babaie and
+    Arindam Banerjee and
+    Kirk D. Borne and
+    Gary Bust and
+    Michelle Cheatham and
+    Imme Ebert{-}Uphoff and
+    Carla Gomes and
+    Mary Hill and
+    John Horel and
+    Leslie Hsu and
+    Jim Kinter and
+    Craig A. Knoblock and
+    David Krum and
+    Vipin Kumar and
+    Pierre Lermusiaux and
+    Yan Liu and
+    Chris North and
+    Victor Pankratius and
+    Shanan Peters and
+    Beth Plale and
+    Allen Pope and
+    Sai Ravela and
+    Juan Restrepo and
+    Aaron J. Ridley and
+    Hanan Samet and
+    Shashi Shekhar},
+    title     = {Intelligent systems for geosciences: an essential research agenda},
+    journal   = {Commun. {ACM}},
+    volume    = {62},
+    number    = {1},
+    pages     = {76--84},
+    year      = {2019},
+}
+% END - THESIS PROPOSAL
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ITEMSET
+@article{DBLP:journals/kais/Ahmed19,
+	author    = {Mohiuddin Ahmed},
+	title     = {Data summarization: a survey},
+	journal   = {Knowl. Inf. Syst.},
+	volume    = {58},
+	number    = {2},
+	pages     = {249--273},
+	year      = {2019}
+}
+@article{day1984efficient,
+	title={Efficient algorithms for agglomerative hierarchical clustering methods},
+	author={Day, William HE and Edelsbrunner, Herbert},
+	journal={Journal of classification},
+	volume={1},
+	number={1},
+	pages={7--24},
+	year={1984},
+	publisher={Springer}
+}
+@article{DBLP:journals/jnca/HoplarosTK14,
+	author    = {Demetris Hoplaros and
+	Zahir Tari and
+	Ibrahim Khalil},
+	title     = {Data summarization for network traffic monitoring},
+	journal   = {J. Network and Computer Applications},
+	volume    = {37},
+	pages     = {194--205},
+	year      = {2014}
+}
+@article{DBLP:journals/isci/VanahalliP19,
+	author    = {Manjunath K. Vanahalli and
+	Nagamma Patil},
+	title     = {An efficient parallel row enumerated algorithm for mining frequent
+	colossal closed itemsets from high dimensional datasets},
+	journal   = {Inf. Sci.},
+	volume    = {496},
+	pages     = {343--362},
+	year      = {2019}
+}
+@article{DBLP:journals/kbs/ZakiZ18,
+	author    = {Fatimah Audah Md. Zaki and
+	Nurul Fariza Zulkurnain},
+	title     = {{RARE:} Mining colossal closed itemset in high dimensional data},
+	journal   = {Knowl.-Based Syst.},
+	volume    = {161},
+	pages     = {1--11},
+	year      = {2018}
+}
+@article{DBLP:journals/tits/Yu19,
+	author    = {Wenhao Yu},
+	title     = {Discovering Frequent Movement Paths From Taxi Trajectory Data Using
+	Spatially Embedded Networks and Association Rules},
+	journal   = {{IEEE} Trans. Intelligent Transportation Systems},
+	volume    = {20},
+	number    = {3},
+	pages     = {855--866},
+	year      = {2019}
+}
+@article{DBLP:journals/isci/NguyenVLDMNVF19,
+	author    = {Loan T. T. Nguyen and
+	Vinh V. Vu and
+	Mi T. H. Lam and
+	Thuy T. M. Duong and
+	Ly T. Manh and
+	Thuy T. T. Nguyen and
+	Bay Vo and
+	Hamido Fujita},
+	title     = {An efficient method for mining high utility closed itemsets},
+	journal   = {Inf. Sci.},
+	volume    = {495},
+	pages     = {78--99},
+	year      = {2019}
+}
+@article{DBLP:journals/widm/LunaFV19,
+	author    = {Jos{\'{e}} Mar{\'{\i}}a Luna and
+	Philippe Fournier{-}Viger and
+	Sebasti{\'{a}}n Ventura},
+	title     = {Frequent itemset mining: {A} 25 years review},
+	journal   = {Wiley Interdiscip. Rev. Data Min. Knowl. Discov.},
+	volume    = {9},
+	number    = {6},
+	year      = {2019}
+}
+@article{DBLP:journals/kbs/ZhangD15,
+	author    = {Xiong Zhang and
+	Zhi{-}Hong Deng},
+	title     = {Mining summarization of high utility itemsets},
+	journal   = {Knowl.-Based Syst.},
+	volume    = {84},
+	pages     = {67--77},
+	year      = {2015}
+}
+@inproceedings{DBLP:conf/icde/DjenouriLNR19,
+	author    = {Youcef Djenouri and
+	Jerry Chun{-}Wei Lin and
+	Kjetil N{\o}rv{\aa}g and
+	Heri Ramampiaro},
+	title     = {Highly Efficient Pattern Mining Based on Transaction Decomposition},
+	booktitle = {Proc. {ICDE}},
+	pages     = {1646--1649},
+	publisher = {{IEEE}},
+	year      = {2019}
+}
+@article{DBLP:journals/ijbidm/DjenouriDB14,
+	author    = {Youcef Djenouri and
+	Habiba Drias and
+	Ahc{\`{e}}ne Bendjoudi},
+	title     = {Pruning irrelevant association rules using knowledge mining},
+	journal   = {{IJBIDM}},
+	volume    = {9},
+	number    = {2},
+	pages     = {112--144},
+	year      = {2014}
+}
+@inproceedings{DBLP:conf/aistats/BagariaKNZT18,
+	author    = {Vivek Kumar Bagaria and
+	Govinda M. Kamath and
+	Vasilis Ntranos and
+	Martin J. Zhang and
+	David Tse},
+	title     = {Medoids in Almost-Linear Time via Multi-Armed Bandits},
+	booktitle = {Proc. {AISTATS}},
+	volume    = {84},
+	pages     = {500--509},
+	publisher = {{PMLR}},
+	year      = {2018}
+}
+@inproceedings{DBLP:conf/aistats/NewlingF17,
+	author    = {James Newling and
+	Fran{\c{c}}ois Fleuret},
+	title     = {A Sub-Quadratic Exact Medoid Algorithm},
+	booktitle = {Proc. {AISTATS}},
+	volume    = {54},
+	pages     = {185--193},
+	publisher = {{PMLR}},
+	year      = {2017}
+}
+@article{DBLP:journals/isci/ZiHayatA14,
+	author    = {Morteza Zihayat and
+	Aijun An},
+	title     = {Mining top-k high utility patterns over data streams},
+	journal   = {Inf. Sci.},
+	volume    = {285},
+	pages     = {138--161},
+	year      = {2014},
+}
+@article{DBLP:journals/isci/ChonH018,
+	author    = {Kang{-}Wook Chon and
+	Sang{-}Hyun Hwang and
+	Min{-}Soo Kim},
+	title     = {GMiner: {A} fast GPU-based frequent itemset mining method for large-scale
+	data},
+	journal   = {Inf. Sci.},
+	volume    = {439-440},
+	pages     = {19--38},
+	year      = {2018},
+}
+@article{DBLP:journals/datamine/MampaeyV13,
+ author    = {Michael Mampaey and
+              Jilles Vreeken},
+ title     = {Summarizing categorical data by clustering attributes},
+ journal   = {Data Min. Knowl. Discov.},
+ volume    = {26},
+ number    = {1},
+ pages     = {130--173},
+ year      = {2013}
+}
+@article{DBLP:journals/datamine/HanPYM04,
+    author    = {Jiawei Han and
+    Jian Pei and
+    Yiwen Yin and
+    Runying Mao},
+    title     = {Mining Frequent Patterns without Candidate Generation: {A} Frequent-Pattern
+    Tree Approach},
+    journal   = {Data Min. Knowl. Discov.},
+    volume    = {8},
+    number    = {1},
+    pages     = {53--87},
+    year      = {2004},
+}
+@inproceedings{DBLP:conf/gd/EllsonGKNW00,
+    author    = {John Ellson and
+    Emden R. Gansner and
+    Eleftherios Koutsofios and
+    Stephen C. North and
+    Gordon Woodhull},
+    title     = {Graphviz - Open Source Graph Drawing Tools},
+    booktitle = {Graph Drawing},
+    pages     = {483--484},
+    year      = {2001},
+}
+@article{DBLP:journals/tog/BedersonSW02,
+    author    = {Benjamin B. Bederson and
+    Ben Shneiderman and
+    Martin Wattenberg},
+    title     = {Ordered and quantum treemaps: Making effective use of 2D space to
+    display hierarchies},
+    journal   = {{ACM} Trans. Graph.},
+    volume    = {21},
+    number    = {4},
+    pages     = {833--854},
+    year      = {2002},
+}
+@article{DBLP:journals/tog/Shneiderman92,
+    author    = {Ben Shneiderman},
+    title     = {Tree Visualization with Tree-Maps: 2-d Space-Filling Approach},
+    journal   = {{ACM} Trans. Graph.},
+    volume    = {11},
+    number    = {1},
+    pages     = {92--99},
+    year      = {1992},
+}
+@article{DBLP:journals/datamine/DavidsonR09,
+  author    = {Ian Davidson and
+               S. S. Ravi},
+  title     = {Using instance-level constraints in agglomerative hierarchical clustering:
+               theoretical and empirical results},
+  journal   = {Data Min. Knowl. Discov.},
+  volume    = {18},
+  number    = {2},
+  pages     = {257--282},
+  year      = {2009}
+}
+@inproceedings{agrawal1994fast,
+  author    = {Rakesh Agrawal and
+               Ramakrishnan Srikant},
+  title     = {Fast Algorithms for Mining Association Rules in Large Databases},
+  booktitle = {Proc. VLDB},
+  pages     = {487--499},
+  year      = {1994}
+}
+@inproceedings{gunopulos1997data,
+	author    = {Dimitrios Gunopulos and
+	Roni Khardon and
+	Heikki Mannila and
+	Hannu Toivonen},
+	title     = {Data mining, Hypergraph Transversals, and Machine Learning},
+	booktitle = {Proc. {PODS}},
+	pages     = {209--216},
+	year      = {1997}
+}
+@article{han1999mining,
+	author    = {Jiawei Han and
+	Yongjian Fu},
+	title     = {Mining Multiple-Level Association Rules in Large Databases},
+	journal   = {{IEEE} Trans. Knowl. Data Eng.},
+	volume    = {11},
+	number    = {5},
+	pages     = {798--804},
+	year      = {1999},
+}
+@inproceedings{pasquier1999closed,
+	author    = {Nicolas Pasquier and
+	Yves Bastide and
+	Rafik Taouil and
+	Lotfi Lakhal},
+	title     = {Discovering Frequent Closed Itemsets for Association Rules},
+	booktitle = {Proc. ICDT},
+	pages     = {398--416},
+	year      = {1999}
+}
+@inproceedings{xin2005compressed,
+	author    = {Dong Xin and
+	Jiawei Han and
+	Xifeng Yan and
+	Hong Cheng},
+	title     = {Mining Compressed Frequent-Pattern Sets},
+	booktitle = {Proc. VLDB}, 
+	pages     = {709--720},
+	year      = {2005}
+}
+@article{wang2006efficiently,
+	author    = {Jianyong Wang and
+	George Karypis},
+	title     = {On efficiently summarizing categorical databases},
+	journal   = {Knowl. Inf. Syst.},
+	volume    = {9},
+	number    = {1},
+	pages     = {19--37},
+	year      = {2006},
+}
+@inproceedings{baralis2010support,
+  author    = {Elena Baralis and
+               Luca Cagliero and
+               Tania Cerquitelli and
+               Vincenzo D'Elia and
+               Paolo Garza},
+  title     = {Support driven opportunistic aggregation for generalized itemset extraction},
+  address   = {London, {UK}},
+  booktitle = {Proc. IS},
+  pages     = {102--107},
+  year      = {2010},
+}
+@inproceedings{afrati2004approximating,
+	author    = {Foto N. Afrati and
+	Aristides Gionis and
+	Heikki Mannila},
+	title     = {Approximating a collection of frequent sets},
+	booktitle = {Proc. {KDD}},
+	pages     = {12--19},
+	year      = {2004},
+}
+@inproceedings{yan2005summarizing,
+  author    = {Xifeng Yan and
+               Hong Cheng and
+               Jiawei Han and
+               Dong Xin},
+  title     = {Summarizing itemset patterns: a profile-based approach},
+  booktitle = {Proc. {KDD}},
+  pages     = {314--323},
+  year      = {2005},
+}
+@article{chandola2007summarization,
+  author    = {Varun Chandola and
+               Vipin Kumar},
+  title     = {Summarization --- compressing data into an informative representation},
+  journal   = {Knowl. Inf. Syst.},
+  volume    = {12},
+  number    = {3},
+  pages     = {355--378},
+  year      = {2007},
+}
+@inproceedings{jin2008effective,
+	author    = {Ruoming Jin and
+	Muad Abu{-}Ata and
+	Yang Xiang and
+	Ning Ruan},
+	title     = {Effective and efficient itemset pattern summarization: regression-based
+	approaches},
+	booktitle = {Proc. {KDD}},
+	pages     = {399--407},
+	year      = {2008},
+}
+@article{xiang2011summarizing,
+	author    = {Yang Xiang and
+	Ruoming Jin and
+	David Fuhry and
+	Feodor F. Dragan},
+	title     = {Summarizing transactional databases with overlapped hyperrectangles},
+	journal   = {Data Min. Knowl. Discov.},
+	volume    = {23},
+	number    = {2},
+	pages     = {215--251},
+	year      = {2011},
+}
+@article{takigawa2011efficiently,
+	author    = {Ichigaku Takigawa and
+	Hiroshi Mamitsuka},
+	title     = {Efficiently mining \emph{{\(\delta\)}}-tolerance closed frequent subgraphs},
+	journal   = {Machine Learning},
+	volume    = {82},
+	number    = {2},
+	pages     = {95--121},
+	year      = {2011},
+}
+@article{liu2014flexible,
+	author    = {Guimei Liu and
+	Haojun Zhang and
+	Limsoon Wong},
+	title     = {A Flexible Approach to Finding Representative Pattern Sets},
+	journal   = {{IEEE} Trans. Knowl. Data Eng.},
+	volume    = {26},
+	number    = {7},
+	pages     = {1562--1574},
+	year      = {2014},
+}
+@inproceedings{carbonell1998use,
+  author    = {Jaime G. Carbonell and
+               Jade Goldstein},
+  title     = {The Use of {MMR}, Diversity-Based Reranking for Reordering Documents
+               and Producing Summaries},
+  booktitle = {Proc. SIGIR},
+  pages     = {335--336},
+  year      = {1998},
+}
+@inproceedings{poernomo2009cp,
+  author    = {Ardian Kristanto Poernomo and
+               Vivekanand Gopalkrishnan},
+  title     = {{CP}-summary: a concise representation for browsing frequent itemsets},
+  booktitle = {Proc. KDD},
+  pages     = {687--696},
+  year      = {2009},
+}
+@article{yang2005pruning,
+    author    = {Li Yang},
+    title     = {Pruning and Visualizing Generalized Association Rules in Parallel
+    Coordinates},
+    journal   = {{IEEE} Trans. Knowl. Data Eng.},
+    volume    = {17},
+    number    = {1},
+    pages     = {60--70},
+    year      = {2005},
+}
+@article{han2007frequent,
+  author    = {Jiawei Han and
+               Hong Cheng and
+               Dong Xin and
+               Xifeng Yan},
+  title     = {Frequent pattern mining: current status and future directions},
+  journal   = {Data Min. Knowl. Discov.},
+  volume    = {15},
+  number    = {1},
+  pages     = {55--86},
+  year      = {2007},
+}
+@inproceedings{ertek2006framework,
+    author    = {G{\"{u}}rdal Ertek and
+    Ayhan Demiriz},
+    title     = {A Framework for Visualizing Association Mining Results},
+    booktitle = {Proc. ISCIS},
+    pages     = {593--602},
+    year      = {2006},
+}
+@inproceedings{lim2009visual,
+    author    = {Seung Jin Lim},
+    title     = {On a visual frequent itemset mining},
+    booktitle = {Proc. ICDIM},
+    pages     = {46--51},
+    year      = {2009},
+}
+@article{leung2009fpvat,
+    author    = {Carson Kai{-}Sang Leung and
+    Christopher L. Carmichael},
+    title     = {{FpVAT}: a visual analytic tool for supporting frequent pattern mining},
+    journal   = {{SIGKDD} Explorations},
+    volume    = {11},
+    number    = {2},
+    pages     = {39--48},
+    year      = {2009},
+}
+@article{keim2002information,
+  author    = {Daniel A. Keim},
+  title     = {Information Visualization and Visual Data Mining},
+  journal   = {{IEEE} Trans. Vis. Comput. Graph.},
+  volume    = {8},
+  number    = {1},
+  pages     = {1--8},
+  year      = {2002},
+}
+@article{gansner1993dag, 
+  author    = {Emden R. Gansner and
+               Eleftherios Koutsofios and
+               Stephen C. North and
+               Kiem{-}Phong Vo},
+  title     = {A Technique for Drawing Directed Graphs},
+  journal   = {{IEEE} Trans. Software Eng.},
+  volume    = {19},
+  number    = {3},
+  pages     = {214--230},
+  year      = {1993},
+}
+@inproceedings{bothorel2013visualization,
+  author    = {Gwenael Bothorel and
+               Mathieu Serrurier and
+               Christophe Hurter},
+  title     = {Visualization of Frequent Itemsets with Nested Circular Layout and
+               Bundling Algorithm},
+  booktitle = {Proc. ISVC},
+  pages     = {396--405},
+  year      = {2013},
+}
+@inproceedings{song2014visualizer,
+  author    = {Wei Song and
+               Mingyuan Liu},
+  title     = {A Visualizer for High Utility Itemset Mining},
+  booktitle = {Proc. CSE},
+  pages     = {244--248},
+  year      = {2014},
+}
+@article{zhang2010sumaryqueries,
+  author    = {Shichao Zhang and
+               Zhi Jin and
+               Jingli Lu},
+  title     = {Summary queries for frequent itemsets mining},
+  journal   = {Journal of Systems and Software},
+  volume    = {83},
+  number    = {3},
+  pages     = {405--411},
+  year      = {2010},
+}
+% END - ITEMSET
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AUGMENTED
+@incollection{Hochbaum96,
+ author = {Hochbaum, Dorit S.},
+ title = {Approximating Covering and Packing Problems: Set Cover, Vertex Cover, Independent Set, and Related Problems},
+ booktitle = {Approximation Algorithms for {NP}-hard Problems},
+ editor = {Hochbaum, Dorit S.},
+ year = {1997},
+ pages = {94--143},
+ publisher = {PWS Publishing Co.},
+ address = {Boston, MA, USA}
+} 
+@article{DBLP:journals/cacm/StrongLW97,
+  author    = {Diane M. Strong and
+               Yang W. Lee and
+               Richard Y. Wang},
+  title     = {Data Quality in Context},
+  journal   = {Commun. {ACM}},
+  volume    = {40},
+  number    = {5},
+  pages     = {103--110},
+  year      = {1997}
+}
+@article{DBLP:journals/dss/WattsSE09,
+  author    = {Stephanie Watts and
+               Ganesan Shankaranarayanan and
+               Adir Even},
+  title     = {Data quality assessment in context: A cognitive perspective},
+  journal   = {Decis. Support Syst.},
+  volume    = {48},
+  number    = {1},
+  pages     = {202--211},
+  year      = {2009}
+}
+@incollection{DBLP:series/sci/AligonMN13,
+  author    = {Julien Aligon and
+               Patrick Marcel and
+               Elsa Negre},
+  title     = {Summarizing and Querying Logs of {OLAP} Queries},
+  booktitle = {Advances in Knowledge Discovery and Management},
+  volume = {3},
+  pages     = {99--124},
+  editor = {Fabrice Guillet and Bruno Pinaud and Gilles Venturini and Djamel Abdelkader Zighed},
+  year      = {2011},
+  publisher = {Springer},
+}
+@article{DBLP:journals/vldb/GunopulosKTD05,
+  author    = {Dimitrios Gunopulos and
+               George Kollios and
+               Vassilis J. Tsotras and
+               Carlotta Domeniconi},
+  title     = {Selectivity estimators for multidimensional range queries over real
+               attributes},
+  journal   = {{VLDB} J.},
+  volume    = {14},
+  number    = {2},
+  pages     = {137--154},
+  year      = {2005}
+}
+@article{DBLP:journals/corr/abs-1907-03799,
+  author    = {Vincenzo Lomonaco and
+               Davide Maltoni and
+               Lorenzo Pellegrini},
+  title     = {Fine-Grained Continual Learning},
+  journal   = {CoRR},
+  volume    = {abs/1907.03799},
+  year      = {2019},
+  url       = {http://arxiv.org/abs/1907.03799},
+}
+@inproceedings{DBLP:conf/vldb/PoosalaI97,
+  author    = {Viswanath Poosala and
+               Yannis E. Ioannidis},
+  title     = {Selectivity Estimation Without the Attribute Value Independence Assumption},
+  booktitle = {Proc. VLDB}, 
+  address = {Athens, Greece},
+  pages     = {486--495},
+  year      = {1997}
+}
+@incollection{DBLP:series/lncs/ChandlerMK18,
+  author    = {Tom Chandler and
+               Thomas Morgan and
+               Torsten Wolfgang Kuhlen},
+  title     = {Exploring Immersive Analytics for Built Environments},
+  booktitle = {Immersive Analytics},
+  series    = {LNCS},
+  volume    = {11190},
+  publisher = {Springer},
+  editor    = {Kim Marriott and others},
+  pages     = {331--357},
+  year      = {2018}
+}
+@inproceedings{DBLP:conf/kdd/PanCTYZ03,
+	author    = {Feng Pan and
+	Gao Cong and
+	Anthony K. H. Tung and
+	Jiong Yang and
+	Mohammed Javeed Zaki},
+	title     = {Carpenter: finding closed patterns in long biological datasets},
+	booktitle = {Proc. KDD}, 
+	address = {Washington DC, USA},
+	pages     = {637--642},
+	year      = {2003}
+}
+@article{DBLP:journals/tvcg/SicatLCCJBP19,
+	author    = {Ronell Sicat and
+	Jiabao Li and
+	Junyoung Choi and
+	Maxime Cordeil and
+	Won{-}Ki Jeong and
+	Benjamin Bach and
+	Hanspeter Pfister},
+	title     = {{DXR:} A Toolkit for Building Immersive Data Visualizations},
+	journal   = {{IEEE} Trans. Vis. Comput. Graph.},
+	volume    = {25},
+	number    = {1},
+	pages     = {715--725},
+	year      = {2019}
+}
+@article{DBLP:journals/dagstuhl-reports/DwyerRKST16,
+	author    = {Tim Dwyer and
+	Nathalie Henry Riche and
+	Karsten Klein and
+	Wolfgang Stuerzlinger and
+	Bruce H. Thomas},
+	title     = {Immersive Analytics},
+	journal   = {Dagstuhl Reports},
+	volume    = {6},
+	number    = {6},
+	pages     = {1--9},
+	year      = {2016}
+}
+@article{DBLP:journals/dagstuhl-reports/BullingCKR16,
+	author    = {Andreas Bulling and
+	Ozan Cakmakci and
+	Kai Kunze and
+	James M. Rehg},
+	title     = {Eyewear Computing - Augmenting the Human with Head-mounted Wearable
+	Assistants},
+	journal   = {Dagstuhl Reports},
+	volume    = {6},
+	number    = {1},
+	pages     = {160--206},
+	year      = {2016}
+}
+@incollection{DBLP:series/lncs/CzaudernaHKK0KOSS18,
+	author    = {Tobias Czauderna and
+	Jason Haga and
+	Jinman Kim and
+	Matthias Klapperst{\"{u}}ck and
+	Karsten Klein and
+	Torsten W. Kuhlen and
+	Steffen Oeltze{-}Jafra and
+	Bj{\"{o}}rn Sommer and
+	Falk Schreiber},
+	title     = {Immersive Analytics Applications in Life and Health Sciences},
+	booktitle = {Immersive Analytics},
+  series    = {LNCS},
+  volume    = {11190},
+  publisher = {Springer},
+  editor    = {Kim Marriott and others},
+	pages     = {289--330},
+	year      = {2018}
+}
+@inproceedings{DBLP:conf/avi/HubeM18,
+	author    = {Natalie Hube and
+	Mathias M{\"{u}}ller},
+	title     = {The Data in Your Hands: Exploring Novel Interaction Techniques and
+	Data Visualization Approaches for Immersive Data Analytics},
+	booktitle = {Proc. VisBIA},
+	address = {Castiglione della Pescaia, Italy},
+	pages     = {12--21},
+	year      = {2018}
+}
+@inproceedings{DBLP:conf/eccv/SuG16,
+	author    = {Yu{-}Chuan Su and
+	Kristen Grauman},
+	title     = {Detecting Engagement in Egocentric Video},
+	booktitle = {Proc. ECCV}, 
+	adress = {Amsterdam,
+	The Netherlands},
+	pages     = {454--471},
+	year      = {2016},
+}
+@book{roberts2009applied,
+  title={Applied combinatorics},
+  author={Roberts, Fred and Tesman, Barry},
+  year={2009},
+  publisher={Chapman and Hall/CRC}
+}
+% END - AUGMENTED
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONVERSATIONAL
+@article{DBLP:journals/ijcis/GolfarelliMR98,
+  author    = {Matteo Golfarelli and
+               Dario Maio and
+               Stefano Rizzi},
+  title     = {The Dimensional Fact Model: {A} Conceptual Model for Data Warehouses},
+  journal   = {Int. J. Cooperative Inf. Syst.},
+  volume    = {7},
+  number    = {2-3},
+  pages     = {215--247},
+  year      = {1998}
+}
+@article{DBLP:journals/siamcomp/Tarjan72,
+  author    = {Robert Endre Tarjan},
+  title     = {Depth-First Search and Linear Graph Algorithms},
+  journal   = {{SIAM} J. Comput.},
+  volume    = {1},
+  number    = {2},
+  pages     = {146--160},
+  year      = {1972}
+}
+@article{BlunschiJKMS12,
+  author    = {Lukas Blunschi and
+               Claudio Jossen and
+               Donald Kossmann and
+               Magdalini Mori and
+               Kurt Stockinger},
+  title     = {{SODA:} Generating {SQL} for Business Users},
+  journal   = {Proc. {VLDB}},
+  volume    = {5},
+  number    = {10},
+  pages     = {932--943},
+  year      = {2012}
+}
+@article{AffolterSB19,
+  author    = {Katrin Affolter and
+               Kurt Stockinger and
+               Abraham Bernstein},
+  title     = {A comparative survey of recent natural language interfaces for databases},
+  journal   = {{VLDB} J.},
+  volume    = {28},
+  number    = {5},
+  pages     = {793--819},
+  year      = {2019},
+}
+@article{DBLP:journals/cacm/Miller95,
+  author    = {George A. Miller},
+  title     = {WordNet: {A} Lexical Database for English},
+  journal   = {Commun. {ACM}},
+  volume    = {38},
+  number    = {11},
+  pages     = {39--41},
+  year      = {1995}
+}
+@article{DBLP:journals/siamcomp/ZhangS89,
+  author    = {Kaizhong Zhang and
+               Dennis E. Shasha},
+  title     = {Simple Fast Algorithms for the Editing Distance Between Trees and
+               Related Problems},
+  journal   = {{SIAM} J. Comput.},
+  volume    = {18},
+  number    = {6},
+  pages     = {1245--1262},
+  year      = {1989}
+}
+@article{DBLP:journals/is/DrushkuALMP19,
+  author    = {Krista Drushku and
+               Julien Aligon and
+               Nicolas Labroche and
+               Patrick Marcel and
+               Ver{\'{o}}nika Peralta},
+  title     = {Interest-based recommendations for business intelligence users},
+  journal   = {Inf. Syst.},
+  volume    = {86},
+  pages     = {79--93},
+  year      = {2019}
+}
+@inproceedings{DBLP:conf/rcis/Kuchmann-BeaugerBA13,
+  author    = {Nicolas Kuchmann{-}Beauger and
+               Falk Brauer and
+               Marie{-}Aude Aufaure},
+  title     = {{QUASL:} {A} framework for question answering and its Application
+               to business intelligence},
+  booktitle = {Proc. {RCIS}},
+  pages     = {1--12},
+  publisher = {{IEEE}},
+  year      = {2013}
+}
+@inproceedings{DBLP:conf/sigmod/LyonsTBCK16,
+  author    = {Gabriel Lyons and
+               Vinh Tran and
+               Carsten Binnig and
+               Ugur {\c{C}}etintemel and
+               Tim Kraska},
+  title     = {Making the Case for Query-by-Voice with EchoQuery},
+  address   = {New York, NY, USA},
+  booktitle = {Proc. {SIGMOD}},
+  pages     = {2129--2132},
+  publisher = {{ACM}},
+  year      = {2016}
+}
+@article{DBLP:journals/jacm/Beatty82,
+  author    = {John C. Beatty},
+  title     = {On the relationship between {LL(1)} and {LR(1)} grammars},
+  journal   = {J. {ACM}},
+  volume    = {29},
+  number    = {4},
+  pages     = {1007--1022},
+  year      = {1982}
+}
+@inproceedings{etcheverry2012qb4olap,
+  author    = {Lorena Etcheverry and
+               Alejandro A. Vaisman},
+  title     = {{QB4OLAP:} {A} Vocabulary for {OLAP} Cubes on the Semantic Web},
+  booktitle = {Proc. {COLD}},
+  series    = {{CEUR} Workshop Proceedings},
+  volume    = {905},
+  publisher = {CEUR-WS.org},
+  address = {Aachen, DEU},
+  year      = {2012}
+}
+@inproceedings{DBLP:conf/wsdm/GuhaGRS15,
+  author    = {Ramanathan V. Guha and
+               Vineet Gupta and
+               Vivek Raghunathan and
+               Ramakrishnan Srikant},
+  title     = {User Modeling for a Personal Assistant},
+  address = {New York, NY, USA},
+  booktitle = {Proc. {WSDM}},
+  pages     = {275--284},
+  publisher = {{ACM}},
+  year      = {2015}
+}
+@inproceedings{DBLP:conf/vldb/GuptaHQ95,
+  author    = {Ashish Gupta and
+               Venky Harinarayan and
+               Dallan Quass},
+  title     = {Aggregate-Query Processing in Data Warehousing Environments},
+  booktitle = {Proc. {VLDB}},
+  pages     = {358--369},
+  address   = {San Francisco, CA, USA},
+  publisher = {Morgan Kaufmann},
+  year      = {1995}
+}
+@article{DBLP:journals/corr/abs-1906-02287,
+  author    = {Radwa El Shawi and
+               Mohamed Maher and
+               Sherif Sakr},
+  title     = {Automated Machine Learning: State-of-The-Art and Open Challenges},
+  journal   = {CoRR},
+  volume    = {abs/1906.02287},
+  year      = {2019},
+}
+@inproceedings{DBLP:conf/acl/ManningSBFBM14,
+  author    = {Christopher D. Manning and
+               Mihai Surdeanu and
+               John Bauer and
+               Jenny Rose Finkel and
+               Steven Bethard and
+               David McClosky},
+  title     = {The Stanford CoreNLP Natural Language Processing Toolkit},
+  booktitle = {{ACL} (System Demonstrations)},
+  address = "Baltimore, Maryland",
+  pages     = {55--60},
+  publisher = {The Association for Computer Linguistics},
+  year      = {2014}
+}
+@inproceedings{DBLP:conf/sigmod/TrummerWM19,
+  author    = {Immanuel Trummer and
+               Yicheng Wang and
+               Saketh Mahankali},
+  title     = {A Holistic Approach for Query Evaluation and Result Vocalization in Voice-Based {OLAP}},
+  booktitle = {Proc. {SIGMOD}},
+  address   = {Amsterdam, The Netherlands},
+  pages     = {936--953},
+  year      = {2019},
+  publisher = {{ACM}},
+}
+@inproceedings{DBLP:conf/aaai/SahaKS18,
+  author    = {Amrita Saha and
+               Mitesh M. Khapra and
+               Karthik Sankaranarayanan},
+  title     = {Towards Building Large Scale Multimodal Domain-Aware Conversation
+               Systems},
+  booktitle = {Proc. {AAAI}},
+  pages     = {696--704},
+  publisher = {{AAAI} Press},
+  year      = {2018}
+}
+@inproceedings{DBLP:conf/sigmod/SenOQSMJLSS19,
+  author    = {Jaydeep Sen and
+               Fatma Ozcan and
+               Abdul Quamar and
+               Greg Stager and
+               Ashish R. Mittal and
+               Manasa Jammi and
+               Chuan Lei and
+               Diptikalyan Saha and
+               Karthik Sankaranarayanan},
+  title     = {Natural Language Querying of Complex Business Intelligence Queries},
+  booktitle = {Proc. {SIGMOD}},
+  address   = {Amsterdam, The Netherlands},
+  pages     = {1997--2000},
+  publisher = {{ACM}},
+  year      = {2019}
+}
+@article{DBLP:journals/sigmod/LiJ16,
+  author    = {Fei Li and
+               H. V. Jagadish},
+  title     = {Understanding Natural Language Queries over Relational Databases},
+  journal   = {{SIGMOD} Record},
+  volume    = {45},
+  number    = {1},
+  pages     = {6--13},
+  year      = {2016}
+}
+@inproceedings{DBLP:conf/iui/DhamdhereMNSY17,
+  author    = {Kedar Dhamdhere and
+               Kevin S. McCurley and
+               Ralfi Nahmias and
+               Mukund Sundararajan and
+               Qiqi Yan},
+  title     = {Analyza: Exploring Data with Conversation},
+  booktitle = {Proc. {IUI}},
+  pages     = {493--504},
+  address = {New York, NY, USA},
+  publisher = {{ACM}},
+  year      = {2017}
+}
+@article{DBLP:journals/pvldb/SahaFSMMO16,
+  author    = {Diptikalyan Saha and
+               Avrilia Floratou and
+               Karthik Sankaranarayanan and
+               Umar Farooq Minhas and
+               Ashish R. Mittal and
+               Fatma {\"{O}}zcan},
+  title     = {{ATHENA:} An Ontology-Driven System for Natural Language Querying
+               over Relational Data Stores},
+  journal   = {Proc. {VLDB}},
+  volume    = {9},
+  number    = {12},
+  pages     = {1209--1220},
+  year      = {2016},
+}
+@misc{Gartner2018,
+  title     = {Hype Cycle for Artificial Intelligence, 2018},
+  howpublished = {\url{http://www.gartner.com/en/documents/3883863/hype-cycle-for-artificial-intelligence-2018}},
+  note = {[Online; accessed 21-June-2019]},
+  year      = {2018},
+  author    = {Kenneth Brant and Svetlana Sicular}
+}
+@article{DBLP:journals/pacmpl/Yaghmazadeh0DD17,
+  author    = {Navid Yaghmazadeh and
+               Yuepeng Wang and
+               Isil Dillig and
+               Thomas Dillig},
+  title     = {SQLizer: query synthesis from natural language},
+  journal   = {{PACMPL}},
+  volume    = {1},
+  number    = {{OOPSLA}},
+  pages     = {63:1--63:26},
+  year      = {2017}
+}
+@misc{Indyco,
+  author    = {{iConsulting S.p.A.}},
+  title = {Indyco wewb site},
+  howpublished = {\url{https://www.indyco.com/}},
+  note = {[Online; accessed 21-June-2019]},
+  year      = {2020}
+}
+% END - CONVERSATIONAL
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DESCRIBE
+@inproceedings{DBLP:conf/ictai/SalvadorC04,
+  author    = {Stan Salvador and
+               Philip Chan},
+  title     = {Determining the Number of Clusters/Segments in Hierarchical Clustering/Segmentation
+               Algorithms},
+  booktitle = {Proc. ICTAI},
+  pages     = {576--584},
+  year      = {2004}
+}
+@inproceedings{DBLP:conf/icdcsw/SatopaaAIR11,
+  author    = {Ville Satopaa and
+               Jeannie R. Albrecht and
+               David E. Irwin and
+               Barath Raghavan},
+  title     = {Finding a "Kneedle" in a Haystack: Detecting Knee Points in System
+               Behavior},
+  booktitle = {Proc. ICDCS},
+  pages     = {166--171},
+  year      = {2011}
+}
+@article{DBLP:journals/sigkdd/Raedt02,
+  author    = {Luc De Raedt},
+  title     = {A Perspective on Inductive Databases},
+  journal   = {{SIGKDD} Explorations},
+  volume    = {4},
+  number    = {2},
+  pages     = {69--77},
+  year      = {2002}
+}
+@inproceedings{DBLP:conf/ds/Han97,
+  author    = {Jiawei Han},
+  title     = {{OLAP} Mining: Integration of {OLAP} with Data Mining},
+  booktitle = {Proc. Working Conf. on Database Semantics},
+  year      = {1997},
+  pages     = {3-20}
+}
+@book{Abe08,
+	Author = {Andrew Abela},
+	Title = {Advanced presentations by design},
+	publisher = {Pfeiffer},
+	year = {2008}
+}
+@book{Bor15,
+	Author = {Katy B\"orner},
+	Title = {Atlas of knowledge: anyone can map},
+	publisher = {MIT Press},
+	year = {2015}
+}
+@inproceedings{DBLP:conf/dolap/ChansonCDLM19,
+  author    = {Alexandre Chanson and
+               Ben Crulis and
+               Krista Drushku and
+               Nicolas Labroche and
+               Patrick Marcel},
+  title     = {Profiling User Belief in {BI} Exploration for Measuring Subjective
+               Interestingness},
+  booktitle = {Proc. DOLAP},
+  year      = {2019}
+}
+@article{DBLP:journals/ivs/GolfarelliR20,
+  author    = {Matteo Golfarelli and
+               Stefano Rizzi},
+  title     = {A model-driven approach to automate data visualization in big data
+               analytics},
+  journal   = {Information Visualization},
+  volume    = {19},
+  number    = {1},
+  year      = {2020}
+}
+% %%%%%%%%%%%%%%%
+% NEW PAPERS FROM THE REVIEWS
+% %%%%%%%%%%%%%%%
+@inproceedings{DBLP:conf/dexa/BentayebF09,
+  author    = {Fadila Bentayeb and
+               C{\'{e}}cile Favre},
+  title     = {{RoK}: Roll-Up with the K-Means Clustering Method for Recommending {OLAP}
+               Queries},
+  booktitle = {Proc. DEXA},
+  pages     = {501--515},
+  year      = {2009}
+}
+@inproceedings{DBLP:conf/sigmod/DeshpandeM06,
+  author    = {Amol Deshpande and
+               Samuel Madden},
+  title     = {{MauveDB}: supporting model-based user views in database systems},
+  booktitle = {Proc. SIGMOD},
+  pages     = {73--84},
+  year      = {2006}
+}
+@inproceedings{DBLP:conf/vldb/ChenCLR05,
+  author    = {Bee{-}Chung Chen and
+               Lei Chen and
+               Yi Lin and
+               Raghu Ramakrishnan},
+  title     = {Prediction Cubes},
+  booktitle = {Proc. VLDB},
+  pages     = {982--993},
+  year      = {2005}
+}
+@incollection{DBLP:series/anis/Pedersen09,
+  author    = {Torben Bach Pedersen},
+  editor    = {Stanislaw Kozielski and
+               Robert Wrembel},
+  title     = {Warehousing The World: {A} Vision for Data Warehouse Research},
+  booktitle = {New Trends in Data Warehousing and Data Analysis},
+  series    = {Annals of Information Systems},
+  volume    = {3},
+  pages     = {1--17},
+  publisher = {Springer},
+  year      = {2009}
+}
+@article{DBLP:journals/pvldb/Kraska18,
+  author    = {Tim Kraska},
+  title     = {Northstar: An Interactive Data Science System},
+  journal   = {Proc. {VLDB}},
+  volume    = {11},
+  number    = {12},
+  pages     = {2150--2164},
+  year      = {2018}
+}
+% %%%%%%%%%%%%%%%
+%Intensional Query Answering
+% %%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%
+%Traditional OLAP
+% %%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%
+%Advanced OLAP
+% %%%%%%%%%%%%%%%
+@inproceedings{DBLP:conf/vldb/SatheS01,
+	author    = {Gayatri Sathe and
+	Sunita Sarawagi},
+	title     = {Intelligent Rollups in Multidimensional {OLAP} Data},
+	booktitle = {Proc. VLDB},
+	year      = {2001},
+	pages     = {531--540}
+}
+@inproceedings{DBLP:conf/vldb/Sarawagi99,
+	author    = {Sunita Sarawagi},
+	title     = {Explaining Differences in Multidimensional Aggregates},
+	booktitle = {Proc. VLDB},
+year      = {1999},
+	pages     = {42--53}
+}
+@article{DBLP:journals/dke/GolfarelliGR14,
+	author    = {Matteo Golfarelli and
+	Simone Graziani and
+	Stefano Rizzi},
+	title     = {Shrink: An {OLAP} operation for balancing precision and size of pivot
+	tables},
+	journal   = {Data Knowl. Eng.},
+	volume    = {93},
+	pages     = {19--41},
+	year      = {2014}
+}
+% %%%%%%%%%%%%%%%
+% Interestingness
+% %%%%%%%%%%%%%%%
+@inproceedings{DBLP:conf/ida/Bie13,
+  author    = {Tijl De Bie},
+  title     = {Subjective Interestingness in Exploratory Data Mining},
+  booktitle = {Proc. IDA},
+  pages     = {19--31},
+  year      = {2013}
+}
+% %%%%%%%%%%%%%%%
+% Patterns and inductive databases
+% %%%%%%%%%%%%%%%
+@article{DBLP:conf/ssdbm/TerrovitisVSBCM04,
+	author    = {Manolis Terrovitis and
+	Panos Vassiliadis and
+	Spiros Skiadopoulos and
+	Elisa Bertino and
+	Barbara Catania and
+	Anna Maddalena and
+	Stefano Rizzi},
+	title     = {Modeling and language support for the management of pattern-bases},
+	journal   = {Data Knowl. Eng.},
+	volume    = {62},
+	number    = {2},
+	pages     = {368--397},
+	year      = {2007}
+}
+% %%%%%%%%%%%%%%%
+% Intensional query answering
+% %%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%
+% Educational principles for operators' foundation
+% %%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%
+%OLAP Benchmarks & Data sets
+% %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%
+% MISC MISC MISC
+% %%%%%%%%%%%%%%%
+% END - DESCRIBE
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Map matching
+@inproceedings{DBLP:conf/nips/ChuKLYBNO06,
+  author    = {Cheng{-}Tao Chu and
+               Sang Kyun Kim and
+               Yi{-}An Lin and
+               YuanYuan Yu and
+               Gary R. Bradski and
+               Andrew Y. Ng and
+               Kunle Olukotun},
+  title     = {Map-Reduce for Machine Learning on Multicore},
+  booktitle = {Proc. {NIPS}},
+  pages     = {281--288},
+  publisher = {{MIT} Press},
+  year      = {2006}
+}
+@article{forney1973viterbi,
+    title={The viterbi algorithm},
+    author={Forney, G David},
+    journal={Proc. of the IEEE},
+    volume={61},
+    number={3},
+    pages={268--278},
+    year={1973},
+    publisher={IEEE}
+}
+@inproceedings{DBLP:conf/itsc/AlmeidaLMM16,
+  author    = {Antonio M. R. Almeida and
+               Maria I. V. Lima and
+               Jos{\'{e}} Ant{\^{o}}nio Fernandes de Mac{\^{e}}do and
+               Javam C. Machado},
+  title     = {{DMM:} {A} distributed map-matching algorithm using the MapReduce
+               paradigm},
+  booktitle = {Proc. {ITSC}},
+  address   = {Rio de Janeiro},
+  pages     = {1706--1711},
+  year      = {2016}
+}
+@article{peixoto2018framework,
+  author    = {Douglas Alves Peixoto and
+               Nguyen Quoc Viet Hung and
+               Bolong Zheng and
+               Xiaofang Zhou},
+  title     = {A framework for parallel map-matching at scale using Spark},
+  journal   = {Distributed Parallel Databases},
+  volume    = {37},
+  number    = {4},
+  pages     = {697--720},
+  year      = {2019}
+}
+@article{DBLP:journals/cacm/DeanG08,
+  author    = {Jeffrey Dean and
+               Sanjay Ghemawat},
+  title     = {MapReduce: simplified data processing on large clusters},
+  journal   = {Commun. {ACM}},
+  volume    = {51},
+  number    = {1},
+  pages     = {107--113},
+  year      = {2008}
+}
+@inproceedings{DBLP:conf/itsc/GohDMAOJ12,
+  author    = {Chong Yang Goh and
+               Justin Dauwels and
+               Nikola Mitrovic and
+               Muhammad Tayyab Asif and
+               Ali Oran and
+               Patrick Jaillet},
+  title     = {Online map-matching based on Hidden Markov model for real-time traffic
+               sensing applications},
+  booktitle = {Proc. {ITSC}},
+  address   = {Anchorage, AK, USA},
+  pages     = {776--781},
+  year      = {2012}
+}
+@inproceedings{DBLP:conf/icdcs/HanLO12,
+  author    = {Binh Han and
+               Ling Liu and
+               Edward Omiecinski},
+  title     = {{NEAT:} Road Network Aware Trajectory Clustering},
+  booktitle = {Proc. {ICDCS}},
+  address   = {Macau, China},
+  pages     = {142--151},
+  year      = {2012},
+}
+@article{DBLP:journals/tkde/LeeHLC11,
+  author    = {Jae{-}Gil Lee and
+               Jiawei Han and
+               Xiaolei Li and
+               Hong Cheng},
+  title     = {Mining Discriminative Patterns for Classifying Trajectories on Road
+               Networks},
+  journal   = {{IEEE} Trans. Knowl. Data Eng.},
+  volume    = {23},
+  number    = {5},
+  pages     = {713--726},
+  year      = {2011}
+}
+@inproceedings{DBLP:conf/gis/LouZZXWH09,
+  author    = {Yin Lou and
+               Chengyang Zhang and
+               Yu Zheng and
+               Xing Xie and
+               Wei Wang and
+               Yan Huang},
+  title     = {Map-matching for low-sampling-rate {GPS} trajectories},
+  booktitle = {Proc. {GIS}},
+  pages     = {352--361},
+  address   = {Seattle, Washington, USA},
+  publisher = {{ACM}},
+  year      = {2009}
+}
+@article{DBLP:journals/ijgi/LuoCX17,
+  author    = {An Luo and
+               Shenghua Chen and
+               Bin Xv},
+  title     = {Enhanced Map-Matching Algorithm with a Hidden Markov Model for Mobile
+               Phone Positioning},
+  journal   = {{ISPRS} Int. J. Geo-Inform.},
+  volume    = {6},
+  number    = {11},
+  pages     = {327},
+  year      = {2017}
+}
+@inproceedings{DBLP:conf/nsdi/ZahariaCDDMMFSS12,
+  author    = {Matei Zaharia and
+               Mosharaf Chowdhury and
+               Tathagata Das and
+               Ankur Dave and
+               Justin Ma and
+               Murphy McCauly and
+               Michael J. Franklin and
+               Scott Shenker and
+               Ion Stoica},
+  title     = {Resilient Distributed Datasets: {A} Fault-Tolerant Abstraction for
+               In-Memory Cluster Computing},
+  booktitle = {Proc. {NSDI}}, 
+  address   = {San Jose, CA, USA},
+  pages     = {15--28},
+  year      = {2012}
+}
+@inproceedings{DBLP:conf/kdd/MonrealePTG09,
+  author    = {Anna Monreale and
+               Fabio Pinelli and
+               Roberto Trasarti and
+               Fosca Giannotti},
+  title     = {WhereNext: a location predictor on trajectory pattern mining},
+  booktitle = {Proc. {KDD}},
+  address   = {Paris, France},
+  pages     = {637--646},
+  year      = {2009}
+}
+@inproceedings{DBLP:conf/gis/NewsonK09,
+  author    = {Paul Newson and
+               John Krumm},
+  title     = {Hidden Markov map matching through noise and sparseness},
+  booktitle = {Proc. {GIS}},
+  address   = {Seattle, Washington, USA},
+  pages     = {336--343},
+  year      = {2009}
+}
+@inproceedings{DBLP:conf/icde/YouZG15,
+  author    = {Simin You and
+               Jianting Zhang and
+               Le Gruenwald},
+  title     = {Large-scale spatial join query processing in Cloud},
+  booktitle = {Proc. {ICDE} Workshops},
+  address   = {Seoul, South Korea},
+  pages     = {34--41},
+  year      = {2015}
+}
+@article{yu2018spatial,
+  title={Spatial data management in apache spark: the GeoSpark perspective and beyond},
+  author={Yu, Jia and Zhang, Zongsi and Sarwat, Mohamed},
+  journal={GeoInformatica},
+  pages={1--42},
+  year={2018},
+  publisher={Springer}
+}
+@inproceedings{DBLP:conf/bigdataconf/ZeidanLZNTV18,
+  author    = {Ayman Zeidan and
+               Eemil Lagerspetz and
+               Kai Zhao and
+               Petteri Nurmi and
+               Sasu Tarkoma and
+               Huy T. Vo},
+  title     = {GeoMatch: Efficient Large-Scale Map Matching on Apache Spark},
+  booktitle = {Proc. {BigData}},
+  address   = {Seattle, WA, USA},
+  pages     = {384--391},
+  year      = {2018},
+}
+@article{DBLP:journals/tist/Zheng15,
+  author    = {Yu Zheng},
+  title     = {Trajectory Data Mining: An Overview},
+  journal   = {{ACM} Trans. Intell. Syst. Technol.},
+  volume    = {6},
+  number    = {3},
+  pages     = {29:1--29:41},
+  year      = {2015},
+}
+@article{eddy1996hidden,
+  title={Hidden markov models},
+  author={Eddy, Sean R},
+  journal={Current opinion in structural biology},
+  volume={6},
+  number={3},
+  pages={361--365},
+  year={1996},
+  publisher={Elsevier}
+}
+@book{DBLP:books/daglib/0023820,
+  author    = {Stuart J. Russell and
+               Peter Norvig},
+  title     = {Artificial Intelligence - {A} Modern Approach {(3.} internat. ed.)},
+  publisher = {Pearson Education},
+  year      = {2010},
+  isbn      = {978-0-13-207148-2}
+}
+@inproceedings{DBLP:conf/afips/Amdahl67,
+  author    = {Gene M. Amdahl},
+  title     = {Validity of the single processor approach to achieving large scale
+               computing capabilities},
+  booktitle = {Proc. {AFIPS}},
+  address   = {Atlantic City, New Jersey, {USA}},
+  pages     = {483--485},
+  year      = {1967}
+}
+% END - Map matching
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% VACCINI
+@article{larson2016state,
+  title={The state of vaccine confidence 2016: global insights through a 67-country survey},
+  author={Larson, Heidi J and de Figueiredo, Alexandre and Xiahong, Zhao and Schulz, William S and Verger, Pierre and Johnston, Iain G and Cook, Alex R and Jones, Nick S},
+  journal={EBioMedicine},
+  volume={12},
+  pages={295--301},
+  year={2016},
+  publisher={Elsevier}
+}
+
+@article{bonhoeffer2007adverse,
+  title={Adverse events following immunization: perception and evidence},
+  author={Bonhoeffer, Jan and Heininger, Ulrich},
+  journal={Current opinion in infectious diseases},
+  volume={20},
+  number={3},
+  pages={237--246},
+  year={2007},
+  publisher={LWW}
+}
+
+@article{wolfe2002anti,
+  title={Anti-vaccinationists past and present},
+  author={Wolfe, Robert M and Sharp, Lisa K},
+  journal={BMJ: British Medical Journal},
+  volume={325},
+  number={7361},
+  pages={430},
+  year={2002},
+  publisher={BMJ Publishing Group}
+}
+
+@article{chen1999vaccine,
+  title={Vaccine risks: real, perceived and unknown},
+  author={Chen, Robert T},
+  journal={Vaccine},
+  volume={17},
+  pages={S41--S46},
+  year={1999},
+  publisher={Elsevier}
+}
+
+@article{surian2016characterizing,
+  title={Characterizing Twitter discussions about HPV vaccines using topic modeling and community detection},
+  author={Surian, Didi and Nguyen, Dat Quoc and Kennedy, Georgina and Johnson, Mark and Coiera, Enrico and Dunn, Adam G},
+  journal={Journal of medical Internet research},
+  volume={18},
+  number={8},
+  year={2016},
+  publisher={JMIR Publications Inc.}
+}
+
+@article{rosvall2008maps,
+  title={Maps of random walks on complex networks reveal community structure},
+  author={Rosvall, Martin and Bergstrom, Carl T},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={105},
+  number={4},
+  pages={1118--1123},
+  year={2008},
+  publisher={National Acad Sciences}
+}
+
+@article{blondel2008fast,
+  title={Fast unfolding of communities in large networks},
+  author={Blondel, Vincent D and Guillaume, Jean-Loup and Lambiotte, Renaud and Lefebvre, Etienne},
+  journal={Journal of statistical mechanics: theory and experiment},
+  volume={2008},
+  number={10},
+  pages={P10008},
+  year={2008},
+  publisher={IOP Publishing}
+}
+
+@article{kang2017semantic,
+  title={Semantic network analysis of vaccine sentiment in online social media},
+  author={Kang, Gloria J and Ewing-Nelson, Sinclair R and Mackey, Lauren and Schlitt, James T and Marathe, Achla and Abbas, Kaja M and Swarup, Samarth},
+  journal={Vaccine},
+  volume={35},
+  number={29},
+  pages={3621--3638},
+  year={2017},
+  publisher={Elsevier}
+}
+
+@article{salathe2011assessing,
+  title={Assessing vaccination sentiments with online social media: implications for infectious disease dynamics and control},
+  author={Salath{\'e}, Marcel and Khandelwal, Shashank},
+  journal={PLoS computational biology},
+  volume={7},
+  number={10},
+  pages={e1002199},
+  year={2011},
+  publisher={Public Library of Science}
+}
+
+@article{reichardt2006statistical,
+  title={Statistical mechanics of community detection},
+  author={Reichardt, J{\"o}rg and Bornholdt, Stefan},
+  journal={Physical Review E},
+  volume={74},
+  number={1},
+  pages={016110},
+  year={2006},
+  publisher={APS}
+}
+
+@article{bello2017detecting,
+  title={Detecting discussion communities on vaccination in twitter},
+  author={Bello-Orgaz, Gema and Hernandez-Castro, Julio and Camacho, David},
+  journal={Future Generation Computer Systems},
+  volume={66},
+  pages={125--136},
+  year={2017},
+  publisher={Elsevier}
+}
+
+@inproceedings{d2017monitoring,
+  title={Monitoring negative opinion about vaccines from tweets analysis},
+  author={D'Andrea, Eleonora and Ducange, Pietro and Marcelloni, Francesco},
+  booktitle={Proc. {ICRCICN}},
+  pages={186--191},
+  year={2017},
+  organization={IEEE}
+}
+@phdthesis{kadam2017understanding,
+  title={Understanding Vaccination Attitudes and Detecting Sentiment Stimulus in Online Social Media},
+  author={Kadam, Mayuri},
+  year={2017},
+  school={Illinois Institute of Technology}
+}
+
+@inproceedings{yuan2018examining,
+  author    = {Xiaoyi Yuan and
+               Andrew T. Crooks},
+  title     = {Examining Online Vaccination Discussion and Communities in Twitter},
+  booktitle = {Proc. {SMS}ociety},
+  pages     = {197--206},
+  publisher = {{ACM}},
+  year      = {2018}
+}
+@article{dunn2015associations,
+  title={Associations between exposure to and expression of negative opinions about human papillomavirus vaccines on social media: an observational study},
+  author={Dunn, Adam G and Leask, Julie and Zhou, Xujuan and Mandl, Kenneth D and Coiera, Enrico},
+  journal={Journal of medical Internet research},
+  volume={17},
+  number={6},
+  year={2015},
+  publisher={JMIR Publications Inc.}
+}
+@inproceedings{mitra2016understanding,
+  title={Understanding Anti-Vaccination Attitudes in Social Media.},
+  author={Mitra, Tanushree and Counts, Scott and Pennebaker, James W},
+  booktitle={Proc. {ICWSM}},
+  pages={269--278},
+  year={2016}
+}
+@inproceedings{yom2014information,
+  title={Information is in the eye of the beholder: Seeking information on the MMR vaccine through an Internet search engine},
+  author={Yom-Tov, Elad and Fernandez-Luque, Luis},
+  booktitle={Proc. {AMIA} Annual Symposium},
+  volume={2014},
+  pages={1238},
+  year={2014},
+  organization={American Medical Informatics Association}
+}
+@article{larson2013measuring,
+  title={Measuring vaccine confidence: analysis of data obtained by a media surveillance system used to analyse public concerns about vaccines},
+  author={Larson, Heidi J and Smith, David MD and Paterson, Pauline and Cumming, Melissa and Eckersberger, Elisabeth and Freifeld, Clark C and Ghinai, Isaac and Jarrett, Caitlin and Paushter, Louisa and Brownstein, John S and others},
+  journal={The Lancet infectious diseases},
+  volume={13},
+  number={7},
+  pages={606--613},
+  year={2013},
+  publisher={Elsevier}
+}
+@article{radzikowski2016measles,
+  title={The measles vaccination narrative in Twitter: a quantitative analysis},
+  author={Radzikowski, Jacek and Stefanidis, Anthony and Jacobsen, Kathryn H and Croitoru, Arie and Crooks, Andrew and Delamater, Paul L},
+  journal={JMIR public health and surveillance},
+  volume={2},
+  number={1},
+  year={2016},
+  publisher={JMIR Publications Inc.}
+}
+@article{tausczik2010psychological,
+  title={The psychological meaning of words: LIWC and computerized text analysis methods},
+  author={Tausczik, Yla R and Pennebaker, James W},
+  journal={Journal of language and social psychology},
+  volume={29},
+  number={1},
+  pages={24--54},
+  year={2010},
+  publisher={Sage Publications Sage CA: Los Angeles, CA}
+}
+@article{chung2008revealing,
+  title={Revealing dimensions of thinking in open-ended self-descriptions: An automated meaning extraction method for natural language},
+  author={Chung, Cindy K and Pennebaker, James W},
+  journal={Journal of research in personality},
+  volume={42},
+  number={1},
+  pages={96--132},
+  year={2008},
+  publisher={Elsevier}
+}
+@article{blei2003latent,
+  title={Latent dirichlet allocation},
+  author={Blei, David M and Ng, Andrew Y and Jordan, Michael I},
+  journal={Journal of machine Learning research},
+  volume={3},
+  number={Jan},
+  pages={993--1022},
+  year={2003}
+}
+@article{nigam2000text,
+  title={Text classification from labeled and unlabeled documents using EM},
+  author={Nigam, Kamal and McCallum, Andrew Kachites and Thrun, Sebastian and Mitchell, Tom},
+  journal={Machine learning},
+  volume={39},
+  number={2-3},
+  pages={103--134},
+  year={2000},
+  publisher={Springer}
+}
+@article{clauset2004finding,
+  title={Finding community structure in very large networks},
+  author={Clauset, Aaron and Newman, Mark EJ and Moore, Cristopher},
+  journal={Physical review E},
+  volume={70},
+  number={6},
+  pages={066111},
+  year={2004},
+  publisher={APS}
+}
+@article{al2018exploring,
+  title={Exploring visual impairment awareness campaigns on Twitter},
+  author={Al Zayer, Majed and Gunes, Mehmet Hadi},
+  journal={Social Network Analysis and Mining},
+  volume={8},
+  number={1},
+  pages={40},
+  year={2018},
+  publisher={Springer}
+}
+@article{conover2011political,
+  title={Political polarization on twitter.},
+  author={Conover, Michael and Ratkiewicz, Jacob and Francisco, Matthew R and Gon{\c{c}}alves, Bruno and Menczer, Filippo and Flammini, Alessandro},
+  journal={Icwsm},
+  volume={133},
+  pages={89--96},
+  year={2011}
+}
+@inproceedings{francia2016social,
+  author    = {Matteo Francia and
+               Enrico Gallinucci and
+               Matteo Golfarelli and
+               Stefano Rizzi},
+  title     = {Social Business Intelligence in Action},
+  booktitle = {Proc. {CAiSE}},
+  series    = {LNCS},
+  volume    = {9694},
+  pages     = {33--48},
+  publisher = {Springer},
+  year      = {2016}
+}
+
+@book{trottier2014social,
+  title={Social media, politics and the state: Protests, revolutions, riots, crime and policing in the age of facebook, twitter and youtube},
+  author={Trottier, Daniel and Fuchs, Christian},
+  volume={16},
+  year={2014},
+  publisher={Routledge}
+}
+
+@article{holmberg2014disciplinary,
+  title={Disciplinary differences in Twitter scholarly communication},
+  author={Holmberg, Kim and Thelwall, Mike},
+  journal={Scientometrics},
+  volume={101},
+  number={2},
+  pages={1027--1042},
+  year={2014},
+  publisher={Springer}
+}
+
+@article{ghiassi2013twitter,
+  title={Twitter brand sentiment analysis: A hybrid system using n-gram analysis and dynamic artificial neural network},
+  author={Ghiassi, Manoochehr and Skinner, James and Zimbra, David},
+  journal={Expert Systems with applications},
+  volume={40},
+  number={16},
+  pages={6266--6282},
+  year={2013},
+  publisher={Elsevier}
+}
+
+@article{grassegger2017data,
+  title={The data that turned the world upside down},
+  author={Grassegger, Hannes and Krogerus, Mikael},
+  journal={Vice Motherboard},
+  volume={28},
+  year={2017}
+}
+
+@inproceedings{francia2014methodology,
+  author    = {Matteo Francia and
+               Matteo Golfarelli and
+               Stefano Rizzi},
+  title     = {A methodology for social {BI}},
+  booktitle = {Proc. {IDEAS}},
+  address   = {Porto, Portugal},
+  pages     = {207--216},
+  year      = {2014},
+}
+@article{gallinucci2015advanced,
+  author    = {Enrico Gallinucci and
+               Matteo Golfarelli and
+               Stefano Rizzi},
+  title     = {Advanced topic modeling for social business intelligence},
+  journal   = {Inf. Syst.},
+  volume    = {53},
+  pages     = {87--106},
+  year      = {2015},
+}
+
+@article{world2018europe,
+  title={Europe Observes a 4 Fold Increase in Measles Cases in 2017 Compared to a Previous Year},
+  author={{World Health Organization} and others},
+  journal={World Health Organization},
+  volume={6},
+  year={2018}
+}
+
+@article{zipprich2015measles,
+  title={Measles outbreak--California, December 2014-February 2015.},
+  author={Zipprich, Jennifer and Winter, Kathleen and Hacker, Jill and Xia, Dongxiang and Watt, James and Harriman, Kathleen},
+  journal={MMWR. Morbidity and mortality weekly report},
+  volume={64},
+  number={6},
+  pages={153--154},
+  year={2015},
+  publisher={Centers for Disease Control and Prevention}
+}
+
+@article{signorelli2017infant,
+  title={Infant immunization coverage in Italy (2000-2015)},
+  author={Signorelli, Carlo and Odone, Anna and Cella, Paola and Iannazzo, Stefania and D'Ancona, Fortunato and Guerra, Ranieri},
+  journal={Annali dell'Istituto superiore di sanita},
+  volume={53},
+  number={3},
+  pages={231--237},
+  year={2017}
+}
+
+@article{signorelli2017italy,
+  title={Italy's response to vaccine hesitancy: an innovative and cost effective national immunization plan based on scientific evidence},
+  author={Signorelli, C and Guerra, R and Siliquini, R and Ricciardi, W},
+  journal={Vaccine},
+  volume={35},
+  number={33},
+  pages={4057--9},
+  year={2017},
+  publisher={Elsevier}
+}
+
+@article{donzelli2018varicella,
+  title={Varicella vaccination: scientific reasons for a different strategic approach},
+  author={Donzelli, A and Demicheli, V},
+  journal={Epidemiologia e prevenzione},
+  volume={42},
+  number={1},
+  pages={65--70},
+  year={2018}
+}
+
+@inproceedings{furini2018public,
+  title={Public Health and Social Media: Language Analysis of Vaccine Conversations},
+  author={Furini, Marco and Menegoni, Gabriele},
+  booktitle={Social Sensing (SocialSens), 2018 International Workshop on},
+  pages={50--55},
+  year={2018},
+  organization={IEEE}
+}
+
+@article{betsch2012opportunities,
+  title={Opportunities and challenges of Web 2.0 for vaccination decisions},
+  author={Betsch, Cornelia and Brewer, Noel T and Brocard, Pauline and Davies, Patrick and Gaissmaier, Wolfgang and Haase, Niels and Leask, Julie and Renkewitz, Frank and Renner, Britta and Reyna, Valerie F and others},
+  journal={Vaccine},
+  volume={30},
+  number={25},
+  pages={3727--3733},
+  year={2012},
+  publisher={Elsevier}
+}
+
+@article{faasse2016comparison,
+  title={A comparison of language use in pro-and anti-vaccination comments in response to a high profile Facebook post},
+  author={Faasse, Kate and Chatman, Casey J and Martin, Leslie R},
+  journal={Vaccine},
+  volume={34},
+  number={47},
+  pages={5808--5814},
+  year={2016},
+  publisher={Elsevier}
+}
+
+@article{glanz2017web,
+  title={Web-based social media intervention to increase vaccine acceptance: a randomized controlled trial},
+  author={Glanz, Jason M and Wagner, Nicole M and Narwaney, Komal J and Kraus, Courtney R and Shoup, Jo Ann and Xu, Stanley and O’Leary, Sean T and Omer, Saad B and Gleason, Kathy S and Daley, Matthew F},
+  journal={Pediatrics},
+  pages={e20171117},
+  year={2017},
+  publisher={Am Acad Pediatrics}
+}
+@article{covolo2017arguments,
+  title={What arguments on vaccinations run through YouTube videos in Italy? A content analysis},
+  author={Covolo, Loredana and Ceretti, Elisabetta and Passeri, Chiara and Boletti, Michela and Gelatti, Umberto},
+  journal={Human vaccines \& immunotherapeutics},
+  volume={13},
+  number={7},
+  pages={1693--1699},
+  year={2017},
+  publisher={Taylor \& Francis}
+}
+@misc{Statista18Twitter,
+  author = {Statista},
+  title = {Social network market share held by {T}witter in {I}taly from {J}anuary 2017 to {A}ugust 2018},
+  year = 2018,
+  howpublished = {\url{https://www.statista.com/statistics/622878/twitter-s-social-network-market-share-monthly-in-italy/}},
+  note = {[Online; accessed 28-September-2018]}
+}
+@misc{Statista18Facebook,
+  author = {Statista},
+  title = {Social network market share held by {F}acebook in {I}taly from {J}anuary 2017 to {A}ugust 2018},
+  year = 2018,
+  howpublished = {\url{https://www.statista.com/statistics/622874/facebook-s-social-network-market-share-monthly-in-italy/}},
+  note = {[Online; accessed 28-September-2018]}
+}
+@inproceedings{bakshy2011everyone,
+  title={Everyone's an influencer: quantifying influence on twitter},
+  author={Bakshy, Eytan and Hofman, Jake M and Mason, Winter A and Watts, Duncan J},
+  booktitle={Proceedings of the fourth ACM international conference on Web search and data mining},
+  pages={65--74},
+  year={2011},
+  organization={ACM}
+}
+
+@book{wasserman1994social,
+  title={Social network analysis: Methods and applications},
+  author={Wasserman, Stanley and Faust, Katherine},
+  volume={8},
+  year={1994},
+  publisher={Cambridge university press}
+}
+
+@article{ciampaglia2018fighting,
+  title={Fighting fake news: a role for computational social science in the fight against digital misinformation},
+  author={Ciampaglia, Giovanni Luca},
+  journal={Journal of Computational Social Science},
+  volume={1},
+  number={1},
+  pages={147--153},
+  year={2018},
+  publisher={Springer}
+}
+
+@misc{wiki:burioni,
+  author = {Wikipedia},
+  title = {Roberto Burioni},
+  year = {2019},
+  howpublished = {\url{http://en.wikipedia.org/wiki/Roberto_Burioni}},
+  note = {[Online; accessed 04-January-2019]}
+}
+
+@article{jaccard1901etude,
+  title={{\'E}tude comparative de la distribution florale dans une portion des Alpes et des Jura},
+  author={Jaccard, Paul},
+  journal={Bull Soc Vaudoise Sci Nat},
+  volume={37},
+  pages={547--579},
+  year={1901}
+}
+
+@book{DBLP:books/daglib/0015656,
+  author    = {Elena Deza and
+               Michel Deza},
+  title     = {Dictionary of distances},
+  publisher = {North-Holland},
+  year      = {2006},
+  isbn      = {978-0-444-52087-6},
+  timestamp = {Wed, 23 Mar 2011 16:58:38 +0100},
+  biburl    = {https://dblp.org/rec/bib/books/daglib/0015656},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@book{DBLP:books/mg/SaltonG83,
+  author    = {Gerard Salton and
+               Michael McGill},
+  title     = {Introduction to Modern Information Retrieval},
+  publisher = {McGraw-Hill Book Company},
+  year      = {1984},
+  isbn      = {0-07-054484-0},
+  timestamp = {Thu, 03 Jan 2002 11:51:25 +0100},
+  biburl    = {https://dblp.org/rec/bib/books/mg/SaltonG83},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{DBLP:journals/toit/LippiT16,
+  author    = {Marco Lippi and
+               Paolo Torroni},
+  title     = {Argumentation Mining: State of the Art and Emerging Trends},
+  journal   = {{ACM} Trans. Internet Techn.},
+  volume    = {16},
+  number    = {2},
+  pages     = {10:1--10:25},
+  year      = {2016},
+  url       = {https://doi.org/10.1145/2850417},
+  doi       = {10.1145/2850417},
+  timestamp = {Wed, 14 Nov 2018 10:50:37 +0100},
+  biburl    = {https://dblp.org/rec/bib/journals/toit/LippiT16},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{DBLP:journals/coling/HabernalG17,
+  author    = {Ivan Habernal and
+               Iryna Gurevych},
+  title     = {Argumentation Mining in User-Generated Web Discourse},
+  journal   = {Computational Linguistics},
+  volume    = {43},
+  number    = {1},
+  pages     = {125--179},
+  year      = {2017},
+  url       = {https://doi.org/10.1162/COLI\_a\_00276},
+  doi       = {10.1162/COLI\_a\_00276},
+  timestamp = {Tue, 21 May 2019 18:03:32 +0200},
+  biburl    = {https://dblp.org/rec/bib/journals/coling/HabernalG17},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{giambi2018parental,
+  title={Parental vaccine hesitancy in Italy--results from a national survey},
+  author={Giambi, Cristina and Fabiani, Massimo and D'Ancona, Fortunato and Ferrara, Lorenza and Fiacchini, Daniel and Gallo, Tolinda and Martinelli, Domenico and Pascucci, Maria Grazia and Prato, Rosa and Filia, Antonietta and others},
+  journal={Vaccine},
+  volume={36},
+  number={6},
+  pages={779--787},
+  year={2018},
+  publisher={Elsevier}
+}
+
+@article{biasio2016communication,
+  title={Communication about vaccination: A shared responsibility},
+  author={Biasio, Luigi R and Corsello, Giovanni and Costantino, Claudio and Fara, Gaetano M and Giammanco, Giuseppe and Signorelli, Carlo and Vecchio, Davide and Vitale, Francesco},
+  journal={Human vaccines \& immunotherapeutics},
+  volume={12},
+  number={11},
+  pages={2984--2987},
+  year={2016},
+  publisher={Taylor \& Francis}
+}
+
+@article{d2018introduction,
+  title={Introduction of new and reinforcement of existing compulsory vaccinations in Italy: first evaluation of the impact on vaccination coverage in 2017},
+  author={D’Ancona, Fortunato and D’Amario, Claudio and Maraglino, Francesco and Rezza, Giovanni and Ricciardi, Walter and Iannazzo, Stefania},
+  journal={Eurosurveillance},
+  volume={23},
+  number={22},
+  year={2018},
+  publisher={European Centre for Disease Prevention and Control}
+}
+
+@article{signorelli2018imperative,
+  title={The imperative of vaccination put into practice},
+  author={Signorelli, Carlo and Iannazzo, Stefania and Odone, Anna},
+  journal={The Lancet Infectious Diseases},
+  volume={18},
+  number={1},
+  pages={26--27},
+  year={2018},
+  publisher={Elsevier}
+}
+
+@article{DBLP:journals/kbs/WangLYSRX18,
+  author    = {Zhixiao Wang and
+               Zechao Li and
+               Guan Yuan and
+               Yunlian Sun and
+               Xiaobin Rui and
+               Xinguang Xiang},
+  title     = {Tracking the evolution of overlapping communities in dynamic social
+               networks},
+  journal   = {Knowl.-Based Syst.},
+  volume    = {157},
+  pages     = {81--97},
+  year      = {2018},
+  url       = {https://doi.org/10.1016/j.knosys.2018.05.026},
+  doi       = {10.1016/j.knosys.2018.05.026},
+  timestamp = {Sat, 11 Aug 2018 00:57:26 +0200},
+  biburl    = {https://dblp.org/rec/bib/journals/kbs/WangLYSRX18},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{DBLP:journals/coling/ChurchH90,
+  author    = {Kenneth Ward Church and
+               Patrick Hanks},
+  title     = {Word Association Norms, Mutual Information, and Lexicography},
+  journal   = {Computational Linguistics},
+  volume    = {16},
+  number    = {1},
+  pages     = {22--29},
+  year      = {1990},
+  timestamp = {Thu, 03 Jan 2002 12:16:55 +0100},
+  biburl    = {https://dblp.org/rec/bib/journals/coling/ChurchH90},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@misc{ministero:sentenza,
+  author = {{Ministero della Salute}},
+  title = {Decreto vaccini, la sentenza della Corte costituzionale considera legittimo l'obbligo dei vaccini nel contesto attuale},
+  year = {2017},
+  howpublished = {\url{http://www.salute.gov.it/portale/news/p3_2_1_1_1.jsp?lingua=italiano&menu=notizie&p=dalministero&id=3184}},
+  note = {[Online; accessed 04-June-2019]}
+}
+
+@article{petrarca2018vaccination,
+  title={Vaccination policies in Europe: Common goals, diverse approaches and public doubts},
+  author={Petrarca, Laura and Midulla, Fabio and Openshaw, Peter JM},
+  journal={European Journal of Immunology},
+  volume={48},
+  number={1},
+  pages={10--12},
+  year={2018},
+  publisher={Wiley Online Library}
+}
+% END - VACCINI
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DART
+@article{MendesV17,
+  author    = {Ricardo Mendes and
+               Jo{\~{a}}o P. Vilela},
+  title     = {Privacy-Preserving Data Mining: Methods, Metrics, and Applications},
+  journal   = {{IEEE} Access},
+  volume    = {5},
+  pages     = {10562--10582},
+  year      = {2017},
+}
+
+@InProceedings{geetha2020,
+author="Geetha, P.
+and Naikodi, Chandrakant
+and Setty, Suresh Lakshmi Narasimha",
+editor="Jain, Vanita
+and Chaudhary, Gopal
+and Taplamacioglu, M. Cengiz
+and Agarwal, M. S.",
+title="Design of Big Data Privacy Framework---A Balancing Act",
+booktitle="Advances in Data Sciences, Security and Applications",
+year="2020",
+publisher="Springer Singapore",
+address="Singapore",
+pages="253--265"
+}
+@inproceedings{DBLP:conf/icwsm/0004WSM15,
+  author    = {Luca Rossi and
+               Matthew J. Williams and
+               Christoph Stich and
+               Mirco Musolesi},
+  editor    = {Meeyoung Cha and
+               Cecilia Mascolo and
+               Christian Sandvig},
+  title     = {Privacy and the City: User Identification and Location Semantics in
+               Location-Based Social Networks},
+  booktitle = {Proc. {ICWSM}},
+  address   = {Oxford, UK},
+  pages     = {387--396},
+  publisher = {{AAAI} Press},
+  year      = {2015},
+}
+@article{DBLP:journals/epjds/RossiWM15,
+  author    = {Luca Rossi and
+               James Walker and
+               Mirco Musolesi},
+  title     = {Spatio-temporal techniques for user identification by means of {GPS}
+               mobility data},
+  journal   = {{EPJ} Data Sci.},
+  volume    = {4},
+  number    = {1},
+  pages     = {11},
+  year      = {2015}
+}
+@inproceedings{DBLP:conf/ssdbm/JiangSBKT13,
+  author    = {Kaifeng Jiang and
+               Dongxu Shao and
+               St{\'{e}}phane Bressan and
+               Thomas Kister and
+               Kian{-}Lee Tan},
+  editor    = {Alex Szalay and
+               Tamas Budavari and
+               Magdalena Balazinska and
+               Alexandra Meliou and
+               Ahmet Sacan},
+  title     = {Publishing trajectories with differential privacy guarantees},
+  booktitle = {Proc. {SSDBM}},
+  address   = {Baltimore, MD, USA},
+  pages     = {12:1--12:12},
+  publisher = {{ACM}},
+  year      = {2013}
+}
+@article{DBLP:journals/sigkdd/Gkoulalas-DivanisKV10,
+  author    = {Aris Gkoulalas{-}Divanis and
+               Panos Kalnis and
+               Vassilios S. Verykios},
+  title     = {Providing K-Anonymity in location based services},
+  journal   = {{SIGKDD} Explorations},
+  volume    = {12},
+  number    = {1},
+  pages     = {3--10},
+  year      = {2010}
+}
+@article{DBLP:journals/percom/LaurilaGABBDDEM13,
+  author    = {Juha K. Laurila and
+               Daniel Gatica{-}Perez and
+               Imad Aad and
+               Jan Blom and
+               Olivier Bornet and
+               Trinh Minh Tri Do and
+               Olivier Dousse and
+               Julien Eberle and
+               Markus Miettinen},
+  title     = {From big smartphone data to worldwide research: The Mobile Data Challenge},
+  journal   = {Pervasive and Mobile Computing},
+  volume    = {9},
+  number    = {6},
+  pages     = {752--771},
+  year      = {2013}
+}
+@article{cecaj2016re,
+  author    = {Alket Cecaj and
+               Marco Mamei and
+               Franco Zambonelli},
+  title     = {Re-identification and information fusion between anonymized {CDR}
+               and social network data},
+  journal   = {J. Ambient Intell. Humaniz. Comput.},
+  volume    = {7},
+  number    = {1},
+  pages     = {83--96},
+  year      = {2016},
+}
+@article{Ma2013,
+  author    = {Chris Y. T. Ma and
+               David K. Y. Yau and
+               Nung Kwan Yip and
+               Nageswara S. V. Rao},
+  title     = {Privacy Vulnerability of Published Anonymous Mobility Traces},
+  journal   = {{IEEE/ACM} Trans. Netw.},
+  volume    = {21},
+  number    = {3},
+  pages     = {720--733},
+  year      = {2013},
+}
+@inproceedings{Shokri2011,
+  author    = {Reza Shokri and
+               George Theodorakopoulos and
+               Jean{-}Yves Le Boudec and
+               Jean{-}Pierre Hubaux},
+  title     = {Quantifying Location Privacy},
+  booktitle = {Proc. {IEEE} Symposium on Security and Privacy},
+  address   = {Berkeley, California, {USA}},
+  pages     = {247--262},
+  year      = {2011},
+}
+@inproceedings{Narayanan2009,
+  author    = {Arvind Narayanan and
+               Vitaly Shmatikov},
+  title     = {De-anonymizing Social Networks},
+  booktitle = {Proc. {IEEE} Symposium on Security and Privacy}, 
+  address   = {Oakland, California, {USA}},
+  pages     = {173--187},
+  year      = {2009}
+}
+@inproceedings{Narayanan2008111,
+  author    = {Arvind Narayanan and
+               Vitaly Shmatikov},
+  title     = {Robust De-anonymization of Large Sparse Datasets},
+  booktitle = {Proc. {IEEE} Symposium on Security and Privacy},
+  address   = {Oakland, California, {USA}},
+  pages     = {111--125},
+  year      = {2008}
+}
+@inproceedings{Mu2016,
+  author    = {Xin Mu and
+               Feida Zhu and
+               Ee{-}Peng Lim and
+               Jing Xiao and
+               Jianzong Wang and
+               Zhi{-}Hua Zhou},
+  title     = {User Identity Linkage by Latent User Space Modelling},
+  booktitle = {Proc. {KDD}}, 
+  address   = {San Francisco, CA, USA},
+  pages     = {1775--1784},
+  year      = {2016},
+}
+@inproceedings{Srivatsa2012,
+  author    = {Mudhakar Srivatsa and
+               Michael Hicks},
+  title     = {Deanonymizing mobility traces: using social network as a side-channel},
+  booktitle = {Proc. {CCS}},
+  address   = {Raleigh, NC, USA},
+  pages     = {628--637},
+  year      = {2012},
+}
+@inproceedings{Rossi2014,
+  author    = {Luca Rossi and
+               Mirco Musolesi},
+  title     = {It's the way you check-in: identifying users in location-based social
+               networks},
+  booktitle = {Proc. {COSN}},
+  address   = {Dublin, Ireland},
+  pages     = {215--226},
+  year      = {2014},
+}
+@inproceedings{Goga2016,
+  author    = {Oana Goga and
+               Howard Lei and
+               Sree Hari Krishnan Parthasarathi and
+               Gerald Friedland and
+               Robin Sommer and
+               Renata Teixeira},
+  title     = {Exploiting innocuous activity for correlating users across sites},
+  booktitle = {Proc. {WWW}},
+  address   = {Rio de Janeiro, Brazil},
+  pages     = {447--458},
+  year      = {2013},
+}
+@inproceedings{DeMulder2008,
+  author    = {Yoni De Mulder and
+               George Danezis and
+               Lejla Batina and
+               Bart Preneel},
+  title     = {Identification via location-profiling in {GSM} networks},
+  booktitle = {Proc. {WPES}},
+  address   = {Alexandria, VA, USA},
+  pages     = {23--32},
+  year      = {2008},
+}
+@article{DeMontjoye2013,
+	author = {{De Montjoye}, Yves Alexandre and Hidalgo, C{\'{e}}sar A. and Verleysen, Michel and Blondel, Vincent D.},
+	journal = {Scientific Reports},
+	title = {{Unique in the Crowd: The privacy bounds of human mobility}},
+	volume = {3},
+	year = {2013}
+}
+@inproceedings{DBLP:conf/pervasive/GolleP09,
+  author    = {Philippe Golle and
+               Kurt Partridge},
+  title     = {On the Anonymity of Home/Work Location Pairs},
+  booktitle = {Proc. {Pervasive}},
+  address   = {Nara, Japan},
+  pages     = {390--397},
+  year      = {2009},
+}
+@inproceedings{Freudiger2012,
+  author    = {Julien Freudiger and
+               Reza Shokri and
+               Jean{-}Pierre Hubaux},
+  title     = {Evaluating the Privacy Risk of Location-Based Services},
+  booktitle = {Proc. Financial Cryptography},
+  address   = {Gros Islet, St. Lucia},
+  series    = {LNCS},
+  volume    = {7035},
+  pages     = {31--46},
+  publisher = {Springer},
+  year      = {2011}
+}
+@article{Manousakas2018,
+  author    = {Dionysis Manousakas and
+               Cecilia Mascolo and
+               Alastair R. Beresford and
+               Dennis Chan and
+               Nikhil Sharma},
+  title     = {Quantifying Privacy Loss of Human Mobility Graph Topology},
+  journal   = {Proc. {PoPETs}},
+  volume    = {2018},
+  number    = {3},
+  pages     = {5--21},
+  year      = {2018},
+}
+@inproceedings{Lin2015,
+  author    = {Miao Lin and
+               Hong Cao and
+               Vincent W. Zheng and
+               Kevin Chen{-}Chuan Chang and
+               Shonali Krishnaswamy},
+  title     = {Mobile user verification/identification using statistical mobility
+               profile},
+  booktitle = {Proc. {BIGCOMP}},
+  address   = {Jeju, South Korea},
+  pages     = {15--18},
+  year      = {2015},
+}
+@article{Gambs2014,
+  author    = {S{\'{e}}bastien Gambs and
+               Marc{-}Olivier Killijian and
+               Miguel N{\'{u}}{\~{n}}ez del Prado Cortez},
+  title     = {De-anonymization attack on geolocated data},
+  journal   = {J. Comput. Syst. Sci.},
+  volume    = {80},
+  number    = {8},
+  pages     = {1597--1614},
+  year      = {2014}
+}
+@inproceedings{GouineauLT16,
+  author    = {Frank Gouineau and
+               Tom Landry and
+               Thomas Triplet},
+  title     = {PatchWork, a scalable density-grid clustering algorithm},
+  booktitle = {Proc. {ACM} Symposium on Applied Computing},
+  address   = {Pisa, Italy},
+  pages     = {824--831},
+  year      = {2016}
+}
+@inproceedings{ZhouFLST04,
+  author    = {Changqing Zhou and
+               Dan Frankowski and
+               Pamela J. Ludford and
+               Shashi Shekhar and
+               Loren G. Terveen},
+  title     = {Discovering personal gazetteers: an interactive clustering approach},
+  booktitle = {Proc. {GIS}},
+  address   = {Washington, DC, USA},
+  pages     = {266--273},
+  year      = {2004},
+}
+@inproceedings{EsterKSX96,
+  author    = {Martin Ester and
+               Hans{-}Peter Kriegel and
+               J{\"{o}}rg Sander and
+               Xiaowei Xu},
+  title     = {A Density-Based Algorithm for Discovering Clusters in Large Spatial
+               Databases with Noise},
+  booktitle = {Proc. {KDD}},
+  address   = {Portland, Oregon, {USA}},
+  pages     = {226--231},
+  year      = {1996}
+}
+@inproceedings{MarmasseS00,
+  author    = {Natalia Marmasse and
+               Chris Schmandt},
+  title     = {Location-Aware Information Delivery with \emph{ComMotion}},
+  booktitle = {Proc. {HUC}},
+  address   = {Bristol, UK},
+  pages     = {157--171},
+  year      = {2000},
+}
+@inproceedings{AshbrookS02,
+  author    = {Daniel Ashbrook and
+               Thad Starner},
+  title     = {Learning Significant Locations and Predicting User Movement with {GPS}},
+  booktitle = {Proc. {ISWC}},
+  address   = {Seattle, WA, {USA}},
+  pages     = {101--108},
+  year      = {2002},
+}
+@article{DBLP:journals/sigkdd/ZhouPL08,
+  author    = {Bin Zhou and
+               Jian Pei and
+               Wo{-}Shun Luk},
+  title     = {A brief survey on anonymization techniques for privacy preserving
+               publishing of social network data},
+  journal   = {{SIGKDD} Explorations},
+  volume    = {10},
+  number    = {2},
+  pages     = {12--22},
+  year      = {2008}
+}
+% END - DART
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INTRO TRAJECTORY
+@article{DBLP:journals/access/KongLMTWNX18,
+  author    = {Xiangjie Kong and
+               Menglin Li and
+               Kai Ma and
+               Kaiqi Tian and
+               Mengyuan Wang and
+               Zhaolong Ning and
+               Feng Xia},
+  title     = {Big Trajectory Data: {A} Survey of Applications and Services},
+  journal   = {{IEEE} Access},
+  volume    = {6},
+  pages     = {58295--58306},
+  year      = {2018},
+}
+% END - INTRO TRAJECTORY
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% SURVEY
+@article{DBLP:journals/jal/Ukkonen85,
+  author    = {Esko Ukkonen},
+  title     = {Finding Approximate Patterns in Strings},
+  journal   = {J. Algorithms},
+  volume    = {6},
+  number    = {1},
+  pages     = {132--137},
+  year      = {1985},
+}
+@inproceedings{DBLP:conf/kdd/ChenFDS12,
+  author    = {Rui Chen and
+               Benjamin C. M. Fung and
+               Bipin C. Desai and
+               N{\'{e}}riah M. Sossou},
+  title     = {Differentially private transit data publication: a case study on the
+               montreal transportation system},
+  booktitle = {Proc. {KDD}},
+  pages     = {213--221},
+  publisher = {{ACM}},
+  year      = {2012}
+}
+@inproceedings{DBLP:conf/gis/NergizAS08,
+  author    = {Mehmet Ercan Nergiz and
+               Maurizio Atzori and
+               Y{\"{u}}cel Saygin},
+  title     = {Towards trajectory anonymization: a generalization-based approach},
+  booktitle = {Proc. {SPRINGL}},
+  pages     = {52--61},
+  publisher = {{ACM}},
+  year      = {2008}
+}
+@inproceedings{DBLP:conf/petra/OuyangXLCM08,
+  author    = {Yi Ouyang and
+               Yurong Xu and
+               Zhengyi Le and
+               Guanling Chen and
+               Fillia Makedon},
+  title     = {Providing location privacy in assisted living environments},
+  booktitle = {Proc. {PETRA}},
+  series    = {{ACM} International Conference Proceeding Series},
+  volume    = {282},
+  pages     = {39},
+  publisher = {{ACM}},
+  year      = {2008}
+}
+@inproceedings{DBLP:conf/icde/KidoYS05,
+  author    = {Hidetoshi Kido and
+               Yutaka Yanagisawa and
+               Tetsuji Satoh},
+  title     = {Protection of Location Privacy using Dummies for Location-based Services},
+  booktitle = {Proc. {ICDE} Workshops},
+  pages     = {1248},
+  publisher = {{IEEE} Computer Society},
+  year      = {2005}
+}
+@inproceedings{DBLP:conf/icde/MachanavajjhalaGKV06,
+  author    = {Ashwin Machanavajjhala and
+               Johannes Gehrke and
+               Daniel Kifer and
+               Muthuramakrishnan Venkitasubramaniam},
+  title     = {l-Diversity: Privacy Beyond k-Anonymity},
+  booktitle = {Proc. {ICDE}},
+  pages     = {24},
+  publisher = {{IEEE} Computer Society},
+  year      = {2006}
+}
+@inproceedings{DBLP:conf/pods/SamaratiS98,
+  author    = {Pierangela Samarati and
+               Latanya Sweeney},
+  title     = {Generalizing Data to Provide Anonymity when Disclosing Information
+               (Abstract)},
+  booktitle = {Proc. {PODS}},
+  pages     = {188},
+  publisher = {{ACM} Press},
+  year      = {1998}
+}
+@inproceedings{DBLP:conf/kdd/YangZW05,
+  author    = {Zhiqiang Yang and
+               Sheng Zhong and
+               Rebecca N. Wright},
+  title     = {Anonymity-preserving data collection},
+  booktitle = {Proc. {KDD}},
+  pages     = {334--343},
+  publisher = {{ACM}},
+  year      = {2005}
+}
+@article{saglio2001,
+  title={Oporto: A realistic scenario generator for moving objects},
+  author={Saglio, Jean-Marc and Moreira, Jos{\'e}},
+  journal={GeoInformatica},
+  volume={5},
+  number={1},
+  pages={71--93},
+  year={2001},
+  publisher={Springer}
+}
+@article{pfoser2003,
+  title={Generating semantics-based trajectories of moving objects},
+  author={Pfoser, Dieter and Theodoridis, Yannis},
+  journal={Computers, Environment and Urban Systems},
+  volume={3},
+  number={27},
+  pages={243--263},
+  year={2003}
+}
+@inproceedings{zhang2015,
+  author    = {Desheng Zhang and
+               Juanjuan Zhao and
+               Fan Zhang and
+               Tian He},
+  title     = {UrbanCPS: a cyber-physical system based on multi-source big infrastructure
+               data for heterogeneous model integration},
+  booktitle = {Proc. {ICCPS}},
+  address   = {Seattle, WA, USA},
+  pages     = {238--247},
+  year      = {2015},
+}
+@inproceedings{bao2012,
+  author    = {Jie Bao and
+               Yu Zheng and
+               Mohamed F. Mokbel},
+  title     = {Location-based and preference-aware recommendation using sparse geo-social
+               networking data},
+  booktitle = {Proc. {SIGSPATIAL}},
+  address   = {Redondo Beach, CA, USA},
+  pages     = {199--208},
+  year      = {2012},
+}
+@article{yang2014,
+  author    = {Dingqi Yang and
+               Daqing Zhang and
+               Vincent W. Zheng and
+               Zhiyong Yu},
+  title     = {Modeling User Activity Preference by Leveraging User Spatial Temporal
+               Characteristics in LBSNs},
+  journal   = {{IEEE} Trans. Syst. Man Cybern. Syst.},
+  volume    = {45},
+  number    = {1},
+  pages     = {129--142},
+  year      = {2015},
+}
+@article{yang2015,
+  author    = {Dingqi Yang and
+               Daqing Zhang and
+               Longbiao Chen and
+               Bingqing Qu},
+  title     = {NationTelescope: Monitoring and visualizing large-scale collective
+               behavior in LBSNs},
+  journal   = {J. Netw. Comput. Appl.},
+  volume    = {55},
+  pages     = {170--180},
+  year      = {2015},
+}
+@inproceedings{yuan2010,
+  author    = {Jing Yuan and
+               Yu Zheng and
+               Chengyang Zhang and
+               Wenlei Xie and
+               Xing Xie and
+               Guangzhong Sun and
+               Yan Huang},
+  editor    = {Divyakant Agrawal and
+               Pusheng Zhang and
+               Amr El Abbadi and
+               Mohamed F. Mokbel},
+  title     = {T-drive: driving directions based on taxi trajectories},
+  booktitle = {Proc. {SIGSPATIAL}},
+  address   = {San Jose, CA, USA},
+  pages     = {99--108},
+  publisher = {{ACM}},
+  year      = {2010},
+}
+@inproceedings{chon2011,
+  author    = {Yohan Chon and
+               Elmurod Talipov and
+               Hyojeong Shin and
+               Hojung Cha},
+  editor    = {Jie Liu and
+               Philip Levis and
+               Kay R{\"{o}}mer},
+  title     = {Mobility prediction-based smartphone energy optimization for everyday
+               location monitoring},
+  booktitle = {Proc. {SenSys}},
+  address   = {Seattle, WA, USA},
+  pages     = {82--95},
+  publisher = {{ACM}},
+  year      = {2011},
+}
+@inproceedings{jetcheva2003, 
+  author    = {Jorjeta G. Jetcheva and
+               Yih{-}Chun Hu and
+               Santashil PalChaudhuri and
+               Amit Kumar Saha and
+               David B. Johnson},
+  title     = {Design and Evaluation of a Metropolitan Area Multitier Wireless Ad
+               Hoc Network Architecture},
+  booktitle = {Proc. {WMCSA}},
+  address   = {Monterey, CA, {USA}},
+  pages     = {32--43},
+  publisher = {{IEEE} Computer Society},
+  year      = {2003},
+}
+@inproceedings{DBLP:conf/icde/PalanisamyL11,
+  author    = {Balaji Palanisamy and
+               Ling Liu},
+  title     = {MobiMix: Protecting location privacy with mix-zones over road networks},
+  booktitle = {Proc. {ICDE}},
+  pages     = {494--505},
+  publisher = {{IEEE} Computer Society},
+  year      = {2011}
+}
+@inproceedings{DBLP:conf/infocom/LiuZPYLF12,
+  author    = {Xinxin Liu and
+               Han Zhao and
+               Miao Pan and
+               Hao Yue and
+               Xiaolin Li and
+               Yuguang Fang},
+  title     = {Traffic-aware multiple mix zone placement for protecting location privacy},
+  booktitle = {Proc. {INFOCOM}},
+  pages     = {972--980},
+  publisher = {{IEEE}},
+  year      = {2012}
+}
+@inproceedings{DBLP:conf/percom/BeresfordS04,
+  author    = {Alastair R. Beresford and
+               Frank Stajano},
+  title     = {Mix Zones: User Privacy in Location-aware Services},
+  booktitle = {Proc. {PerCom} Workshops},
+  pages     = {127--131},
+  publisher = {{IEEE} Computer Society},
+  year      = {2004}
+}
+@inproceedings{DBLP:conf/icde/LiLV07,
+  author    = {Ninghui Li and
+               Tiancheng Li and
+               Suresh Venkatasubramanian},
+  title     = {t-Closeness: Privacy Beyond k-Anonymity and l-Diversity},
+  booktitle = {Proc. {ICDE}},
+  pages     = {106--115},
+  publisher = {{IEEE} Computer Society},
+  year      = {2007}
+}
+@inproceedings{DBLP:conf/mdm/YaoWWHW19,
+  author    = {Lin Yao and
+               Xinyu Wang and
+               Xin Wang and
+               Haibo Hu and
+               Guowei Wu},
+  title     = {Publishing Sensitive Trajectory Data Under Enhanced l-Diversity Model},
+  booktitle = {Proc. {MDM}},
+  pages     = {160--169},
+  publisher = {{IEEE}},
+  year      = {2019}
+}
+@article{DBLP:journals/tnsm/TuZXLSJ19,
+  author    = {Zhen Tu and
+               Kai Zhao and
+               Fengli Xu and
+               Yong Li and
+               Li Su and
+               Depeng Jin},
+  title     = {Protecting Trajectory From Semantic Attack Considering k-Anonymity, l-Diversity, and t-Closeness},
+  journal   = {{IEEE} Trans. Network and Service Management},
+  volume    = {16},
+  number    = {1},
+  pages     = {264--278},
+  year      = {2019}
+}
+@inproceedings{DBLP:conf/conext/GramagliaF15,
+  author    = {Marco Gramaglia and
+               Marco Fiore},
+  title     = {Hiding mobile traffic fingerprints with {GLOVE}},
+  booktitle = {Proc. {CoNEXT}},
+  pages     = {26:1--26:13},
+  publisher = {{ACM}},
+  year      = {2015}
+}
+@article{DBLP:journals/is/AbulBN10,
+  author    = {Osman Abul and
+               Francesco Bonchi and
+               Mirco Nanni},
+  title     = {Anonymization of moving objects databases by clustering and perturbation},
+  journal   = {Inf. Syst.},
+  volume    = {35},
+  number    = {8},
+  pages     = {884--910},
+  year      = {2010}
+}
+@article{DBLP:journals/ijufks/Sweene02,
+  author    = {Latanya Sweeney},
+  title     = {k-Anonymity: {A} Model for Protecting Privacy},
+  journal   = {Int. J. Uncertain. Fuzziness Knowl. Based Syst.},
+  volume    = {10},
+  number    = {5},
+  pages     = {557--570},
+  year      = {2002},
+}
+@article{DBLP:journals/eswa/ZhaoDP19,
+  author    = {Xiaodong Zhao and
+               Yulan Dong and
+               Dechang Pi},
+  title     = {Novel trajectory data publishing method under differential privacy},
+  journal   = {Expert Syst. Appl.},
+  volume    = {138},
+  year      = {2019}
+}
+@article{DBLP:journals/csur/FungWCY10,
+  author    = {Benjamin C. M. Fung and
+               Ke Wang and
+               Rui Chen and
+               Philip S. Yu},
+  title     = {Privacy-preserving data publishing: {A} survey of recent developments},
+  journal   = {{ACM} Comput. Surv.},
+  volume    = {42},
+  number    = {4},
+  pages     = {14:1--14:53},
+  year      = {2010}
+}
+@inproceedings{DBLP:conf/icalp/Dwork06,
+  author    = {Cynthia Dwork},
+  title     = {Differential Privacy},
+  booktitle = {Proc. {ICALP}},
+  series    = {LNCS},
+  volume    = {4052},
+  pages     = {1--12},
+  publisher = {Springer},
+  year      = {2006}
+}
+@article{DBLP:journals/cn/Al-HussaeniFIDP18,
+  author    = {Khalil Al{-}Hussaeni and
+               Benjamin C. M. Fung and
+               Farkhund Iqbal and
+               Gaby G. Dagher and
+               Eun G. Park},
+  title     = {SafePath: Differentially-private publishing of passenger trajectories
+               in transportation systems},
+  journal   = {Comput. Networks},
+  volume    = {143},
+  pages     = {126--139},
+  year      = {2018}
+}
+@article{DBLP:journals/pvldb/HeCMPS15,
+  author    = {Xi He and
+               Graham Cormode and
+               Ashwin Machanavajjhala and
+               Cecilia M. Procopiuc and
+               Divesh Srivastava},
+  title     = {{DPT:} Differentially Private Trajectory Synthesis Using Hierarchical
+               Reference Systems},
+  journal   = {Proc. {VLDB}},
+  volume    = {8},
+  number    = {11},
+  pages     = {1154--1165},
+  year      = {2015}
+}
+@article{DBLP:journals/csur/GuoJPZCI15,
+  author    = {Mingming Guo and
+               Xinyu Jin and
+               Niki Pissinou and
+               Sebastian Zanlongo and
+               Bogdan Carbunar and
+               S. Sitharama Iyengar},
+  title     = {In-Network Trajectory Privacy Preservation},
+  journal   = {{ACM} Comput. Surv.},
+  volume    = {48},
+  number    = {2},
+  pages     = {23:1--23:29},
+  year      = {2015}
+}
+@incollection{DBLP:reference/sp/Bettini18,
+  author    = {Claudio Bettini},
+  title     = {Privacy Protection in Location-Based Services: {A} Survey},
+  booktitle = {Handbook of Mobile Data Privacy},
+  pages     = {73--96},
+  publisher = {Springer},
+  year      = {2018}
+}
+@article{DBLP:journals/comsur/PrimaultBMB19,
+  author    = {Vincent Primault and
+               Antoine Boutet and
+               Sonia Ben Mokhtar and
+               Lionel Brunie},
+  title     = {The Long Road to Computational Location Privacy: {A} Survey},
+  journal   = {IEEE Commun. Surv. Tutorials},
+  volume    = {21},
+  number    = {3},
+  pages     = {2772--2793},
+  year      = {2019}
+}
+@article{DBLP:journals/comcom/LeHZ18,
+  author    = {Van Huynh Le and
+               Jerry den Hartog and
+               Nicola Zannone},
+  title     = {Security and privacy for innovative automotive applications: {A} survey},
+  journal   = {Comput. Communications},
+  volume    = {132},
+  pages     = {17--41},
+  year      = {2018}
+}
+@article{DBLP:journals/jnca/ZakharyB18,
+  author    = {Sameh Zakhary and
+               Abderrahim Benslimane},
+  title     = {On location-privacy in opportunistic mobile networks, a survey},
+  journal   = {J. Netw. Comput. Appl.},
+  volume    = {103},
+  pages     = {157--170},
+  year      = {2018}
+}
+@article{DBLP:journals/ijcv/RubnerTG00,
+  author    = {Yossi Rubner and
+               Carlo Tomasi and
+               Leonidas J. Guibas},
+  title     = {The Earth Mover's Distance as a Metric for Image Retrieval},
+  journal   = {Int. J. Comput. Vis.},
+  volume    = {40},
+  number    = {2},
+  pages     = {99--121},
+  year      = {2000}
+}
+@article{DBLP:journals/jnca/JiangHWG19,
+  author    = {Jinfang Jiang and
+               Guangjie Han and
+               Hao Wang and
+               Mohsen Guizani},
+  title     = {A survey on location privacy protection in Wireless Sensor Networks},
+  journal   = {J. Netw. Comput. Appl.},
+  volume    = {125},
+  pages     = {93--114},
+  year      = {2019}
+}
+@article{fiore2019privacy,
+  title={Privacy of trajectory micro-data: a survey},
+  author={Fiore, Marco and Katsikouli, Panagiota and Zavou, Elli and Cunche, Mathieu and Fessant, Fran{\c{c}}oise and Hello, Dominique Le and Aivodji, Ulrich Matchi and Olivier, Baptiste and Quertier, Tony and Stanica, Razvan},
+  journal={arXiv preprint arXiv:1903.12211},
+  year={2019}
+}
+@article{de2013unique,
+  title={Unique in the crowd: The privacy bounds of human mobility},
+  author={De Montjoye, Yves-Alexandre and Hidalgo, C{\'e}sar A and Verleysen, Michel and Blondel, Vincent D},
+  journal={Scientific reports},
+  volume={3},
+  pages={1376},
+  year={2013},
+  publisher={Nature Publishing Group}
+}
+@article{westin1968privacy,
+  title={Privacy and freedom},
+  author={Westin, Alan F},
+  journal={Washington and Lee Law Review},
+  volume={25},
+  number={1},
+  pages={166},
+  year={1968}
+}
+@inproceedings{DBLP:conf/nss/MahdavifarAKM12,
+  author    = {Samaneh Mahdavifar and
+               Mahdi Abadi and
+               Mohsen Kahani and
+               Hassan Mahdikhani},
+  title     = {A Clustering-Based Approach for Personalized Privacy Preserving Publication of Moving Object Trajectory Data},
+  booktitle = {Proc. {NSS}},
+  series    = {LNCS},
+  volume    = {7645},
+  pages     = {149--165},
+  publisher = {Springer},
+  year      = {2012}
+}
+@inproceedings{DBLP:conf/dasfaa/HuoMHH12,
+  author    = {Zheng Huo and
+               Xiaofeng Meng and
+               Haibo Hu and
+               Yi Huang},
+  title     = {You Can Walk Alone: Trajectory Privacy-Preserving through Significant Stays Protection},
+  booktitle = {Proc. {DASFAA}},
+  series    = {LNCS},
+  volume    = {7238},
+  pages     = {351--366},
+  publisher = {Springer},
+  year      = {2012}
+}
+@inproceedings{DBLP:conf/www/XuTLZFJ17,
+  author    = {Fengli Xu and
+               Zhen Tu and
+               Yong Li and
+               Pengyu Zhang and
+               Xiaoming Fu and
+               Depeng Jin},
+  title     = {Trajectory Recovery From Ash: User Privacy Is {NOT} Preserved in Aggregated Mobility Data},
+  booktitle = {Proc. {WWW}},
+  pages     = {1241--1250},
+  publisher = {{ACM}},
+  year      = {2017}
+}
+@inproceedings{DBLP:conf/sp/BindschaedlerS16,
+  author    = {Vincent Bindschaedler and
+               Reza Shokri},
+  title     = {Synthesizing Plausible Privacy-Preserving Location Traces},
+  booktitle = {Proc. {IEEE} Symposium on Security and Privacy},
+  pages     = {546--563},
+  publisher = {{IEEE} Computer Society},
+  year      = {2016}
+}
+@inproceedings{DBLP:conf/bigcom/LiGYP16,
+  author    = {Fengyun Li and
+               Fuxiang Gao and
+               Lan Yao and
+               Yu Pan},
+  title     = {Privacy Preserving in the Publication of Large-Scale Trajectory Databases},
+  booktitle = {Proc. {BigCom}},
+  series    = {LNCS},
+  volume    = {9784},
+  pages     = {367--376},
+  publisher = {Springer},
+  year      = {2016}
+}
+@inproceedings{DBLP:conf/icde/LeFevreDR06,
+  author    = {Kristen LeFevre and
+               David J. DeWitt and
+               Raghu Ramakrishnan},
+  title     = {Mondrian Multidimensional K-Anonymity},
+  booktitle = {Proc. {ICDE}},
+  pages     = {25},
+  publisher = {{IEEE} Computer Society},
+  year      = {2006}
+}
+@article{DBLP:journals/www/DaiSWZS18,
+  author    = {Yan Dai and
+               Jie Shao and
+               Chengbo Wei and
+               Dongxiang Zhang and
+               Heng Tao Shen},
+  title     = {Personalized semantic trajectory privacy preservation through trajectory reconstruction},
+  journal   = {World Wide Web},
+  volume    = {21},
+  number    = {4},
+  pages     = {875--914},
+  year      = {2018}
+}
+@article{DBLP:journals/kbs/DongP18,
+  author    = {Yulan Dong and
+               Dechang Pi},
+  title     = {Novel Privacy-preserving algorithm based on frequent path for trajectory data publishing},
+  journal   = {Knowl.-Based Syst.},
+  volume    = {148},
+  pages     = {55--65},
+  year      = {2018}
+}
+@article{DBLP:journals/tkde/TerrovitisPMS17,
+  author    = {Manolis Terrovitis and
+               Giorgos Poulis and
+               Nikos Mamoulis and
+               Spiros Skiadopoulos},
+  title     = {Local Suppression and Splitting Techniques for Privacy Preserving
+               Publication of Trajectories},
+  journal   = {{IEEE} Trans. Knowl. Data Eng.},
+  volume    = {29},
+  number    = {7},
+  pages     = {1466--1479},
+  year      = {2017}
+}
+@inproceedings{DBLP:conf/ivs/MattosDL19,
+  author    = {Ekler P. de Mattos and
+               Augusto C. S. A. Domingues and
+               Antonio A. F. Loureiro},
+  title     = {Give Me Two Points and I'll Tell You Who You Are},
+  booktitle = {Proc. {IV}},
+  pages     = {1081--1087},
+  publisher = {{IEEE}},
+  year      = {2019}
+}
+@article{DBLP:journals/ijsn/ChangWT11,
+  author    = {Wei Chang and
+               Jie Wu and
+               Chiu Chiang Tan},
+  title     = {Friendship-based location privacy in Mobile Social Networks},
+  journal   = {Int. J. Secur. Networks},
+  volume    = {6},
+  number    = {4},
+  pages     = {226--236},
+  year      = {2011}
+}
+@inproceedings{DBLP:conf/IEEEwisa/LiuCXZ0L19,
+  author    = {Xiangyu Liu and
+               Jinmei Chen and
+               Xiufeng Xia and
+               Chuanyu Zong and
+               Rui Zhu and
+               Jiajia Li},
+  title     = {Dummy-Based Trajectory Privacy Protection Against Exposure Location Attacks},
+  booktitle = {Proc. {WISA}},
+  series    = {LNCS},
+  volume    = {11817},
+  pages     = {368--381},
+  publisher = {Springer},
+  year      = {2019}
+}
+@inproceedings{DBLP:conf/mdm/YouPL07,
+  author    = {Tun{-}Hao You and
+               Wen{-}Chih Peng and
+               Wang{-}Chien Lee},
+  title     = {Protecting Moving Trajectories with Dummies},
+  booktitle = {Proc. {MDM}},
+  pages     = {278--282},
+  publisher = {{IEEE}},
+  year      = {2007}
+}
+@article{DBLP:journals/jise/LeiPSC12,
+  author    = {Po{-}Ruey Lei and
+               Wen{-}Chih Peng and
+               Ing{-}Jiunn Su and
+               Chien{-}Ping Chang},
+  title     = {Dummy-Based Schemes for Protecting Movement Trajectories},
+  journal   = {J. Inf. Sci. Eng.},
+  volume    = {28},
+  number    = {2},
+  pages     = {335--350},
+  year      = {2012}
+}
+@article{DBLP:journals/corr/abs-0906-0612,
+  author    = {Santo Fortunato},
+  title     = {Community detection in graphs},
+  journal   = {CoRR},
+  volume    = {abs/0906.0612},
+  year      = {2009}
+}
+@inproceedings{DBLP:conf/icde/XueZZXHX13,
+  author    = {Andy Yuan Xue and
+               Rui Zhang and
+               Yu Zheng and
+               Xing Xie and
+               Jin Huang and
+               Zhenghua Xu},
+  title     = {Destination prediction by sub-trajectory synthesis and privacy protection against such prediction},
+  booktitle = {Proc. {ICDE}},
+  pages     = {254--265},
+  publisher = {{IEEE} Computer Society},
+  year      = {2013}
+}
+@article{DBLP:journals/tdp/MonrealeTPRB11,
+  author    = {Anna Monreale and
+               Roberto Trasarti and
+               Dino Pedreschi and
+               Chiara Renso and
+               Vania Bogorny},
+  title     = {C-safety: a framework for the anonymization of semantic trajectories},
+  journal   = {Trans. Data Privacy},
+  volume    = {4},
+  number    = {2},
+  pages     = {73--101},
+  year      = {2011}
+}
+@article{DBLP:journals/tdp/PoulisSLG14,
+  author    = {Giorgos Poulis and
+               Spiros Skiadopoulos and
+               Grigorios Loukides and
+               Aris Gkoulalas{-}Divanis},
+  title     = {Apriori-based algorithms for k\({}^{\mbox{m}}\)-anonymizing trajectory data},
+  journal   = {Trans. Data Privacy},
+  volume    = {7},
+  number    = {2},
+  pages     = {165--194},
+  year      = {2014}
+}
+@inproceedings{DBLP:conf/dsaa/DouriezDFS16,
+  author    = {Marie Douriez and
+               Harish Doraiswamy and
+               Juliana Freire and
+               Cl{\'{a}}udio T. Silva},
+  title     = {Anonymizing {NYC} Taxi Data: Does It Matter?},
+  booktitle = {Proc. {DSAA}},
+  pages     = {140--148},
+  publisher = {{IEEE}},
+  year      = {2016}
+}
+@inproceedings{DBLP:conf/icdm/WuS15,
+  author    = {Xichen Wu and
+               Guangzhong Sun},
+  title     = {A Novel Dummy-Based Mechanism to Protect Privacy on Trajectories},
+  booktitle = {Proc. {ICDM} Workshops},
+  pages     = {1120--1125},
+  publisher = {{IEEE} Computer Society},
+  year      = {2014}
+}
+@inproceedings{DBLP:conf/gis/KatoIHSXAN12,
+  author    = {Ryo Kato and
+               Mayu Iwata and
+               Takahiro Hara and
+               Akiyoshi Suzuki and
+               Xing Xie and
+               Yuki Arase and
+               Shojiro Nishio},
+  title     = {A dummy-based anonymization method based on user trajectory with pauses},
+  booktitle = {Proc. {SIGSPATIAL}},
+  pages     = {249--258},
+  publisher = {{ACM}},
+  year      = {2012}
+}
+@inproceedings{DBLP:conf/icdcs/GedikL05,
+  author    = {Bugra Gedik and
+               Ling Liu},
+  title     = {Location Privacy in Mobile Systems: {A} Personalized Anonymization
+               Model},
+  booktitle = {{ICDCS}},
+  pages     = {620--629},
+  publisher = {{IEEE} Computer Society},
+  year      = {2005}
+}
+@inproceedings{DBLP:conf/nana/LiuWZ18,
+  author    = {Xiangwen Liu and
+               Liangmin Wang and
+               Yuquan Zhu},
+  title     = {{SLAT:} Sub-Trajectory Linkage Attack Tolerance Framework for Privacy-Preserving Trajectory Publishing},
+  booktitle = {Proc. {NaNA}},
+  pages     = {298--303},
+  publisher = {{IEEE}},
+  year      = {2018}
+}
+article{aivodji2016meeting,
+  title={Meeting points in ridesharing: A privacy-preserving approach},
+  author={A{\"\i}vodji, Ulrich Matchi and Gambs, S{\'e}bastien and Huguet, Marie-Jos{\'e} and Killijian, Marc-Olivier},
+  journal={Transportation Research Part C: Emerging Technologies},
+  volume={72},
+  pages={239--253},
+  year={2016},
+  publisher={Elsevier}
+}
+@inproceedings{DBLP:conf/mobiquitous/MaoucheMB17,
+  author    = {Mohamed Maouche and
+               Sonia Ben Mokhtar and
+               Sara Bouchenak},
+  title     = {AP-Attack: {A} Novel User Re-identification Attack On Mobility Datasets},
+  booktitle = {Proc. {MobiQuitous}},
+  address   = {Melbourne, Australia},
+  pages     = {48--57},
+  year      = {2017},
+}
+@inproceedings{DBLP:conf/wsdm/ZhongYZZX15,
+  author    = {Yuan Zhong and
+               Nicholas Jing Yuan and
+               Wen Zhong and
+               Fuzheng Zhang and
+               Xing Xie},
+  title     = {You Are Where You Go: Inferring Demographic Attributes from Location Check-ins},
+  booktitle = {Proc. {WSDM}},
+  address   = {Shanghai, China},
+  pages     = {295--304},
+  year      = {2015},
+}
+@inproceedings{DBLP:conf/ndss/WangG0WJS18,
+  author    = {Huandong Wang and
+               Chen Gao and
+               Yong Li and
+               Gang Wang and
+               Depeng Jin and
+               Jingbo Sun},
+  title     = {De-anonymization of Mobility Trajectories: Dissecting the Gaps between Theory and Practice},
+  booktitle = {Proc. {NDSS}},
+  publisher = {The Internet Society},
+  year      = {2018}
+}
+@inproceedings{DBLP:conf/ndss/PyrgelisTC18,
+  author    = {Apostolos Pyrgelis and
+               Carmela Troncoso and
+               Emiliano De Cristofaro},
+  title     = {Knock Knock, Who's There? Membership Inference on Aggregate Location Data},
+  booktitle = {Proc. {NDSS}},
+  publisher = {The Internet Society},
+  year      = {2018}
+}
+@inproceedings{DBLP:conf/wpes/BilogrevicHJLHGN13,
+  author    = {Igor Bilogrevic and
+               K{\'{e}}vin Huguenin and
+               Murtuza Jadliwala and
+               Florent Lopez and
+               Jean{-}Pierre Hubaux and
+               Philip Ginzboorg and
+               Valtteri Niemi},
+  title     = {Inferring social ties in academic networks using short-range wireless communications},
+  booktitle = {Proc. {WPES}},
+  pages     = {179--188},
+  publisher = {{ACM}},
+  year      = {2013}
+}
+@inproceedings{DBLP:conf/huc/KrummR13,
+  author    = {John Krumm and
+               Dany Rouhana},
+  title     = {Placer: semantic place labels from diary data},
+  booktitle = {Proc. {UbiComp}},
+  pages     = {163--172},
+  publisher = {{ACM}},
+  year      = {2013}
+}
+@article{franceschi2015redditor,
+  title={Redditor cracks anonymous data trove to pinpoint muslim cab drivers},
+  author={Franceschi-Bicchierai, Lorenzo},
+  journal={Online at: http://mashable. com/2015/01/28/redditor-muslim-cab-drivers},
+  year={2015}
+}
+@inproceedings{DBLP:conf/www/RiedererKCKL16,
+  author    = {Christopher J. Riederer and
+               Yunsung Kim and
+               Augustin Chaintreau and
+               Nitish Korula and
+               Silvio Lattanzi},
+  title     = {Linking Users Across Domains with Location Data: Theory and Validation},
+  booktitle = {Proc. {WWW}},
+  pages     = {707--719},
+  publisher = {{ACM}},
+  year      = {2016}
+}
+@inproceedings{DBLP:conf/aaai/SadilekK12,
+  author    = {Adam Sadilek and
+               John Krumm},
+  title     = {Far Out: Predicting Long-Term Human Mobility},
+  booktitle = {Proc. {AAAI}},
+  address   = {Toronto, Ontario, Canada},
+  year      = {2012}
+}
+@article{song2010limits,
+  title={Limits of predictability in human mobility},
+  author={Song, Chaoming and Qu, Zehui and Blumm, Nicholas and Barab{\'a}si, Albert-L{\'a}szl{\'o}},
+  journal={Science},
+  volume={327},
+  number={5968},
+  pages={1018--1021},
+  year={2010},
+  publisher={American Association for the Advancement of Science}
+}
+@article{DBLP:journals/tdp/GambsKC11,
+  author    = {S{\'{e}}bastien Gambs and
+               Marc{-}Olivier Killijian and
+               Miguel N{\'{u}}{\~{n}}ez del Prado Cortez},
+  title     = {Show Me How You Move and {I} Will Tell You Who You Are},
+  journal   = {Trans. Data Privacy},
+  volume    = {4},
+  number    = {2},
+  pages     = {103--126},
+  year      = {2011},
+}
+@inproceedings{DBLP:conf/bigdataconf/MirICMW13,
+  author    = {Darakhshan J. Mir and
+               Sibren Isaacman and
+               Ram{\'{o}}n C{\'{a}}ceres and
+               Margaret Martonosi and
+               Rebecca N. Wright},
+  title     = {{DP-WHERE:} Differentially private modeling of human mobility},
+  booktitle = {Proc. {BigData}},
+  pages     = {580--588},
+  publisher = {{IEEE} Computer Society},
+  year      = {2013}
+}
+@inproceedings{DBLP:conf/dexa/ShaoJKBT13,
+  author    = {Dongxu Shao and
+               Kaifeng Jiang and
+               Thomas Kister and
+               St{\'{e}}phane Bressan and
+               Kian{-}Lee Tan},
+  title     = {Publishing Trajectory with Differential Privacy: {A} Priori vs. {A}
+               Posteriori Sampling Mechanisms},
+  booktitle = {Proc. {DEXA}},
+  series    = {LNCS},
+  volume    = {8055},
+  pages     = {357--365},
+  publisher = {Springer},
+  year      = {2013}
+}
+@article{DBLP:journals/tods/TrajcevskiWHC04,
+  author    = {Goce Trajcevski and
+               Ouri Wolfson and
+               Klaus H. Hinrichs and
+               Sam Chamberlain},
+  title     = {Managing uncertainty in moving objects databases},
+  journal   = {{ACM} Trans. Database Syst.},
+  volume    = {29},
+  number    = {3},
+  pages     = {463--507},
+  year      = {2004}
+}
+@inproceedings{DBLP:conf/ccs/ChenAC12,
+  author    = {Rui Chen and
+               Gergely {\'{A}}cs and
+               Claude Castelluccia},
+  title     = {Differentially private sequential data publication via variable-length n-grams},
+  booktitle = {Proc. {CCS}},
+  address   = {Raleigh, NC, USA},
+  pages     = {638--649},
+  publisher = {{ACM}},
+  year      = {2012}
+}
+@article{DBLP:journals/access/HanLZDG18,
+  author    = {Qilong Han and
+               Dan Lu and
+               Kejia Zhang and
+               Xiaojiang Du and
+               Mohsen Guizani},
+  title     = {Lclean: {A} Plausible Approach to Individual Trajectory Data Sanitization},
+  journal   = {{IEEE} Access},
+  volume    = {6},
+  pages     = {30110--30116},
+  year      = {2018}
+}
+@article{DBLP:journals/tmc/Gursoy0TY19,
+  author    = {Mehmet Emre Gursoy and
+               Ling Liu and
+               Stacey Truex and
+               Lei Yu},
+  title     = {Differentially Private and Utility Preserving Publication of Trajectory Data},
+  journal   = {{IEEE} Trans. Mob. Comput.},
+  volume    = {18},
+  number    = {10},
+  pages     = {2315--2329},
+  year      = {2019}
+}
+@article{DBLP:journals/compsec/WangS17,
+  author    = {Shuo Wang and
+               Richard O. Sinnott},
+  title     = {Protecting personal trajectories of social media users through differential privacy},
+  journal   = {Computers {\&} Security},
+  volume    = {67},
+  pages     = {142--163},
+  year      = {2017}
+}
+@inproceedings{DBLP:conf/focs/McSherryT07,
+  author    = {Frank McSherry and
+               Kunal Talwar},
+  title     = {Mechanism Design via Differential Privacy},
+  booktitle = {Proc. {FOCS}},
+  pages     = {94--103},
+  publisher = {{IEEE} Computer Society},
+  year      = {2007}
+}
+@article{DBLP:journals/isci/LiZZX17,
+  author    = {Meng Li and
+               Liehuang Zhu and
+               Zijian Zhang and
+               Rixin Xu},
+  title     = {Achieving differential privacy of trajectory data publishing in participatory sensing},
+  journal   = {Inf. Sci.},
+  volume    = {400},
+  pages     = {1--13},
+  year      = {2017}
+}
+@inproceedings{DBLP:conf/infocom/HuaGZ15,
+  author    = {Jingyu Hua and
+               Yue Gao and
+               Sheng Zhong},
+  title     = {Differentially private publication of general time-serial trajectory data},
+  booktitle = {Proc. {INFOCOM}},
+  pages     = {549--557},
+  publisher = {{IEEE}},
+  year      = {2015}
+}
+% comment: this paper doesn't provide such dataset
+@inproceedings{data:foursquare,
+  author    = {Eunjoon Cho and
+               Seth A. Myers and
+               Jure Leskovec},
+  title     = {Friendship and mobility: user movement in location-based social networks},
+  booktitle = {Proc. {KDD}},
+  pages     = {1082--1090},
+  publisher = {{ACM}},
+  year      = {2011}
+}
+@article{DBLP:journals/isci/ChenFMDW13,
+  author    = {Rui Chen and
+               Benjamin C. M. Fung and
+               Noman Mohammed and
+               Bipin C. Desai and
+               Ke Wang},
+  title     = {Privacy-preserving trajectory data publishing by local suppression},
+  journal   = {Inf. Sci.},
+  volume    = {231},
+  pages     = {83--97},
+  year      = {2013}
+}
+@incollection{DBLP:books/daglib/p/Kuhn10,
+  author    = {Harold W. Kuhn},
+  title     = {The Hungarian Method for the Assignment Problem},
+  booktitle = {50 Years of Integer Programming},
+  pages     = {29--47},
+  publisher = {Springer},
+  year      = {2010}
+}
+@inproceedings{DBLP:conf/pods/MeyersonW04,
+  author    = {Adam Meyerson and
+               Ryan Williams},
+  title     = {On the Complexity of Optimal K-Anonymity},
+  booktitle = {Proc. {PODS}},
+  pages     = {223--228},
+  publisher = {{ACM}},
+  year      = {2004}
+}
+@article{DBLP:journals/kbs/KomishaniAD16,
+  author    = {Elahe Ghasemi Komishani and
+               Mahdi Abadi and
+               Fatemeh Deldar},
+  title     = {{PPTD:} Preserving personalized privacy in trajectory data publishing by sensitive attribute generalization and trajectory local suppression},
+  journal   = {Knowl.-Based Syst.},
+  volume    = {94},
+  pages     = {43--59},
+  year      = {2016}
+}
+@article{DBLP:journals/tdp/MonrealeAAGPRW10,
+  author    = {Anna Monreale and
+               Gennady L. Andrienko and
+               Natalia V. Andrienko and
+               Fosca Giannotti and
+               Dino Pedreschi and
+               Salvatore Rinzivillo and
+               Stefan Wrobel},
+  title     = {Movement Data Anonymity through Generalization},
+  journal   = {Trans. Data Privacy},
+  volume    = {3},
+  number    = {2},
+  pages     = {91--121},
+  year      = {2010}
+}
+@article{DBLP:journals/tifs/NainiUTV16,
+  author    = {Farid Movahedi Naini and
+               Jayakrishnan Unnikrishnan and
+               Patrick Thiran and
+               Martin Vetterli},
+  title     = {Where You Are Is Who You Are: User Identification by Matching Statistics},
+  journal   = {{IEEE} Trans. Information Forensics and Security},
+  volume    = {11},
+  number    = {2},
+  pages     = {358--372},
+  year      = {2016}
+}
+@inproceedings{huo2011history,
+  title={History trajectory privacy-preserving through graph partition},
+  author={Huo, Zheng and Huang, Yi and Meng, Xiaofeng},
+  booktitle={Proc. {MLBS}},
+  pages={71--78},
+  year={2011},
+  organization={ACM}
+}
+% data was created by using the mobile simulator Siafu, which is widely used in other studies (e.g. [6], [11]). The moving range of the mobile was 4.2 km square, and the location information measured every 5 minutes for 10,000 users was used for 4 hours. Also, as a default value, the error of the position information is 200 m.
+@inproceedings{DBLP:conf/ntms/ChibaSTO19,
+  author    = {Tomoki Chiba and
+               Yuichi Sei and
+               Yasuyuki Tahara and
+               Akihiko Ohsuga},
+  title     = {Trajectory Anonymization: Balancing Usefulness about Position Information and Timestamp},
+  booktitle = {Proc. {NTMS}},
+  pages     = {1--6},
+  publisher = {{IEEE}},
+  year      = {2019}
+}
+% mobile simulator Siafu
+@article{DBLP:journals/compsec/HuYZ18,
+  author    = {Zhaowei Hu and
+               Jing Yang and
+               Jianpei Zhang},
+  title     = {Trajectory privacy protection method based on the time interval divided},
+  journal   = {Computers {\&} Security},
+  volume    = {77},
+  pages     = {488--499},
+  year      = {2018}
+}
+@inproceedings{DBLP:conf/icde/BayardoA05,
+  author    = {Roberto J. Bayardo Jr. and
+               Rakesh Agrawal},
+  title     = {Data Privacy through Optimal k-Anonymization},
+  booktitle = {Proc. {ICDE}},
+  pages     = {217--228},
+  publisher = {{IEEE} Computer Society},
+  year      = {2005}
+}
+@inproceedings{DBLP:conf/edbt/KopanakiTPKT16,
+  author    = {Despina Kopanaki and
+               Vasilis Theodossopoulos and
+               Nikos Pelekis and
+               Ioannis Kopanakis and
+               Yannis Theodoridis},
+  title     = {Who Cares about Others' Privacy: Personalized Anonymization of Moving Object Trajectories},
+  booktitle = {Proc. {EDBT}},
+  pages     = {425--436},
+  publisher = {OpenProceedings.org},
+  year      = {2016}
+}
+@inproceedings{DBLP:conf/mdm/HanT15,
+  author    = {Pin{-}I Han and
+               Hsiao{-}Ping Tsai},
+  title     = {{SST:} Privacy Preserving for Semantic Trajectories},
+  booktitle = {Proc. {MDM}},
+  pages     = {80--85},
+  publisher = {{IEEE} Computer Society},
+  year      = {2015}
+}
+@article{DBLP:journals/vldb/CicekNS14,
+  author    = {A. Ercument Cicek and
+               Mehmet Ercan Nergiz and
+               Y{\"{u}}cel Saygin},
+  title     = {Ensuring location diversity in privacy-preserving spatio-temporal data publishing},
+  journal   = {{VLDB} J.},
+  volume    = {23},
+  number    = {4},
+  pages     = {609--625},
+  year      = {2014}
+}
+@article{DBLP:journals/tist/GurungLJHZ14,
+  author    = {Sashi Gurung and
+               Dan Lin and
+               Wei Jiang and
+               Ali R. Hurson and
+               Rui Zhang},
+  title     = {Traffic Information Publication with Privacy Preservation},
+  journal   = {ACM Trans. Intell. Syst. Technol.},
+  volume    = {5},
+  number    = {3},
+  pages     = {44:1--44:26},
+  year      = {2014}
+}
+@article{DBLP:journals/isci/Domingo-FerrerT12,
+  author    = {Josep Domingo{-}Ferrer and
+               Rolando Trujillo{-}Rasua},
+  title     = {Microaggregation- and permutation-based anonymization of movement data},
+  journal   = {Inf. Sci.},
+  volume    = {208},
+  pages     = {55--80},
+  year      = {2012}
+}
+@inproceedings{DBLP:conf/mobicom/ZangB11,
+  author    = {Hui Zang and
+               Jean Bolot},
+  title     = {Anonymization of location data does not work: a large-scale measurement study},
+  booktitle = {Proc. {MobiCom}},
+  pages     = {145--156},
+  publisher = {{ACM}},
+  year      = {2011}
+}
+@article{DBLP:journals/isci/XinXY17,
+  author    = {Yu Xin and
+               Zhiqiang Xie and
+               Jing Yang},
+  title     = {The privacy preserving method for dynamic trajectory releasing based on adaptive clustering},
+  journal   = {Inf. Sci.},
+  volume    = {378},
+  pages     = {131--143},
+  year      = {2017}
+}
+% provide the roadmap of California with the semantic place information, and generate synthetic datasets
+% same as {data:sf}
+@inproceedings{DBLP:conf/edbt/YarovoyBLW09,
+  author    = {Roman Yarovoy and
+               Francesco Bonchi and
+               Laks V. S. Lakshmanan and
+               Wendy Hui Wang},
+  title     = {Anonymizing moving objects: how to hide a {MOB} in a crowd?},
+  booktitle = {Proc. {EDBT}},
+  series    = {{ACM} International Conference Proceeding Series},
+  volume    = {360},
+  pages     = {72--83},
+  publisher = {{ACM}},
+  year      = {2009}
+}
+@article{hern2018fitness,
+  title={Fitness tracking app Strava gives away location of secret US army bases},
+  author={Hern, Alex},
+  journal={The Guardian},
+  volume={28},
+  year={2018}
+}
+@inproceedings{DBLP:conf/infocom/GramagliaFTB17,
+  author    = {Marco Gramaglia and
+               Marco Fiore and
+               Alberto Tarable and
+               Albert Banchs},
+  title     = {Preserving mobile subscriber privacy in open datasets of spatiotemporal trajectories},
+  booktitle = {Proc. {INFOCOM}},
+  pages     = {1--9},
+  publisher = {{IEEE}},
+  year      = {2017}
+}
+@article{DBLP:journals/pvldb/BindschaedlerSG17,
+  author    = {Vincent Bindschaedler and
+               Reza Shokri and
+               Carl A. Gunter},
+  title     = {Plausible Deniability for Privacy-Preserving Data Synthesis},
+  journal   = {Proc. {VLDB}},
+  volume    = {10},
+  number    = {5},
+  pages     = {481--492},
+  year      = {2017}
+}
+@article{sweeney2000simple,
+  title={Simple demographics often identify people uniquely},
+  author={Sweeney, Latanya},
+  journal={Health},
+  volume={671},
+  pages={1--34},
+  year={2000}
+}
+@inproceedings{DBLP:conf/mdm/TerrovitisM08,
+  author    = {Manolis Terrovitis and
+               Nikos Mamoulis},
+  title     = {Privacy Preservation in the Publication of Trajectories},
+  booktitle = {Proc. {MDM}},
+  pages     = {65--72},
+  publisher = {{IEEE}},
+  year      = {2008}
+}
+@inproceedings{DBLP:conf/icde/AbulBN08,
+  author    = {Osman Abul and
+               Francesco Bonchi and
+               Mirco Nanni},
+  title     = {Never Walk Alone: Uncertainty for Anonymity in Moving Objects Databases},
+  booktitle = {Proc. {ICDE}},
+  pages     = {376--385},
+  publisher = {{IEEE} Computer Society},
+  year      = {2008}
+}
+@misc{GDPR,
+    title = {Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation)},
+    year = {Accessed 09/12/2019}, 
+    howpublished = "\url{https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng}"
+}
+@article{friedman2001greedy,
+  title={Greedy function approximation: a gradient boosting machine},
+  author={Friedman, Jerome H},
+  journal={Annals of statistics},
+  pages={1189--1232},
+  year={2001},
+  publisher={JSTOR}
+}
+@inproceedings{DBLP:conf/icde/JinHXZ19,
+  author    = {Fengmei Jin and
+               Wen Hua and
+               Jiajie Xu and
+               Xiaofang Zhou},
+  title     = {Moving Object Linking Based on Historical Trace},
+  booktitle = {Proc. {ICDE}},
+  pages     = {1058--1069},
+  publisher = {{IEEE}},
+  year      = {2019}
+}
+@article{dalenius1986finding,
+  title={Finding a needle in a haystack or identifying anonymous census records},
+  author={Dalenius, Tore},
+  journal={J. of Official Statistics},
+  volume={2},
+  number={3},
+  pages={329},
+  year={1986},
+  publisher={Statistics Sweden (SCB)}
+}
+@article{DBLP:journals/geoinformatica/Brinkhoff02,
+  author    = {Thomas Brinkhoff},
+  title     = {A Framework for Generating Network-Based Moving Objects},
+  journal   = {Proc. {GeoInformatica}},
+  volume    = {6},
+  number    = {2},
+  pages     = {153--180},
+  year      = {2002}
+}
+%---------------------------------------------------------------------------  
+%------------------------------- Fengmei added -----------------------------
+%---------------------------------------------------------------------------  
+% classification
+% clustering
+% pattern mining
+% outlier
+@inproceedings{yu2014detecting,
+  author    = {Yanwei Yu and
+               Lei Cao and
+               Elke A. Rundensteiner and
+               Qin Wang},
+  editor    = {Sofus A. Macskassy and
+               Claudia Perlich and
+               Jure Leskovec and
+               Wei Wang and
+               Rayid Ghani},
+  title     = {Detecting moving object outliers in massive-scale trajectory streams},
+  booktitle = {Proc. {KDD}},
+  address   = {New York, NY, {USA}},
+  pages     = {422--431},
+  publisher = {{ACM}},
+  year      = {2014},
+}
+% transformation
+@inproceedings{zheng2009matrix,
+  author    = {Yu Zheng and
+               Lizhu Zhang and
+               Xing Xie and
+               Wei{-}Ying Ma},
+  editor    = {Juan Quemada and
+               Gonzalo Le{\'{o}}n and
+               Yo{\"{e}}lle S. Maarek and
+               Wolfgang Nejdl},
+  title     = {Mining interesting locations and travel sequences from {GPS} trajectories},
+  booktitle = {Proc. {WWW}},
+  address   = {Madrid, Spain},
+  pages     = {791--800},
+  publisher = {{ACM}},
+  year      = {2009},
+}
+@article{zheng2011recommending,
+  author    = {Yu Zheng and
+               Lizhu Zhang and
+               Zhengxin Ma and
+               Xing Xie and
+               Wei{-}Ying Ma},
+  title     = {Recommending friends and locations based on individual location history},
+  journal   = {{ACM} Trans. Web},
+  volume    = {5},
+  number    = {1},
+  pages     = {5:1--5:44},
+  year      = {2011},
+  publisher={ACM New York, NY, USA}
+}
+% location prediction
+% path discovery
+@inproceedings{chang2011discovering,
+  author    = {Kai{-}Ping Chang and
+               Ling{-}Yin Wei and
+               Mi{-}Yen Yeh and
+               Wen{-}Chih Peng},
+  editor    = {Christian S. Jensen and
+               Wang{-}Chien Lee and
+               Yu Zheng and
+               Mohamed F. Mokbel},
+  title     = {Discovering personalized routes from trajectories},
+  booktitle = {Proc. {LBSN}},
+  address   = {Chicago, IL, USA},
+  pages     = {33--40},
+  publisher = {{ACM}},
+  year      = {2011},
+}
+@inproceedings{dai2015personalized,
+  author    = {Jian Dai and
+               Bin Yang and
+               Chenjuan Guo and
+               Zhiming Ding},
+  editor    = {Johannes Gehrke and
+               Wolfgang Lehner and
+               Kyuseok Shim and
+               Sang Kyun Cha and
+               Guy M. Lohman},
+  title     = {Personalized route recommendation using big trajectory data},
+  booktitle = {Proc. {ICDE}},
+  address   = {Seoul, South Korea},
+  pages     = {543--554},
+  publisher = {{IEEE} Computer Society},
+  year      = {2015},
+}
+% human mobility
+@inproceedings{moosavi2016discovery,
+  author    = {Sobhan Moosavi and
+               Rajiv Ramnath and
+               Arnab Nandi},
+  editor    = {Erik G. Hoel and
+               Ahmed Eldawy},
+  title     = {Discovery of driving patterns by trajectory segmentation},
+  booktitle = {Proc. {SIGSPATIAL} PhD Symposium},
+  address   = {Burlingame, California, USA},
+  pages     = {4:1--4:4},
+  publisher = {{ACM}},
+  year      = {2016},
+}
+@article{moosavi2017annotation,
+  author    = {Sobhan Moosavi and
+               Behrooz Omidvar{-}Tehrani and
+               R. Bruce Craig and
+               Rajiv Ramnath},
+  title     = {Annotation of Car Trajectories based on Driving Patterns},
+  journal   = {CoRR},
+  volume    = {abs/1705.05219},
+  year      = {2017},
+}
+% trajectory influence maximization
+@article{fung2010privacy,
+  author    = {Benjamin C. M. Fung and
+               Ke Wang and
+               Rui Chen and
+               Philip S. Yu},
+  title     = {Privacy-preserving data publishing: {A} survey of recent developments},
+  journal   = {{ACM} Comput. Surv.},
+  volume    = {42},
+  number    = {4},
+  pages     = {14:1--14:53},
+  year      = {2010},
+}
+@inproceedings{he2006inferring,
+  author    = {Jianming He and
+               Wesley W. Chu and
+               Zhenyu Liu},
+  editor    = {Sharad Mehrotra and
+               Daniel Dajun Zeng and
+               Hsinchun Chen and
+               Bhavani M. Thuraisingham and
+               Fei{-}Yue Wang},
+  title     = {Inferring Privacy Information from Social Networks},
+  booktitle = {Proc. {ISI}},
+  address   = {San Diego, CA, USA},
+  series    = {LNCS},
+  volume    = {3975},
+  pages     = {154--165},
+  publisher = {Springer},
+  year      = {2006},
+}
+@inproceedings{ostrovsky2007survey,
+  author    = {Rafail Ostrovsky and
+               William E. Skeith III},
+  editor    = {Tatsuaki Okamoto and
+               Xiaoyun Wang},
+  title     = {A Survey of Single-Database Private Information Retrieval: Techniques
+               and Applications},
+  booktitle = {Proc. {PKC}},
+  address   = {Beijing, China},
+  series    = {LNCS},
+  volume    = {4450},
+  pages     = {393--411},
+  publisher = {Springer},
+  year      = {2007},
+}

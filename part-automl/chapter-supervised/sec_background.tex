@@ -1,0 +1,73 @@
+\section{Background: AutoETL and AutoML}
+\label{sec:background}
+%\besim{TO DO: AutoETL umbrella for DPSO, ...}
+
+
+%The abundance of data has raised an excessive need for a new business position, that of the data scientist; a role with heterogeneous skills, ranging from Statistics, to Machine Learning, to Programming. The demand for data scientists is growing at an unprecedented scale: it is almost impossible to balance the number of qualified experts of this field and the required effort to analyze the increasingly growing sizes of available data~\cite{data-scientists}. 
+The abundance of data has led to data analytics being prevalent in many disciplines and domains, but since the number of its applications exceeds the number of qualified experts, more and more non-experts approach the task of data analytics. This has consequently led to the rise of off-the-shelf automated techniques that facilitate its application.
+AutoML is an umbrella term for automations mainly related to the ML algorithm, and it typically aims to tackle the challenge of Combined Algorithm Selection and Hyperparameter Optimization (CASH). Yet, there is also need for automation in the more generic aspects of ETL~\cite{Munoz09DOLAP}, which we coin as AutoETL. AutoETL encompasses various steps, however, in this work we focus on the phase that is related to the transformation (pre-processing) of the data, typically formalized as DPSO.
+
+CASH and DPSO can be treated as a single optimization problem ~\cite{auto_weka, auto_sklearn}. However, we consider them separately because this allows to, (i) reduce the search space and, (ii) to explicitly assign different optimization budgets and/or optimization techniques, depending on their respective impact to the final result of the analysis.
+Since these problems are similar, the methods initially employed in CASH have been recently considered to solve the DPSO problem too. Therefore, in the following we first delve into more details about CASH and then DPSO. In particular, we formalize them and discuss the methods they employ.
+
+\subsection{Combined Algorithm Selection and Hyper-parameter optimization (CASH)}
+
+The algorithm selection problem is known to exist for a long time and many approaches have been proposed to solve it~\cite{Serban13survey}. Recently, in the context of ML algorithms, the problem has been extended to include the optimization of the hyperparameters too, and thus has been formalized as follows~\cite{auto_weka}.
+
+Given:
+\begin{itemize}
+    \item A data-set $D$ divided into $D_{train}, D_{test}$;
+    \item A set of algorithms $\mathcal{A} = \{A^{1}, \dots , A^{k}\}$ with associated hyperparameter spaces $\Lambda^{1}, \dots, \Lambda^{k}$;
+    \item And a loss function $\mathcal{L}(A^{i}_\lambda,D_{train},D_{test})$;
+\end{itemize}
+we are searching for:
+\begin{equation}
+    A^{\ast}_{\lambda^{\ast}} \in \argmin\limits_{A^i \in \mathcal{A}, \lambda \in \Lambda^i} \mathcal{L}(A^i_\lambda,D_{train},D_{test}) \tag{CASH}
+\end{equation}
+
+The dataset $D$ is divided into $D_{train}$ and $D_{test}$, to build and to evaluate the overall performance, calculated through the loss function $\mathcal{L}$. The problem is set up as an optimization problem and, as such, the configuration space is assumed to be known in advance (the set of algorithms $\{A^{1}, \dots , A^{k}\}$ and the related hyper-parameter spaces $\{\Lambda^{1}, \dots, \Lambda^{k}\}$).
+The goal is then to find the best algorithm $A^{\ast}$ in the set of algorithms and its best hyperparameters $\lambda^{\ast}$ in the related hyperparameter space. 
+
+Many optimization techniques have been employed to solve the CASH problem and some of them are: Grid search\textcolor{red}{~\cite{montgomery2017design}}, Random search\textcolor{red}{~\cite{bergstra2012random}}, Simulating annealing\textcolor{red}{~\cite{van1987simulated}}, Genetic algorithms\textcolor{red}{~\cite{kramer2017genetic}}, Bayesian techniques\textcolor{red}{~\cite{gp_kernel}}, Bandit-based algorithms~\textcolor{red}{\cite{li2017hyperband}}.
+However, due to their promising results, Bayesian techniques are perhaps the most popular ones~\cite{zoller2019survey,autoMLsurveyQuanming}. We explore their details and specifically focus on one of their incarnation, the Sequential Model-Based Optimization (SMBO) algorithm~\cite{hutter2011sequential}.
+
+
+
+\subsubsection{Sequential Model-Based Optimization (SMBO)}
+
+In an optimization problem, we are searching for the best solution among a set of feasible solutions. The latter can be formalized as follows:
+\begin{equation*}
+    \max_{x \in B} f ( x )
+\end{equation*}
+, where $B$ contains all the feasible solutions, or candidates, and it is typically d-dimensional ($B \subseteq \mathbb{R}^d$), where $d \in \mathbb{Z}$ and $d>1$. A specific solution $x \in B$ is evaluated through the function $f: \mathbb{R}^d \longrightarrow \mathbb{R}$, also called the objective function. In general, in these kinds of problems,~$f$~has no special structure like concavity or linearity that would make the optimization easier. In fact, it is considered as a ``black-box'' function, without any knowledge about its behaviour; being that it maps certain inputs, $x \in B$, to certain outputs, $f(x) \in \mathbb{R}$. The goal is then finding an $x$ that maximizes $f(x)$.
+The naive solution to the problem would be to systematically evaluate all possible candidates $x$ and choosing the one leading to the highest value of $f(x)$, aka \textit{exhaustive search}. Since this evaluates all the potential solutions, it guarantees that it always finds the best one. Nevertheless, generally, it cannot be applied to real problems due to the large number of candidate solutions to be explored, which dwell in a high-dimensional space, and too expensive objective functions. The result is that not all candidates can be evaluated and we have to find a way to wisely choose the most promising ones.
+Bayesian techniques are part of the family of ``surrogate methods'', which create a surrogate model to approximate the objective function and thus, choose a point in the search space where to evaluate the objective function~\cite{BayesianOptimizationBook}. In contrast to the other methods, they build such surrogate models through Bayesian statistics.
+
+In short, Bayesian techniques start by evaluating the objective function on an initial observation point of the search space, then the process becomes iterative: the surrogate model is constructed on the basis of the visited points and through an acquisition function --- the Bayesian interpretation of the surrogate, the candidate for the next observation is decided. The process ends when a termination condition is reached, generally expressed through a \textit{budget} represented in terms of the \textit{number of iterations} or \textit{execution time}. Given its iterative nature and the fundamental role of the model, this algorithm is called Sequential Model-Based Optimization~\citep{hutter2011sequential,hutter2009experimental}. 
+Variations of SMBO exist, depending on the method used to build the surrogate model (e.g., Gaussian Processes, Random Forest Regressions)~\cite{snoeck2012NIPS,Wistuba2018ML}.
+
+\subsection{Data Pipeline Selection and Optimization (DPSO)}
+
+DPSO was formalized for the first time in \cite{Quemy20InfSystems}, where some new concepts were introduced. For instance, a pre-processing \textit{pipeline prototype} or \textit{logical pipeline} is defined as a sequence of kinds of transformations, where each represents a logical concept that can be implemented/instantiated by one or more operators. The prototype thus, defines only the order between kinds of transformations, without specifying the concrete operators nor their parameters. Yet, the potential operators of each kind and their corresponding parameter search spaces need to be known in advance. Solving the DPSO problem translates to finding the right instantiation and configuration for each kind of transformation in the pipeline prototype (i.e., optimal operator and optimal parameter values), which is called pre-processing \textit{pipeline} or \textit{physical pipeline}. 
+
+Formally, given:
+\begin{itemize}
+    \item A data-set $D$ divided into $D_{train}, D_{test}$;
+    \item A data pipeline prototype $P$ with a configuration space  $\mathcal{P}$;
+    \item The algorithm $A$, for which the given pipeline $P$ transforms the data;
+    \item And a loss function $\mathcal{L}(P,A,D_{train},D_{test})$;
+\end{itemize}
+we are searching for:
+\begin{equation}
+    P^\ast \in \argmin_{P \in \mathcal{P}} \mathcal{L}(P,A,D_{train},D_{test}) \tag{DPSO}
+\end{equation}
+
+Notice that a prototype imposes an order between the kinds of transformations, but this is an additional problem that is not dealt within DPSO, since it is assumed to be given as part of the input. This is in fact a limitation of the current approaches in DPSO, in that the order of kinds of transformations are fixed a priori without sufficiently studying the potential effectiveness of different alternatives.
+ 
+
+\subsubsection{SMBO as solver for DPSO}
+
+Since DPSO is formalized as an optimization problem, SMBO has been proposed as a valid solver\textcolor{red}{~\cite{hutter2011sequential}}. In the previous section, we saw the application of SMBO to CASH, but in fact the process of selecting the best algorithm, and its hyperparameters configuration, is identical to selecting the best operator for a transformation, and its parameter configuration. Yet, DPSO requires one more layer, in that transformations need to be chained together into a pipeline.
+To this end, given a pipeline prototype as input and a budget either in terms of time or number of iterations, SMBO can be configured to iterate over different configurations until a near to optimal physical pipeline is found. The objective function of the pipeline is however measured in the context of a given parametrised ML algorithm by applying the pipeline on a dataset, and measuring the performance of the ML algorithm (e.g., predictive accuracy) on the transformed output. In this context, by fixing the hyper-parameters of the ML algorithm to the default ones, the performance of the learner is set to measure the effectiveness of the considered data pipeline. 
+
+\color{black}
