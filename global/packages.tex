@@ -146,17 +146,12 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{caption}
-% \usepackage{float}
 \usepackage{floatrow}
 \usepackage{multirow}
 \usepackage{xcolor}
 \usepackage{colortbl}
-% \usepackage{subcaption}
 \usepackage{algorithm}
-% \usepackage{algorithmic}
 \usepackage[noend]{algpseudocode}
-\algnewcommand\algorithmicforeach{\textbf{for each}}
-\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{pifont}
@@ -165,28 +160,37 @@
 \usepackage{epigraph}
 \usepackage[flushleft]{threeparttable}
 \usepackage{subfig}
-\renewcommand{\pm}{\mathbin{\smash{\raisebox{0.35ex}{$\underset{\raisebox{0.5ex}{$\smash -$}}{\smash+}$}}}}
-\newcommand{\cmark}{\ding{51}}
-\newcommand{\xmark}{\ding{55}}
-\renewcommand{\sf}[1]{\textsf{\textup{#1}}}  
-\renewcommand{\tt}[1]{\texttt{\textup{#1}}}
-\newcommand{\eop}{\hfill $\Box$}
-\newif\ifproofread
-\proofreadtrue % commentare questo per disattivare \mf \mg \eg \sr
+
 \newtheorem{example}{Example}
 \newtheorem{definition}{Definition}
 \newtheorem{problem}{Problem}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
+
 \newenvironment{proof}{{\bf Proof:}}{}
 
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+\newcommand{\eop}{\hfill $\Box$}
 \newcommand{\mf}[1]{\textcolor{red}{\textbf{#1} ??}}
 \newcommand{\argmax}{\mathop{\mathrm{argmax}}}
 \newcommand{\argmin}{\mathop{\mathrm{argmin}}}
-\newfloatcommand{capbtabbox}{table}[][\FBwidth]
 \newcommand{\veryshortarrow}[1][3pt]{\mathrel{%
 		\hbox{\rule[\dimexpr\fontdimen22\textfont2-.2pt\relax]{#1}{.4pt}}%
 		\mkern-4mu\hbox{\usefont{U}{lasy}{m}{n}\symbol{41}}}}
+
+\renewcommand{\sf}[1]{\textsf{\textup{#1}}}
+\renewcommand{\tt}[1]{\texttt{\textup{#1}}}
+\renewcommand{\pm}{\mathbin{\smash{\raisebox{0.35ex}{$\underset{\raisebox{0.5ex}{$\smash -$}}{\smash+}$}}}}
+
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+
+\newif\ifproofread
+\proofreadtrue % commentare questo per disattivare \mf \mg \eg \sr
+
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Uncomment to check unused bibitems from here
 % \usepackage{refcheck}
@@ -203,47 +207,40 @@
 % ... to here
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
 % \usepackage{booktabs} % For formal tables
-
 % \usepackage{fancyhdr,amsmath}             % AMS Math
 % \usepackage[utf8]{inputenc}
 % \usepackage{xr}
 % \usepackage{fullpage}
 % \usepackage{times}
-% %\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+% \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
 % \usepackage{mathrsfs}
 % \usepackage{listings,xcolor}
 % \usepackage{color}
-
-
 % \usepackage{blindtext}
-
-% %\usepackage{makeidx}  % allows for indexgeneration
+% \usepackage{makeidx}  % allows for indexgeneration
 % \usepackage{graphicx}
 % \usepackage{natbib}
 % \usepackage{rotating}
-% %\usepackage[noend]{algpseudocode}
+% \usepackage[noend]{algpseudocode}
 % \usepackage{paralist}
 % \usepackage{tabularx}
 % \usepackage{url}
 % \usepackage{soul}
-% %\usepackage[disable]{todonotes}
+% \usepackage[disable]{todonotes}
 % \usepackage{todonotes}
 % \usepackage{enumitem}
 % \usepackage{tikz,fullpage}
 % \usepackage{hyperref}
 % \usepackage{amssymb}
-% %\usepackage{tkz-berge}
-% %\usetikzlibrary{shapes.geometric}
+% \usepackage{tkz-berge}
+% \usetikzlibrary{shapes.geometric}
 % \usepackage{caption}
 % \usepackage{subcaption}
 % \usepackage{stmaryrd}
 % \usepackage{courier}
 % \usepackage{algorithm}
 % \usepackage{eqparbox}
-
-% \newcommand{\veryshortarrow}[1][3pt]{\mathrel{%
-% 		\hbox{\rule[\dimexpr\fontdimen22\textfont2-.2pt\relax]{#1}{.4pt}}%
-% 		\mkern-4mu\hbox{\usefont{U}{lasy}{m}{n}\symbol{41}}}}
+% \usepackage{float}
+% \usepackage{subcaption}
+% \usepackage{algorithmic}
