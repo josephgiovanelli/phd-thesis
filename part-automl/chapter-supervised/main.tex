@@ -1384,326 +1384,324 @@ hc4 : mandatory_order($\langle S_1, \ldots, S_n \rangle$, $\mathcal{C}l$), algor
 
 HAMLET iterates over three phases (\Cref{fig:approach}): (i) the generation of Problem Graph and search space out of the LogicalKB, (ii) the exploration of the search space in compliance with the specified constraints, and (iii) the augmentation of the LogicalKB through a rule recommendation.
 
-% The framework is available at \url{https://github.com/QueueInc/HAMLET}, and it is composed of two sub-modules. 
-% The first, written in Kotlin and running on the JVM, exposes a graphical interface on which the DSs can compile and revise the LogicalKB. 
-% The module is also responsible for the generation and evaluation of the Problem Graph; it implements the Structured Argumentation functionalities as specified in \Cref{ssec:problem} using \argtup{} \cite{arg2p-jlc}, an ASPIC\textsuperscript{+}-based Kotlin library.
-% The second module, written in Python, is responsible for performing the AutoML optimization and the extraction of the new constraints from the explored space.
+The framework is available at \url{https://github.com/QueueInc/HAMLET}, and it is composed of two sub-modules. 
+The first, written in Kotlin and running on the JVM, exposes a graphical interface on which the DSs can compile and revise the LogicalKB. 
+The module is also responsible for the generation and evaluation of the Problem Graph; it implements the Structured Argumentation functionalities as specified in \Cref{ssec:problem} using \argtup{} \cite{arg2p-jlc}, an ASPIC\textsuperscript{+}-based Kotlin library.
+The second module, written in Python, is responsible for performing the AutoML optimization and the extraction of the new constraints from the explored space.
 
-% \subsubsection{Generation of Problem Graph and Search Space}
-% In \Cref{ssec:problem}, we defined the LogicalKB as the set of rules specified by the DS using her knowledge.
-% The LogicalKB also includes a set of hard-encoded rules representing inferences necessary to characterize the AutoML problems.
-% These rules are joined to the ones defined by the DS and used to build the Problem Graph (i.e., Argumentation framework).
+\subsubsection{Generation of Problem Graph and Search Space}
+In \Cref{ssec:problem}, we defined the LogicalKB as the set of rules specified by the DS using her knowledge.
+The LogicalKB also includes a set of hard-encoded rules representing inferences necessary to characterize the AutoML problems.
+These rules are joined to the ones defined by the DS and used to build the Problem Graph (i.e., Argumentation framework).
 
-% A subset of rules is shown in \Cref{rules-arg2p}.
-% The first two ($hc0$ and $hc1$) define how to automatically derive a pipeline using algorithms and steps.
-% The construction of pipelines can be completely automated and the DS should be dispensed from manually enumerating all the possible pipelines as in \Cref{ex:conflict}.
-% In particular, the correct set of rules is built dynamically using the steps and algorithms provided by the DS, then they are used to derive all the arguments for the possible pipelines.
-% The last three rules ($hc2, hc3$ and $hc4$) encode constraints -- mandatory, forbidden, mandatory\_order -- on all the available algorithms with a single statement (e.g., $mandatory(\langle \mathcal{D} \rangle, \mathcal{C}l)$): it will be automatically used by the framework to derive the constraints for all the specific algorithms in the theory.
+A subset of rules is shown in \Cref{rules-arg2p}.
+The first two ($hc0$ and $hc1$) define how to automatically derive a pipeline using algorithms and steps.
+The construction of pipelines can be completely automated and the DS should be dispensed from manually enumerating all the possible pipelines as in \Cref{ex:conflict}.
+In particular, the correct set of rules is built dynamically using the steps and algorithms provided by the DS, then they are used to derive all the arguments for the possible pipelines.
+The last three rules ($hc2, hc3$ and $hc4$) encode constraints -- mandatory, forbidden, mandatory\_order -- on all the available algorithms with a single statement (e.g., $mandatory(\langle \mathcal{D} \rangle, \mathcal{C}l)$): it will be automatically used by the framework to derive the constraints for all the specific algorithms in the theory.
 
-% \begin{example}[Hard-coded rules]
-% With reference to \Cref{ex:graph} and \Cref{rules-arg2p}, we add rule \texttt{c2} for a new data-related constraint.
-% \begin{lstlisting}[mathescape=true]
-% # mandatory Norm. in Class. pipelines
-% c2 : $\Rightarrow$ mandatory($\langle\mathcal{N}\rangle$, $\mathcal{C}l$)
-% \end{lstlisting}
-% From the rule \texttt{c2}, the hard-coded rules generate the two arguments
-% \texttt{c2' = \{c2, a1, hc2\}} (i.e., $mandatory(\langle\mathcal{N}\rangle, \mathcal{D}t)$) and \texttt{c2'' = \{c2, a2, hc2\}} (i.e., $mandatory(\langle\mathcal{N}\rangle, \mathcal{K}nn)$) that are specific for the Classification algorithms in the LogicalKB.
+\begin{example}[Hard-coded rules]
+With reference to \Cref{ex:graph} and \Cref{rules-arg2p}, we add rule \texttt{c2} for a new data-related constraint.
+\begin{lstlisting}[mathescape=true]
+# mandatory Norm. in Class. pipelines
+c2 : $\Rightarrow$ mandatory($\langle\mathcal{N}\rangle$, $\mathcal{C}l$)
+\end{lstlisting}
+From the rule \texttt{c2}, the hard-coded rules generate the two arguments
+\texttt{c2' = \{c2, a1, hc2\}} (i.e., $mandatory(\langle\mathcal{N}\rangle, \mathcal{D}t)$) and \texttt{c2'' = \{c2, a2, hc2\}} (i.e., $mandatory(\langle\mathcal{N}\rangle, \mathcal{K}nn)$) that are specific for the Classification algorithms in the LogicalKB.
 
-% However, \texttt{\{c1\}} (i.e., $forbidden(\langle\mathcal{N}\rangle, \mathcal{D}t)$; is in conflict with \texttt{c2'}.
-% Depending on her experience, the DS decides to resolve the conflict by specifying an ordering over the rules in the LogicalKB.
-% Assuming that the DS prefers \texttt{c1} to \texttt{hc2},
-% the argument \texttt{\{c1\}} is preferred to \texttt{c2'} and the attack from the latter is not considered in the final graph.
-% \Cref{fig:toy_example}b shows the updated graph.
-% Firstly, we observe the support relation between \texttt{\{c2\}} and the generated constraints \texttt{c2'} and \texttt{c2''}.
-% Since \texttt{\{c1\}} has no attackers, it is added to extension.
-% Consequently, \texttt{c2'} is refuted and the the pipelines attacked by it are correctly reinstated.
-% \label{ex:hard_coded_rules}
-% \end{example}
+However, \texttt{\{c1\}} (i.e., $forbidden(\langle\mathcal{N}\rangle, \mathcal{D}t)$; is in conflict with \texttt{c2'}.
+Depending on her experience, the DS decides to resolve the conflict by specifying an ordering over the rules in the LogicalKB.
+Assuming that the DS prefers \texttt{c1} to \texttt{hc2},
+the argument \texttt{\{c1\}} is preferred to \texttt{c2'} and the attack from the latter is not considered in the final graph.
+\Cref{fig:toy_example}b shows the updated graph.
+Firstly, we observe the support relation between \texttt{\{c2\}} and the generated constraints \texttt{c2'} and \texttt{c2''}.
+Since \texttt{\{c1\}} has no attackers, it is added to extension.
+Consequently, \texttt{c2'} is refuted and the pipelines attacked by it are correctly reinstated.
+\label{ex:hard_coded_rules}
+\end{example}
 
-% Given the Problem Graph (we recall that the Problem Graph contains \emph{all} the generated pipelines -- including their partial permutations), the search space can be extracted as in \Cref{spacealgorithm}. 
-% We iterate over all the generated pipelines in the Problem Graph and we recursively build their domain: the pipeline domain is the Cartesian product of the step domains, the step domain is the disjoint union of the algorithm domains (we leverage the disjoint union since each algorithm can be picked as an alternative to the others), the algorithm domain is the Cartesian product of its hyperparameters; the domain of a hyperparameter is given by definition.
-% Finally, the search space is the disjoint union of all the alternative pipeline domains.
+Given the Problem Graph (we recall that the Problem Graph contains \emph{all} the generated pipelines -- including their partial permutations), the search space can be extracted as in \Cref{spacealgorithm}. 
+We iterate over all the generated pipelines in the Problem Graph and we recursively build their domain: the pipeline domain is the Cartesian product of the step domains, the step domain is the disjoint union of the algorithm domains (we leverage the disjoint union since each algorithm can be picked as an alternative to the others), the algorithm domain is the Cartesian product of its hyperparameters; the domain of a hyperparameter is given by definition.
+Finally, the search space is the disjoint union of all the alternative pipeline domains.
 
-% Noticeably, while the search space could be constrained during its construction (e.g., by simply adding an ``if'' condition to check the validity of each pipeline at \Cref{spacealgorithm} line 10), current AutoML frameworks leverage optimization techniques that do not allow the explicit exclusion of regions from the search space.
-% As a consequence, we need to produce the entire search space first.
+Noticeably, while the search space could be constrained during its construction (e.g., by simply adding an ``if'' condition to check the validity of each pipeline at \Cref{spacealgorithm} line 10), current AutoML frameworks leverage optimization techniques that do not allow the explicit exclusion of regions from the search space.
+As a consequence, we need to produce the entire search space first.
 
-% \begin{algorithm}[t]
-% \caption{Search Space from the Problem Graph}
-% \label{spacealgorithm}
-% \footnotesize
-% \begin{algorithmic}[1]
-% \Require{PG(N, E): Nodes and Edges of a Problem Graph}
-% \Ensure{$\Lambda$: Search Space}
-%     \item[]
-%     \Procedure{GetDomain}{$A$}
-%         \State $\Lambda_A \leftarrow \varnothing$
-%         \ForEach{$h \in A$} \Comment{For each hyperparameter in the algorithm...}
-%             \State $\Lambda_A \leftarrow \Lambda_A \times \Lambda_h$ 
-%             \Comment{Compute Cartesian product of hyperpar. domains}
-%         \EndFor
-%         \State \Return $\Lambda_A$ \Comment{Return the algorithm domain}
-%     \EndProcedure
-%     \item[]
-%     \State $\Lambda \leftarrow \varnothing$ \Comment{Initialize the search space}
-%     \ForEach{$pipeline(\alpha, A) \in N$} \Comment{For each argument that is a pipeline with $\alpha$ steps and alg. $A$...}
-%         \State $ \Lambda_{P} \leftarrow \textup{GetDomain(A)}$ \Comment{Init. pipeline domain with algorithm domain}
-%         \ForEach{$S \in \alpha$}  \Comment{For each step in the pipeline...}
-%             \State $\Lambda_{S}  \leftarrow \varnothing$ \Comment{Init. the step domain}
-%             \ForEach{$A \in S$}  \Comment{For each algorithm in the step...}
-%                 \State $\Lambda_{S} \leftarrow \Lambda_{S} \cupdot \textup{GetDomain(A)}$ \Comment{Add alg. to step domain}
-%             \EndFor
-%             \State $\Lambda_P \leftarrow \Lambda_P \times \Lambda_S$ \Comment{Add step domain to pipeline domain}
-%         \EndFor
-%         \State $\Lambda \leftarrow \Lambda \cupdot \Lambda_P$ \Comment{Add pipeline domain to the search space}
-%     \EndFor
-%     \State \Return $\Lambda$ \Comment{Return the search space}
-% \end{algorithmic}
-% \end{algorithm}
+\begin{algorithm}[t]
+\caption{Search Space from the Problem Graph}
+\label{spacealgorithm}
+\footnotesize
+\begin{algorithmic}[1]
+\Require{PG(N, E): Nodes and Edges of a Problem Graph}
+\Ensure{$\Lambda$: Search Space}
+    \item[]
+    \Procedure{GetDomain}{$A$}
+        \State $\Lambda_A \leftarrow \varnothing$
+        \ForEach{$h \in A$} \Comment{For each hyperparameter in the algorithm...}
+            \State $\Lambda_A \leftarrow \Lambda_A \times \Lambda_h$ 
+            \Comment{Compute Cartesian product of hyperpar. domains}
+        \EndFor
+        \State \Return $\Lambda_A$ \Comment{Return the algorithm domain}
+    \EndProcedure
+    \item[]
+    \State $\Lambda \leftarrow \varnothing$ \Comment{Initialize the search space}
+    \ForEach{$pipeline(\alpha, A) \in N$} \Comment{For each argument that is a pipeline with $\alpha$ steps and alg. $A$...}
+        \State $ \Lambda_{P} \leftarrow \textup{GetDomain(A)}$ \Comment{Init. pipeline domain with algorithm domain}
+        \ForEach{$S \in \alpha$}  \Comment{For each step in the pipeline...}
+            \State $\Lambda_{S}  \leftarrow \varnothing$ \Comment{Init. the step domain}
+            \ForEach{$A \in S$}  \Comment{For each algorithm in the step...}
+                \State $\Lambda_{S} \leftarrow \Lambda_{S} \cupdot \textup{GetDomain(A)}$ \Comment{Add alg. to step domain}
+            \EndFor
+            \State $\Lambda_P \leftarrow \Lambda_P \times \Lambda_S$ \Comment{Add step domain to pipeline domain}
+        \EndFor
+        \State $\Lambda \leftarrow \Lambda \cupdot \Lambda_P$ \Comment{Add pipeline domain to the search space}
+    \EndFor
+    \State \Return $\Lambda$ \Comment{Return the search space}
+\end{algorithmic}
+\end{algorithm}
 
-% \subsubsection{Exploration of a Constrained Search Space}\label{subsec:constrained_automl}
+\subsubsection{Exploration of a Constrained Search Space}\label{subsec:constrained_automl}
 
-% The Problem Graph is not only used to build the entire search space but it is also evaluated to understand which pipelines are invalid and which constraints are valid.
-% Hence -- through the Problem Graph -- we enhance AutoML exploration by combining the following techniques.
-% \begin{itemize}
-%     \item[(i)] Invalid pipelines are used to discourage the exploration of such a portion of the search space (we recall that a pipeline has a domain -- a region of the search space -- in which several pipeline instances are parametrized).
-%     First, we sample such regions of the search space, then we enforce a knowledge injection mechanism through warm-starting (i.e., the process of providing previous evaluations that help the model to converge faster).
-%     For instance, with reference to \Cref{ex:hard_coded_rules}, we sample some pipeline instances from the pipelines that have been discarded (from \texttt{\{p3\}} to \texttt{\{p7\}});
-%     then, we label such samples as invalid and provide them to the AutoML tool, helping the optimization algorithm to focus only on the valid portions of the space.
-%     \item[(ii)] Valid constraints -- expressed as conjunctions of Boolean clauses -- are used to discard the invalid pipeline instances that still are encountered by the AutoML tool.
-%     Indeed, since the sampling from (i) is non-exhaustive, it can happen that small portions of invalid regions could still be explored.
-% \end{itemize}
+The Problem Graph is not only used to build the entire search space but it is also evaluated to understand which pipelines are invalid and which constraints are valid.
+Hence -- through the Problem Graph -- we enhance AutoML exploration by combining the following techniques.
+\begin{itemize}
+    \item[(i)] Invalid pipelines are used to discourage the exploration of such a portion of the search space (we recall that a pipeline has a domain -- a region of the search space -- in which several pipeline instances are parametrized).
+    First, we sample such regions of the search space, then we enforce a knowledge injection mechanism through warm-starting (i.e., the process of providing previous evaluations that help the model to converge faster).
+    For instance, with reference to \Cref{ex:hard_coded_rules}, we sample some pipeline instances from the pipelines that have been discarded (from \texttt{\{p3\}} to \texttt{\{p7\}});
+    then, we label such samples as invalid and provide them to the AutoML tool, helping the optimization algorithm to focus only on the valid portions of the space.
+    \item[(ii)] Valid constraints -- expressed as conjunctions of Boolean clauses -- are used to discard the invalid pipeline instances that still are encountered by the AutoML tool.
+    Indeed, since the sampling from (i) is non-exhaustive, it can happen that small portions of invalid regions could still be explored.
+\end{itemize}
 
-% Our AutoML implementation is based on FLAML \cite{wang2021flaml}, which mixes Bayesian Optimization with CFO (Frugal Optimization for Cost-related Hyperparameters).
-% In a standard Bayesian process, an increasingly accurate model is built on top of the previously explored pipeline instances to suggest the most promising ones among the remaining.
-% The pipeline instances keep being explored, updating the model, until a budget in terms of either iterations or time is reached.
-% With CFO, there is also an estimation of the evaluation time to consider the frugality of the suggested pipeline instances -- hence favoring the ones requiring a smaller amount of time.
-% Throughout the exploration, different solutions are tested, which contribute to augmenting the global knowledge about the problem.
+Our AutoML implementation is based on FLAML \cite{wang2021flaml}, which mixes Bayesian Optimization with CFO (Frugal Optimization for Cost-related Hyperparameters).
+In a standard Bayesian process, an increasingly accurate model is built on top of the previously explored pipeline instances to suggest the most promising ones among the remaining.
+The pipeline instances keep being explored, updating the model, until a budget in terms of either iterations or time is reached.
+With CFO, there is also an estimation of the evaluation time to consider the frugality of the suggested pipeline instances -- hence favoring the ones requiring a smaller amount of time.
+Throughout the exploration, different solutions are tested, which contribute to augmenting the global knowledge about the problem.
 
-% \subsubsection{Knowledge Augmentation through Rule Recommendation}
+\subsubsection{Knowledge Augmentation through Rule Recommendation}
 
-% New constraints are automatically mined out of the pipeline instances explored by AutoML and \emph{recommended} in our logical language as rules.
-% Then, the DS decides which rules are accepted and added to the LogicalKB.
-
-
-% At this stage, we leverage frequent pattern mining techniques to learn constraints in an unsupervised manner.
-% Frequent pattern mining is the task of finding the most frequent and relevant patterns in large datasets (e.g., finding the products frequently bought together in the domain of market basket analysis); depending on the constraint type, we look for (sub)sets \cite{srikant1995mining} or (sub)sequences \cite{srikant1996mining} frequently recurring among the explored pipelines.
-% Since a pipeline instance is a sequence of algorithms, the set of the explored pipeline instances can be directly mapped into a transactional dataset \cite{srikant1995mining} where each pipeline instance is a transaction and each step -- inferred from the algorithm -- is an item.
-
-% We recommend the same constraints we support at the Argumentation level (i.e., $mandatory$, $forbidden$, $mandatory\_order$) so that AutoML can be as expressive as the DS.
-% For mandatory and forbidden constraints we look for (sub)sets \cite{srikant1995mining} frequently recurring among the explored pipelines.
-% Specifically, we split the explored pipeline instances by the applied Classification algorithm, set a minimum frequency (i.e., support) threshold to 50\% (i.e., to be retrieved, a set/sequence must occur at least in 50\% of the explored instances), and extract frequent maximal\footnote{Maximal itemsets are patterns that are not contained in any other.
-% For instance, given two frequent patterns, $\{a, b, c\}$ and $\{a, b\}$, the former is maximal while the latter is not.
-% }
-% itemsets.
-% The recommendation depends on the constraint.
-% \begin{itemize}
-%     \item $mandatory$: we consider only the patterns with good performance (i.e., $0.7 \leq metric \leq 1.0$); 
-%     \item $forbidden$: we consider only the patterns with bad performance (i.e., $0.0 \leq metric \leq 0.3$);
-%     \item $mandatory\_order$: the same considerations of the mandatory constraints stand, except that we look for (sub)sequences \cite{srikant1996mining} of length 2 to discover ordering dependencies in pairs of steps as in \cite{giovanelli2021data}.   
-% \end{itemize}
-% We leveraged well-known implementations \cite{raschkas_2018_mlxtend} and \cite{seq2pat2022} for itemsets and sequences mining, respectively.
-% Finally, we return to the DS only the top-10 rules sorted by descending support; we allow the DS to explore all the rules on-demand.
-
-% The thresholds act as filters on the extracted rules since we cannot burden the user with the investigation of hundreds of recommendations. 
-% As to the intervals, our rationale is simple: we only want to recommend as mandatory (order) the rules that achieved ``good performance'' and as forbidden the rules that achieved ``bad performance''.
-% Since we handle classification pipelines that mainly refer to (balanced) accuracy/F1 score/recall, we mapped ``good'' in the interval $[0.7, 1.0]$ and ``bad'' in the interval $[0, 0.3]$. For the frequent pattern extraction, we consider only the pipeline instances falling in these intervals.
-% As to the support, 50\% ensures that the pattern recurs on many of the explored instances and empirically showed to be a good threshold to have good efficiency in the extraction of frequent patterns.
-
-% \begin{example}[Rules Recommendation]
-% With reference to the Problem Graph in \Cref{ex:hard_coded_rules},
-% the AutoML results are filtered according to the chosen metric, the algorithm \cite{raschkas_2018_mlxtend} is applied, and let us assume that the rule \texttt{c3} is recommended:
-% \begin{lstlisting}[mathescape=true]
-% c3 : $\Rightarrow$ mandatory($\langle\mathcal{D}\rangle$, $\mathcal{D}t$).
-% \end{lstlisting}
-% The constraints specifies ``mandatory $\mathcal{D}$ in pipelines with $\mathcal{D}t$''.
-% As a matter of fact, it is well known that Discretization improves the performance of tree-based algorithms giving to them the ability to apply multiple split in the decision nodes.
-% \Cref{fig:toy_example}c shows the effect of the applied constraint: a new portion of the search space is excluded from the extension ($\{p1\}$).
-% \end{example}
+New constraints are automatically mined out of the pipeline instances explored by AutoML and \emph{recommended} in our logical language as rules.
+Then, the DS decides which rules are accepted and added to the LogicalKB.
 
 
-% \subsection{Experimental Evaluation}\label{ssec:test}
+At this stage, we leverage frequent pattern mining techniques to learn constraints in an unsupervised manner.
+Frequent pattern mining is the task of finding the most frequent and relevant patterns in large datasets (e.g., finding the products frequently bought together in the domain of market basket analysis); depending on the constraint type, we look for (sub)sets \cite{srikant1995mining} or (sub)sequences \cite{srikant1996mining} frequently recurring among the explored pipelines.
+Since a pipeline instance is a sequence of algorithms, the set of the explored pipeline instances can be directly mapped into a transactional dataset \cite{srikant1995mining} where each pipeline instance is a transaction and each step -- inferred from the algorithm -- is an item.
 
-% The performance of HAMLET depends on (i) the rules encoded in the LogicalKB and (ii) the rules recommended after each run.
-% To test both the effectiveness and efficiency of our approach, we define three experimental settings.
-% \begin{itemize}
-%     \item PKB (Preliminary Knowledge Base), HAMLET starts with a preliminary LogicalKB constraining the search space from the first iteration, and no rule mining is applied.
-%     %, but the rules that are suggested throughout the iterations are not applied.
-%     The preliminary LogicalKB consists of the rules discovered in \cite{giovanelli2021data} and some well-known from the literature (e.g., suggested by scikit-learn\footnote{\url{https://scikit-learn.org/stable/auto_examples/preprocessing/plot_discretization.html}}).
-%     The complete knowledge base can be found in the Github repository.
-%     \item IKA (Iterative Knowledge Augmentation), HAMLET starts with an empty LogicalKB, and all the rules recommended after each run are applied to extend the LogicalKB.
-%     \item PKB+IKA, HAMLET starts with a preliminary LogicalKB, and the rules recommended after each run are applied to extend the LogicalKB.
-% \end{itemize}
-% HAMLET run 4 times in every setting -- intuitively, four runs of knowledge augmentation -- the budget assigned to each run is 125 pipeline instances in 900 seconds (15 minutes).
-% We also test against a baseline: we let AutoML explore 500 pipeline instances ($= 125 \cdot 4$) in a single run with a time budget of 3600 seconds ($= 900 \cdot 4$; 1 hour).
+We recommend the same constraints we support at the Argumentation level (i.e., $mandatory$, $forbidden$, $mandatory\_order$) so that AutoML can be as expressive as the DS.
+For mandatory and forbidden constraints we look for (sub)sets \cite{srikant1995mining} frequently recurring among the explored pipelines.
+Specifically, we split the explored pipeline instances by the applied Classification algorithm, set a minimum frequency (i.e., support) threshold to 50\% (i.e., to be retrieved, a set/sequence must occur at least in 50\% of the explored instances), and extract frequent maximal\footnote{Maximal itemsets are patterns that are not contained in any other.
+For instance, given two frequent patterns, $\{a, b, c\}$ and $\{a, b\}$, the former is maximal while the latter is not.
+}
+itemsets.
+The recommendation depends on the constraint.
+\begin{itemize}
+    \item $mandatory$: we consider only the patterns with good performance (i.e., $0.7 \leq metric \leq 1.0$); 
+    \item $forbidden$: we consider only the patterns with bad performance (i.e., $0.0 \leq metric \leq 0.3$);
+    \item $mandatory\_order$: the same considerations of the mandatory constraints stand, except that we look for (sub)sequences \cite{srikant1996mining} of length 2 to discover ordering dependencies in pairs of steps as in \cite{giovanelli2021data}.   
+\end{itemize}
+We leveraged well-known implementations \cite{raschkas_2018_mlxtend} and \cite{seq2pat2022} for itemsets and sequences mining, respectively.
+Finally, we return to the DS only the top-10 rules sorted by descending support; we allow the DS to explore all the rules on-demand.
 
-% For such an evaluation, we derive a search space out of 6 steps, 5 Data Pre-processing steps (Imputation, Normalization, Discretization, Feature Engineering, and Rebalancing) followed by the final Classification task.
-% Since the tests are run on datasets from OpenML \cite{OpenML2013} -- a well-known repository for data acquisition and benchmarking -- and it provides already-encoded datasets, we do not consider the encoding step. 
-% Except for that, we included all the Data Pre-processing steps and algorithms available in the scikit-learn \cite{scikit-learn} Python library (plus imbalance-learn \cite{JMLR:v18:16-365} for Rebalancing transformations).
-% The leveraged steps, algorithms per step, and hyperparameters per algorithm are reported in \Cref{tab:search_space}.
+The thresholds act as filters on the extracted rules since we cannot burden the user with the investigation of hundreds of recommendations. 
+As to the intervals, our rationale is simple: we only want to recommend as mandatory (order) the rules that achieved ``good performance'' and as forbidden the rules that achieved ``bad performance''.
+Since we handle classification pipelines that mainly refer to (balanced) accuracy/F1 score/recall, we mapped ``good'' in the interval $[0.7, 1.0]$ and ``bad'' in the interval $[0, 0.3]$. For the frequent pattern extraction, we consider only the pipeline instances falling in these intervals.
+As to the support, 50\% ensures that the pattern recurs on many of the explored instances and empirically showed to be a good threshold to have good efficiency in the extraction of frequent patterns.
 
-% \begin{table}[t]
-%     \footnotesize
-%     \caption{Algorithms and number of hyperparameters for each of the steps in HAMLET. Algorithm names and hyperparameters are imported from the scikit-learn Python library.}
-%     \centering
-%     \begin{tabular}{llc}
-%         \toprule
-%         \textbf{Step} & \textbf{Algorithm} & \textbf{\#Hyperparameters}  \\\midrule
-%         Imputation        & SimpleImputer & 1 \\
-%                           & IterativeImputer & 2 \\
-%         Normalization     & StandardScaler & 2 \\
-%                           & MinMaxScaler & 0 \\
-%                           & RobustScaler & 2 \\
-%                           & PowerTransformer & 0 \\
-%         Discretization    & Binarizer & 1 \\
-%                           & KBinsDiscretizer & 3 \\
-%         Feature Eng.      & SelectKBest & 1 \\
-%                           & PCA & 1 \\
-%         Rebalancing       & NearMiss & 1 \\
-%                           & SMOTE & 1 \\
-%         Classification    & DecisionTreeClassifier & 7 \\
-%                           & KNeighborsClassifier & 3 \\
-%                           & RandomForestClassifier & 7 \\
-%                           & AdaBoostClassifier & 2 \\
-%                           & MLPClassifier & 6 \\ \bottomrule
-%     \end{tabular}
-%     \label{tab:search_space}
-% \end{table}
-
-% The OpenML-CC18 suite is a well-known collection of 72 datasets for benchmarking.
-% Given the time-consuming computation of each dataset (8 hours per dataset = 2 hours for the baseline + 6 hours for HAMLET in the three settings) -- in this preliminary evaluation -- we select a representative subset of datasets according to three meta-features provided by OpenML: number of instances, number of features, and number of classes.
-% For each of the considered meta-features, we search for datasets with either high or low values, and we select the representatives that maximize the overall dataset diversification.
-% \Cref{tab:datasets} illustrates the 6 datasets that have been identified; note that some combinations of meta-features have no representative dataset in the suite.
-% Among these, we do not report the results for the dataset mnist\_784 since the number of explored pipeline instances is insufficient to validate the result (i.e., due to the time necessary to run a single pipeline instance, only 50 instances were explored out of 1000).
-
-% \begin{table}[t]
-%     \caption{Dataset descriptions.}
-%     \footnotesize
-%     \label{tab:meta_features}
-%     \begin{threeparttable}
-%     \centering
-%         \begin{tabular}{ll|ll|ll|ll}
-%             \toprule
-%              \textbf{OpenMLID} \tnote{a} & \textbf{Dataset} & \multicolumn{2}{c}{\textbf{Instances}} & \multicolumn{2}{c}{\textbf{Features}} & \multicolumn{2}{c}{\textbf{Classes}}  \\ \midrule
-%              40983 & wilt & 4839 & \footnotesize{\texttt{L}} & 6 & \footnotesize{\texttt{L}} & 2 & \footnotesize{\texttt{L}}\\
-%              40499 & texture & 5500& \footnotesize{\texttt{L}} & 41& \footnotesize{\texttt{L}} & 11& \footnotesize{\texttt{H}}\\
-%              1485 & madelon & 2600 & \footnotesize{\texttt{L}} & 501 & \footnotesize{\texttt{H}} & 2 & \footnotesize{\texttt{L}}\\
-%              1478 & har & 10229 & \footnotesize{\texttt{L}} & 562& \footnotesize{\texttt{H}} & 6& \footnotesize{\texttt{H}}\\
-%              1590 & adult & 48842& \footnotesize{\texttt{H}} & 9& \footnotesize{\texttt{L}} & 2& \footnotesize{\texttt{L}}\\
-%              -- & -- & -- & \footnotesize{\texttt{H}} & -- & \footnotesize{\texttt{L}} & -- & \footnotesize{\texttt{H}}\\%[-1.5ex]\hline\noalign{\vspace{\dimexpr 2.ex-\doublerulesep}}
-%              -- & -- & -- & \footnotesize{\texttt{H}} & -- & \footnotesize{\texttt{H}} & -- & \footnotesize{\texttt{L}}\\%[-1.5ex]\hline\noalign{\vspace{\dimexpr 2.ex-\doublerulesep}}
-%              554 & mnist\_784 & 70000& \footnotesize{\texttt{H}} & 785& \footnotesize{\texttt{H}} & 10& \footnotesize{\texttt{H}}\\%[-1.5ex]\hline\noalign{\vspace{\dimexpr 2.ex-\doublerulesep}}
-%              \bottomrule
-%         \end{tabular}
-%         \label{tab:datasets}
-%         \begin{tablenotes}
-%             \item[--] {\scriptsize Not Applicable}
-%             \item[\texttt{H}] {\scriptsize The value $v$ is high for the meta-feature $F$ if $ v \geq \frac{1}{|F|}\sum_{f \in F} f$}
-%             \item[\texttt{L}] {\scriptsize The value $v$ is low for the meta-feature $F$ if $v < \frac{1}{|F|}\sum_{f \in F} f$}
-%             \item[a] {\scriptsize Datasets are available at \url{https://www.openml.org/d/<OpenMLID>}}
-%         \end{tablenotes}
-%     \end{threeparttable}
-% \end{table}
-
-% \subsection{Effectiveness}
-% \begin{figure}[t]
-%     \centering
-%     \includegraphics[scale=.45]{part-automl/chapter-supervised/img-hamlet/accuracy.pdf}
-%     \caption{Results assessing the effectiveness of HAMLET w.r.t. the baseline.}
-%     \label{fig:effectiveness}
-% \end{figure}
-
-% \begin{figure*}[h!]
-%     \centering
-%     \includegraphics[scale=.3]{part-automl/chapter-supervised/img-hamlet/accuracy_time.pdf}
-%     \caption{Results assessing the performance of HAMLET through the optimization time.}
-%     \label{fig:efficiency}
-%     \includegraphics[scale=.3]{part-automl/chapter-supervised/img-hamlet/skyline.pdf}
-%     \caption{Comparison of the best pipeline instances characterized by optimization time and (balanced) accuracy, bigger circles represent settings that dominate the others.}
-%     \label{fig:effskyline}
-% \end{figure*}
-
-% We employ balanced accuracy as the quality metric.
-% For instance, in case of (two) binary classes, such a score is
-% $$
-% \texttt{Balanced accuracy} = \frac{1}{2}\left( \frac{TP}{TP + FN} + \frac{TN}{TN + FP}\right )
-% $$
-% where $TP$ and $TN$ stand respectively for True Positive and True Negative (i.e., number of instances that have been correctly assigned to the positive and negative classes), and $FP$ and $FN$ stand respectively for False Positive and False Negative (i.e., number of instances that have been mistakenly assigned to the positive and negative classes). The formulation generalized to more than 2 classes can be found at \cite{DBLP:conf/icpr/BrodersenOSB10}.
-% The score avoids inflated performance estimations on imbalanced datasets.
-% For balanced datasets, the score is equal to the conventional accuracy (i.e., the number of correct predictions divided by the total number of predictions), otherwise it drops to $\frac{1}{\#classes}$.
-
-% \Cref{fig:effectiveness} illustrates the performance achieved by the baseline and the three settings of HAMLET.
-% HAMLET is clearly beneficial since in all datasets the framework overcomes the baseline.
-% The preliminary results highlight that both the LogicalKB and rule recommendation play important roles:
-% \begin{itemize}
-%     \item When we warm-start the exploration with a non-empty LogicalKB (PKB), in all datasets HAMLET overcomes the baseline.
-%     \item When we only leverage rule recommendation (IKA)}, we achieve results that are better than or equivalent to PKB, indeed we are injecting in the LogicalKB new rules that are tailored to the dataset.
-%     \item The synergy of PKB+IKA performs better than PKB in adult, worse in wilt, and the two are comparable in the other datasets.
-%     On the one hand, the PKB act as a warm start mechanism that speeds up the optimization; on the other hand, if not aligned with the recommended rules, it can mitigate the benefits of IKA.
-%     This proves to be a promising direction that further requires investigation since merging the words will require further studies.
-%     Indeed, it is worth noting that the recommended rules can be overlapping with the ones in the LogicalKB, highlighting the need to improve the recommendation process by also considering the rules that are already present in the LogicalKB.
-% \end{itemize}
-
-% In PKB+IKA, IKA can introduce rules that contradict the ones in the LogicalKB of PKB; for instance when the PKB contains rules that are not ``representative'' of the dataset/algorithms in use. We believe that this is an added value of HAMLET since ``incomplete'' (or even wrong) LogicalKBs can be corrected/refined by a data-driven approach. Finally, PKB+IKA and IKA are likely to produce different rules, since in PKB+IKA the LogicalKB biases the exploration of the search space from the beginning (acting as a warm start mechanism).
+\begin{example}[Rules Recommendation]
+With reference to the Problem Graph in \Cref{ex:hard_coded_rules},
+the AutoML results are filtered according to the chosen metric, the algorithm \cite{raschkas_2018_mlxtend} is applied, and let us assume that the rule \texttt{c3} is recommended:
+\begin{lstlisting}[mathescape=true]
+c3 : $\Rightarrow$ mandatory($\langle\mathcal{D}\rangle$, $\mathcal{D}t$).
+\end{lstlisting}
+The constraints specifies ``mandatory $\mathcal{D}$ in pipelines with $\mathcal{D}t$''.
+As a matter of fact, it is well known that Discretization improves the performance of tree-based algorithms giving to them the ability to apply multiple split in the decision nodes.
+\Cref{fig:toy_example}c shows the effect of the applied constraint: a new portion of the search space is excluded from the extension ($\{p1\}$).
+\end{example}
 
 
-% \subsection{Efficiency}
+\subsection{Experimental Evaluation}\label{ssec:test}
+
+The performance of HAMLET depends on (i) the rules encoded in the LogicalKB and (ii) the rules recommended after each run.
+To test both the effectiveness and efficiency of our approach, we define three experimental settings.
+\begin{itemize}
+    \item PKB (Preliminary Knowledge Base), HAMLET starts with a preliminary LogicalKB constraining the search space from the first iteration, and no rule mining is applied.
+    %, but the rules that are suggested throughout the iterations are not applied.
+    The preliminary LogicalKB consists of the rules discovered in \cite{giovanelli2021data} and some well-known from the literature (e.g., suggested by scikit-learn\footnote{\url{https://scikit-learn.org/stable/auto_examples/preprocessing/plot_discretization.html}}).
+    The complete knowledge base can be found in the Github repository.
+    \item IKA (Iterative Knowledge Augmentation), HAMLET starts with an empty LogicalKB, and all the rules recommended after each run are applied to extend the LogicalKB.
+    \item PKB+IKA, HAMLET starts with a preliminary LogicalKB, and the rules recommended after each run are applied to extend the LogicalKB.
+\end{itemize}
+HAMLET run 4 times in every setting -- intuitively, four runs of knowledge augmentation -- the budget assigned to each run is 125 pipeline instances in 900 seconds (15 minutes).
+We also test against a baseline: we let AutoML explore 500 pipeline instances ($= 125 \cdot 4$) in a single run with a time budget of 3600 seconds ($= 900 \cdot 4$; 1 hour).
+
+For such an evaluation, we derive a search space out of 6 steps, 5 Data Pre-processing steps (Imputation, Normalization, Discretization, Feature Engineering, and Rebalancing) followed by the final Classification task.
+Since the tests are run on datasets from OpenML \cite{OpenML2013} -- a well-known repository for data acquisition and benchmarking -- and it provides already-encoded datasets, we do not consider the encoding step. 
+Except for that, we included all the Data Pre-processing steps and algorithms available in the scikit-learn \cite{scikit-learn} Python library (plus imbalance-learn \cite{JMLR:v18:16-365} for Rebalancing transformations).
+The leveraged steps, algorithms per step, and hyperparameters per algorithm are reported in \Cref{tab:search_space}.
+
+\begin{table}[t]
+    \footnotesize
+    \caption{Algorithms and number of hyperparameters for each of the steps in HAMLET. Algorithm names and hyperparameters are imported from the scikit-learn Python library.}
+    \centering
+    \begin{tabular}{llc}
+        \toprule
+        \textbf{Step} & \textbf{Algorithm} & \textbf{\#Hyperparameters}  \\\midrule
+        Imputation        & SimpleImputer & 1 \\
+                          & IterativeImputer & 2 \\
+        Normalization     & StandardScaler & 2 \\
+                          & MinMaxScaler & 0 \\
+                          & RobustScaler & 2 \\
+                          & PowerTransformer & 0 \\
+        Discretization    & Binarizer & 1 \\
+                          & KBinsDiscretizer & 3 \\
+        Feature Eng.      & SelectKBest & 1 \\
+                          & PCA & 1 \\
+        Rebalancing       & NearMiss & 1 \\
+                          & SMOTE & 1 \\
+        Classification    & DecisionTreeClassifier & 7 \\
+                          & KNeighborsClassifier & 3 \\
+                          & RandomForestClassifier & 7 \\
+                          & AdaBoostClassifier & 2 \\
+                          & MLPClassifier & 6 \\ \bottomrule
+    \end{tabular}
+    \label{tab:search_space}
+\end{table}
+
+The OpenML-CC18 suite is a well-known collection of 72 datasets for benchmarking.
+Given the time-consuming computation of each dataset (8 hours per dataset = 2 hours for the baseline + 6 hours for HAMLET in the three settings) -- in this preliminary evaluation -- we select a representative subset of datasets according to three meta-features provided by OpenML: number of instances, number of features, and number of classes.
+For each of the considered meta-features, we search for datasets with either high or low values, and we select the representatives that maximize the overall dataset diversification.
+\Cref{tab:datasets} illustrates the 6 datasets that have been identified; note that some combinations of meta-features have no representative dataset in the suite.
+Among these, we do not report the results for the dataset mnist\_784 since the number of explored pipeline instances is insufficient to validate the result (i.e., due to the time necessary to run a single pipeline instance, only 50 instances were explored out of 1000).
+
+\begin{table}[t]
+    \caption{Dataset descriptions.}
+    \footnotesize
+    \label{tab:meta_features}
+    \begin{threeparttable}
+    \centering
+        \begin{tabular}{ll|ll|ll|ll}
+            \toprule
+             \textbf{OpenMLID} \tnote{a} & \textbf{Dataset} & \multicolumn{2}{c}{\textbf{Instances}} & \multicolumn{2}{c}{\textbf{Features}} & \multicolumn{2}{c}{\textbf{Classes}}  \\ \midrule
+             40983 & wilt & 4839 & \footnotesize{\texttt{L}} & 6 & \footnotesize{\texttt{L}} & 2 & \footnotesize{\texttt{L}}\\
+             40499 & texture & 5500& \footnotesize{\texttt{L}} & 41& \footnotesize{\texttt{L}} & 11& \footnotesize{\texttt{H}}\\
+             1485 & madelon & 2600 & \footnotesize{\texttt{L}} & 501 & \footnotesize{\texttt{H}} & 2 & \footnotesize{\texttt{L}}\\
+             1478 & har & 10229 & \footnotesize{\texttt{L}} & 562& \footnotesize{\texttt{H}} & 6& \footnotesize{\texttt{H}}\\
+             1590 & adult & 48842& \footnotesize{\texttt{H}} & 9& \footnotesize{\texttt{L}} & 2& \footnotesize{\texttt{L}}\\
+             -- & -- & -- & \footnotesize{\texttt{H}} & -- & \footnotesize{\texttt{L}} & -- & \footnotesize{\texttt{H}}\\%[-1.5ex]\hline\noalign{\vspace{\dimexpr 2.ex-\doublerulesep}}
+             -- & -- & -- & \footnotesize{\texttt{H}} & -- & \footnotesize{\texttt{H}} & -- & \footnotesize{\texttt{L}}\\%[-1.5ex]\hline\noalign{\vspace{\dimexpr 2.ex-\doublerulesep}}
+             554 & mnist\_784 & 70000& \footnotesize{\texttt{H}} & 785& \footnotesize{\texttt{H}} & 10& \footnotesize{\texttt{H}}\\%[-1.5ex]\hline\noalign{\vspace{\dimexpr 2.ex-\doublerulesep}}
+             \bottomrule
+        \end{tabular}
+        \label{tab:datasets}
+        \begin{tablenotes}
+            \item[--] {\scriptsize Not Applicable}
+            \item[\texttt{H}] {\scriptsize The value $v$ is high for the meta-feature $F$ if $ v \geq \frac{1}{|F|}\sum_{f \in F} f$}
+            \item[\texttt{L}] {\scriptsize The value $v$ is low for the meta-feature $F$ if $v < \frac{1}{|F|}\sum_{f \in F} f$}
+            \item[a] {\scriptsize Datasets are available at \url{https://www.openml.org/d/<OpenMLID>}}
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}
+
+\subsubsection{Effectiveness}
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=.45]{part-automl/chapter-supervised/img-hamlet/accuracy.pdf}
+    \caption{Results assessing the effectiveness of HAMLET w.r.t. the baseline.}
+    \label{fig:effectiveness}
+\end{figure}
+
+\begin{figure}[h!]
+    \RawFloats
+    \centering
+    \includegraphics[scale=.25]{part-automl/chapter-supervised/img-hamlet/accuracy_time.pdf}
+    \caption{Results assessing the performance of HAMLET through the optimization time.}
+    \label{fig:efficiency}
+    \includegraphics[scale=.25]{part-automl/chapter-supervised/img-hamlet/skyline.pdf}
+    \caption{Comparison of the best pipeline instances characterized by optimization time and (balanced) accuracy, bigger circles represent settings that dominate the others.}
+    \label{fig:effskyline}
+\end{figure}
+
+We employ balanced accuracy as the quality metric.
+For instance, in case of (two) binary classes, such a score is
+$$
+\texttt{Balanced accuracy} = \frac{1}{2}\left ( \frac{TP}{TP + FN} + \frac{TN}{TN + FP}\right )
+$$
+where $TP$ and $TN$ stand respectively for True Positive and True Negative (i.e., number of instances that have been correctly assigned to the positive and negative classes), and $FP$ and $FN$ stand respectively for False Positive and False Negative (i.e., number of instances that have been mistakenly assigned to the positive and negative classes). The formulation generalized to more than 2 classes can be found at \cite{DBLP:conf/icpr/BrodersenOSB10}.
+The score avoids inflated performance estimations on imbalanced datasets.
+For balanced datasets, the score is equal to the conventional accuracy (i.e., the number of correct predictions divided by the total number of predictions), otherwise it drops to $\frac{1}{\#classes}$.
+
+\Cref{fig:effectiveness} illustrates the performance achieved by the baseline and the three settings of HAMLET.
+HAMLET is clearly beneficial since in all datasets the framework overcomes the baseline.
+The preliminary results highlight that both the LogicalKB and rule recommendation play important roles:
+\begin{itemize}
+    \item When we warm-start the exploration with a non-empty LogicalKB (PKB), in all datasets HAMLET overcomes the baseline.
+    \item When we only leverage rule recommendation (IKA), we achieve results that are better than or equivalent to PKB, indeed we are injecting in the LogicalKB new rules that are tailored to the dataset.
+    \item The synergy of PKB+IKA performs better than PKB in adult, worse in wilt, and the two are comparable in the other datasets.
+    On the one hand, the PKB act as a warm start mechanism that speeds up the optimization; on the other hand, if not aligned with the recommended rules, it can mitigate the benefits of IKA.
+    This proves to be a promising direction that further requires investigation since merging the words will require further studies.
+    Indeed, it is worth noting that the recommended rules can be overlapping with the ones in the LogicalKB, highlighting the need to improve the recommendation process by also considering the rules that are already present in the LogicalKB.
+\end{itemize}
+
+In PKB+IKA, IKA can introduce rules that contradict the ones in the LogicalKB of PKB; for instance when the PKB contains rules that are not ``representative'' of the dataset/algorithms in use. We believe that this is an added value of HAMLET since ``incomplete'' (or even wrong) LogicalKBs can be corrected/refined by a data-driven approach. Finally, PKB+IKA and IKA are likely to produce different rules, since in PKB+IKA the LogicalKB biases the exploration of the search space from the beginning (acting as a warm start mechanism).
+
+\subsubsection{Efficiency}
 
 
-% \Cref{fig:efficiency} shows how settings converge to the optimal pipeline instance.
-% Noticeably, PKB and PKB+IKA start with higher accuracy than IKA and the baseline in four datasets out of five, proving how the preliminary LogicalKB warm starts the exploration.
-% However, time and \#iterations alone are not fair metrics for comparison; for instance, an optimization strategy could privilege simple algorithms taking small amounts of computational time but producing worse results than ``more complex'' algorithms.
-% In the direction of multi-objective optimization (exploration time should be minimized while accuracy should be maximized), \Cref{fig:effskyline} depicts which settings dominate the others using the Skyline operator \cite{borzsony2001skyline}.
-% A setting dominates another one if it is as good or better in all dimensions (time and accuracy) and better in at least one dimension (time or accuracy).
-% PKB dominates in 80\% of the datasets, IKA in 40\%, PKB+IKA in 20\%, and the baseline in 40\%.
-% Noticeably, the baseline is selected as dominating only in madelon and har datasets due to the fact that converges faster than HAMLET (although it converges to a pipeline instance with lower accuracy).
+\Cref{fig:efficiency} shows how settings converge to the optimal pipeline instance.
+Noticeably, PKB and PKB+IKA start with higher accuracy than IKA and the baseline in four datasets out of five, proving how the preliminary LogicalKB warm starts the exploration.
+However, time and \#iterations alone are not fair metrics for comparison; for instance, an optimization strategy could privilege simple algorithms taking small amounts of computational time but producing worse results than ``more complex'' algorithms.
+In the direction of multi-objective optimization (exploration time should be minimized while accuracy should be maximized), \Cref{fig:effskyline} depicts which settings dominate the others using the Skyline operator \cite{borzsony2001skyline}.
+A setting dominates another one if it is as good or better in all dimensions (time and accuracy) and better in at least one dimension (time or accuracy).
+PKB dominates in 80\% of the datasets, IKA in 40\%, PKB+IKA in 20\%, and the baseline in 40\%.
+Noticeably, the baseline is selected as dominating only in madelon and har datasets due to the fact that converges faster than HAMLET (although it converges to a pipeline instance with lower accuracy).
 
 
-% \begin{figure}[t]
-%     \centering
-%     \includegraphics[scale=.43]{part-automl/chapter-supervised/img-hamlet/time.pdf}
-%     \caption{Computational time of the argumentation and AutoML processes.}
-%     \label{fig:effoverhead}
-% \end{figure}
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=.43]{part-automl/chapter-supervised/img-hamlet/time.pdf}
+    \caption{Computational time of the argumentation and AutoML processes.}
+    \label{fig:effoverhead}
+\end{figure}
 
 
-% Finally, \Cref{fig:effoverhead} depicts the overhead introduced by the argumentation framework in HAMLET that, at maximum, is 20\% of the computational time in the adult dataset.
-% This proves that the argumentation time is marginal with respect to the duration of the optimization process.
-% As expected, PKB+IKA shows the highest overhead since the number of rules to manage is the highest.
+Finally, \Cref{fig:effoverhead} depicts the overhead introduced by the argumentation framework in HAMLET that, at maximum, is 20\% of the computational time in the adult dataset.
+This proves that the argumentation time is marginal with respect to the duration of the optimization process.
+As expected, PKB+IKA shows the highest overhead since the number of rules to manage is the highest.
+
+\subsubsection{Comparison}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=.45]{part-automl/chapter-supervised/img-hamlet/comparison.pdf}
+    \caption{Results assessing the performance of HAMLET w.r.t. Auto-sklearn \cite{feurer2019auto} and H2O \cite{ledell2020h2o}.}
+    \label{fig:comparison}
+\end{figure}
 
 
-
-% \subsection{Comparison}
-
-% \begin{figure}[t]
-%     \centering
-%     \includegraphics[scale=.45]{part-automl/chapter-supervised/img-hamlet/comparison.pdf}
-%     \caption{Results assessing the performance of HAMLET w.r.t. Auto-sklearn \cite{feurer2019auto} and H2O \cite{ledell2020h2o}.}
-%     \label{fig:comparison}
-% \end{figure}
+\Cref{fig:comparison} compares HAMLET against two well-known AutoML frameworks: Auto-sklearn \cite{feurer2019auto} and H2O \cite{ledell2020h2o}.
+In four datasets out of five, HAMLET outperforms or is comparable to the two frameworks.
+Additionally, the added value of HAMLET is \textit{explainability}.
+Hamlet is a human-in-the-loop AutoML framework tailored to the needs of DS that (i) enables the injection of their experience into the exploration process as well as (ii) the spreading and sharing of knowledge bases that encode what DSs have understood by the optimization of their pipelines.
 
 
-% \Cref{fig:comparison} compares HAMLET against two well-known AutoML frameworks: Auto-sklearn \cite{feurer2019auto} and H2O \cite{ledell2020h2o}.
-% In four datasets out of five, HAMLET outperforms or is comparable to the two frameworks.
-% Additionally, the added value of HAMLET is \textit{explainability}.
-% Hamlet is a human-in-the-loop AutoML framework tailored to the needs of DS that (i) enables the injection of their experience into the exploration process as well as (ii) the spreading and sharing of knowledge bases that encode what DSs have understood by the optimization of their pipelines.
+\subsection{Conclusions and Future Work}\label{ssec:conclusion}
 
+Data platforms support Data Scientists in performing end-to-end data analysis; to this end, Machine Learning plays a primary role.
+However, the complexity and heterogeneity of (Automated) Machine Learning processes are leading Data Scientists to lose control over such processes.
+Human awareness about the constraints and solutions of Machine Learning tasks is a fundamental aspect to consider, and consequently, the Data Scientist should play a central role in the design of next-generation data platforms.
 
-% \subsection{Conclusions and Future Work}\label{ssec:conclusion}
+According to this vision, we present HAMLET, a framework for Human-centered AutoML based on Logic and Structured Argumentation.
+Logic is exploited to structure the knowledge that the Data Scientist gathers while designing, modeling, and deploying a solution.
+The logical encoding of the knowledge provides a medium that is both human- and machine-readable and it allows an easy exploration and verification of all the constraints that may apply to the case at hand---it is overwhelming for the Data Scientist to correctly handle the vast amount of them.
+The preliminary evaluation of HAMLET shows promising results against state-of-the-art AutoML algorithms both in terms of effectiveness and efficiency, with argumentation introducing a small overhead with respect to the duration of the exploration process.
 
-% Data platforms support Data Scientists in performing end-to-end data analysis; to this end, Machine Learning plays a primary role.
-% However, the complexity and heterogeneity of (Automated) Machine Learning processes are leading Data Scientists to lose control over such processes.
-% Human awareness about the constraints and solutions of Machine Learning tasks is a fundamental aspect to consider, and consequently, the Data Scientist should play a central role in the design of next-generation data platforms.
-
-% According to this vision, we present HAMLET, a framework for Human-centered AutoML based on Logic and Structured Argumentation.
-% Logic is exploited to structure the knowledge that the Data Scientist gathers while designing, modeling, and deploying a solution.
-% The logical encoding of the knowledge provides a medium that is both human- and machine-readable and it allows an easy exploration and verification of all the constraints that may apply to the case at hand---it is overwhelming for the Data Scientist to correctly handle the vast amount of them.
-% The preliminary evaluation of HAMLET shows promising results against state-of-the-art AutoML algorithms both in terms of effectiveness and efficiency, with argumentation introducing a small overhead with respect to the duration of the exploration process.
-
-% The directions for future work are plentiful, among them:
-% \begin{itemize}
-%     \item[(i)] the recommendation of more constraints out of the explored search space (e.g., rare or negative patterns);
-%     \item[(ii)] the support to heterogeneous constraints on hyperparameter domains;
-%     \item[(iii)] the injection of meta-learning into our Logical Knowledge Base to better identify when and how the constraints should be applied (e.g., this can be done after testing HAMLET on a multitude of datasets);
-%     \item[(iv)] the introduction of a visual metaphor (e.g., based on the Problem Graph) to help Data Scientists' understanding;
-%     \item[(v)] the study of automatic resolution/recommendation of conflicting constraints, also depending on the rules already embedded in the Logical Knowledge Base.
-% \end{itemize}
+The directions for future work are plentiful, among them:
+\begin{itemize}
+    \item[(i)] the recommendation of more constraints out of the explored search space (e.g., rare or negative patterns);
+    \item[(ii)] the support to heterogeneous constraints on hyperparameter domains;
+    \item[(iii)] the injection of meta-learning into our Logical Knowledge Base to better identify when and how the constraints should be applied (e.g., this can be done after testing HAMLET on a multitude of datasets);
+    \item[(iv)] the introduction of a visual metaphor (e.g., based on the Problem Graph) to help Data Scientists' understanding;
+    \item[(v)] the study of automatic resolution/recommendation of conflicting constraints, also depending on the rules already embedded in the Logical Knowledge Base.
+\end{itemize}
