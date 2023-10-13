@@ -314,10 +314,29 @@ Finally, \Cref{precision-chap:smart-irrigation} deepens the smart-irrigation alg
 
 \chapter{Background and Formalization}
 \label{automl-chap:background}
-\begin{itemize}
-    \item Qui ci va sicuramente la formalizzazione
-    \item la motivation è dubbia, forse ripeteremmo quello che è scritto sopra nell'Introduction
-\end{itemize}
+
+Alan Turing defines the field of artificial intelligence (AI) in cognitive terms \cite{turing1980computing}, raising the question of whether machines can show intelligence, and along this line Arthur Samuel defines machine learning (ML) \cite{samuel2000some}, building upon the notion of intelligence as learning.
+In this chapter, we delve into more formal definitions.
+\Cref{automl-background-sec:ml} introduces the building blocks of ML, such as dataset, algorithm, and hyperparameter;
+% provides the necessary background in ML,
+\Cref{automl-background-sec:automl} formalizes the problems tackled by automated machine learning (AutoML), up to the combined algorithm selection and hyperparameter optimization;
+% along with the state-of-the-art techniques to solve them.
+and finally \Cref{automl-background-sec:formalization} extends the formalization towards a more operational level of ML, enabling the user to handle comprehensive ML pipelines---i.e., concatenations of steps that cover more than the sole learning process.
+% Here we can also put something like " ... extends the formalization focusing on a more operational level of ML and methods that following this way enables to handle comprehensive ... "
+
+\section{Machine Learning}\label{automl-background-sec:ml}
+Tom M. Mitchell provided a widely quoted, more formal definition of the algorithms studied in the machine learning algorithm: ``A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P if its performance at tasks in T, as measured by P, improves with experience E.''
+This definition of the tasks in which machine learning is concerned offers a fundamentally operational definition rather than defining the field in cognitive terms.
+This follows Alan Turing's proposal in his paper "Computing Machinery and Intelligence", in which the question "Can machines think?" is replaced with the question "Can machines do what we (as thinking entities) can do?".
+
+\section{Automated Machine Learning}\label{automl-background-sec:automl}
+
+\section{Formalization}\label{automl-background-sec:formalization}
+
+% \begin{itemize}
+%     \item Qui ci va sicuramente la formalizzazione
+%     \item la motivation è dubbia, forse ripeteremmo quello che è scritto sopra nell'Introduction
+% \end{itemize}
 
 % \include{part-automl/chapter-background/main}
 \include{part-automl/chapter-supervised/main}
