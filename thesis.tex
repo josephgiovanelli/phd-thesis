@@ -374,20 +374,32 @@ Particularly in this chapter, \Cref{automl-background-sec:ml} introduces the bui
 At the core of each and every task lies the data, serving as the essential fuel for the learning process because providing the means to observe the real world.
 Specifically in ML, we refer to a dataset as a sample of data from which it is possible to learn that experience of interest.
 % The sample consists of some instances $X$, each characterized by specific features $\altmathcal{F}$, and the aim is understanding how changes in $X$ impact a desired output $Y$, hence learning a function $f: X \rightarrow Y$.
-The sample consists of some instances $X$, or data points such as sensor measurements, each of them characterized by specific features $\altmathcal{F}$, properties like intensity, duration, or location.
-The aim is to understand how changes in these features within $X$ impact a desired output $Y$, like crop yield, hence learning a function $f: \altmathcal{X} \rightarrow \altmathcal{Y}$.
+% The sample consists of some data items X, instances such as sensor measurements, each of them characterized by specific features F, properties like intensity, duration, or location.
+% The aim is to understand how changes in these features within X translate into changes in a desired output Y, like crop yield
+Intuitively, some data points $X$ -- such as sensor measurements -- are characterized by specific features -- like intensity, duration, or location -- and we are interested in understanding how changes in these features translate into changes in the desired outcome $Y$---like crop yield.
+% As mentioned, in supervised learning, data items $X$ come with the corresponding correct outcomes $Y$; while, in unsupervised learning, no ground truth is provided.
 
-\begin{definition}[Dataset]
-    A \textit{dataset} $\altmathcal{D}$ is a collection of data items that is characterized by a set of features $\altmathcal{F}$ (i.e., columns).
-    \begin{equation}
+\begin{definition}[Dataset]\label{def:dataset}
+    A \textit{dataset} $\altmathcal{D}$ is a collection of data points $X$, with corresponding space $\altmathcal{X}$.
+    % , characterized by a set of features $\altmathcal{F}$.
+    % According to the task $T$, a ground truth $Y$ -- within its corresponding space $\altmathcal{Y}$ -- is available in the dataset (supervised learning) or not (unsupervised learning).
+    % According to the task $T$, the dataset includes the ground truth $Y$, with corresponding space $\altmathcal{Y}$ (supervised learning); or it is left as it is (unsupervised learning).
+    According to the task $T$, the dataset may include the ground truth $Y$, within its corresponding space $\altmathcal{Y}$ (supervised learning) or not (unsupervised learning).
+
+    \begin{equation}\label{eq:dataset}
         \altmathcal{D} = \left\lbrace\,
         \begin{array}{@{}l@{}l@{\quad}l@{}}
-            \{(\vec{x}_n, y_n)\}_{n=1}^N & \in \mathbb{D} \subset \altmathcal{X} \times \altmathcal{Y} & \text{{if }} T = \text{{supervised}} \\
-            \{\vec{x}_n\}_{n=1}^N & \in \mathbb{D} \subset \altmathcal{X} & \text{{if }} T = \text{{unsupervised}}
+            (\pmb{x}_n, y_n)_{n=1}^N & \in \mathbb{D} \subset \altmathcal{X} \times \altmathcal{Y} & \text{{if }} T = \text{{supervised}} \\
+            (\pmb{x}_n)_{n=1}^N & \in \mathbb{D} \subset \altmathcal{X} & \text{{if }} T = \text{{unsupervised}}
         \end{array}
         \right.
     \end{equation}
 \end{definition}
+
+The aim is to discover the hidden relationship between inputs $X$ and outputs $Y$, hence learning a function $f: \altmathcal{X} \rightarrow \altmathcal{Y}$.
+A \textit{learning algorithm} $A$ leverages data points in $\altmathcal{D}$ to estimate such a function $f$, which is often expressed via a vector of \textit{model parameters} $\altmathcal{H}$.
+
+
 
 
 % \begin{definition}[Dataset]
