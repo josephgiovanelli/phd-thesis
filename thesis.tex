@@ -135,10 +135,10 @@
 
 Artificial intelligence (AI) is currently the buzzword on everybody's lips.
 %, often used without a clear understanding, with only a minority possessing in-depth knowledge.
-% with the majority of people not knowing what is actually about and only a few possessing the knowledge. 
+% with the majority of people not knowing what is actually about and only a few possessing the knowledge.
 % This thesis contributes towards a democratization of AI, i.e. making it accessible to both experts and non-experts alike.
-Riding the wave of recent groundbreaking achievements, from self-driving cars \citep{} to intelligent chat bots \citep{}, AI is transforming industries and reshaping our daily lives.
-Several interpretations and definitions have been provided over the years, yet the seminal perspective given by the Turing test \citep{turing1980computing} is still one worth mentioning. 
+Riding the wave of recent groundbreaking achievements, from self-driving cars \citep{} to intelligent chatbots \citep{}, AI is transforming industries and reshaping our daily lives.
+Several interpretations and definitions have been provided over the years, yet the seminal perspective given by the Turing test \citep{turing1980computing} is still one worth mentioning.
 \begin{definition}[Artificial Intelligence \citep{turing1980computing}]
 A machine that shows intelligence indistinguishable from that of human beings is qualified to be labeled as artificial intelligence.
 \end{definition}
@@ -166,32 +166,43 @@ meta-learning (i.e., learning atop learning) to warm-start BO (i.e., to boost th
 Besides, off-the-shelf solutions \cite{} are provided to tune entire ML pipelines, achieving -- in some cases -- higher performance than experts.
 
 By lowering the barrier of access, AutoML emerged as promising for democratization of AI, i.e. making it accessible to both experts and non-experts alike.
-Yet, when it comes to real-case scenarios, the journey of learning is riddled with challenges, ranging from the need for human intervention to mitigate harnessing, to the need for physical simulators. 
-% and heterogeneity of the data to constraints that may apply to the problem, from need for domain knowledge to . 
-While investigating these challenges, this thesis evolves into two parts.
+Yet, when it comes to real-case scenarios, the journey of learning is riddled with challenges, ranging from the need for human intervention to mitigate harnessing, to the need for physical simulators.
+% and heterogeneity of the data to constraints that may apply to the problem, from need for domain knowledge to .
+While \Cref{chap:background} provides the necessary background, the remaining of the thesis investigates these challenges evolving into two parts.
 
 
 
 
-\paragraph{Part I: Towards Human-centered AutoML}
+\paragraph{Part I: Human-centered AutoML}
 
 The original promise of AutoML was to automate certain ML tasks to a significant extent, thereby democratizing it and enabling non-experts to apply it in their respective domains.
 However, despite their success, many current AutoML tools were not built around the user but rather around algorithmic ideas.
 The stacking of complex mechanisms on top of each other unavoidably led to a less understanding of the process by the user -- even ML experts -- and allowing for very limited interaction.
-Parts of the community have hence pushed towards a more human-centered AutoML process aimed at complementing, instead of replacing, human intelligence. 
+Parts of the community have hence pushed towards a more human-centered AutoML process aimed at complementing, instead of replacing, human intelligence.
 % This becomes even more crucial nowadays
 % Motivated by ethical concerns and social bias issues arising at each step of the ML process, this becomes imperative in such a mitigating call nowadays.
 Besides, motivated by ethical concerns and social bias issues arising at each step of the ML process, this approach becomes even imperative in such a mitigating call nowadays.
-By placing the user back in the loop, it would be possible to revise and supervise the entire process, ensuring fairness, transparency, and ethical compliance. 
+By placing the user back in the loop, it would be possible to revise and supervise the entire process, ensuring fairness, transparency, and ethical compliance.
 
-In this part, we devise human-centered AutoML solutions for the main categories of ML. 
-\Cref{automl-chap:background} provides the necessary background and formalization in ML and AutoML.
-\Cref{automl-chap:supervised} and \Cref{automl-chap:unsupervised} address -- respectively -- supervised and unsupervised learning. 
-The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
-Then, \Cref{automl-chap:moo} delves to multi-objective ML, i.e. optimization of more than one loss or objective function.
-Lastly, \Cref{automl-chap:llm} showcases the potential challenges, opportunities, and risks of novel (human-centered) AutoML interfaces with large language models, i.e. AI models trained on large corpora of text to understand and produce human-like answers.
+In this part, we focus on the following contributions.
+\begin{itemize}
+    \item Providing the AutoML formalization to explicitly deal with thorough pipelines i.e., concatenations of pre-processing transformations and ML algorithms.
+    \item Devising human-centered solutions for the main categories of ML i.e., supervised and unsupervised learning. The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
+    \item Addressing multi-objective ML, i.e. optimization of more than one loss or objective function, by interactively learning user preferences and drive the optimization towards it.
+    \item Showcasing potential challenges, opportunities, and risks of novel (human-centered) AutoML interfaces with large language models (LLMs), i.e. AI models trained on large corpora of text to understand and produce human-like answers.
+\end{itemize}
 
-\paragraph{Part II: Towards Physics-coupled AutoML}
+We organize this part as follows.
+\Cref{automl-chap:formalization} provides the comprehensive AutoML formalization for ML pipelines.
+\Cref{automl-chap:supervised} and \Cref{automl-chap:unsupervised} address supervised and unsupervised learning respectively.
+\Cref{automl-chap:moo} delves into multi-objective ML and, lastly, \Cref{automl-chap:llm} discusses the novel human-centered AutoML interfaces with LLMs.
+% In this part, we devise human-centered AutoML solutions for the main categories of ML.
+% While in \Cref{automl-chap:formalization} we provide the AutoML formalization to explicitly deal with thorough pipelines i.e., concatenations of pre-processing transformations and ML algorithms, \Cref{automl-chap:supervised} and \Cref{automl-chap:unsupervised} address supervised and unsupervised learning respectively.
+% The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
+% Then, \Cref{automl-chap:moo} delves into multi-objective ML, i.e. optimization of more than one loss or objective function.
+% Lastly, \Cref{automl-chap:llm} showcases the potential challenges, opportunities, and risks of novel (human-centered) AutoML interfaces with large language models, i.e. AI models trained on large corpora of text to understand and produce human-like answers.
+
+\paragraph{Part II: Physics-coupled AutoML}
 
 % As application areas go, there are fields in which forecasts and analyses are mostly conducted with non-ML models but rather rely on knowledge provided by domain experts and simulators that encode well-known physical laws.
 % As application areas go, there are fields in which forecasts and analyses are currently conducted with non-ML models but rather rely on numerical simulators that encode well-known physical laws. 
@@ -294,26 +305,25 @@ Finally, \Cref{precision-chap:smart-irrigation} deepens the smart-irrigation alg
 %         \item We believe in AI that complements, rather than replaces, human intelligence
 %         \item this thesis focuses on two complementary parts
 %         \begin{itemize}
-%             \item improve 
+%             \item improve
 %             \item When it comes to application areas,
 %                     % As application areas go,
 %                     fields related to Earth Observation tend to be particularly high-impact. The aim is to mitigate challenges such as climate change by delivering more eco-friendly systems. Traditionally, such research fields have relied on domain knowledge provided by experts to make predictions about our planet, such as weather forecasts and crop lifecycles. With the torrent of remotely sensed data available today, new opportunities to take advantage of massive remote sensing datasets have emerged that traditional methods are not equipped to handle. This is where advances in AI (particularly Machine Learning and Deep Learning) can push forward humanity’s abilities to understand, support and, if necessary, steer the course of our planet to a better future. At the same time, a naïve application of data-driven methods for problems as complex and impactful as these is doomed to result in biased and unreliable models. This is why domain experts, as always, remain crucial in this process, and why AI should be there as a powerful tool that supports them in fully taking advantage of the exciting new opportunities we are presented with.
 %         \end{itemize}
 %         \item we pass from aiming the full automation to put the human back to the loop, because there is no silver bullet, the user should revise and supervise the whole process and be aware of what is going on (otherwise risks)
 %     \end{itemize}
-%     \item important things: data, meta-learning, 
-%     \item AutoML as important 
+%     \item important things: data, meta-learning,
+%     \item AutoML as important
 %     \item Data scientists do not scale
-%     \item 
+%     \item
 % \end{itemize}
 
 
 
-\part{Towards Human-centered AutoML}\label{part:automl}
 
 
-\chapter{Background and Formalization}
-\label{automl-chap:background}
+\chapter{Background}
+\label{chap:background}
 
 Alan Turing defines the field of AI in cognitive terms \cite{turing1980computing}, raising the question of whether machines can show intelligence, and along this line Arthur Samuel defines ML \cite{samuel2000some}, building upon the notion of intelligence as learning.
 A more formal definition is provided by Tom M. Mitchell \citep{mitchell1997machine}, who delineates the behavior of algorithms studied in machine learning and introduces the concepts of \textit{task} and \textit{experience}.
@@ -321,52 +331,104 @@ A more formal definition is provided by Tom M. Mitchell \citep{mitchell1997machi
     A computer program is said to learn in some class of tasks, with respect to a performance measure, if its performance improves with experience.
 \end{definition}
 Notably, the formalization of experience is contingent upon the task to address, which is crucial because determines what the ML algorithm can observe and, in turn, how it operates.
-The literature identifies three different ML tasks: \textit{supervised}, \textit{unsupervised}, and \textit{reinforcement learning}.
-In supervised learning, the algorithm is provided with a sample of data describing scenarios that have been \textit{experienced} in the past along with the corresponding \textit{ground truth}---i.e., labels that indicate the correct outcomes.
+Specifically, the literature identifies three different ML tasks: \textit{supervised}, \textit{unsupervised}, and \textit{reinforcement learning}.
+
+\paragraph{Supervised learning} This is the kind of learning studied in most current research in the ML field. The algorithm is provided with a sample of data describing scenarios that have been \textit{experienced} in the past along with the corresponding \textit{ground truth}---i.e., labels that indicate the correct outcomes.
 The goal consists of finding a \textit{function} that maps samples to outcomes so that unseen scenarios can be labeled correctly.
 For instance, according to the nature of such data, it is possible to classify objects (e.g., face recognition), guess unknown measurements (e.g., soil moisture estimation), and predict future events (e.g., weather forecasting).
-As to the unsupervised case, the samples come with no ground truth available.
+
+\paragraph{Unupervised learning} Here, the samples come with no ground truth available.
 The algorithm has to uncover hidden insights by searching for patterns, investigating different partitionings, or estimating density distributions within the data.
 Unsupervised tasks are inherently exploratory in nature and are often employed in data mining to provide explanations for the given scenarios or even to summarize them.
-Finally, reinforcement learning stands on the edge of this landscape, categorized as the learning that differentiates the most from classical ML tasks \cite{sutton2018reinforcement}.
+
+\paragraph{Reinforcement Learning} Standing on the edge of the ML landscape, it has been categorized as the learning that differentiates the most from ``classical'' tasks \cite{sutton2018reinforcement}.
 Here the experience is not sampled and fed to the algorithm but rather comes from interactions with an environment.
-The algorithm learns by making decisions and receiving feedback based on its actions, allowing it to adapt its behavior over time.
+The algorithm learns by making decisions and receiving feedback based on its actions, allowing it to adapt its behavior over time.\\
 
+%TODO: Qua c'è da menzionare che infatti automatizzare RL, in letteratura, prende il nome di AutoRL mentre noi facciamo AutoML.
 This thesis focuses on supervised and unsupervised learning.
-The former is the kind of learning studied in most current research in the ML field, with a strong background in AutoML 
-
-
-
-\Cref{automl-background-sec:ml} introduces the building blocks of ML, such as dataset, algorithm, and hyperparameter;
+% providing a formalization that covers both cases.
+Particularly in this chapter, \Cref{automl-background-sec:ml} introduces the building blocks such as dataset, algorithm, and hyperparameter; while
 % provides the necessary background in ML,
-\Cref{automl-background-sec:automl} formalizes the problems tackled by automated machine learning (AutoML), up to the combined algorithm selection and hyperparameter optimization;
+\Cref{automl-background-sec:automl} formalizes the problems tackled by automated machine learning (AutoML), up to the combined algorithm selection and hyperparameter optimization.
 % along with the state-of-the-art techniques to solve them.
-and finally \Cref{automl-background-sec:formalization} extends the formalization towards a more operational level of ML, enabling the user to handle comprehensive ML pipelines---i.e., concatenations of steps that cover more than the sole learning process.
+% and finally \Cref{automl-background-sec:formalization} extends the formalization towards a more operational level of ML, enabling the user to handle comprehensive ML pipelines---i.e., concatenations of steps that cover more than the sole learning process.
 % Here we can also put something like " ... extends the formalization focusing on a more operational level of ML and methods that following this way enables to handle comprehensive ... "
 
 \section{Machine Learning}\label{automl-background-sec:ml}
 
+% The core concept of learning from experience is understanding how changes in our observed scenario translate into changes in the outcome---be it supervised or unsupervised.
+
+% consists of   . In a supervised learning scenario, the use case (X) is characterized by specific features, and the goal is to find a function (f) that models how these features influence the outcome (Y). Essentially, it's about identifying relationships between inputs and outputs through data analysis, enabling the system to make accurate predictions on new data based on the experience gained during training.
+
+% Learning from experience is at the core of machine learning (ML). In this context, the function f maps input values X to output values Y, and understanding this relationship is the ultimate goal. To convey this concept, imagine a quest to uncover the mysterious function f that links diverse factors or parameters in X to their corresponding outcomes in Y.
+
+% To appreciate this concept, let's first concretize what learning from experience means. In ML, we aim to understand and learn a function f that maps input values X to output values Y. X represents various factors or parameters that can influence specific outcomes, such as temperature, time, or location. Meanwhile, Y encapsulates the potential results or responses, like crop yield, sales figures, or temperature readings.
+
+% Now, let's discuss how we acquire the experience in ML through data. A dataset is a sample extracted from the vast tapestry of the real world. Each data point in this sample represents a unique snippet, capturing the essence of different factors in X and their corresponding outcomes in Y. By analyzing this dataset, we can uncover the intricate connections between changes in input factors and shifts in output results, ultimately leading to an understanding of the function f that guides us towards newfound insights.
+
+% Finally, let's delve into the details of what a dataset is in ML. A dataset is a collection of data points that provide enough information to learn an experience. Each data point contains information about input values X and their corresponding output values Y. By analyzing this dataset, we can gain insights into how the function f behaves under different conditions, allowing us to refine our understanding of the relationship between X and Y.
+
+% Learning from experience
+
+At the core of each and every task lies the data, serving as the essential fuel for the learning process because providing the means to observe the real world.
+Specifically in ML, we refer to a dataset as a sample of data from which it is possible to learn that experience of interest.
+% The sample consists of some instances $X$, each characterized by specific features $\altmathcal{F}$, and the aim is understanding how changes in $X$ impact a desired output $Y$, hence learning a function $f: X \rightarrow Y$.
+The sample consists of some instances $X$, or data points such as sensor measurements, each of them characterized by specific features $\altmathcal{F}$, properties like intensity, duration, or location.
+The aim is to understand how changes in these features within $X$ impact a desired output $Y$, like crop yield, hence learning a function $f: \altmathcal{X} \rightarrow \altmathcal{Y}$.
+
+\begin{definition}[Dataset]
+    A \textit{dataset} $\altmathcal{D}$ is a collection of data items that is characterized by a set of features $\altmathcal{F}$ (i.e., columns).
+    \begin{equation}
+        \altmathcal{D} = \left\lbrace\,
+        \begin{array}{@{}l@{}l@{\quad}l@{}}
+            \{(\vec{x}_n, y_n)\}_{n=1}^N & \in \mathbb{D} \subset \altmathcal{X} \times \altmathcal{Y} & \text{{if }} T = \text{{supervised}} \\
+            \{\vec{x}_n\}_{n=1}^N & \in \mathbb{D} \subset \altmathcal{X} & \text{{if }} T = \text{{unsupervised}}
+        \end{array}
+        \right.
+    \end{equation}
+\end{definition}
 
 
+% \begin{definition}[Dataset]
+
+% \end{definition}
+% At the core of each and every task lies the data.
+% Specifically, a dataset in ML is a sample serving as a lens to observe and understand the real world.
+% At the core of each and every ML task lies the dataset, a collection of data serving as a lens to observe and understand the real world.
 
 
+% a collection of data sampled from the real world.
+% Considered the fuel of each and every ML task, there would be no learning without data---or worse, with ``dirty'' data.
 
-The formalization of experience is crucial because determines what the ML algorithm can observe and, in turn, how it operates.
-Notably, this is contingent upon the three ML tasks: \textit{supervised}, \textit{unsupervised}, and \textit{reinforcement learning}.
+% As a matter of fact, the very first step to build a trustworthy dataset is to carefully select and
 
-Supervised learning is the most studied field in current ML research.
-It 
+% the dataset allows to observe the real world
+
+% As mentioned, the main difference between supervised and unsupervised learning stands in the
+
+% HPO formalizes the task of finding a hyperparameter configuration for a machine learning algorithm leading to a well-performing model on a given dataset
+% \begin{equation}
+%     \altmathcal{D} = \{(\vec{x}_n, y_n)\}_{n=1}^N \in \mathbb{D} \subset \altmathcal{X} \times \altmathcal{Y}
+% \end{equation}
+% with an instance space $\altmathcal{X}$ and a target space $\altmathcal{Y}$.
 
 \section{Automated Machine Learning}\label{automl-background-sec:automl}
 
-\section{Formalization}\label{automl-background-sec:formalization}
 
 % \begin{itemize}
 %     \item Qui ci va sicuramente la formalizzazione
 %     \item la motivation è dubbia, forse ripeteremmo quello che è scritto sopra nell'Introduction
 % \end{itemize}
 
-% \include{part-automl/chapter-background/main}
+
+
+\part{Human-centered AutoML}\label{part:automl}
+
+
+\chapter{Formalization}\label{automl-chap:formalization}
+
+% \include{part-automl/chapter-formalization/main}
 \include{part-automl/chapter-supervised/main}
 % \include{part-automl/chapter-unsupervised/main}
 % \include{part-automl/chapter-moo/main}
@@ -385,7 +447,7 @@ It
     \item Questo qua o lo mettiamo a parte??
 \end{itemize}
 
-\part{Towards Physics-coupled AutoML}\label{part:farming}
+\part{Physics-coupled AutoML}\label{part:farming}
 
 \chapter{Background and Formalization}
 \label{precision-chap:background}
