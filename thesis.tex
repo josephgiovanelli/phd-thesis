@@ -134,9 +134,6 @@
 \chapter{Introduction}
 
 Artificial intelligence (AI) is currently the buzzword on everybody's lips.
-%, often used without a clear understanding, with only a minority possessing in-depth knowledge.
-% with the majority of people not knowing what is actually about and only a few possessing the knowledge.
-% This thesis contributes towards a democratization of AI, i.e. making it accessible to both experts and non-experts alike.
 Riding the wave of recent groundbreaking achievements, from self-driving cars \citep{} to intelligent chatbots \citep{}, AI is transforming industries and reshaping our daily lives.
 Several interpretations and definitions have been provided over the years, yet the seminal perspective given by the Turing test \citep{turing1980computing} is still one worth mentioning.
 \begin{definition}[Artificial Intelligence \citep{turing1980computing}]
@@ -144,12 +141,9 @@ A machine that shows intelligence indistinguishable from that of human beings is
 \end{definition}
 This translates into understanding what falls under the umbrella of \textit{intelligence}, which is defined differently across the research areas as reasoning, planning, and learning.
 
-% Building upon the notion of intelligence as learning has emerged as the cornerstone due to its disruptive advancements.
 \begin{definition}[Machine Learning \citep{samuel2000some}]
 A machine with the ability to learn without being explicitly programmed.
 \end{definition}
-% Machine learning (ML) represents the pinnacle of this learning process. 
-% Machine learning (ML) emerged as the pinnacle of this learning process due to its disruptive advancements.
 Building upon the notion of intelligence as learning, i.e. Machine Learning (ML), emerged as the pinnacle of AI due to its disruptive advancements.
 At its core, ML aims at addressing problems for which the development of algorithms by humans is not feasible, because the algorithm itself is either not known or cost-prohibitive.
 Examples include face recognition, fraud detection, sale forecasting, and object ranking. 
@@ -204,26 +198,18 @@ We organize this part as follows.
 
 \paragraph{Part II: Physics-coupled AutoML}
 
-% As application areas go, there are fields in which forecasts and analyses are mostly conducted with non-ML models but rather rely on knowledge provided by domain experts and simulators that encode well-known physical laws.
-% As application areas go, there are fields in which forecasts and analyses are currently conducted with non-ML models but rather rely on numerical simulators that encode well-known physical laws. 
-% Such domains are usually related to earth observations and tend to be particularly high-impact, mitigating challenges such as climate change by delivering (more) eco-friendly systems. 
-% Examples include weather forecasts, crop lifecycles, and energy consumption reductions.
-% Domain experts leverage their knowledge to periodically tune the simulator parameters and deliver 
-% Yet, 
-% Traditionally, such research fields have relied on domain knowledge provided by experts to make predictions about our planet, such as weather forecasts and crop lifecycles.
-
 As application areas go, there are domains in which ML models are not yet widespread.
-Usually related to earth observations, the deployed applications tend to be particularly high-impact, trying to mitigate challenges such as climate change by delivering (more) eco-friendly systems. 
+Usually related to earth observations, the deployed applications tend to be particularly high-impact, trying to mitigate challenges such as climate change by delivering (more) eco-friendly systems.
 Examples include weather forecasts and crop life-cycle management.
 Domain experts leverage their knowledge to tune numerical simulators -- which encode well-known physical laws -- and deliver forecasts and analyses.
-However, this process faces several challenges. 
-% several issues jeopardize this process. 
+However, this process faces several challenges.
+% several issues jeopardize this process.
 The non-existence of universal well-defined practices translates to several trials and errors, with domain experts manually configuring the simulator parameters until an acceptable solution is found.
 Yet, as variables involved in physics phenomena are subject to constant change, such numerical solution must undergo periodic (re-)calibration.
-Besides, with the torrent of remotely sensed data available today, opportunities to integrate real-time observations in predictive models have emerged that traditional methods are not equipped to handle. 
+Besides, with the torrent of remotely sensed data available today, opportunities to integrate real-time observations in predictive models have emerged that traditional methods are not equipped to handle.
 This is where advances in AI can push forward to enhance our understanding, provide support and, if necessary, steer the course of resolving global concerns to a more favorable future.
 For instance, ML models exhibit singular performance in adapting themselves to handle scenarios different from the one they were trained on (e.g., fine-tuning of network parameters) and AutoML can significantly impact in automating several stages (e.g., tuning simulators and ML models).
-% At the same time, relying on fully-automated data-driven methods for problems as complex and impactful as these is doomed to result in biased and unreliable. 
+% At the same time, relying on fully-automated data-driven methods for problems as complex and impactful as these is doomed to result in biased and unreliable.
 % This underscores the ongoing importance of domain experts in this endeavor, highlighting their crucial role, with AI serving as a powerful tool.
 % This is why domain experts, as always, remain crucial in this process, and why AI should be there as a powerful tool that supports them in fully taking advantage of the new opportunities we are presented with.
 
@@ -233,93 +219,6 @@ In this part, we focus on precision farming, which plays a pivotal role in addre
 \Cref{precision-chap:orchard} deepens on Orchard3D-Lab, a well-known crop and soil simulator enhanced with auto-tuning and data assimilation capabilities, i.e. ingestion of sensor data for more reliable estimations.
 \Cref{precision-chap:pluto} and \Cref{precision-chap:forecasting} delve -- respectively -- into the modules of real-time soil moisture monitoring and forecasting.
 Finally, \Cref{precision-chap:smart-irrigation} deepens the smart-irrigation algorithm.
-% , leveraging predictive models for smart irrigation, aligning them with the specific stages of the crop lifecycle.
-% Our approach enhance a well-known crop and soil simulator with data assimilation capabilities and integrate it into a end-to-end ML workflow for agronomists.
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OLD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% cash
-% pre-processing
-% meta-learning + multifidelity 
-% AutoML emerged as the beacon of hope, casting a light on the path to democratizing AI and bringing its transformative potential within reach for all.
-% AutoML emerged as promising, casting a light on the path to democratizing AI and bringing its transformative potential within reach for all.
-% armed with cutting-edge optimization techniques that promised to unlock the full potential of machine learning
-% In the last decade, automated machine learning (AutoML) has played a crucial role in this landscape, by lowering the barrier of access to AI.
-
-% At its dawn, AutoML boldly tackles the CASH optimization problem achieving -- in some cases -- higher performance than experts\cite{}.
-% Following improvements have yielded to address ever-larger search space in a remarkably small time budget .
-% First, as data quality issues can significantly influence the success of ML endeavors, data pre-processing (i.e., cleaning and shaping data ad-hoc for the ML algorithm) has been included. 
-% Then, to cope with ever larger research spaces, meta-learning (i.e., ) was leveraged to boost the convergence the optimization process, and multy-fidelity
-% Following improvements in AutoML have yielded to tune entire ML pipelines (i.e., including data pre-processing to shape data ad-hoc for the algorithm) in remarkably small time budget \cite{}, yet leading to a lack of understanding.
-
-% stacking then not able to interact
-% pezzo mancante è l'interazione e l'understanding
-% wave che meglio complementary piuttosto che 
-
-% is committed to relieve practitioners of a range of burdensome throughout the whole ML process.
-% Indeed, when it comes to real-case scenarios, the journey of learning is far from over.
-% First, as data quality issues can significantly influence the success of ML endeavors, data pre-processing is paramount. 
-% It is a meticulous process of cleaning, transforming, and engineering to ensure that the shape of data is suitable for the algorithms.
-% The aim is to democratize AI, i.e. making it accessible to both experts and non-experts alike.
-
-% In this thesis, we share the aim of AutoML in democratizing AI, contributing towards a \textit{pervasive} adoption of analytics.
-% On the one hand, we commit in improving the automation of the discovery process.
-% This eases the deploy of analytics platforms, and hence helps the pervasive spread of them.
-% On the other hand, in certain domains there is a particular need of building such comprehensive analytics solutions; we focus on precision farming.
-
-
-% his becomes even more critical nowadays
-% In today's historical period, where social issues such as bias and ethical concerns can manifest at each step of the ML process, this human-centered approach becomes even more critical. 
-% It underscores the importance of involving the user in revising and supervising the entire process to ensure fairness, transparency, and ethical compliance. 
-% By placing the user back in the loop, we can mitigate the potential risks and harness the full potential of AI in a responsible and accountable manner.
-
-% this is extremely important in this historical period in which social harnessing can arise in each step, example social bias
-% it is important that the user revise and supervise the whole process
-
-
-% Before delving to the actual contributions of this thesis, Chapter 2 provides the AutoML background necessary to understand both Part I and Part II.
-
-
-% When it comes to real-case problems, the problem exacerbates
-% The journey of learning is far from over. 
-% In real-case problems, ML practitioners have to overcome a range of challenges.
-% that AutoML plays a crucial role in this landscape, providing state-of-the-art methods to solve, not only the CASH problem but, also, to tune the entire ML pipeline (i.e., including data pre-processing transformations that shape the data until the algorithm is fed), suggesting . 
-
-
-% \cite{albrecht2020}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Table of contents %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-% \begin{itemize}
-%     \item AI importance (it is now on everyone's lips),  ML importance in AI, and examples
-%     \begin{itemize}
-%         \item Artificial Intelligence (AI) is currently on everyone's lips due to the recent series of rapid breakthroughs achieved,
-%         \item AI definition with learning -> ML, data,  meta-learning
-%         \item AI as learning to solve a problem, machine learning as the most important sub-field (got attraction for the performance), not clear -- given a problem -- which algorithm is the best and how to tune it (distance measure in knn, pruning in decision tree, architecture in neural network), field of automl comes to help: automatically selecting performing configurations, demonstrate itself successful/achieved great performance
-%         \item this shares the aim of democratizing ml (to spread) and involving more people to use it to solve real-case problems
-%         \item to effectively deliver AI and reduce the risks and mitigate potential harness and social impact, we need humans to be able to understand and interact with the AI system
-%         \item We believe in AI that complements, rather than replaces, human intelligence
-%         \item this thesis focuses on two complementary parts
-%         \begin{itemize}
-%             \item improve
-%             \item When it comes to application areas,
-%                     % As application areas go,
-%                     fields related to Earth Observation tend to be particularly high-impact. The aim is to mitigate challenges such as climate change by delivering more eco-friendly systems. Traditionally, such research fields have relied on domain knowledge provided by experts to make predictions about our planet, such as weather forecasts and crop lifecycles. With the torrent of remotely sensed data available today, new opportunities to take advantage of massive remote sensing datasets have emerged that traditional methods are not equipped to handle. This is where advances in AI (particularly Machine Learning and Deep Learning) can push forward humanity’s abilities to understand, support and, if necessary, steer the course of our planet to a better future. At the same time, a naïve application of data-driven methods for problems as complex and impactful as these is doomed to result in biased and unreliable models. This is why domain experts, as always, remain crucial in this process, and why AI should be there as a powerful tool that supports them in fully taking advantage of the exciting new opportunities we are presented with.
-%         \end{itemize}
-%         \item we pass from aiming the full automation to put the human back to the loop, because there is no silver bullet, the user should revise and supervise the whole process and be aware of what is going on (otherwise risks)
-%     \end{itemize}
-%     \item important things: data, meta-learning,
-%     \item AutoML as important
-%     \item Data scientists do not scale
-%     \item
-% \end{itemize}
-
-
-
 
 
 \chapter{Background}
@@ -367,39 +266,11 @@ Particularly in this chapter, \Cref{automl-background-sec:ml} introduces the bui
 
 \section{Machine Learning}\label{automl-background-sec:ml}
 
-% The core concept of learning from experience is understanding how changes in our observed scenario translate into changes in the outcome---be it supervised or unsupervised.
-
-% consists of   . In a supervised learning scenario, the use case (X) is characterized by specific features, and the goal is to find a function (f) that models how these features influence the outcome (Y). Essentially, it's about identifying relationships between inputs and outputs through data analysis, enabling the system to make accurate predictions on new data based on the experience gained during training.
-
-% Learning from experience is at the core of machine learning (ML). In this context, the function f maps input values X to output values Y, and understanding this relationship is the ultimate goal. To convey this concept, imagine a quest to uncover the mysterious function f that links diverse factors or parameters in X to their corresponding outcomes in Y.
-
-% To appreciate this concept, let's first concretize what learning from experience means. In ML, we aim to understand and learn a function f that maps input values X to output values Y. X represents various factors or parameters that can influence specific outcomes, such as temperature, time, or location. Meanwhile, Y encapsulates the potential results or responses, like crop yield, sales figures, or temperature readings.
-
-% Now, let's discuss how we acquire the experience in ML through data. A dataset is a sample extracted from the vast tapestry of the real world. Each data point in this sample represents a unique snippet, capturing the essence of different factors in X and their corresponding outcomes in Y. By analyzing this dataset, we can uncover the intricate connections between changes in input factors and shifts in output results, ultimately leading to an understanding of the function f that guides us towards newfound insights.
-
-% Finally, let's delve into the details of what a dataset is in ML. A dataset is a collection of data points that provide enough information to learn an experience. Each data point contains information about input values X and their corresponding output values Y. By analyzing this dataset, we can gain insights into how the function f behaves under different conditions, allowing us to refine our understanding of the relationship between X and Y.
-
-% Learning from experience
-
 At the core of each and every task lies the data, serving as the essential fuel for the learning process because providing the means to observe the real world.
 Specifically in ML, we refer to a dataset $\altmathcal{D}$ as a sample of data from which it is possible to learn that experience of interest.
-% The sample consists of some instances $X$, each characterized by specific features $\altmathcal{F}$, and the aim is understanding how changes in $X$ impact a desired output $Y$, hence learning a function $f: X \rightarrow Y$.
-% The sample consists of some data items X, instances such as sensor measurements, each of them characterized by specific features F, properties like intensity, duration, or location.
-% The aim is to understand how changes in these features within X translate into changes in a desired output Y, like crop yield
-% Intuitively, we are provided with some data points $X$ -- such as sensor measurements -- characterized by specific features -- like intensity, duration, or location -- and we are interested in understanding how changes in these features translate into changes in the outcome $Y$---like crop yield.
-% Intuitively, we are provided with some data points $X$, such as sensor measurements, which are characterized by specific features like intensity, duration, or location.
-% We are interested in understanding how changes in these features translate into changes in the outcome $Y$, such as the crop yield.
-% While in supervised learning we collect the desired outcomes along with $X$, in unsupervised learning we are not aware of such information.
-% Intuitively, we are provided with some data points $X$, such as sensor measurements, which are characterized by specific features like intensity, duration, or location.
-% While in supervised learning we are provided with the desired outcomes $Y$, such as the crop yield; in unsupervised tasks, we are not aware .
-% As mentioned, in supervised learning, data items $X$ come with the corresponding correct outcomes $Y$; while, in unsupervised learning, no ground truth is provided.
-
 
 \begin{definition}[Dataset]\label{def:dataset}
     A \textit{dataset} $\altmathcal{D}$ is a collection of data points $X$, with corresponding space $\altmathcal{X}$.
-    % , characterized by a set of features $\altmathcal{F}$.
-    % According to the task $T$, a ground truth $Y$ -- within its corresponding space $\altmathcal{Y}$ -- is available in the dataset (supervised learning) or not (unsupervised learning).
-    % According to the task $T$, the dataset includes the ground truth $Y$, with corresponding space $\altmathcal{Y}$ (supervised learning); or it is left as it is (unsupervised learning).
     According to the task $T$, the dataset may include the ground truth $Y$ within its corresponding space $\altmathcal{Y}$ (supervised) or not (unsupervised).
     \begin{equation*}\label{eq:dataset}
         \altmathcal{D} = \left\lbrace\,
@@ -411,8 +282,6 @@ Specifically in ML, we refer to a dataset $\altmathcal{D}$ as a sample of data f
     \end{equation*}
 \end{definition}
 
-% Intuitively, data points $X$ -- such as sensor measurements -- are characterized by specific features -- like intensity, duration, or location -- and we are interested in understanding how changes in these features affect some outcome of interest $Y$---like crop yield.
-% While in supervised learning we can drive algorithms by providing them with the desired outcomes, unsupervised tasks are inherently more exploratory and algorithms have to autonomously discover patterns and relationships within the data.
 Intuitively, a dataset resembles a structured table where each row represents a unique instance $x \in X$ characterized by specific features in their domain $\altmathcal{X}$.
 The features, denoted by the columns, describe the diverse factors or characteristics influencing a particular outcome $Y$ in its domain $\altmathcal{Y}$.
 While in supervised learning the ground truth is provided with the aim of understanding the hidden relationships between features and corresponding outcomes, in supervised tasks, the most appropriate outcome has to be found by discovering patterns within the data.
@@ -439,16 +308,9 @@ While in supervised learning the ground truth is provided with the aim of unders
     This dataset is also used in unsupervised learning tasks by discarding the class attribute, yet the data only contains two clusters with rather obvious separation.
 \end{example}
 
-% The literature further differentiates the tasks contingently to the domain of $Y$.
-% In supervised learning, we consider the outcome as a \textit{class} when it can assume finite values, and hence talk about \textit{classification}; otherwise, when the outcome is continuous, we refer to \textit{regression}.
-% Analogously in unsupervised learning, we refer to \textit{clustering} when searching for different finite clusters---or groups, partitions.
-% Otherwise, the nomenclature usually comes after the task semantic; for example, anomaly detection assigns an outlier score to each instance that deviates from the overall distribution.
-
-
 % The aim is to discover the hidden relationships between inputs $X$ and outputs $Y$, hence learning a function $f: \altmathcal{X} \rightarrow \altmathcal{Y}$.
 Despite the task, the ultimate goal is learning a function $f: \altmathcal{X} \rightarrow \altmathcal{Y}$. A (machine) learning \textit{algorithm} $A$ leverages data points in $\altmathcal{D}$ to estimate such a function $f$, which is expressed via a vector of \textit{model parameters} $H$.
 Most algorithms further expose hyperparameters $\lambda_1, \dots, \lambda_K$ that change the functioning of the algorithm itself.
-% Yet, this does not affect our formalization.
 
 \begin{definition}[Machine Learning Algorithm]\label{def:algorithm}
     Given a dataset $\altmathcal{D}$ and a hyperparameter space $\pmb{\Lambda}$, an algorithm $A$ provides a model $H$ from the model space $\altmathcal{H}$.
@@ -500,56 +362,15 @@ Both model training and validation demand substantial amounts of data to -- resp
 A practical solution is the $k$-fold cross-validation technique.
 This divides the dataset into $k$ folds and, for each fold, uses the corresponding subset of data for testing while employing the remaining $(k - 1)$ folds for training.
 
-\begin{example}[$K$-Fold Cross-Validation]
+\begin{definition}[$K$-Fold Cross-Validation]
     The $k$-fold cross-validation provides a protocol to validate an algorithm $A$ with corresponding hyperparameter configuration $\lambda$ via a loss $\altmathcal{L}$ on a dataset $\altmathcal{D}$.
     \begin{equation*}
         \frac{1}{k}~\mathlarger{\sum}_{i=1}^{k} \altmathcal{L}(A(\altmathcal{D}_{train}^{(i)}, \lambda), \altmathcal{D}_{valid}^{(i)})
     \end{equation*}
     where $\altmathcal{D}_{train}^{(i)} = \altmathcal{D} \setminus \altmathcal{D}_{valid}^{(i)}$.
-\end{example}
+\end{definition}
 
 When it comes to unsupervised learning
-
-
-% Finally, we need a loss function $\altmathcal{L}: \altmathcal{H} \times \mathbb{D} \rightarrow \mathbb{R}$ quantifying how well a given model performs on a given dataset.
-% Although we provide a formalization allowing supervised and unsupervised cases to be treated likewise, it is worth noticing that -- under the hood -- algorithm functioning and performance assessment work differently according to the task at hand.
-
-% In supervised learning, the loss function can be used to assess the quality of a hyperparameter configuration by splitting the original dataset $\altmathcal{D}$ into two disjoint datasets $\altmathcal{D}_\mathit{train}$ and $\altmathcal{D}_\mathit{valid}$, where the model is trained only based on $\altmathcal{D}_\mathit{train}$ but validated with $\altmathcal{L}$ on $\altmathcal{D}_\mathit{valid}$.
-
-% In supervised learning, the original dataset $\altmathcal{D}$ is split into two disjoint partitions $\altmathcal{D}_\mathit{train}$ and $\altmathcal{D}_\mathit{valid}$.
-% The model is trained only based on $\altmathcal{D}_\mathit{train}$ and validated with $\altmathcal{L}$ on $\altmathcal{D}_\mathit{valid}$.
-% This prevents the algorithm to overfit 
-
-% In supervised learning, the dataset is split into different partitions: $\altmathcal{D}_{train}$, $\altmathcal{D}_{valid}$, $\altmathcal{D}_{test}$,
-% algorithms are trained with the aid of the ground truth $Y$
-
-
-
-
-
-
-% \begin{definition}[Dataset]
-
-% \end{definition}
-% At the core of each and every task lies the data.
-% Specifically, a dataset in ML is a sample serving as a lens to observe and understand the real world.
-% At the core of each and every ML task lies the dataset, a collection of data serving as a lens to observe and understand the real world.
-
-
-% a collection of data sampled from the real world.
-% Considered the fuel of each and every ML task, there would be no learning without data---or worse, with ``dirty'' data.
-
-% As a matter of fact, the very first step to build a trustworthy dataset is to carefully select and
-
-% the dataset allows to observe the real world
-
-% As mentioned, the main difference between supervised and unsupervised learning stands in the
-
-% HPO formalizes the task of finding a hyperparameter configuration for a machine learning algorithm leading to a well-performing model on a given dataset
-% \begin{equation}
-%     \altmathcal{D} = \{(\vec{x}_n, y_n)\}_{n=1}^N \in \mathbb{D} \subset \altmathcal{X} \times \altmathcal{Y}
-% \end{equation}
-% with an instance space $\altmathcal{X}$ and a target space $\altmathcal{Y}$.
 
 \section{Automated Machine Learning}\label{automl-background-sec:automl}
 
