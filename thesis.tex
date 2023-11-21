@@ -131,7 +131,7 @@
 \sloppy
 % \include{global/preamble}
 
-\chapter{Introduction}
+\chapter*{Introduction}
 
 Artificial intelligence (AI) is currently the buzzword on everybody's lips.
 Riding the wave of recent groundbreaking achievements, from self-driving cars \citep{} to intelligent chatbots \citep{}, AI is transforming industries and reshaping our daily lives.
@@ -234,11 +234,7 @@ Specifically, the literature identifies three different ML tasks: \textit{superv
 
 \paragraph{Supervised learning} This is the kind of learning studied in most current research in the ML field. The algorithm is provided with a sample of data describing scenarios that have been \textit{experienced} in the past along with the corresponding \textit{ground truth}---i.e., values that indicate the correct outcomes.
 The goal consists of finding a \textit{function} that maps samples to outcomes so that the next unseen scenarios can be labeled correctly.
-Besides, according to the nature of such data, the literature makes the following distinctions.
-\begin{itemize}
-    \item \textbf{Classification} tasks, when the outcome can assume finite values and it represents the class to which the instances belong e.g., in an image recognition use-case: ``dog'', ``cat'', ``car'', or ``tree''.
-    \item \textbf{Regression} tasks, when the outcome is continuous e.g., predicting house prices, stock prices, or temperature.
-\end{itemize}
+
 
 \paragraph{Unupervised learning}
 Here, the samples come with no ground truth available.
@@ -250,7 +246,8 @@ Analogously, tasks can be further categorized.
 \end{itemize}
 % Unsupervised tasks are inherently exploratory in nature and are often employed in data mining to provide explanations for the given scenarios or even to summarize them.
 
-\paragraph{Reinforcement Learning} Standing on the edge of the ML landscape, it has been categorized as the learning that differentiates the most from ``classical'' tasks \cite{sutton2018reinforcement}.
+\paragraph{Reinforcement Learning}
+Standing on the edge of the ML landscape, it has been categorized as the learning that differentiates the most from ``classical'' tasks \cite{sutton2018reinforcement}.
 Here the experience is not sampled and fed to the algorithm but rather comes from interactions with an environment.
 The algorithm learns by making decisions and receiving feedback based on its actions, allowing it to adapt its behavior over time.\\
 
@@ -286,7 +283,7 @@ Intuitively, a dataset resembles a structured table where each row represents a 
 The features, denoted by the columns, describe the diverse factors or characteristics influencing a particular outcome $Y$ in its domain $\altmathcal{Y}$.
 While in supervised learning the ground truth is provided with the aim of understanding the hidden relationships between features and corresponding outcomes, in supervised tasks, the most appropriate outcome has to be found by discovering patterns within the data.
 
-\begin{example}[Iris dataset \cite{iris}]
+\begin{example}[Iris dataset \cite{iris}]\label{ex:dataset}
     The iris dataset contains $150$ instances of flowers ($X$) under four features in cm ($\altmathcal{X} \subset \mathbb{R}^4$): sepal length, sepal width, petal length, and petal width.
     The data have been collected to quantify the morphologic variation within the Iris species ($Y$), which can assume the following $3$ classes ($\altmathcal{Y}$): Iris setosa, Iris virginica and Iris versicolor.
     \begin{table}[!h]
@@ -305,11 +302,14 @@ While in supervised learning the ground truth is provided with the aim of unders
         \caption{Example tuples from the Iris dataset.}
         \label{tbl:iris}
     \end{table}
-    This dataset is also used in unsupervised learning tasks by discarding the class attribute, yet the data only contains two clusters with rather obvious separation.
+
+    \noindent This dataset is also used in unsupervised learning tasks by discarding the class attribute, yet the data only contains two clusters with rather obvious separation.
 \end{example}
 
 % The aim is to discover the hidden relationships between inputs $X$ and outputs $Y$, hence learning a function $f: \altmathcal{X} \rightarrow \altmathcal{Y}$.
-Despite the task, the ultimate goal is learning a function $f: \altmathcal{X} \rightarrow \altmathcal{Y}$. A (machine) learning \textit{algorithm} $A$ leverages data points in $\altmathcal{D}$ to estimate such a function $f$, which is expressed via a vector of \textit{model parameters} $H$.
+% Despite the task,
+The ultimate goal is learning a function $f: \altmathcal{X} \rightarrow \altmathcal{Y}$.
+A (machine) learning \textit{algorithm} $A$ leverages data points in $\altmathcal{D}$ to estimate such a function $f$, which is expressed via a vector of \textit{model parameters} $H$.
 Most algorithms further expose hyperparameters $\lambda_1, \dots, \lambda_K$ that change the functioning of the algorithm itself.
 
 \begin{definition}[Machine Learning Algorithm]\label{def:algorithm}
@@ -320,46 +320,46 @@ Most algorithms further expose hyperparameters $\lambda_1, \dots, \lambda_K$ tha
     Given the hyperparameters $\lambda_1, \dots, \lambda_M$, with corresponding spaces $\Lambda_1, \dots, \Lambda_M$, we refer with $\pmb{\lambda}$ to a hyperpaprameter configuration sampled from the space $\pmb{\Lambda} = \Lambda_1 \times \dots \times \Lambda_M$.
 \end{definition}
 
-Popular learning algorithms include, for supervised tasks: decision trees \cite{} and neural networks \cite{}; for unsupervised tasks: k-means \cite{} and isolation forest \cite{}.
-
-\begin{example}[Decision Tree]
-    The decision tree algorithm recursively splits instances based on their feature values, creating a hierarchical tree-like structure where each leaf represents a class.
-    Notably, in its supervised nature, the tree can be built by minimizing the entropy of the leaves.
-    Hyperparameters such as the maximum depth of the tree or the minimum number of instances in the leaves control the complexity and structure of the resulting tree.
-\end{example}
-
-\begin{example}[K-Means]
-    The k-means algorithm aims to partition the instances into a predetermined number of clusters based on their feature similarity.
-    Being unsupervised, the algorithm iteratively assigns instances to clusters and updates the cluster centroids until its convergence criteria i.e., instances in the same cluster are more similar than instances in a different cluster.
-    Hyperparameters such as the number of clusters and the similarity measure affect the returned partitioning.
-\end{example}
-
-Sticking with the decision tree algorithm as an example, a deeper tree with more splits may capture intricate patterns but is prone to \textit{overfitting} i.e., the model fits the data too closely and performs poorly on new, unseen data.
-On the other hand, a shallower tree might generalize better but may overlook finer details.
-For such reasons, we need loss functions that assess the quality of hyperparameter configurations.
+The actual learning is performed via the so-called \textit{model training} or, due to the iterative process of adjusting internal parameters until convergence, \textit{model fitting}.
+The quality of such a model heavily depends on the hyperparameter choices we made, hence we need loss functions that assess the quality of different configurations.
+% How well a model performs depends heavily on the hyperparameter choices we make and loss functions assess the quality of such configurations.
+The term loss typically refers to the error committed by the model, hence the lower the better; instead, when higher values are favored, we refer to quality metrics.
+Quality metrics share the same signature as the losses.
 
 \begin{definition}[Loss Function]\label{def:loss}
     Given a dataset $\altmathcal{D}$ and a model $H$, the loss function $\altmathcal{L}$ quantifies how well the given model performs on $\altmathcal{D}$.
     \begin{equation*}\label{eq:loss}
         \altmathcal{L}: \altmathcal{H} \times \mathbb{D} \rightarrow \mathbb{R}
     \end{equation*}
-    The term loss typically refers to the error, hence the lower the better; instead, when higher values are favored, we refer to quality metrics.
 \end{definition}
 
-Not only loss functions are inevitably built specifically for the task at hand but, in supervised learning, their application should also follow protocols that assure the consistency and reliability of the estimated model performance.
-In particular, since the model is built by leveraging the ground truth of the data(i.e., model training), we need to evaluate its performance on different data to not overestimate the generalization capacity (i.e., model validation).
-Indeed, the loss function is applied by splitting the original dataset $\altmathcal{D}$ into two disjoint datasets $\altmathcal{D}_\mathit{train}$ and $\altmathcal{D}_\mathit{valid}$, where the model is trained only based on $\altmathcal{D}_\mathit{train}$ but validated with $\altmathcal{L}$ on $\altmathcal{D}_\mathit{valid}$.
+In the following, we walk over the main characteristics and differences between the specific cases of supervised and unsupervised learning.
 
-\begin{example}[Misclassification Error]
-    Given the validation set $(x, y) \in D_\mathit{valid}$  and the model $H$ resulted from the training $A(D_\mathit{train}, \lambda)$, then the loss MIS computes the fraction of incorrect predictions made by $H$.
-    \begin{equation*}
-        MIS(H, \altmathcal{D}_\mathit{valid}) = \frac{1}{|D_\mathit{valid}|}~\mathlarger{\sum}_{(x, y) \in D_\mathit{valid}} (H(x) \ne y)
-    \end{equation*}
-    In classification tasks, the accuracy ($ACC = 1 - MIS$) is often used as a quality metric.
+\subsection{Supervised Learning}
+
+First of all, supervised learning can be further differentiated based on the nature of the desired outcome.
+\begin{itemize}
+    \item \textbf{Classification} tasks, when the outcome can assume finite values and it represents the class to which the instances belong e.g., in an image recognition use-case: ``dog'', ``cat'', ``car'', or ``tree''.
+    \item \textbf{Regression} tasks, when the outcome is continuous e.g., predicting house prices, stock prices, or temperature.
+\end{itemize}
+This might alter how some algorithms internally work but, for our perspective, they are still designed to be fed with a labeled dataset and, through model training, to minimize the discrepancy between its predictions and actual outcomes.
+The ultimate goal is to deploy a model that performs well on new data, hence achieving a good \textit{generalization}.
+Yet, two undesired scenarios can occur.
+\textit{Overfitting} takes place when the model is too complex and fits the training data too closely, not being able to generalize the acquired knowledge to unseen data and capturing noise rather than genuine patterns.
+On the contrary, \textit{underfitting} happens when a model is too simplistic, failing to capture the underlying complexities.
+Hyperparameters are crucial in striking the right balance.
+
+\begin{example}[Decision Tree]
+    The decision tree algorithm recursively splits instances based on their feature values, creating a hierarchical tree-like structure where each leaf represents a class or a prediction value---in classification and regression tasks respectively.
+    % Notably, in its supervised nature, the tree can be built by minimizing the entropy of the leaves.
+    We can control the complexity of such a tree by leveraging hyperparameters such as the maximum depth of the tree and the minimum number of instances in the leaves.
+    In this case, a deeper tree with more splits may capture intricate patterns but is prone to overfitting, as to a shallower tree, it might generalize better but may overlook finer details.
 \end{example}
 
-Both model training and validation demand substantial amounts of data to -- respectively -- build and assess the model's performance with statistical relevance.
-A practical solution is the $k$-fold cross-validation technique.
+Loss functions are inevitable when it comes to assess generalization performance but their application should also follow protocols that assure consistency and statistical reliability.
+The most common protocol involves splitting the original dataset $\altmathcal{D}$ into two disjoint sets $\altmathcal{D}_\mathit{train}$ and $\altmathcal{D}_\mathit{valid}$, where the model is trained only based on $\altmathcal{D}_\mathit{train}$ but validated with $\altmathcal{L}$ on $\altmathcal{D}_\mathit{valid}$.
+Yet, both model training and validation demand substantial amounts of data.
+When the split is not feasible, a practical solution is the $k$-fold cross-validation technique.
 This divides the dataset into $k$ folds and, for each fold, uses the corresponding subset of data for testing while employing the remaining $(k - 1)$ folds for training.
 
 \begin{definition}[$K$-Fold Cross-Validation]
@@ -370,7 +370,33 @@ This divides the dataset into $k$ folds and, for each fold, uses the correspondi
     where $\altmathcal{D}_{train}^{(i)} = \altmathcal{D} \setminus \altmathcal{D}_{valid}^{(i)}$.
 \end{definition}
 
-When it comes to unsupervised learning
+Follows two examples of losses: misclassification error (\Cref{ex:misclassification}) and root mean square error (\Cref{ex:rmse}), for classification and regression tasks respectively.
+
+\begin{example}[Misclassification Error]\label{ex:misclassification}
+    Given the validation set $(x, y) \in D_\mathit{valid}$  and the model $H$ resulted from the training $A(D_\mathit{train}, \lambda)$, then the loss MIS computes the fraction of incorrect predictions made by $H$.
+    \begin{equation*}
+        MIS(H, \altmathcal{D}_\mathit{valid}) = \frac{1}{|D_\mathit{valid}|}~\mathlarger{\sum}_{(x, y) \in D_\mathit{valid}} (H(x) \ne y)
+    \end{equation*}
+    In classification tasks, the accuracy ($ACC = 1 - MIS$) computes the fraction of incorrect predictions and is often used as a quality metric.
+\end{example}
+
+
+\begin{example}[Root Mean Square Error]\label{ex:rmse}
+    Given the validation set $(x, y) \in D_\mathit{valid}$  and the model $H$ resulted from the training $A(D_\mathit{train}, \lambda)$, then the loss RMSE computes the average difference between the predictions made by $H$ and the actual values in $D_\mathit{valid}$.
+    \begin{equation*}
+        RMSE(H, \altmathcal{D}_\mathit{valid}) = \sqrt{\frac{1}{|D_\mathit{valid}|}~\mathlarger{\sum}_{(x, y) \in D_\mathit{valid}} (H(x) - y)^2}
+    \end{equation*}
+\end{example}
+
+\subsection{Unsupervised Learning}
+
+For unsupervised tasks: k-means \cite{} and isolation forest \cite{}.
+
+\begin{example}[K-Means]
+    The k-means algorithm aims to partition the instances into a predetermined number of clusters based on their feature similarity.
+    Being unsupervised, the algorithm iteratively assigns instances to clusters and updates the cluster centroids until its convergence criteria i.e., instances in the same cluster are more similar than instances in a different cluster.
+    Hyperparameters such as the number of clusters and the similarity measure affect the returned partitioning.
+\end{example}
 
 \section{Automated Machine Learning}\label{automl-background-sec:automl}
 
