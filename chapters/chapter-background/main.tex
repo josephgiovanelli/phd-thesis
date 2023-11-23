@@ -43,11 +43,11 @@ Specifically in ML, we refer to a dataset $\altmathcal{D}$ as a sample of data f
     According to the task $T$, the dataset may include the ground truth $Y$ within its corresponding space $\altmathcal{Y}$ (supervised) or not (unsupervised).
     \begin{equation*}\label{eq:dataset}
         \altmathcal{D} = \left\lbrace\,
-        d_i  \quad \begin{array}{|@{}l@{}l@{\quad}l@{}}
-            \quad (\pmb{x}_i, y_i)_{i=1}^N & \in \mathbb{D} \subset \altmathcal{X} \times \altmathcal{Y} & \text{{if }} T = \text{{supervised}} \\
-            \quad (\pmb{x}_i)_{i=1}^N & \in \mathbb{D} \subset \altmathcal{X} & \text{{if }} T = \text{{unsupervised}}
+        (d_i)_{i=1}^N  \quad \begin{array}{|@{}l@{}l@{\quad}l@{}}
+            \quad d_i = (\pmb{x}_i, y_i) & \in \mathbb{D} \subset \altmathcal{X} \times \altmathcal{Y} & \text{{if }} T = \text{{supervised}} \\
+            \quad d_i = \pmb{x}_i & \in \mathbb{D} \subset \altmathcal{X} & \text{{if }} T = \text{{unsupervised}}
         \end{array}
-        \right.
+        \right\rbrace
     \end{equation*}
 \end{definition}
 
@@ -147,18 +147,22 @@ Follows two examples of losses: misclassification error (\Cref{ex:misclassificat
 In both cases, the evaluation is done by comparing predictions with the ground through.
 
 \begin{example}[Misclassification Error]\label{ex:misclassification}
-    Given the validation set $(x_i, y_i) \in D_\mathit{valid}$  and the model $H_{\pmb{\lambda}}$ resulted from the training $A_{\pmb{\lambda}}(D_\mathit{train})$, then the loss MIS computes the fraction of incorrect predictions made by $H$.
+    Given the validation set $(\pmb{x_i}, y_i) \in D_\mathit{valid}$  and the model $H_{\pmb{\lambda}}$ resulted from the training $A_{\pmb{\lambda}}(D_\mathit{train})$, then the loss MIS computes the fraction of incorrect predictions made by $H$.
     \begin{equation*}
-        MIS(H_{\pmb{\lambda}}, \altmathcal{D}_\mathit{valid}) = \frac{1}{|D_\mathit{valid}|}~\mathlarger{\sum}_{(x_i, y_i) \in D_\mathit{valid}} (H_{\pmb{\lambda}}(x_i) \ne y_i)
+        MIS(H_{\pmb{\lambda}}, \altmathcal{D}_\mathit{valid}) = \frac{1}{|D_\mathit{valid}|}~\mathlarger{\sum}_{(\pmb{x_i}, y_i) \in D_\mathit{valid}} \left\lbrace \begin{array}{ll}
+            1 & if (H_{\pmb{\lambda}}(\pmb{x_i}) \ne y_i) \\
+            0 & otherwise
+        \end{array}
+        \right.
     \end{equation*}
     In classification tasks, the accuracy ($ACC = 1 - MIS$) computes the fraction of incorrect predictions and is often used as a quality metric.
 \end{example}
 
 
 \begin{example}[Root Mean Square Error]\label{ex:rmse}
-    Given the validation set $(x_i, y_i) \in D_\mathit{valid}$  and the model $H_{\pmb{\lambda}}$ resulted from the training $A_{\pmb{\lambda}}(D_\mathit{train})$, then the loss RMSE computes the average difference between the predictions made by $H$ and the actual values in $D_\mathit{valid}$.
+    Given the validation set $(\pmb{x_i}, y_i) \in D_\mathit{valid}$  and the model $H_{\pmb{\lambda}}$ resulted from the training $A_{\pmb{\lambda}}(D_\mathit{train})$, then the loss RMSE computes the average difference between the predictions made by $H$ and the actual values in $D_\mathit{valid}$.
     \begin{equation*}
-        RMSE(H_{\pmb{\lambda}}, \altmathcal{D}_\mathit{valid}) = \sqrt{\frac{1}{|D_\mathit{valid}|}~\mathlarger{\sum}_{(x_i, y_i) \in D_\mathit{valid}} (H_{\pmb{\lambda}}(x_i) - y_i)^2}
+        RMSE(H_{\pmb{\lambda}}, \altmathcal{D}_\mathit{valid}) = \sqrt{\frac{1}{|D_\mathit{valid}|}~\mathlarger{\sum}_{(\pmb{x_i}, y_i) \in D_\mathit{valid}} (H_{\pmb{\lambda}}(\pmb{x_i}) - y_i)^2}
     \end{equation*}
 \end{example}
 
@@ -187,13 +191,13 @@ The Silhouette index (\Cref{ex:sil}) is a quality metric that estimates: (i) coh
 \begin{example}[Silhouette Index \cite{sil}]\label{ex:sil}
     Given the dataset set $\altmathcal{D}$ and the model $H_{\pmb{\lambda}}$ resulted from the training $A_{\pmb{\lambda}}(\altmathcal{D})$, then the quality metric $SIL$ summarizes cohesion $COH$ and separability $SEP$ of the clustering made by $H_{\pmb{\lambda}}$
     \begin{equation*}
-        COH(H, x_i) = \frac{1}{|C_{i}| - 1} \sum_{x \in C_{i}, x \neq x_i} d(x, x_i) \quad
-        SEP(H, x_i) = \min_{i \neq j} \frac{1}{|C_j|} \sum_{x_j \in C_j} d(x_j, x_i)
+        COH(H, \pmb{x_i}) = \frac{1}{|C_{i}| - 1} \sum_{\pmb{x} \in C_{i}, \pmb{x} \neq x_i} d(\pmb{x}, \pmb{x_i}) \quad
+        SEP(H, \pmb{x_i}) = \min_{i \neq j} \frac{1}{|C_j|} \sum_{\pmb{x_j} \in C_j} d(\pmb{x_j}, \pmb{x_i})
     \end{equation*}
     \begin{equation*}
-        SIL(H, \altmathcal{D}) = \frac{1}{|\altmathcal{D}|}~\mathlarger{\sum}_{x_i \in \altmathcal{D}} \frac{COH(H_{\pmb{\lambda}}, x_i) - SEP(H, x_i)}{\max(COH(H, x_i), SEP(H, x_i))}
+        SIL(H, \altmathcal{D}) = \frac{1}{|\altmathcal{D}|}~\mathlarger{\sum}_{\pmb{x_i} \in \altmathcal{D}} \frac{COH(H_{\pmb{\lambda}}, x_i) - SEP(H, \pmb{\pmb{x_i}})}{\max(COH(H, \pmb{x_i}), SEP(H, \pmb{x_i}))}
     \end{equation*}
-    where $C_i$ is the cluster of instances to which $x_i$ belongs i.e., $C_i = \{x \in \altmathcal{D} : H_{\pmb{\lambda}}(x) = H_{\pmb{\lambda}}(x_i)\}$.
+    where $C_i$ is the cluster of instances to which $x_i$ belongs i.e., $C_i = \{\pmb{x} \in \altmathcal{D} | H_{\pmb{\lambda}}(\pmb{x}) = H_{\pmb{\lambda}}(\pmb{x_i})\}$.
 \end{example}
 
 
@@ -238,11 +242,97 @@ The root-level parameters of each subspace $\pmb{\Lambda_i}$ are made conditiona
 \end{definition}
 
 The loss function serves as the objective i.e., it represents the goal of the optimization process.
-Depending on number of the objectives of interest, problems can be categorized into single- or multi-objective optimizations.
-In what follows, we provide diverse approaches for tackling both types of optimization challenges.
+Specifically, our objective is considered a black box, namely a costly function in which no assumptions on the distribution can be made \cite{69, 134, 88, 55}.
+Several approaches have been based on and borrowed ideas from the domains of statistical and traditional optimization \cite{opt_algos}.
+Besides, depending on the number of objectives in which the user is interested, we categorized them as either single- or multi-objective.
+In the following, we showcase the challenges of both.
 
 \subsection{Single-objective Optimization}
-In general, several approaches have been based on and borrowed ideas from the domains of statistical and traditional optimization techniques \cite{opt_algos}.
+
+We provide the most common approaches for tackling single-objective optimization, in particular: from the baselines \textit{exhaustive}, \textit{grid}, and \textit{random search} to more sophisticated techniques from the \textit{model-free} family such as \textit{simulated annealing}, and the approaches based on \textit{evolutionary} and \textit{multi-fidelity}.
+Finally, we deepen the \textit{model-based} framework of \textit{bayesian optimization} (BO).
+Model-based approaches differentiate themselves from model-free ones in leveraging a surrogate model that drives the optimization toward the objective function and BO is the current leader of black-box optimization techniques.
+Having gained significant attention for tuning huge search spaces across various tasks, including classification and regression \cite{113, 112}, we will use it throughout the whole thesis.
+
+\subsubsection{Baselines}
+
+\paragraph{Exhaustive search}
+Being the most naive solution, exhaustive search considers all combinations of hyperparameters.
+Obviously, this is computationally expensive and suffers from the curse of dimensionality as the number of trials grows exponentially with the number of hyperparameters \cite{7}, resulting in unfeasible.
+
+\paragraph{Grid Search}
+Another basic solution consists of choosing a predefined set of values for each hyperparameter and computing all combinations in the corresponding cross product.
+This method allows for a good exploration, yet it assumes the loss function being uniformly distributed across all hyperparameters.
+Besides, even in this case, the number of trials grows exponentially with the number of hyperparameters.
+
+\paragraph{Random Search}
+Given a budget $B$, in terms of either time or number of trials, this method samples configurations at random until $B$ is exhausted \cite{10}.
+Random search is often considered a baseline since it tends to find better solutions than grid search \cite{90} and it is -- surprisingly -- competitive with most state-of-the-art approaches.
+One of the main advantages of random search, and grid search, is that they can be easily parallelized over a number of workers, which is essential when dealing with big data.
+
+\subsubsection{Model-free Optimization}
+
+\paragraph{Simulated Annealing}
+This optimization technique draws inspiration from metallurgical processes involving controlled heating and cooling \cite{61}.
+Initially, a single configuration is randomly chosen and evaluated, this consists of the initial state.
+Next, one of the hyperparameters is randomly updated by selecting a value from its immediate neighborhood, to obtain a neighboring state, and the performance is assessed.
+The obtained performances from the current and neighboring states are then compared and, finally, the user decides to accept or reject the neighboring state as the current state.
+
+\paragraph{Evolutionary Approaches}
+Evolutionary (or genetic) approaches draw inspiration from the process of natural gene selection \cite{49}.
+The fundamental concept behind genetic-based optimization techniques is the application of multiple genetic operations to a population of configurations.
+For instance, the crossover operation involves taking two parent chromosomes (configurations) and combining their genetic information to generate new offspring.
+Specifically, the two parent configurations are cut at the same crossover point, and the sub-parts to the right of that point are swapped between the two parent chromosomes, resulting in two new offspring (child configurations).
+Mutation randomly selects a chromosome and mutates one or more of its parameters, leading to a completely new chromosome.
+
+\paragraph{Multi-fidelity approaches}
+Here, samples can be evaluated at different levels, specifically: high-fidelity evaluation and low-fidelity evaluation.
+High-fidelity evaluation provides precise results from the entire dataset, while low-fidelity evaluation offers a more economical assessment from a subset of the dataset (e.g., folds in a k-fold cross-validation).
+The core concept relies on leveraging multiple low-fidelity evaluations to reduce the overall evaluation cost.
+Although low-fidelity optimization may lead to a cheaper evaluation cost, it might compromise optimization performance.
+Nevertheless, the achieved speedup is often more substantial than the introduced approximation error.
+
+\subsubsection{Model-based Optimization}
+
+In principle, employing a framework in which a surrogate model guides the optimization process translates into building a probability distribution that can approximate the objective function based on previous evaluations, and hence understand the most promising configurations.
+As one might expect, we talk about bayesian optimization due to the well-known bayesian theorem in which it is possible to describe the probability of an event, based on prior knowledge of conditions that might be related to the event:
+\begin{equation*}
+    P(c | h) = \frac{P(h | c) \cdot P(c)}{P(h)}
+\end{equation*}
+Similarly, we can get the estimated cost $c$ of a hyperparameter configuration $\pmb{\lambda}$ given the history of previously evaluated configurations $h$.
+The algorithm of sequential model-based optimization (SMBO) is described in \Cref{alg:smbo}.
+\begin{algorithm}
+    \caption{SMBO Algorithm}
+    \label{alg:smbo}
+    \begin{algorithmic}[1]
+        \Require{$B$: budget for optimization}
+        \State Initialize surrogate $S$ and history $h \leftarrow \emptyset$
+        \While{$B$ has not been exhausted}
+            \State $\pmb{\lambda} \leftarrow$ candidate configuration from $S$
+            \State Compute $c = \altmathcal{L}(A_{\pmb{\lambda}}(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$
+            \State $h \leftarrow h \cup \{(\pmb{\lambda}, c)\}$
+            \State Update $S$ given $h$
+        \EndWhile
+        \State \textbf{return} $\pmb{\lambda}$ from $h$ with minimal $c$
+    \end{algorithmic}
+\end{algorithm}
+
+\noindent This begins by building a model $S$ that captures the dependence of the loss function $L$ on hyperparameter settings $\pmb{\lambda}$ (line 1).
+It then iterates through the following steps: using $S$ to determine a promising candidate configuration of hyperparameters $\pmb{\lambda}$ to evaluate next (line 3); evaluating the loss $c$ of $\pmb{\lambda}$ (line 4); and updating the model $S$ with the new data point $(\pmb{\lambda}, c)$ obtained (lines 5–6).
+To select its next hyperparameter configuration $\pmb{\lambda}$ using the model $S$, SMBO employs a so-called acquisition function $a_{S} : \pmb{\Lambda} \rightarrow \mathbb{R}$, which uses the predictive distribution of $S$ at arbitrary hyperparameter configurations $\pmb{\lambda} \in \pmb{\Lambda}$ to quantify (in closed form) how useful knowledge about $\pmb{\lambda}$ would be.
+SMBO then maximizes this function over $\pmb{\Lambda}$ to select the most promising configuration $\pmb{\lambda}$ to evaluate next.
+Several prominent acquisition functions exist [17, 23, 26], all aiming to automatically trade off exploitation (locally optimizing hyperparameters in regions known to perform well) versus exploration (trying hyperparameters in a relatively unexplored region of the space) to avoid premature convergence.
+An example of prominent acquisition function is the probability of improvement $PI = P(c(\pmb{\lambda}) \ge c(\pmb{\lambda}^{\star}))$, where $\pmb{\lambda}^{\star}$ corresponds to the best hyperparameter configuration encountered so far during the optimization.
+
+Yet, the real hype for bayesian framework relies on the improvements made in implementing extremely-performing surrogate models.
+Gaussian processes are commonly considered the pioneers among the surrogates \cite{112, 80}, but they suffer from cubic complexity with the number of data points, limiting parallelization capability.
+Tree-Structured Parzen Estimator (TPE) \cite{13}, in contrast, does not define a predictive distribution over the objective function but creates two density functions as generative models for all domain variables.
+Given a percentile, observations are partitioned into two sets (good observations and bad observations), where simple \textit{parzen windows} model the two sets.
+The ratio between the two density functions reflects the improvement in the acquisition function and is used to recommend new configurations for hyperparameters.
+Tree-Structured Parzen Estimator (TPE) has demonstrated excellent performance in hyperparameter optimization tasks \cite{13, 12, 35, 37, 115}.
+Random forests \cite{20} offer an alternative for modeling the objective function in Bayesian optimization.
+The algorithm starts by growing $B$ regression trees, each built using $n$ randomly selected data points with replacement from training data of size $n$.
+For each tree, a split node is chosen from $d$ algorithm parameters, and the minimum number of points considered for further split is set to $10$. The complexity of fitting and predicting variances for random forests is $O(n \log n)$ and $O(\log n)$, respectively, making them more scalable than Gaussian processes. Random forests are utilized by the Sequential Model-based Algorithm Configuration (SMAC) library \cite{51}.
 
 
 
