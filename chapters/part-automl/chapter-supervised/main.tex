@@ -17,7 +17,7 @@ In the literature, this particular problem has been often referred to as the Dat
 
 \begin{figure*}[t]
     \centering
-    \includegraphics[width=1.0\textwidth]{part-automl/chapter-supervised/img-effective/data-analytics-pipeline.pdf}
+    \includegraphics[width=1.0\textwidth]{chapters/part-automl/chapter-supervised/img-effective/data-analytics-pipeline.pdf}
     \caption{Data analytics pipeline generation in a knowledge discovery process.}
     \label{fig:data-analytics-pipeline}
 \end{figure*}
@@ -26,7 +26,7 @@ To briefly illustrate this, we perform an experiment on the well known \texttt{b
 In Figure~\ref{fig:pre-processing-impact}, the ratio of the change in terms of predictive accuracy (i.e., ratio of the accuracy obtained after the i-th iteration to the baseline/default accuracy) is plotted against the number of different configurations visited by HyperOpt (i.e., iterations). Observe that after the 11th iteration for NB and KNN, and after the 26th iteration for RF, the lines remain flat. That is, from there on, no improvement is achieved by optimizing the hyper-parameters of the algorithms until the 50th iteration is reached. At this point, a sudden jump is observed and the results start to improve again, going clearly beyond the ones obtained before, thanks to the optimizations performed now over the pre-processing pipeline.
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.7\textwidth]{part-automl/chapter-supervised/img-effective/pre-processing-impact.pdf}
+    \includegraphics[width=0.7\textwidth]{chapters/part-automl/chapter-supervised/img-effective/pre-processing-impact.pdf}
     \caption{Evolution of predictive accuracy during the optimization process. The first 50 configurations optimize only the hyper-parameters and after the 50th configuration, the pre-processing pipeline is optimized instead.}
     \label{fig:pre-processing-impact}
 \end{figure}
@@ -128,7 +128,7 @@ To this end, given a pipeline prototype as input and a budget either in terms of
 
 \begin{figure*}[t]
     \centering
-    \includegraphics[clip, trim=6.5cm 3.5cm 6.5cm 8cm,width=1.0\textwidth]{part-automl/chapter-supervised/img-effective/bpmn.pdf}
+    \includegraphics[clip, trim=6.5cm 3.5cm 6.5cm 8cm,width=1.0\textwidth]{chapters/part-automl/chapter-supervised/img-effective/bpmn.pdf}
     \caption{A method for generating pre-processing pipelines.}
     \label{fig:methodology}
 \end{figure*}
@@ -383,7 +383,7 @@ Nr. & Pipeline 1 & Pipeline 2 & Valid result & Valid score & Winner prototype\\\
 
 \begin{figure*}[!b]
 	\centering
-	\includegraphics[width=1.0\textwidth]{part-automl/chapter-supervised/img-effective/experiments_results.pdf}
+	\includegraphics[width=1.0\textwidth]{chapters/part-automl/chapter-supervised/img-effective/experiments_results.pdf}
 	\caption{Number of datasets for which a given pipeline prototype is declared the winner.}
 	\label{fig:learned-rules-results}
 \end{figure*}
@@ -460,7 +460,7 @@ We conclude that, for both of the rules (i.e.,  $F\rightarrow N$ and $F\rightarr
 
 \begin{figure*}[!t]
 	\centering
-	\includegraphics[width=0.9\textwidth]{part-automl/chapter-supervised/img-effective/10_times_4_folds_cv.pdf}
+	\includegraphics[width=0.9\textwidth]{chapters/part-automl/chapter-supervised/img-effective/10_times_4_folds_cv.pdf}
 	\caption{The distribution of the p-values obtained after repeating the chi-square test for 10 times, for the 10 times 4-fold cross-validation.}
 	\label{fig:10-times-4-cv}
 \end{figure*}
@@ -491,7 +491,7 @@ We conclude that, for both of the rules (i.e.,  $F\rightarrow N$ and $F\rightarr
 \begin{figure}
 \begin{floatrow}
 \ffigbox{
-    \includegraphics[clip, trim=2.5cm 23cm 10.5cm 2cm,width=0.5\textwidth]{part-automl/chapter-supervised/img-effective/graph.pdf}
+    \includegraphics[clip, trim=2.5cm 23cm 10.5cm 2cm,width=0.5\textwidth]{chapters/part-automl/chapter-supervised/img-effective/graph.pdf}
 }{
   	\caption{Precedence graph generated from Table~\ref{tbl:rules-union}. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering. }
 }
@@ -613,21 +613,21 @@ For this, we need more complex rules or guidelines that may help in finding the 
 
 \begin{figure*}[!t]
 	\centering
-	\includegraphics[width=1.0\textwidth]{part-automl/chapter-supervised/img-effective/prototypes_impact.pdf}
+	\includegraphics[width=1.0\textwidth]{chapters/part-automl/chapter-supervised/img-effective/prototypes_impact.pdf}
 	\caption{The impact of the different pipeline prototypes over the baseline (i.e., when no transformation is applied).}
 	\label{fig:prototypes-impact}
 \end{figure*}
 
 \begin{figure*}[!h]
 	\centering
-	\includegraphics[width=1.0\textwidth]{part-automl/chapter-supervised/img-effective/pp_pipeline_study2.pdf}
+	\includegraphics[width=1.0\textwidth]{chapters/part-automl/chapter-supervised/img-effective/pp_pipeline_study2.pdf}
 	\caption{Percentage of use of the different physical pipelines.}
 	\label{fig:pipeline-frequency}
 \end{figure*}
 
 \begin{figure*}[!h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{part-automl/chapter-supervised/img-effective/pp_pipeline_study_grouped.pdf}
+	\includegraphics[width=0.7\textwidth]{chapters/part-automl/chapter-supervised/img-effective/pp_pipeline_study_grouped.pdf}
 	\caption{Percentage of use of a transformation in a physical pipeline.}
 	\label{fig:transformation-frequency}
 \end{figure*}
@@ -686,14 +686,14 @@ The prototypes from the top flow and the meta-lerning rules from the bottom flow
 
 \begin{figure*}[!h]
 	\centering
-	\includegraphics[clip, trim=1.0cm 0.4cm 1cm 1cm,width=1\textwidth]{part-automl/chapter-supervised/img-effective/tree-FE.pdf}
+	\includegraphics[clip, trim=1.0cm 0.4cm 1cm 1cm,width=1\textwidth]{chapters/part-automl/chapter-supervised/img-effective/tree-FE.pdf}
 	\caption{Conditional Inference Tree built for the \textit{Features Engineering} transformation.}
 	\label{fig:features-meta-learning:feature-engineering}
 \end{figure*}
 
 \begin{figure*}[!h]
 	\centering
-	\includegraphics[clip, trim=5.8cm 0.4cm 5.05cm 3.5cm,width=0.65\textwidth]{part-automl/chapter-supervised/img-effective/tree-RE.pdf}
+	\includegraphics[clip, trim=5.8cm 0.4cm 5.05cm 3.5cm,width=0.65\textwidth]{chapters/part-automl/chapter-supervised/img-effective/tree-RE.pdf}
 	\caption{Conditional Inference Tree built for the \textit{Rebalancing} transformation.}
 	\label{fig:features-meta-learning:rebalancing}
 	\end{figure*}
@@ -711,7 +711,7 @@ The aim of our experimental study is three-fold:
     \item Assess and compare the impact of dedicating a portion of the optimization time to the effective pipelines constructed using our method, with the impact of using the whole optimization time for the hyper-parameters of the ML algorithm (Section~\ref{ssec:eval-dpso-vs-cash}).
 \end{enumerate}
 
-The experiments were performed on an Intel Core i7 machine with 12 cores, running at 3.20 GHz with 64 GB of main memory. As a platform for running the SMBO optimization algorithm we use HyperOpt. Furthermore, the datasets used in the experiments are the ones from the OpenML repository (see Section~\ref{sec:rules-learned:algorithm}). Finally, the classification algorithms considered are \textit{NB}, \textit{KNN}, and \textit{RF}. All the experiments for a single algorithm, on average took approximately two weeks\footnote{The source code and the datasets for reproducing the experiments can be found in 
+The experiments were performed on an Intel Core i7 machine with 12 cores, running at 3.20 GHz with 64 GB of main memory. As a platform for running the SMBO optimization algorithm we use HyperOpt. Furthermore, the datasets used in the experiments are the ones from the OpenML repository (see Section~\ref{ssec:rules-learned:algorithm}). Finally, the classification algorithms considered are \textit{NB}, \textit{KNN}, and \textit{RF}. All the experiments for a single algorithm, on average took approximately two weeks\footnote{The source code and the datasets for reproducing the experiments can be found in 
 \href{https://github.com/josephgiovanelli/effective\_preprocessing\_pipeline\_evaluation}{https://github.com/josephgiovanelli/effective\_preprocessing\_pipeline\_evaluation}}.
 
 \subsubsection{Universal pipeline prototype}
@@ -751,7 +751,7 @@ The enumerated prototypes are listed in the ordinate axis and each stacked bar r
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.8\textwidth]{part-automl/chapter-supervised/img-effective/evaluation1.pdf}
+    \includegraphics[width=0.8\textwidth]{chapters/part-automl/chapter-supervised/img-effective/evaluation1.pdf}
     \caption{Comparison of the goodness of the exhaustive set of prototypes.}
     \label{fig:eval-universal-pipeline}
 \end{figure}
@@ -775,7 +775,7 @@ To summarize, the experiment shows that with roughly 24 times less time budget, 
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=0.7\textwidth]{part-automl/chapter-supervised/img-effective/evaluation2.pdf}
+    \includegraphics[width=0.7\textwidth]{chapters/part-automl/chapter-supervised/img-effective/evaluation2.pdf}
     \caption{Normalized distances between the scores obtained by optimizing our effective prototypes and the ones obtained optimizing the exhaustive set.}
     \label{fig:eval-exhaustive-vs-effective}
 \end{figure}
@@ -785,7 +785,7 @@ To summarize, the experiment shows that with roughly 24 times less time budget, 
 
 \begin{figure*}[!t]
 	\centering
-	\includegraphics[width=1.0\textwidth]{part-automl/chapter-supervised/img-effective/barplot-10.pdf}
+	\includegraphics[width=1.0\textwidth]{chapters/part-automl/chapter-supervised/img-effective/barplot-10.pdf}
 	\caption{The impact of dedicating a portion of the optimization budget to pre-processing compared to using the whole optimization budget for the hyper-parameter optimization.}
 	\label{fig:eval-pre-processing-hyper-parameter}
 \end{figure*}
@@ -835,7 +835,7 @@ Finally, there are works that aim at fully automating the data analytics process
 
 In DPD \cite{Quemy20InfSystems}, the DPSO problem, as we use it in this work, is formally defined. Authors demonstrate the impact of optimizing the pre-processing pipeline, but considering only a single fixed pipeline prototype. %and only a few datasets. 
 However, as we have already seen (Section~
-\ref{sec:eval-universal-pipeline}), a single fixed prototype cannot perform best for every dataset. Therefore, we build on top of~\cite{Quemy20InfSystems}, and instead of relying on a fixed prototype, we define a method to generate the right pipeline prototypes to be optimized.
+\ref{ssec:eval-universal-pipeline}), a single fixed prototype cannot perform best for every dataset. Therefore, we build on top of~\cite{Quemy20InfSystems}, and instead of relying on a fixed prototype, we define a method to generate the right pipeline prototypes to be optimized.
 
 In PRESISTANT~\cite{presistant18CSI,presistant18CAISE,presistant19DKE}, we tackled the problem of recommending pre-processing operators to the non-expert data analyst. The goal, and at the same time the challenge was to identify the pre-processing operators, and rank them in advance, based on their potential impact to the final analysis. However, we did not consider pre-processing pipelines, but only single transformations, expecting that the analyst applies the process iteratively. In this work, we consider sets of transformations and thus study the impact of combining transformations into a pipeline. 
 
@@ -923,7 +923,7 @@ Finally, previous works have shown the effectiveness of meta-learning for solvin
 
 \begin{figure*}[t]
     \centering
-    \includegraphics[scale=.3]{part-automl/chapter-supervised/img-hamlet/dymmymodel.png}
+    \includegraphics[scale=.3]{chapters/part-automl/chapter-supervised/img-hamlet/dymmymodel.png}
     \caption{Integrating HAMLET with the CRISP-DM process model.}
     \label{fig:approach}
 \end{figure*}
@@ -975,7 +975,7 @@ AutoML tools lighten the DS in the overwhelming practice of finding the best ML 
 In the early days, only the optimization of the ML task was addressed (but no pre-preprocessing).
 Auto-Weka \cite{kotthoff2019auto} formalized the problem as ``combined algorithm selection and hyperparameter optimization'': various ML algorithms and hyperparameters are tested over a dataset to find the most performing configuration. Such optimization was successfully implemented by leveraging Bayesian optimization \cite{frazier2018tutorial}, a sequential strategy for global optimization: until a limit (budget) of iterations or time is reached, an increasingly accurate model is built on top of the previously explored configurations.
 
-Recently, AutoML is no longer limited to optimizing just the ML task, but it also includes Data Pre-processing \cite{giovanelli2021effective, quemy2019data}.
+Recently, AutoML is no longer limited to optimizing just the ML task, but it also includes Data Pre-processing \cite{Giovanelli2021DOLAP, Quemy19DOLAP}.
 In doing so, Auto-sklearn \cite{feurer2019auto} fixes the arrangement of the transformations a priori, without considering that the most performing arrangement changes according to the problem and dataset at hand.
 However, considering several arrangements translates into larger search spaces that are not easy to explore.
 
@@ -1155,7 +1155,7 @@ Given a pipeline instance $\lambda_P \in \Lambda_P \subseteq \Lambda$
 
 \begin{figure}
     \centering
-    \includegraphics[scale=.75]{part-automl/chapter-supervised/img-hamlet/toy_example_ss.pdf}
+    \includegraphics[scale=.75]{chapters/part-automl/chapter-supervised/img-hamlet/toy_example_ss.pdf}
     \caption{Examples of the pipeline domain $\Lambda_{P_4}$ and pipeline instance $\lambda_{P_4}$, for the sake of visualization we omit the third dimension representing the domain of the Decision Tree. Green (or red) circles represent valid (or invalid) sub-regions of the search space; Normalization is not allowed in the pipeline. The rectangle represents a zoom in the domain of the Binarizer algorithm.}
     \label{fig:space}
 \end{figure}
@@ -1243,21 +1243,21 @@ c1 : $\Rightarrow$ forbidden($\langle\mathcal{N}\rangle$, $\mathcal{D}t$).
     \centering
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{part-automl/chapter-supervised/img-hamlet/toy_example1.png}
+        \includegraphics[width=\textwidth]{chapters/part-automl/chapter-supervised/img-hamlet/toy_example1.png}
         \caption{}
         \label{fig:running_a}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{part-automl/chapter-supervised/img-hamlet/toy_example2.png}
+        \includegraphics[width=\textwidth]{chapters/part-automl/chapter-supervised/img-hamlet/toy_example2.png}
         \caption{}
         \label{fig:running_b}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{part-automl/chapter-supervised/img-hamlet/toy_example3.png}
+        \includegraphics[width=\textwidth]{chapters/part-automl/chapter-supervised/img-hamlet/toy_example3.png}
         \caption{}
         \label{fig:running_c}
     \end{subfigure}
@@ -1607,7 +1607,7 @@ Among these, we do not report the results for the dataset mnist\_784 since the n
 \subsubsection{Effectiveness}
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=.45]{part-automl/chapter-supervised/img-hamlet/accuracy.pdf}
+    \includegraphics[scale=.45]{chapters/part-automl/chapter-supervised/img-hamlet/accuracy.pdf}
     \caption{Results assessing the effectiveness of HAMLET w.r.t. the baseline.}
     \label{fig:effectiveness}
 \end{figure}
@@ -1615,10 +1615,10 @@ Among these, we do not report the results for the dataset mnist\_784 since the n
 \begin{figure}[h!]
     \RawFloats
     \centering
-    \includegraphics[scale=.25]{part-automl/chapter-supervised/img-hamlet/accuracy_time.pdf}
+    \includegraphics[scale=.25]{chapters/part-automl/chapter-supervised/img-hamlet/accuracy_time.pdf}
     \caption{Results assessing the performance of HAMLET through the optimization time.}
     \label{fig:efficiency}
-    \includegraphics[scale=.25]{part-automl/chapter-supervised/img-hamlet/skyline.pdf}
+    \includegraphics[scale=.25]{chapters/part-automl/chapter-supervised/img-hamlet/skyline.pdf}
     \caption{Comparison of the best pipeline instances characterized by optimization time and (balanced) accuracy, bigger circles represent settings that dominate the others.}
     \label{fig:effskyline}
 \end{figure}
@@ -1660,7 +1660,7 @@ Noticeably, the baseline is selected as dominating only in madelon and har datas
 
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=.43]{part-automl/chapter-supervised/img-hamlet/time.pdf}
+    \includegraphics[scale=.43]{chapters/part-automl/chapter-supervised/img-hamlet/time.pdf}
     \caption{Computational time of the argumentation and AutoML processes.}
     \label{fig:effoverhead}
 \end{figure}
@@ -1674,7 +1674,7 @@ As expected, PKB+IKA shows the highest overhead since the number of rules to man
 
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=.45]{part-automl/chapter-supervised/img-hamlet/comparison.pdf}
+    \includegraphics[scale=.45]{chapters/part-automl/chapter-supervised/img-hamlet/comparison.pdf}
     \caption{Results assessing the performance of HAMLET w.r.t. Auto-sklearn \cite{feurer2019auto} and H2O \cite{ledell2020h2o}.}
     \label{fig:comparison}
 \end{figure}

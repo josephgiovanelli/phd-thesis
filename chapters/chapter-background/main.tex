@@ -1,0 +1,250 @@
+\chapter{Background}
+\label{chap:background}
+
+Alan Turing defines the field of AI in cognitive terms \cite{turing1980computing}, raising the question of whether machines can show intelligence, and along this line Arthur Samuel defines ML \cite{samuel2000some}, building upon the notion of intelligence as learning.
+A more formal definition is provided by Tom M. Mitchell \citep{mitchell1997machine}, who delineates the behavior of algorithms studied in machine learning and introduces the concepts of \textit{task} and \textit{experience}.
+\begin{definition}[Machine Learning \citep{mitchell1997machine}]
+    A computer program is said to learn in some class of tasks, with respect to a performance measure, if its performance improves with experience.
+\end{definition}
+Notably, the formalization of experience is contingent upon the task to address, which is crucial because determines what the ML algorithm can observe and, in turn, how it operates.
+Specifically, the literature identifies three different ML tasks: \textit{supervised}, \textit{unsupervised}, and \textit{reinforcement learning}.
+
+\paragraph{Supervised learning} This is the kind of learning studied in most current research in the ML field. The algorithm is provided with a sample of data describing scenarios that have been \textit{experienced} in the past along with the corresponding \textit{ground truth}---i.e., values that indicate the correct outcomes.
+The goal consists of finding a \textit{function} that maps samples to outcomes so that the next unseen scenarios can be labeled correctly.
+
+
+\paragraph{Unupervised learning}
+Here, the samples come with no ground truth available.
+The algorithm has to guess the outcome by uncovering hidden insights or patterns, investigating different partitionings, or estimating density distributions within the data.
+Unsupervised tasks are inherently exploratory in nature and are often employed in data mining to provide explanations for the given scenarios or even to summarize them.
+
+\paragraph{Reinforcement Learning}
+Standing on the edge of the ML landscape, it has been categorized as the learning that differentiates the most from ``classical'' tasks \cite{sutton2018reinforcement}.
+Here the experience is not sampled and fed to the algorithm but rather comes from interactions with an environment.
+The algorithm learns by making decisions and receiving feedback based on its actions, allowing it to adapt its behavior over time.\\
+
+%TODO: Qua c'è da menzionare che infatti automatizzare RL, in letteratura, prende il nome di AutoRL mentre noi facciamo AutoML.
+This thesis focuses on supervised and unsupervised learning.
+% providing a formalization that covers both cases.
+Particularly in this chapter, \Cref{automl-background-sec:ml} introduces the building blocks such as dataset, algorithm, and hyperparameter; while
+% provides the necessary background in ML,
+\Cref{automl-background-sec:automl} formalizes the problems tackled by automated machine learning (AutoML), up to the combined algorithm selection and hyperparameter optimization.
+% along with the state-of-the-art techniques to solve them.
+% and finally \Cref{automl-background-sec:formalization} extends the formalization towards a more operational level of ML, enabling the user to handle comprehensive ML pipelines---i.e., concatenations of steps that cover more than the sole learning process.
+% Here we can also put something like " ... extends the formalization focusing on a more operational level of ML and methods that following this way enables to handle comprehensive ... "
+
+\section{Machine Learning}\label{automl-background-sec:ml}
+
+At the core of each and every task lies the data, serving as the essential fuel for the learning process because providing the means to observe the real world.
+Specifically in ML, we refer to a dataset $\altmathcal{D}$ as a sample of data from which it is possible to learn that experience of interest.
+
+\begin{definition}[Dataset]\label{def:dataset}
+    A \textit{dataset} $\altmathcal{D}$ is a collection of data points $X$, with corresponding space $\altmathcal{X}$.
+    According to the task $T$, the dataset may include the ground truth $Y$ within its corresponding space $\altmathcal{Y}$ (supervised) or not (unsupervised).
+    \begin{equation*}\label{eq:dataset}
+        \altmathcal{D} = \left\lbrace\,
+        d_i  \quad \begin{array}{|@{}l@{}l@{\quad}l@{}}
+            \quad (\pmb{x}_i, y_i)_{i=1}^N & \in \mathbb{D} \subset \altmathcal{X} \times \altmathcal{Y} & \text{{if }} T = \text{{supervised}} \\
+            \quad (\pmb{x}_i)_{i=1}^N & \in \mathbb{D} \subset \altmathcal{X} & \text{{if }} T = \text{{unsupervised}}
+        \end{array}
+        \right.
+    \end{equation*}
+\end{definition}
+
+Intuitively, a dataset resembles a structured table where each row represents a unique instance $x \in X$ characterized by specific features in their domain $\altmathcal{X}$.
+The features, denoted by the columns, describe the diverse factors or characteristics influencing a particular outcome $Y$ in its domain $\altmathcal{Y}$.
+While in supervised learning the ground truth is provided with the aim of understanding the hidden relationships between features and corresponding outcomes, in supervised tasks, the most appropriate outcome has to be found by discovering patterns within the data.
+
+\begin{example}[Iris dataset \cite{iris}]\label{ex:dataset}
+    The iris dataset contains $150$ instances of flowers ($X$) under four features in cm ($\altmathcal{X} \subset \mathbb{R}^4$): sepal length, sepal width, petal length, and petal width.
+    The data have been collected to quantify the morphologic variation within the Iris species ($Y$), which can assume the following $3$ classes ($\altmathcal{Y}$): Iris setosa, Iris virginica and Iris versicolor.
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{llll|l}
+            \hline
+            Sepal length & Sepal width & Petal length & Petal width & Class \\ \hline
+            % $5.1$ & $3.5$ & $1.4$ & $0.2$ & Iris-setosa \\
+            $4.9$ & $3.0$ & $1.4$ & $0.2$ & Iris-setosa \\
+            % $7.0$ & $3.2$ & $4.7$ & $1.4$ & Iris-versicolor \\
+            $6.4$ & $3.2$ & $4.5$ & $1.5$ & Iris-versicolor \\
+            % $6.3$ & $3.3$ & $6.0$ & $2.5$ & Iris-virginica \\
+            $5.8$ & $2.7$ & $5.1$ & $1.9$ & Iris-virginica \\ \hline
+            \
+        \end{tabular}
+        \caption{Example tuples from the Iris dataset.}
+        \label{tbl:iris}
+    \end{table}
+
+    \noindent This dataset is also used in unsupervised learning tasks by discarding the class attribute, yet the data only contains two clusters with rather obvious separation.
+\end{example}
+
+% The aim is to discover the hidden relationships between inputs $X$ and outputs $Y$, hence learning a function $f: \altmathcal{X} \rightarrow \altmathcal{Y}$.
+% Despite the task,
+The ultimate goal is learning a function $f: \altmathcal{X} \rightarrow \altmathcal{Y}$.
+A (machine) learning \textit{algorithm} $A$ leverages data points in $\altmathcal{D}$ to estimate such a function $f$, which is expressed via a vector of \textit{model parameters} $H$.
+Most algorithms further expose hyperparameters $\lambda_1, \dots, \lambda_K$ that change the functioning of the algorithm itself.
+
+\begin{definition}[Machine Learning Algorithm]\label{def:algorithm}
+    Given the hyperparameters $\lambda_1, \dots, \lambda_M$, with corresponding spaces $\Lambda_1, \dots, \Lambda_M$, we refer with $\pmb{\lambda}$ to a hyperpaprameter configuration sampled from the space $\pmb{\Lambda} = \Lambda_1 \times \dots \times \Lambda_M$.
+    Then, given a dataset $\altmathcal{D} \in \mathbb{D}$ and a hyperparameter configuration $\pmb{\lambda} \in \pmb{\Lambda}$, an algorithm $A(\altmathcal{D}, \pmb{\lambda})$ -- or $A_{\pmb{\lambda}}$ for brevity -- provides a model $H_{\pmb{\lambda}}$ from the model space $\altmathcal{H}$.
+    \begin{equation*}\label{eq:algorithm}
+        A: \mathbb{D} \times \pmb{\Lambda} \rightarrow \altmathcal{H}
+    \end{equation*}
+    % For conciseness matter, we write $A_{\pmb{\lambda}}$ for $A(\altmathcal{D}, \pmb{\lambda})$ and refer to $H_{\pmb{\lambda}}$ as the corresponding model.
+\end{definition}
+
+The actual learning is performed via the so-called \textit{model training}, also known as \textit{model fitting} due to the iterative process of adjusting the internal parameters of the model until convergence.
+The quality of such a model heavily depends on the hyperparameter choices we made, hence we need loss functions that assess the quality of different configurations.
+% How well a model performs depends heavily on the hyperparameter choices we make and loss functions assess the quality of such configurations.
+The term loss typically refers to the error committed by the model, hence the lower the better; instead, when higher values are favored, we refer to quality metrics.
+Quality metrics share the same signature as the losses.
+
+\begin{definition}[Loss Function]\label{def:loss}
+    Given a dataset $\altmathcal{D} \in \mathbb{D}$ and a model $H_{\pmb{\lambda}} \in \altmathcal{H}$, the loss function $\altmathcal{L}(\altmathcal{D}, H_{\pmb{\lambda}})$ quantifies how well the given model performs on $\altmathcal{D}$.
+    \begin{equation*}\label{eq:loss}
+        \altmathcal{L}: \altmathcal{H} \times \mathbb{D} \rightarrow \mathbb{R}
+    \end{equation*}
+\end{definition}
+
+In the following, we walk over the main characteristics and differences between the specific cases of supervised and unsupervised learning.
+
+\subsection{Supervised Learning}
+
+Supervised learning tasks can be differentiated based on the nature of the desired outcome.
+\begin{itemize}
+    \item \textbf{Classification} tasks, the outcome assumes finite values, representing the class to which the instances belong e.g., in an image recognition use-case labels may include ``dog'', ``cat'', ``car'', or ``tree''.
+    \item \textbf{Regression} tasks, the outcome is continuous and -- according to the semantic of the task -- can be considered as either forecasting or estimation e.g., predicting future stock prices based on historical data or estimating soil moisture based on soil features and weather conditions.
+\end{itemize}
+Algorithms employ model training to minimize the discrepancy between the predictions and the provided ground truth.
+However, the aim is to acquire the knowledge to perform well on new, future data, hence achieving a good \textit{generalization}.
+Two undesired scenarios can occur.
+\textit{Overfitting} takes place when the model becomes too complex and fits the training data too closely, not being able to generalize the acquired knowledge to unseen data, capturing noise rather than genuine patterns.
+On the contrary, \textit{underfitting} happens when the model remains too simplistic, failing to capture the underlying complexities.
+Hyperparameters are crucial in striking the right balance.
+
+\begin{example}[Decision Tree]
+    The decision tree algorithm recursively splits instances based on their feature values, creating a hierarchical tree-like structure where each leaf represents a class or a prediction value---in classification and regression tasks respectively.
+    % Notably, in its supervised nature, the tree can be built by minimizing the entropy of the leaves.
+    We can control the complexity of such a tree by leveraging hyperparameters such as the maximum depth of the tree and the minimum number of instances in the leaves.
+    In this case, a deeper tree with more splits may capture intricate patterns but is prone to overfitting, as to a shallower tree, it might generalize better but may overlook finer details.
+\end{example}
+
+Loss functions are inevitable when it comes to assessing generalization performance but -- when we are provided with solely one set of data -- their application should follow protocols that assure consistency and statistical reliability.
+The most common protocol involves splitting the original dataset $\altmathcal{D}$ into two disjoint sets $\altmathcal{D}_\mathit{train}$ and $\altmathcal{D}_\mathit{valid}$, where the model is trained only based on $\altmathcal{D}_\mathit{train}$ but validated with $\altmathcal{L}$ on $\altmathcal{D}_\mathit{valid}$.
+Yet, both model training and validation demand substantial amounts of data.
+When the split is not feasible, a practical solution is the $k$-fold cross-validation technique.
+This divides the dataset into $k$ folds and, for each fold, uses the corresponding subset of data for testing while employing the remaining $(k - 1)$ folds for training.
+
+\begin{definition}[$K$-Fold Cross-Validation]
+    The $k$-fold cross-validation provides a protocol to validate an algorithm $A_{\pmb{\lambda}}$ via a loss $\altmathcal{L}$ on a dataset $\altmathcal{D}$.
+    \begin{equation*}
+        \frac{1}{k}~\mathlarger{\sum}_{i=1}^{k} \altmathcal{L}(A_{\pmb{\lambda}}(\altmathcal{D}_{train}^{(i)}), \altmathcal{D}_{valid}^{(i)})
+    \end{equation*}
+    where $\altmathcal{D}_{train}^{(i)}$ stands for $\altmathcal{D}$ without the $i^{\textup{th}}$ fold (used for validation) i.e., $\altmathcal{D}_{train}^{(i)} = \altmathcal{D} \setminus \altmathcal{D}_{valid}^{(i)}$.
+\end{definition}
+
+Follows two examples of losses: misclassification error (\Cref{ex:misclassification}) and root mean square error (\Cref{ex:rmse}), for classification and regression tasks respectively.
+In both cases, the evaluation is done by comparing predictions with the ground through.
+
+\begin{example}[Misclassification Error]\label{ex:misclassification}
+    Given the validation set $(x_i, y_i) \in D_\mathit{valid}$  and the model $H_{\pmb{\lambda}}$ resulted from the training $A_{\pmb{\lambda}}(D_\mathit{train})$, then the loss MIS computes the fraction of incorrect predictions made by $H$.
+    \begin{equation*}
+        MIS(H_{\pmb{\lambda}}, \altmathcal{D}_\mathit{valid}) = \frac{1}{|D_\mathit{valid}|}~\mathlarger{\sum}_{(x_i, y_i) \in D_\mathit{valid}} (H_{\pmb{\lambda}}(x_i) \ne y_i)
+    \end{equation*}
+    In classification tasks, the accuracy ($ACC = 1 - MIS$) computes the fraction of incorrect predictions and is often used as a quality metric.
+\end{example}
+
+
+\begin{example}[Root Mean Square Error]\label{ex:rmse}
+    Given the validation set $(x_i, y_i) \in D_\mathit{valid}$  and the model $H_{\pmb{\lambda}}$ resulted from the training $A_{\pmb{\lambda}}(D_\mathit{train})$, then the loss RMSE computes the average difference between the predictions made by $H$ and the actual values in $D_\mathit{valid}$.
+    \begin{equation*}
+        RMSE(H_{\pmb{\lambda}}, \altmathcal{D}_\mathit{valid}) = \sqrt{\frac{1}{|D_\mathit{valid}|}~\mathlarger{\sum}_{(x_i, y_i) \in D_\mathit{valid}} (H_{\pmb{\lambda}}(x_i) - y_i)^2}
+    \end{equation*}
+\end{example}
+
+\subsection{Unsupervised Learning}
+
+According to the desired outcome, unsupervised learning provides a categorization similar to supervised one.
+\begin{itemize}
+    \item \textbf{Cluster analysis}, the outcome can assume finite values and it aims to group instances in such a way that those in the same group (called a cluster) are more similar to each other than to those in other groups e.g., identifying customer segments based on purchasing behavior.
+    \item Otherwise, when the outcome is continuous, there is no nomenclature in literature and tasks are named after the semantic at hand e.g., anomaly detection assigns an outlier score to each instance that deviates from the overall distribution.
+\end{itemize}
+% The core of unsupervised learning lies in training not to explicitly perform the task on future instances but, rather, to extract patterns and insights from the training data itself.
+However, in unsupervised scenarios, the knowledge acquired through model fitting does not have the goal of predicting future instances but, rather, of understanding the inherent patterns and structure within the training data itself.
+Popular examples of algorithms are: k-means \cite{k_means}, isolation forest \cite{random_forest}
+
+\begin{example}[K-Means \cite{k_means}]
+    The k-means algorithm aims to partition the instances into a predetermined number of clusters based on their feature similarity.
+    The algorithm iteratively assigns instances to clusters and updates the cluster centroids until its convergence criteria i.e., instances in the same cluster are more similar than instances in a different cluster.
+    Hyperparameters such as the number of clusters and the similarity measure affect the returned partitioning.
+\end{example}
+
+Consistently, the model evaluation is performed atop the training dataset and does not need any particular protocol.
+Being provided without any ground truth, loss functions and quality metrics estimate the model performance based on patterns and relationships discovered within the feature values themselves.
+For instance, in cluster analysis, the aim is to find a well-separated partitioning (also known as clustering).
+The Silhouette index (\Cref{ex:sil}) is a quality metric that estimates: (i) cohesion of the provided clusters as the mean distance between a sample and all other points in the same cluster, and (i) separability as the mean distance between a sample and all other points in the next nearest cluster.
+
+\begin{example}[Silhouette Index \cite{sil}]\label{ex:sil}
+    Given the dataset set $\altmathcal{D}$ and the model $H_{\pmb{\lambda}}$ resulted from the training $A_{\pmb{\lambda}}(\altmathcal{D})$, then the quality metric $SIL$ summarizes cohesion $COH$ and separability $SEP$ of the clustering made by $H_{\pmb{\lambda}}$
+    \begin{equation*}
+        COH(H, x_i) = \frac{1}{|C_{i}| - 1} \sum_{x \in C_{i}, x \neq x_i} d(x, x_i) \quad
+        SEP(H, x_i) = \min_{i \neq j} \frac{1}{|C_j|} \sum_{x_j \in C_j} d(x_j, x_i)
+    \end{equation*}
+    \begin{equation*}
+        SIL(H, \altmathcal{D}) = \frac{1}{|\altmathcal{D}|}~\mathlarger{\sum}_{x_i \in \altmathcal{D}} \frac{COH(H_{\pmb{\lambda}}, x_i) - SEP(H, x_i)}{\max(COH(H, x_i), SEP(H, x_i))}
+    \end{equation*}
+    where $C_i$ is the cluster of instances to which $x_i$ belongs i.e., $C_i = \{x \in \altmathcal{D} : H_{\pmb{\lambda}}(x) = H_{\pmb{\lambda}}(x_i)\}$.
+\end{example}
+
+
+
+
+\section{Automated Machine Learning}\label{automl-background-sec:automl}
+
+
+The process of finding the best-performing machine learning model for a given dataset involves two kinds of choices: selecting a learning algorithm and tuning it by setting its hyperparameters.
+In the following, we define the corresponding optimization problems.
+
+Let us consider a dataset $\altmathcal{D} = \{d_1, \dots, d_n\} \in \mathbb{D}$.
+If the task $T$ is supervised, we refer with $\altmathcal{D}_{train}$ and $\altmathcal{D}_{valid}$ to two different data splits for training and validation respectively; otherwise, if $T$ is unsupervised, they correspond to the same original dataset $\altmathcal{D}$.
+Besides, we are provided with a loss function $\altmathcal{L} = \altmathcal{H} \times \mathbb{D} \rightarrow \mathbb{R}$.
+
+\begin{definition}[Algorithm Selection (AS)]
+    Given a set of learning algorithms $\altmathcal{A} = \{A_1, \dots, A_K\}$, the goal of algorithm selection is to determine the algorithm $A^{\star} \in \altmathcal{A}$ with optimal loss function
+    \begin{equation*}
+        A^{\star} \in \argmin_{A_i \in \altmathcal{A}} \altmathcal{L}(A_i(\altmathcal{D}_{train}), \altmathcal{D}_{valid})
+    \end{equation*}
+    where $A_i$ is trained with its default hyperparameter setting.
+\end{definition}
+
+\begin{definition}[Hyperparameter Optimization (HPO)]
+    Given an algorithm $A$ and hyperparameters $\lambda_1, \dots, \lambda_M$, with the corresponding cross product space of $\pmb{\Lambda} = \Lambda_1 \times \dots \times \Lambda_M$, the goal of hyperparameter optimization is to determine the configuration $\pmb{\lambda}^{\star} \in \pmb{\Lambda}$ with optimal loss function.
+    \begin{equation*}
+        \pmb{\lambda}^{\star} \in \argmin_{\pmb{\lambda} \in \pmb{\Lambda}} \altmathcal{L}(A_{\pmb{\lambda}}(\altmathcal{D}_{train}), \altmathcal{D}_{valid})
+    \end{equation*}
+\end{definition}
+
+There has been considerable past work separately addressing algorithm selection \cite{as_algos} and hyperparameter optimization \cite{hpo_algos}.
+One could similarly tackle the combined space of learning algorithms and their hyperparameters, yet this has not achieved good results.
+The corresponding loss function becomes noisy when the space is high-dimensional, involves both categorical and continuous choices, and contains hierarchical dependencies (e.g., the hyperparameters of a learning algorithm are only meaningful if that algorithm is chosen).
+For such reasons CASH has been reformulated as a single combined hierarchical hyperparameter optimization with space $\pmb{\Lambda} = \pmb{\Lambda_1} \cup \dots \cup \pmb{\Lambda_K} \cup \{\lambda_r\}$, where $\lambda_r$ is a new root-level hyperparameter that selects between algorithms $A_1, \dots, A_K$.
+The root-level parameters of each subspace $\pmb{\Lambda_i}$ are made conditional on $\lambda_r$ being instantiated to $A_i$.
+
+\begin{definition}[Combined Algorithm Selection and Optimization (CASH)]
+    Given a set of learning algorithms $\altmathcal{A} = \{A_1, \dots, A_K\}$, with assocciated hyperparameter spaces  $\pmb{\Lambda}_1, \dots, \pmb{\Lambda}_K$, we define the hierarchical space $\pmb{\Lambda} = \pmb{\Lambda_1} \cup \dots \cup \pmb{\Lambda_K} \cup \{\lambda_r\}$. Then, the goal is to find the algorithm and corresponding configuration $A^{\star}_{\pmb{\lambda}^{\star}} \in \pmb{\Lambda}$ with optimal loss function.
+    \begin{equation*}
+        A^{\star}_{\pmb{\lambda}^{\star}} \in \argmin_{A_{\pmb{\lambda}} \in \pmb{\Lambda}} \altmathcal{L}(A_{\pmb{\lambda}}(\altmathcal{D}_{train}), \altmathcal{D}_{valid})
+    \end{equation*}
+\end{definition}
+
+The loss function serves as the objective i.e., it represents the goal of the optimization process.
+Depending on number of the objectives of interest, problems can be categorized into single- or multi-objective optimizations.
+In what follows, we provide diverse approaches for tackling both types of optimization challenges.
+
+\subsection{Single-objective Optimization}
+In general, several approaches have been based on and borrowed ideas from the domains of statistical and traditional optimization techniques \cite{opt_algos}.
+
+
+
+
+\subsection{Multi-objective Optimization}

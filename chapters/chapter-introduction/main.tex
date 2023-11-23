@@ -1,0 +1,97 @@
+\chapter{Introduction}
+\label{chap:intro}
+
+Artificial intelligence (AI) is currently the buzzword on everybody's lips.
+Riding the wave of recent groundbreaking achievements, from self-driving cars \citep{} to intelligent chatbots \citep{}, AI is transforming industries and reshaping our daily lives.
+Several interpretations and definitions have been provided over the years, yet the seminal perspective given by the Turing test \citep{turing1980computing} is still one worth mentioning.
+\begin{definition}[Artificial Intelligence \citep{turing1980computing}]
+A machine that shows intelligence indistinguishable from that of human beings is qualified to be labeled as artificial intelligence.
+\end{definition}
+This translates into understanding what falls under the umbrella of \textit{intelligence}, which is defined differently across the research areas as reasoning, planning, and learning.
+
+\begin{definition}[Machine Learning \citep{samuel2000some}]
+A machine with the ability to learn without being explicitly programmed.
+\end{definition}
+Building upon the notion of intelligence as learning, i.e. Machine Learning (ML), emerged as the pinnacle of AI due to its disruptive advancements.
+At its core, ML aims at addressing problems for which the development of algorithms by humans is not feasible, because the algorithm itself is either not known or cost-prohibitive.
+Examples include face recognition, fraud detection, sale forecasting, and object ranking. 
+The problems are solved instead by letting the algorithms (e.g., neural networks \cite{nn}) \textit{discover their own solutions}: they perform a training process atop a sample of historical data, borrowing techniques from disciplines such as numerical analysis, statistics, and information theory.
+The training process consists of fitting internal parameters (e.g., weights and bias) and providing ML practitioners with a model, which is ready to ingest new data and tackle the problem at hand.
+
+There exists a plethora of different algorithms solving the same problem with different strengths and weaknesses, confirming theoretical results proving that there is \textit{no silver bullet} \cite{kerschke2019automated}---no algorithm dominates all others in all respects.
+Besides, algorithms often expose some hyperparameters controlling the learning behavior (e.g., learning rate).
+To unleash the full potential of ML, practitioners have to carefully tune such hyperparameters but get easily overwhelmed by the showcased problem of combined algorithm selection and hyperparameter (CASH) optimization.
+
+Automated machine learning (AutoML) demonstrates to play a crucial role in this landscape by tackling the CASH problem and, going beyond, by handling ever-larger search spaces in surprisingly small time budgets \cite{small_time_budgets}.
+Remarkable milestones include bayesian optimization (BO) to explore promising configurations based on prior evaluations,
+meta-learning (i.e., learning atop learning) to warm-start BO (i.e., to boost the convergence process) by suggesting configurations that worked well in previous similar cases, and multi-fidelity methods to partially evaluate time-consuming configurations.
+Besides, off-the-shelf solutions \cite{auto_sklearn} are provided to tune entire ML pipelines, achieving -- in some cases -- higher performance than experts.
+
+By lowering the barrier of access, AutoML emerged as promising for democratization of AI, i.e. making it accessible to both experts and non-experts alike.
+Yet, when it comes to real-case scenarios, the journey of learning is riddled with challenges, ranging from the need for human intervention to mitigate harnessing, to the need for physical simulators.
+% and heterogeneity of the data to constraints that may apply to the problem, from need for domain knowledge to .
+While \Cref{chap:background} provides the necessary background, the remaining of the thesis investigates these challenges evolving into two parts.
+
+
+
+
+\paragraph{Part I: Human-centered AutoML}
+
+The original promise of AutoML was to automate certain ML tasks to a significant extent, thereby democratizing it and enabling non-experts to apply it in their respective domains.
+However, despite their success, many current AutoML tools were not built around the user but rather around algorithmic ideas.
+The stacking of complex mechanisms on top of each other unavoidably led to a less understanding of the process by the user -- even ML experts -- and allowing for very limited interaction.
+Parts of the community have hence pushed towards a more human-centered AutoML process aimed at complementing, instead of replacing, human intelligence.
+% This becomes even more crucial nowadays
+% Motivated by ethical concerns and social bias issues arising at each step of the ML process, this becomes imperative in such a mitigating call nowadays.
+Besides, motivated by ethical concerns and social bias issues arising at each step of the ML process, this approach becomes even imperative in such a mitigating call nowadays.
+By placing the user back in the loop, it would be possible to revise and supervise the entire process, ensuring fairness, transparency, and ethical compliance.
+
+In this part, we focus on the following contributions.
+\begin{itemize}
+    \item Providing the AutoML formalization to explicitly deal with thorough pipelines i.e., concatenations of pre-processing transformations and ML algorithms.
+    \item Devising human-centered solutions for the main categories of ML i.e., supervised and unsupervised learning. The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
+    \item Addressing multi-objective ML, i.e. optimization of more than one loss or objective function, by interactively learning user preferences and drive the optimization towards it.
+    \item Showcasing potential challenges, opportunities, and risks of novel (human-centered) AutoML interfaces with large language models (LLMs), i.e. AI models trained on large corpora of text to understand and produce human-like answers.
+\end{itemize}
+
+We organize this part as follows.
+\Cref{automl-chap:formalization} provides the comprehensive AutoML formalization for ML pipelines.
+\Cref{automl-chap:supervised} and \Cref{automl-chap:unsupervised} address supervised and unsupervised learning respectively.
+\Cref{automl-chap:moo} delves into multi-objective ML and, lastly, \Cref{automl-chap:llm} discusses the novel human-centered AutoML interfaces with LLMs.
+% In this part, we devise human-centered AutoML solutions for the main categories of ML.
+% While in \Cref{automl-chap:formalization} we provide the AutoML formalization to explicitly deal with thorough pipelines i.e., concatenations of pre-processing transformations and ML algorithms, \Cref{automl-chap:supervised} and \Cref{automl-chap:unsupervised} address supervised and unsupervised learning respectively.
+% The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
+% Then, \Cref{automl-chap:moo} delves into multi-objective ML, i.e. optimization of more than one loss or objective function.
+% Lastly, \Cref{automl-chap:llm} showcases the potential challenges, opportunities, and risks of novel (human-centered) AutoML interfaces with large language models, i.e. AI models trained on large corpora of text to understand and produce human-like answers.
+
+\paragraph{Part II: Physics-coupled AutoML}
+
+As application areas go, there are domains in which ML models are not yet widespread.
+Usually related to earth observations, the deployed applications tend to be particularly high-impact, trying to mitigate challenges such as climate change by delivering (more) eco-friendly systems.
+Examples include weather forecasts and crop life-cycle management.
+Domain experts leverage their knowledge to tune numerical simulators -- which encode well-known physical laws -- and deliver forecasts and analyses.
+However, this process faces several challenges.
+% several issues jeopardize this process.
+The non-existence of universal well-defined practices translates to several trials and errors, with domain experts manually configuring the simulator parameters until an acceptable solution is found.
+Yet, as variables involved in physics phenomena are subject to constant change, such numerical solution must undergo periodic (re-)calibration.
+Besides, with the torrent of remotely sensed data available today, opportunities to integrate real-time observations in predictive models have emerged that traditional methods are not equipped to handle.
+This is where advances in AI can push forward to enhance our understanding, provide support and, if necessary, steer the course of resolving global concerns to a more favorable future.
+For instance, ML models exhibit singular performance in adapting themselves to handle scenarios different from the one they were trained on (e.g., fine-tuning of network parameters) and AutoML can significantly impact in automating several stages (e.g., tuning simulators and ML models).
+% At the same time, relying on fully-automated data-driven methods for problems as complex and impactful as these is doomed to result in biased and unreliable.
+% This underscores the ongoing importance of domain experts in this endeavor, highlighting their crucial role, with AI serving as a powerful tool.
+% This is why domain experts, as always, remain crucial in this process, and why AI should be there as a powerful tool that supports them in fully taking advantage of the new opportunities we are presented with.
+
+In this part, we focus on precision farming, which plays a pivotal role in addressing water wastage and improving crop efficiency. Specifically, we commit to the following contributions.
+\begin{itemize}
+    \item Devising an extensive and flexible architecture for a big-data smart-irrigation platform that allows to perform analytics by coupling (automated) machine learning with physically-based models.
+    \item Controlling soil moisture in real-time by relying on a grid of sensors and building fine-grained 2D and 3D profiles that enable a comprehensive analysis of the field.
+    \item Forecasting the soil moisture through a two-stage optimization technique that also enables the system to adapt to new in-situ conditions.
+    \item Providing a smart-irrigation approach that estimates the daily water amount needed by the plant and -- based on a grid of sensors and weather forecasts -- schedules the irrigation.
+\end{itemize}
+
+
+
+We organize this part as follows. \Cref{precision-chap:formalization} provides the necessary formalization in precision farming and overviews the designed architecture of our big-data smart-irrigation platform.
+\Cref{precision-chap:orchard} deepens on Orchard3D-Lab, a well-known crop and soil simulator enhanced with auto-tuning and data assimilation capabilities, i.e. ingestion of sensor data for more reliable estimations.
+\Cref{precision-chap:pluto} and \Cref{precision-chap:forecasting} delve -- respectively -- into the modules of real-time soil moisture monitoring and forecasting.
+Finally, \Cref{precision-chap:smart-irrigation} deepens the smart-irrigation approach.
