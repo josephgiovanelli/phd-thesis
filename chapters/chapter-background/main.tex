@@ -86,10 +86,11 @@ Most algorithms further expose hyperparameters $\lambda_1, \dots, \lambda_K$ tha
 
 \begin{definition}[Machine Learning Algorithm]\label{def:algorithm}
     Given the hyperparameters $\lambda_1, \dots, \lambda_M$, with corresponding spaces $\Lambda_1, \dots, \Lambda_M$, we refer with $\pmb{\lambda}$ to a hyperpaprameter configuration sampled from the space $\pmb{\Lambda} = \Lambda_1 \times \dots \times \Lambda_M$.
-    Then, given a dataset $\altmathcal{D} \in \mathbb{D}$ and a hyperparameter configuration $\pmb{\lambda} \in \pmb{\Lambda}$, an algorithm $A(\altmathcal{D}, \pmb{\lambda})$ -- or $A_{\pmb{\lambda}}$ for brevity -- provides a model $H_{\pmb{\lambda}}$ from the model space $\altmathcal{H}$.
+    Then, given a dataset $\altmathcal{D} \in \mathbb{D}$ and a hyperparameter configuration $\pmb{\lambda} \in \pmb{\Lambda}$, an algorithm $A(\altmathcal{D}, \pmb{\lambda})$  provides a model from the model space $\mathbb{H}$.
     \begin{equation*}\label{eq:algorithm}
-        A: \mathbb{D} \times \pmb{\Lambda} \rightarrow \altmathcal{H}
+        A: \mathbb{D} \times \pmb{\Lambda} \rightarrow \mathbb{H}
     \end{equation*}
+    For brevity, we refer to $A(\altmathcal{D}, \pmb{\lambda})$ with the notation $A_{\pmb{\lambda}}(\altmathcal{D})$, and $H_{\pmb{\lambda}}$ for the resulting trained model.
     % For conciseness matter, we write $A_{\pmb{\lambda}}$ for $A(\altmathcal{D}, \pmb{\lambda})$ and refer to $H_{\pmb{\lambda}}$ as the corresponding model.
 \end{definition}
 
@@ -100,9 +101,9 @@ The term loss typically refers to the error committed by the model, hence the lo
 Quality metrics share the same signature as the losses.
 
 \begin{definition}[Loss Function]\label{def:loss}
-    Given a dataset $\altmathcal{D} \in \mathbb{D}$ and a model $H_{\pmb{\lambda}} \in \altmathcal{H}$, the loss function $\altmathcal{L}(\altmathcal{D}, H_{\pmb{\lambda}})$ quantifies how well the given model performs on $\altmathcal{D}$.
+    Given a dataset $\altmathcal{D} \in \mathbb{D}$ and a model $H_{\pmb{\lambda}} \in \mathbb{H}$, the loss function $\altmathcal{L}(\altmathcal{D}, H_{\pmb{\lambda}})$ quantifies how well the given model performs on $\altmathcal{D}$.
     \begin{equation*}\label{eq:loss}
-        \altmathcal{L}: \altmathcal{H} \times \mathbb{D} \rightarrow \mathbb{R}
+        \altmathcal{L}: \mathbb{H} \times \mathbb{D} \rightarrow \mathbb{R}
     \end{equation*}
 \end{definition}
 
@@ -197,7 +198,7 @@ The Silhouette index (\Cref{ex:sil}) is a quality metric that estimates: (i) coh
     \begin{equation*}
         SIL(H, \altmathcal{D}) = \frac{1}{|\altmathcal{D}|}~\mathlarger{\sum}_{\pmb{x_i} \in \altmathcal{D}} \frac{COH(H_{\pmb{\lambda}}, x_i) - SEP(H, \pmb{\pmb{x_i}})}{\max(COH(H, \pmb{x_i}), SEP(H, \pmb{x_i}))}
     \end{equation*}
-    where $C_i$ is the cluster of instances to which $x_i$ belongs i.e., $C_i = \{\pmb{x} \in \altmathcal{D} | H_{\pmb{\lambda}}(\pmb{x}) = H_{\pmb{\lambda}}(\pmb{x_i})\}$.
+    where $C_i$ is the cluster of instances to which $x_i$ belongs i.e., $C_i = \{\pmb{x} \in \altmathcal{D} | H_{\pmb{\lambda}}(\pmb{x}) = H_{\pmb{\lambda}}(\pmb{x_i})\}$ and $d(\pmb{x}_i, \pmb{x}_j)$ is the distance between the data points $\pmb{x}_i$ and $\pmb{x}_j$.
 \end{example}
 
 
@@ -211,7 +212,7 @@ In the following, we define the corresponding optimization problems.
 
 Let us consider a dataset $\altmathcal{D} = \{d_1, \dots, d_n\} \in \mathbb{D}$.
 If the task $T$ is supervised, we refer with $\altmathcal{D}_{train}$ and $\altmathcal{D}_{valid}$ to two different data splits for training and validation respectively; otherwise, if $T$ is unsupervised, they correspond to the same original dataset $\altmathcal{D}$.
-Besides, we are provided with a loss function $\altmathcal{L} = \altmathcal{H} \times \mathbb{D} \rightarrow \mathbb{R}$.
+Besides, we are provided with a loss function $\altmathcal{L} = \mathbb{H} \times \mathbb{D} \rightarrow \mathbb{R}$.
 
 \begin{definition}[Algorithm Selection (AS)]
     Given a set of learning algorithms $\altmathcal{A} = \{A_1, \dots, A_K\}$, the goal of algorithm selection is to determine the algorithm $A^{\star} \in \altmathcal{A}$ with optimal loss function
@@ -229,7 +230,7 @@ Besides, we are provided with a loss function $\altmathcal{L} = \altmathcal{H} \
 \end{definition}
 
 There has been considerable past work separately addressing algorithm selection \cite{as_algos} and hyperparameter optimization \cite{hpo_algos}.
-One could similarly tackle the combined space of learning algorithms and their hyperparameters, yet this has not achieved good results.
+One could similarly tackle the combined space of learning algorithms and their hyperparameters (CASH), yet this has not achieved good results.
 The corresponding loss function becomes noisy when the space is high-dimensional, involves both categorical and continuous choices, and contains hierarchical dependencies (e.g., the hyperparameters of a learning algorithm are only meaningful if that algorithm is chosen).
 For such reasons CASH has been reformulated as a single combined hierarchical hyperparameter optimization with space $\pmb{\Lambda} = \pmb{\Lambda_1} \cup \dots \cup \pmb{\Lambda_K} \cup \{\lambda_r\}$, where $\lambda_r$ is a new root-level hyperparameter that selects between algorithms $A_1, \dots, A_K$.
 The root-level parameters of each subspace $\pmb{\Lambda_i}$ are made conditional on $\lambda_r$ being instantiated to $A_i$.
@@ -249,12 +250,12 @@ In the following, we showcase the challenges of both.
 
 \subsection{Single-objective Optimization}
 
-We provide the most common approaches for tackling single-objective optimization, in particular: from the baselines \textit{exhaustive}, \textit{grid}, and \textit{random search} to more sophisticated techniques from the \textit{model-free} family such as \textit{simulated annealing}, and the approaches based on \textit{evolutionary} and \textit{multi-fidelity}.
-Finally, we deepen the \textit{model-based} framework of \textit{bayesian optimization} (BO).
-Model-based approaches differentiate themselves from model-free ones in leveraging a surrogate model that drives the optimization toward the objective function and BO is the current leader of black-box optimization techniques.
+We provide the most common approaches for tackling single-objective optimization, in particular: the baselines \textit{exhaustive}, \textit{grid}, and \textit{random search};  the \textit{model-free} ones such as \textit{simulated annealing}, and the approaches based on \textit{evolutionary} and \textit{multi-fidelity}; and finally the \textit{model-based} framework of \textit{bayesian optimization} (BO).
+Unlike model-free approaches, the model-based framework leverages a surrogate model that drives the optimization toward the objective function and BO is the current leader of black-box optimization techniques.
 Having gained significant attention for tuning huge search spaces across various tasks, including classification and regression \cite{113, 112}, we will use it throughout the whole thesis.
 
 \subsubsection{Baselines}
+The baseline techniques share the common characteristic of exploring the hyperparameter space without any intelligent strategies, relying instead on systematic or random exploration of the hyperparameter space.
 
 \paragraph{Exhaustive search}
 Being the most naive solution, exhaustive search considers all combinations of hyperparameters.
@@ -271,6 +272,7 @@ Random search is often considered a baseline since it tends to find better solut
 One of the main advantages of random search, and grid search, is that they can be easily parallelized over a number of workers, which is essential when dealing with big data.
 
 \subsubsection{Model-free Optimization}
+Model-free approaches share a commonality in their reliance on heuristic techniques and exploration strategies that do not explicitly model the objective function or employ gradient information.
 
 \paragraph{Simulated Annealing}
 This optimization technique draws inspiration from metallurgical processes involving controlled heating and cooling \cite{61}.
@@ -295,11 +297,11 @@ Nevertheless, the achieved speedup is often more substantial than the introduced
 \subsubsection{Model-based Optimization}
 
 In principle, employing a framework in which a surrogate model guides the optimization process translates into building a probability distribution that can approximate the objective function based on previous evaluations, and hence understand the most promising configurations.
-As one might expect, we talk about bayesian optimization due to the well-known bayesian theorem in which it is possible to describe the probability of an event, based on prior knowledge of conditions that might be related to the event:
-\begin{equation*}
-    P(c | h) = \frac{P(h | c) \cdot P(c)}{P(h)}
-\end{equation*}
-Similarly, we can get the estimated cost $c$ of a hyperparameter configuration $\pmb{\lambda}$ given the history of previously evaluated configurations $h$.
+As one might expect, we refer to bayesian optimization due to the well-known bayesian theorem, describing the probability of an event based on prior knowledge of conditions that might be related to the event.
+% \begin{equation*}
+%     P(c(\pmb{\lambda}) | h) = \frac{P(h | c(\pmb{\lambda})) \cdot P(c(\pmb{\lambda}))}{P(h)}
+% \end{equation*}
+Similarly, we can get the estimated cost of a hyperparameter configuration $c(\pmb{\lambda})$ given the history of previously evaluated configurations $h$.
 The algorithm of sequential model-based optimization (SMBO) is described in \Cref{alg:smbo}.
 \begin{algorithm}
     \caption{SMBO Algorithm}
@@ -309,7 +311,7 @@ The algorithm of sequential model-based optimization (SMBO) is described in \Cre
         \State Initialize surrogate $S$ and history $h \leftarrow \emptyset$
         \While{$B$ has not been exhausted}
             \State $\pmb{\lambda} \leftarrow$ candidate configuration from $S$
-            \State Compute $c = \altmathcal{L}(A_{\pmb{\lambda}}(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$
+            \State Compute $c(\pmb{\lambda}) = \altmathcal{L}(A_{\pmb{\lambda}}(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$
             \State $h \leftarrow h \cup \{(\pmb{\lambda}, c)\}$
             \State Update $S$ given $h$
         \EndWhile
@@ -322,19 +324,73 @@ It then iterates through the following steps: using $S$ to determine a promising
 To select its next hyperparameter configuration $\pmb{\lambda}$ using the model $S$, SMBO employs a so-called acquisition function $a_{S} : \pmb{\Lambda} \rightarrow \mathbb{R}$, which uses the predictive distribution of $S$ at arbitrary hyperparameter configurations $\pmb{\lambda} \in \pmb{\Lambda}$ to quantify (in closed form) how useful knowledge about $\pmb{\lambda}$ would be.
 SMBO then maximizes this function over $\pmb{\Lambda}$ to select the most promising configuration $\pmb{\lambda}$ to evaluate next.
 Several prominent acquisition functions exist [17, 23, 26], all aiming to automatically trade off exploitation (locally optimizing hyperparameters in regions known to perform well) versus exploration (trying hyperparameters in a relatively unexplored region of the space) to avoid premature convergence.
-An example of prominent acquisition function is the probability of improvement $PI = P(c(\pmb{\lambda}) \ge c(\pmb{\lambda}^{\star}))$, where $\pmb{\lambda}^{\star}$ corresponds to the best hyperparameter configuration encountered so far during the optimization.
+An example of a promising acquisition function is the probability of improvement $PI = P(c(\pmb{\lambda}) \ge c(\hat{\pmb{\lambda}}))$, where $\hat{\pmb{\lambda}}$ corresponds to the best hyperparameter configuration encountered so far during the optimization.
 
-Yet, the real hype for bayesian framework relies on the improvements made in implementing extremely-performing surrogate models.
-Gaussian processes are commonly considered the pioneers among the surrogates \cite{112, 80}, but they suffer from cubic complexity with the number of data points, limiting parallelization capability.
-Tree-Structured Parzen Estimator (TPE) \cite{13}, in contrast, does not define a predictive distribution over the objective function but creates two density functions as generative models for all domain variables.
-Given a percentile, observations are partitioned into two sets (good observations and bad observations), where simple \textit{parzen windows} model the two sets.
-The ratio between the two density functions reflects the improvement in the acquisition function and is used to recommend new configurations for hyperparameters.
-Tree-Structured Parzen Estimator (TPE) has demonstrated excellent performance in hyperparameter optimization tasks \cite{13, 12, 35, 37, 115}.
-Random forests \cite{20} offer an alternative for modeling the objective function in Bayesian optimization.
-The algorithm starts by growing $B$ regression trees, each built using $n$ randomly selected data points with replacement from training data of size $n$.
-For each tree, a split node is chosen from $d$ algorithm parameters, and the minimum number of points considered for further split is set to $10$. The complexity of fitting and predicting variances for random forests is $O(n \log n)$ and $O(\log n)$, respectively, making them more scalable than Gaussian processes. Random forests are utilized by the Sequential Model-based Algorithm Configuration (SMAC) library \cite{51}.
+However, bayesian optimization achievements are due to ever-efficient implementations of surrogate models.
+Follows the more important ones.
+
+\paragraph{Gaussian processes (GP)} Commonly considered the pioneers among the surrogates \cite{112, 80}, yet suffering from cubic complexity with the number of data points, limiting parallelization capability.
+
+\paragraph{Tree-structured parzen estimator (TPE)} \cite{13}, in contrast, does not define a predictive distribution over the objective function but creates two density functions for all the hyperparameters in the problem.
+Based on past observations, a percentile for each hyperparameter is built to distinguish good and bad observations.
+The hyperparameter values are split into two sets, and their respective distributions are determined using density estimation through \textit{parzen windows}\footnote{Statistical technique to estimate a density distribution by generalization from a histogram.}.
+The ratio between the two density functions reflects the improvement in the acquisition function and is used to recommend new configurations.
+TPE has demonstrated excellent performance in hyperparameter optimization tasks \cite{13, 12, 35, 37, 115}.
+
+\paragraph{Sequential model-based algorithm configuration (SMAC)} Random forest \cite{20} is leveraged as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
+The algorithm starts by training different regression trees, each built using randomly selected data points.
+For each tree, we are provided with an estimation cost, which translates into the posterior distribution in the bayesian framework.
+
+\paragraph{BOHB}
+\textcolor{orange}{TODO}
 
 
-
+\paragraph{FLAML}
+\textcolor{orange}{TODO}
 
 \subsection{Multi-objective Optimization}
+
+
+When it comes to learning a machine learning model with more than one (possibly conflicting) objective or loss function $\altmathcal{L}_1, \dots, \altmathcal{L}_M$ in mind, comparing the quality of models becomes difficult.
+For instance, in the context of Green AI, searching for a model with higher performance usually leads to one with higher power consumption, and vice versa.
+In multi-objective (MO) ML, we leverage the concept of dominance i.e., a model $H_1 \in \mathbb{H}$ is better than another $H_2 \in \mathbb{H}$, if $H_1$ performs better in at least one of the objectives while not performing worse than $H_2$ in the remaining ones.
+Given a set of models $\altmathcal{H} \subset \mathbb{H}$ and $\altmathcal{L}_1, \dots, \altmathcal{L}_M$ objectives, we are provided with a Pareto Front i.e., a set of non-dominated models that are indistinguishable with respect to this dominance idea.
+
+\begin{definition}[Pareto Front]
+    A Pareto front $P(H)$ evaluated on dataset $\altmathcal{D}_{\mathit{val}}$ for a given set of models $\altmathcal{H} \in \mathbb{H}$ is the set of solutions that are non-dominated i.e., as good or better in all objectives and better in at least one objective.
+
+    \begin{equation*}
+        \label{eq:pareto_def}
+            P_{\altmathcal{D}_{\mathit{val}}}(\altmathcal{H}) = \left\{ H \,\, \begin{array}{|l}
+            H \in \altmathcal{H}, \nexists H' \in \altmathcal{H},
+            \forall m \in \{1, \dots, M\} : \\
+            \quad\quad\altmathcal{L}_m(H',\altmathcal{D}_{\mathit{val}}) \leq \altmathcal{L}_m(H,\altmathcal{D}_{\mathit{val}}), \\
+            \exists j \in \{1, \dots, M\} : \\
+            \quad\quad\altmathcal{L}_j(H',\altmathcal{D}_{\mathit{val}}) < \altmathcal{L}_j(H, \altmathcal{D}_{\mathit{val}})
+            \end{array}\right\} \, .
+        \end{equation*}
+\end{definition}
+
+In practice, the ultimate goal of a MO task consists of finding the best Pareto Front.
+On the one hand, there are approaches that optimize classical ML algorithms, which returns one model per configuration, and compute the Pareto front a-posteriori.
+On the other hand, there are others that leverage specific MO implementations of ML algorithms (MO-ML) that return a Pareto front of models.
+
+\subsubsection{Optimizing standard-ML algorithms}
+
+\textcolor{orange}{TODO}
+
+\subsubsection{Optimizing MO-ML algorithms}
+
+MO-ML algorithms return the complete Pareto front of models instead of a single model.
+Formally, the signature of an algorithm changes to $A: \mathbb{D} \times \vec{\Lambda} \rightarrow 2^{\altmathcal{H}}$. As a consequence, the evaluation of each hyperparameter configuration of such an MO-ML algorithm also involves quantifying the quality of a Pareto front of models instead of a single model returned by the algorithm, yielding a much more difficult problem.
+As such, the signature of our loss function also needs to change to $\altmathcal{L}: 2^{\altmathcal{H}} \times \mathbb{D} \rightarrow \mathbb{R}$ and thus can no longer be instantiated with simple loss functions such as accuracy.
+
+One way of assessing the quality of a Pareto front and thus instantiating the HPO loss function $\altmathcal{L}$ in this case, are so-called Pareto front quality indicators~\citep{audet-ejor21}.
+These can be categorized into so-called external and internal indicators where external indicators measure the convergence of a Pareto front to the optimal one, i.e., the one that the user prefers.
+Yet, in real-case problems, computing the entire Pareto front space is unfeasible and there is no way to describe the desiderata beforehand.
+In contrast, internal indicators assess the Pareto front quality by measuring specific characteristics.
+A very common indicator is called hypervolume \citep{zitzler1999multiobjective} quantifying the volume occupied by the Pareto front w.r.t. a reference point.
+Other indicators evaluate factors such as uniformity of solution distribution (e.g., spacing indicator \citep{schott1995fault}), range of values covered by the Pareto front (e.g., maximum spread indicator \citep{zitzler2000comparison}), or proximity to specific threshold points (e.g., R2 indicator \citep{hansen1994evaluating}).
+
+Once a custom loss function tailored to Pareto front indicators is employed, the established single-objective optimization approaches remain applicable for optimizing MO-ML algorithms.
+
