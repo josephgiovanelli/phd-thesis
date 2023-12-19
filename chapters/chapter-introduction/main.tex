@@ -15,7 +15,8 @@ Building upon the notion of intelligence as learning, i.e. Machine Learning (ML)
 At its core, ML aims at addressing problems for which the development of algorithms by humans is not feasible, because the algorithm itself is either not known or cost-prohibitive.
 Examples include face recognition, fraud detection, sale forecasting, and object ranking.
 The problems are solved instead by letting the algorithms (e.g., neural networks \cite{nn}) \textit{discover their own solutions}: they perform a training process atop a sample of historical data, borrowing techniques from disciplines such as numerical analysis, statistics, and information theory.
-The training process consists of fitting internal parameters (e.g., weights and bias) and providing ML practitioners with a model, which is ready to ingest new data and tackle the problem at hand.
+The training process consists of fitting internal parameters (e.g., weights and bias) and providing practitioners with a model.
+In this context, we can hence define an \textit{AI system} as the (software) solution that deploys an ML model specific for the problem at hand i.e., ready to ingest new data and tackle it.
 
 There exists a plethora of different algorithms solving the same problem with different strengths and weaknesses, confirming theoretical results proving that there is \textit{no silver bullet} \cite{kerschke2019automated}---no algorithm dominates all others in all respects.
 Besides, algorithms often expose some hyperparameters controlling the learning behavior (e.g., learning rate).
@@ -26,8 +27,10 @@ Remarkable milestones include bayesian optimization (BO) to explore promising co
 meta-learning (i.e., learning atop learning) to warm-start BO (i.e., to boost the convergence process) by suggesting configurations that worked well in previous similar cases, and multi-fidelity methods to partially evaluate time-consuming configurations.
 % Besides, off-the-shelf solutions \cite{auto_sklearn} are provided to tune entire ML pipelines, achieving -- in some cases -- higher performance than experts.
 By lowering the barrier of access, AutoML emerged as promising for the democratization of AI, i.e. making it accessible to both experts and non-experts alike.
-Yet, when it comes to real-case scenarios, the journey of learning is riddled with challenges.
-% ranging from the need for human intervention to mitigate harnessing, to the need for physical simulators.
+Yet, when it comes to real-case scenarios, the journey of
+delivering AI systems
+% learning
+is riddled with challenges.
 
 \begin{figure}
     \centering
@@ -36,84 +39,98 @@ Yet, when it comes to real-case scenarios, the journey of learning is riddled wi
     \label{fig:contribution}
 \end{figure}
 
-The data scientist is a specialist in machine learning and data analysis, which leverages a process model to translate the \textit{knowledge} about the problem into \textit{ML constraints} and deploy the \textit{solution}.
-The cross-industry standard process for data mining \cite{wirth2000crisp} (CRISP-DM) is the open standard and we will take it as a reference in the whole thesis.
+% ranging from the need for human intervention to mitigate harnessing, to the need for physical simulators.
+Let us quickly overview the end-to-end process.
+The main character is usually the data scientist, a specialist in machine learning and data analysis, which leverages a process model to translate the \textit{knowledge} about the problem into \textit{ML constraints} and deploy the system.
+The cross-industry standard process for data mining \cite{wirth2000crisp} (CRISP-DM) is considered the open standard and we will take it as a reference in the whole thesis.
+Given the numerous skills expected by data scientists,
+their numbers fall short of the needs,
+% their numbers cannot meet the needs,
+% their number does not scale with the needs,
+leading domain experts to carry out such a process.
+For the sake of simplicity, we keep these two roles separated.
 % is an open standard process model and standard de facto that guides the ML experts, better known as \textit{data scientists}, through the different stages in applied machine learning problems.
 \textbf{Domain} and \textbf{data understanding} entail domain experts and the data scientist working in close cooperation to explore constraints and study available data, respectively.
 % \textbf{Data understanding} is devoted to the study of the data collected, its semantics and transformations
-These stages might be repeated many times until the data scientist is satisfied with the acquired knowledge.
+These stages might be repeated many times until the data scientists are satisfied with the acquired knowledge.
 Follows the iterative investigation of different solutions throughout \textbf{data pre-processing}, \textbf{modelling}, and \textbf{evaluation}.
-Data pre-processing and modelling are conducted to build an ML pipeline--i.e., a series of pre-processing transformations that shape the data so that the ML algorithm can perform at its best.
-Then, evaluation offers a way to measure the performance.
-Finally, the process concludes with the \textbf{deployment} of the solution---i.e., the actual implementation.
+Data pre-processing and modelling are conducted to build a data pipeline and train an ML algorithm, respectively.
+More in detail, a series of pre-processing transformations shape the data so that the ML algorithm can output the best model.
+Then, evaluation offers a way to measure the performance and the process can conclude with the \textbf{deployment} of the AI system, including the implementation of the running environment.
+% ---i.e., the actual implementation of the solution.
 % \textbf{Data pre-processing}, \textbf{modelling}, and \textbf{evaluation} are iteratively conducted to investigate different pipelines---i.e., series of pre-processing transformations that shape the data so that the ML algorithm can perform at its best.
 
-\Cref{fig:contribution} shows the CRISP-DM process model and the contribution areas we focus on.
-Specifically, while \Cref{chap:background} provides the necessary background, the remaining of the thesis evolves in three parts.
-% While \Cref{chap:background} provides the necessary background, the remaining of the thesis investigates these challenges evolving into two parts.
+\Cref{fig:contribution} shows the CRISP-DM process model and the research areas we focus on.
+Specifically, according to challenges that are addressed: data-centric, human-centric, and physics-aware AI.
+% According to the challenges that are addressed, this thesis contributes to three research areas.
+% following research areas.
+While \Cref{chap:background} provides the necessary background, the remaining of the thesis evolves in the corresponding three parts.
+% Specifically, while \Cref{chap:background} provides the necessary background, the remaining of the thesis evolves in three parts.
+% While \Cref{chap:background} provides the necessary background, the remaining of this thesis investigates these challenges evolving into two parts.
 
 
-\paragraph{Part I: Data-centric AutoML}
+\paragraph{Part I: Data-centric AI}
 
-During the past few decades, most of the efforts in AI were focused on improving ML algorithms and considered the dataset as fixed .
+During the past few decades, most of the efforts in AI were focused on improving ML algorithms, leading to numerous groundbreaking achievements.
+In many applications, modelling is considered the solved part of the puzzle and the vast majority of the time is spent on improving the data.
+Data-centric AI is the discipline of systematically engineering data used to build an AI system, yet the challenge of configuring data pipelines is rather simple.
+A combinatorial space has to be explored, entailing ad-hoc pre-processing for the algorithm at hand, and constraints within data, transformations, and algorithms exacerbate the problem at hand.
+While AutoML traditionally neglected data quality and pre-processing, there is an untapped potential to contribute to this research area.
+Indeed, given the huge combinatorial space, AutoML can help in designing efficient AI systems with a meticulous focus on data.
+% AI systems are made up of both code, which is software implementing the model or learning algorithm, as well as data, which you run the code on.
 % Over the past few decades, most of the efforts in AI have focused on improving the code and the dominant paradigm in research was to download the dataset and hope the data is fixed while you work on the code.
+% Thanks to all this innovation in the code, part of the puzzle for many applications, I find that the code is basically a solved problem.
+% Data-centric AI is a shift toward developing software tools as well as entering practices to make improving the data efficient reliable and systematic in the last decade the biggest shift in AI was embracing deep learning in this decade.
+% I think the biggest shift in AI might be a shift to data-centric AI.
+% The resources on the site will allow you to take part in this next major trend for ai techniques and I'm excited for you to harness the power of these ideas to more quickly build successful AI systems you
+% I think the biggest shift in AI might be a shift to data-centric AI.
 
-The dominant paradigm 
+% Yet, serving as the essential fuel for the learning process, data plays an even more crucial role.
+% Data plays a key role in the ML process.
 
-Serving as the essential fuel for the learning process, data plays an even more crucial role in AutoML.
-In data-centric AI applications, is the discipline of systematically engineering the data used to build an AI system.
-
-
-AI systems are made up of both code, which is software implementing the model or learning algorithm, as well as data, which you run the code on.
-% Over the past few decades, most of the efforts in AI have focused on improving the code and the dominant paradigm in research was to download the dataset and hope the data is fixed while you work on the code.
-Thanks to all this innovation in the code, part of the puzzle for many applications, I find that the code is basically a solved problem.
-You should still make sure you understand how neural networks work but I found that a lot of the time is more useful to instead spend the vast majority of your time working to improve the data.
-While people in applied machine learning have engineered the data for decades, we've mostly done it in ad hoc compass ways, which often depended on one's skill or even luck to make it work.
-Data-centric AI is a shift toward developing software tools as well as entering practices to make improving the data efficient reliable and systematic in the last decade the biggest shift in AI was embracing deep learning in this decade.
-I think the biggest shift in AI might be a shift to data-centric AI.
-The resources on the site will allow you to take part in this next major trend for ai techniques and I'm excited for you to harness the power of these ideas to more quickly build successful AI systems you
-
-Data plays a key role in the ML process.
-It encompasses a broad range of activities that span from correcting errors to selecting the most relevant features for the analysis phase.
-There is no clear evidence, or rules defined, on how pre-processing transformations impact the final results of the analysis.
-The problem is exacerbated when transformations are combined into pre-processing pipelines.
-Data scientists cannot easily foresee the impact of pipelines and hence require a method to discriminate between them and find the most relevant ones  (e.g., with highest positive impact) for their study at hand.
+% It encompasses a broad range of activities that span from correcting errors to selecting the most relevant features for the analysis phase.
+% There is no clear evidence, or rules defined, on how pre-processing transformations impact the final results of the analysis.
+% The problem is exacerbated when transformations are combined into pre-processing pipelines.
+% Data scientists cannot easily foresee the impact of pipelines and hence require a method to discriminate between them and find the most relevant ones (e.g., with the highest positive impact) for their study at hand.
 
 In this part, we devise data-centric solutions for the main categories of ML i.e., supervised and unsupervised learning.
 The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
 Specifically, we focus on the following contributions.
 \begin{itemize}
-    \item Once found, these prototypes can be instantiated and optimized e.g., using Bayesian Optimization. In this work, we study the impact of transformations when chained together into prototypes, and the impact of transformations when instantiated via various operators. We develop and scrutinize a generic method that allows to generate pre-processing pipelines, as a step towards AutoETL. 
-    \item Devising human-centered solutions for the main categories of ML i.e., supervised and unsupervised learning. The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
-    \item Devising human-centered solutions for the main categories of ML i.e., supervised and unsupervised learning. The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
-    \item Addressing multi-objective ML, i.e. optimization of more than one loss or objective function, by interactively learning user preferences and drive the optimization towards it.
-    \item Showcasing potential challenges, opportunities, and risks of novel (human-centered) AutoML interfaces with large language models (LLMs), i.e. AI models trained on large corpora of text to understand and produce human-like answers.
+    \item As to supervised learning, we study the impact of transformations when chained together into data pipelines and when instantiated via various operators.
+    Then, we extract a set of rules according to their semantics and develop a generic method that allows the generation of efficient pipelines, leading to 90\% of the performance in the median, but with a time cost that is 24 times smaller.
+    \item As to unsupervised learning, we focus on cluster analysis---i.e., partitioning the data such that items in the same cluster are more similar than those in different clusters.
+    We design a framework that explores and returns a dashboard of both relevant and diverse partinionings via AutoML and diversification.
+    AutoML ensures that the explored pipelines for cluster analysis (also including pre-processing steps) compute good clusterings.
+    Then, diversification selects, out of the explored clusterings, the ones conveying different clues to the data scientists.
 \end{itemize}
 
-
+We supervised and unsupervised learning in \Cref{} and \Cref{}, respectively.
 
 \paragraph{Part I: Human-centered AutoML}
 
 The original promise of AutoML was to automate certain ML tasks to a significant extent, thereby democratizing it and enabling non-experts to apply it in their respective domains.
-However, despite their success, many current AutoML tools were not built around the user but rather around algorithmic ideas.
-The stacking of complex mechanisms on top of each other unavoidably led to a less understanding of the process by the user -- even ML experts -- and allowing for very limited interaction.
+However, despite their success, many current AutoML tools were -- yet another time -- not built around the user but rather around algorithmic ideas.
+The stacking of complex mechanisms on top of each other unavoidably led to a less understanding of the process -- even by ML experts -- and allowing for very limited interaction.
 Parts of the community have hence pushed towards a more human-centered AutoML process aimed at complementing, instead of replacing, human intelligence.
 % This becomes even more crucial nowadays
 % Motivated by ethical concerns and social bias issues arising at each step of the ML process, this becomes imperative in such a mitigating call nowadays.
 Besides, motivated by ethical concerns and social bias issues arising at each step of the ML process, this approach becomes even imperative in such a mitigating call nowadays.
-By placing the user back in the loop, it would be possible to revise and supervise the entire process, ensuring fairness, transparency, and ethical compliance.
+By placing the user back in the loop, we let the user to revise and supervise the entire process, ensuring fairness, transparency, and ethical compliance.
 
 In this part, we focus on the following contributions.
 \begin{itemize}
-    \item Providing the AutoML formalization to explicitly deal with thorough pipelines i.e., concatenations of pre-processing transformations and ML algorithms.
-    \item Devising human-centered solutions for the main categories of ML i.e., supervised and unsupervised learning. The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
+    % \item Providing the AutoML formalization to explicitly deal with thorough pipelines i.e., concatenations of pre-processing transformations and ML algorithms.
+    \item Devising a human-centered framework for supervised learning in a single-objective of a user-specified function.
+    Specifically, we design a framework that enablesusers to express ML constraints in a uniformed human- and machine-readable medium.
+    Constraints are interpreted to drive the AutoML exploration, which retrieves the most performing pipelines and, finally, new constraints are learned and integrated through logic and argumentation.
     \item Addressing multi-objective ML, i.e. optimization of more than one loss or objective function, by interactively learning user preferences and drive the optimization towards it.
     \item Showcasing potential challenges, opportunities, and risks of novel (human-centered) AutoML interfaces with large language models (LLMs), i.e. AI models trained on large corpora of text to understand and produce human-like answers.
 \end{itemize}
 
 We organize this part as follows.
-\Cref{automl-chap:formalization} provides the comprehensive AutoML formalization for ML pipelines.
-\Cref{automl-chap:supervised} and \Cref{automl-chap:unsupervised} address supervised and unsupervised learning respectively.
+% \Cref{automl-chap:formalization} provides the comprehensive AutoML formalization for ML pipelines.
+\Cref{automl-chap:supervised} addresses the supervised single-objective optimization.
 \Cref{automl-chap:moo} delves into multi-objective ML and, lastly, \Cref{automl-chap:llm} discusses the novel human-centered AutoML interfaces with LLMs.
 % In this part, we devise human-centered AutoML solutions for the main categories of ML.
 % While in \Cref{automl-chap:formalization} we provide the AutoML formalization to explicitly deal with thorough pipelines i.e., concatenations of pre-processing transformations and ML algorithms, \Cref{automl-chap:supervised} and \Cref{automl-chap:unsupervised} address supervised and unsupervised learning respectively.
