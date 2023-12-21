@@ -124,6 +124,7 @@ On the contrary, \textit{underfitting} happens when the model remains too simpli
 Hyperparameters are crucial in striking the right balance.
 
 \begin{example}[Decision Tree]
+    \label{ex:decision_tree}
     The decision tree algorithm recursively splits instances based on their feature values, creating a hierarchical tree-like structure where each leaf represents a class or a prediction value---in classification and regression tasks respectively.
     % Notably, in its supervised nature, the tree can be built by minimizing the entropy of the leaves.
     We can control the complexity of such a tree by leveraging hyperparameters such as the maximum depth of the tree and the minimum number of instances in the leaves.
@@ -393,4 +394,170 @@ A very common indicator is called hypervolume \citep{zitzler1999multiobjective} 
 Other indicators evaluate factors such as uniformity of solution distribution (e.g., spacing indicator \citep{schott1995fault}), range of values covered by the Pareto front (e.g., maximum spread indicator \citep{zitzler2000comparison}), or proximity to specific threshold points (e.g., R2 indicator \citep{hansen1994evaluating}).
 
 Once a custom loss function tailored to Pareto front indicators is employed, the established single-objective optimization approaches remain applicable for optimizing MO-ML algorithms.
+
+
+\section{Machine Learning Pipelines}
+
+% Flow
+% - transformation as algorithms a tutti gli effetti
+% - take a dataset in input to perform a training process, affected by some hyperparameters as well, and outputs a model that can perform a certain task.
+% - In this case, the nature of the task is not the goal of the analysis (e.g., classification) but rather increasing the quality of the original dataset.
+% - For such a reason, the trained model maps an input dataset $\altmathcal{D} \in \mathbb{D}$ into a new one and $\altmathcal{D}' \in \mathbb{D}$.
+As in the CRISP-DM model, the learning process not only involves algorithm training -- i.e., modelling -- but also data preparation, better known as data pre-processing.
+Data pre-processing transformations are applied to improve data quality and to ease algorithms in achieving good performance.
+% Different transformations are concatenated in pipelines to shape the data for the ML algorithm.
+In practice, transformations are proper ML algorithms that (i) take a dataset in input, (ii) perform a training process, (iii) expose hyperparameters, and (iv) output a model that can perform a certain (pre-processing) task.
+In this case, the nature of such a task is not the ultimate goal of the analysis (e.g., classification) but, rather, altering the original dataset (e.g., feature engineering) for a better result.
+% In practice, for transformations, we do not seek models that map data items to predictions, i.e., $X \rightarrow Y$.
+% Instead, the model signature of a pre-processing transformation changes to $X \rightarrow X'$, which allows to concatenate transformations in pipelines.
+% This allows to concatenate transformations in pipelines. and shape the data according to the ML algorithm at hand (e.g., Decision Tree \Cref{ex:decision_tree}), which performs the ultimate task (e.g., classification).
+
+\begin{definition}[Data Pre-processing Transformation]
+    A \emph{transformation} $T$ is a particular case of an ML algorithm, in which the corresponding model -- after training -- maps an input dataset $\altmathcal{D} \in \mathbb{D}$ into a new one $\altmathcal{D}' \in \mathbb{D}'$.
+    As an ML algorithm, its output is affected by hyperparameters $\lambda_1, \dots, \lambda_M$, with corresponding hyperparameter spaces $\Lambda_1, \dots, \Lambda_M$.
+    A configuration is sampled from the cartesian product $\pmb{\Lambda} = \Lambda_1 \times \ldots \times \Lambda_M$.
+    % Given a dataset $\altmathcal{D} \in \mathbb{D}$ and a hyperparameter configuration $\pmb{\lambda}$ sampled from the space $\pmb{\Lambda}$, a transformation $T(\altmathcal{D}, \pmb{\lambda})$ produces a dataset $\altmathcal{D}' \in \mathbb{D}$.
+    % \begin{equation*}\label{eq:transformation}
+    %     T: \mathbb{D} \times \pmb{\Lambda} \rightarrow \mathbb{D}
+    % \end{equation*}
+\end{definition}
+
+As with ML algorithms, there exists a plethora of different alternatives for implementing transformations with a certain pre-processing task.
+Besides, given the need to alter the dataset w.r.t. different pre-processing tasks, transformations are subsequentially applied in steps.
+
+% As with ML algorithms, there exists a plethora of different alternatives for implementing transformations with a certain pre-processing task.
+% Besides, given the need to alter the dataset under multiple perspectives, transformations are subsequentially applied in pipelines.
+% Given the need to alter the dataset under multiple perspectives, transformations are subsequentially concatenated in pipelines.
+% Specifically, a data pre-processing pipeline -- or data pipeline for short -- consists of different steps.
+% , each of them implemented within a set of alternative transformations that share the same goal (i.e., pre-processing task).
+
+\begin{definition}[Data Pre-processing Step]
+    A data pre-processing step $S$ is a set of alternative transformations with the same pre-processing task.
+    Hence, the instantiation of the step is a sample from the disjoint union of the transformations search spaces: given $T_1, \dots, T_N$ with corresponding hyperparameter spaces $\pmb{\Lambda}_1, \dots, \pmb{\Lambda}_N$, the step search space is defined as  $\pmb{\Lambda}  = \pmb{\Lambda} \cupdot \dots \cupdot \pmb{\Lambda}_N$.
+\end{definition}
+
+In the literature, there are data pre-processing steps that can be applied to both supervised and unsupervised learning because either do not leverage the ground truth intrinsically or there exists implementations that approximate the outcome as if it has not been provided.
+\begin{itemize}
+    \item \textit{Encoding} transforms categorical features in the form of strings into numerical representations.
+    \item \textit{Normalization} scales continuous features such that their values fall in the same range.
+    \item \textit{Discretization} transforms continuous features into categorical ones.
+    \item \textit{Imputation} fills possible missing values among the instances.
+    \item \textit{Feature Engineering} defines the most relevant features for the case at hand.
+\end{itemize}
+
+Besides, there are pre-processing steps that are aligned solely with respect to the analysis at hand.
+\begin{itemize}
+    \item \textit{Rebalancing}, in supervised learning, adjusts the class distribution of a dataset (i.e., so that each class is equally represented among the instances).
+    \item \textit{Outlier Removal}, in unsupervised learning, drops any instances that can be considered noise because deviating (to a certain degree) from the overall distribution.
+\end{itemize}
+
+\begin{example}[Feature Engineering Step and Transformations in Supervised Learning]
+    A feature engineering step reduces the dimensionality of the input dataset, mapping instances represented in $\altmathcal{X}$ features into a new set of features  $\altmathcal{X}'$ s.t.  $|\altmathcal{X}'| < |\altmathcal{X}|$.
+    According to the specific implementation, transformations in this step either select the most relevant features (i.e., $\altmathcal{X}' \subset \altmathcal{X}$; e.g., ANOVA f-value test \cite{}) or create a new latent cartesian space (i.e., $X'_{i} \subset \altmathcal{X}' = \sum_{j}^{|\altmathcal{X}|} w_j \cdot X_j$ where $w_j \in \pmb{w}$ is a weight vector; e.g., PCA \cite{}).
+\end{example}
+
+Finally, steps are concatenated with a specific order in data pre-processing pipelines---or data pipelines in short.
+
+\begin{definition}[Data Pre-processing Pipeline]
+    Given a set of pre-processing steps $\altmathcal{S} = \{S_1,\dots, S_{K}\}$, a data pre-processing pipeline $P$ is a concatenation of the steps in $\altmathcal{S}$, with a specific order.
+    Hence, the instantiation of the pipeline is a sample from the cartesian product of the steps search spaces: given $S_1, \dots, S_K$ with corresponding hyperparameter spaces $\pmb{\Lambda}_1, \dots, \pmb{\Lambda}_K$, the pipeline search space is defined as  $\pmb{\Lambda}  = \pmb{\Lambda} \times \dots \times \pmb{\Lambda}_K$.
+\end{definition}
+
+Given a set of pre-processing steps, with corresponding transformations and hyperparameter spaces, the best pipeline for the ML algorithm at hand is chosen from the disjoint union of all partial permutations of the pre-preprocessing steps.
+We are hence provided with a data pipeline selection and optimization (DPSO) problem \cite{} and, as CASH, it can be reformulated as a single combined hierarchical hyperparameter optimization problem.
+
+\begin{definition}[Data Pipeline Selection and Optimization (DPSO)]
+    Given a set of data pre-processing steps $\altmathcal{S} = \{S_1, \dots, S_K\}$, with associated hyperparameter spaces  $\pmb{\Lambda}_1, \dots, \pmb{\Lambda}_K$, we define the hierarchical space $\pmb{\Lambda} = \pmb{\Lambda_1} \cup \dots \cup \pmb{\Lambda_K} \cup \{\lambda_r\}$, where $\lambda_r$ is a new root-level hyperparameter that selects the order of the steps---hence, the pipeline $P$ that should be instantiated. Then, the goal is to find the pipeline and corresponding configuration $P^{\star}_{\pmb{\lambda}^{\star}} \in \pmb{\Lambda}$ that, when used with the algorithm at hand $A$, leads to the optimal loss function.
+    \begin{equation*}
+        P^{\star}_{\pmb{\lambda}^{\star}} \in \argmin_{P_{\pmb{\lambda}} \in \pmb{\Lambda}} \altmathcal{L}(A(P_{\pmb{\lambda}}(\altmathcal{D}_{train})), \altmathcal{D}_{valid})
+    \end{equation*}
+    with $\altmathcal{D}_{train}$ and $\altmathcal{D}_{valid}$ representing two different splits in supervised learning, and corresponding to the same original dataset $\altmathcal{D}$ otherwise.
+\end{definition}
+
+Despite DPSO can be approached with the aforementioned optimization techniques for which CASH is addressed, different policies can be adopted to optimize the whole ML pipeline, i.e., the concatenation of a data pipeline with an ML algorithm.
+
+\paragraph{Split policy}
+The budget is split between $T1$ and $T2$, allocated respectively for the data pipeline configuration search and the algorithm hyperparameter tuning.
+In the first phase, the optimizer (e.g., BO) is used during $T1$ to build the data pipeline.
+During the second phase, the optimizer is used to configure the algorithm during $T2$.
+
+\paragraph{Iterative Policy}
+Both the data pipeline and the ML algorithm alternate during a short runtime.
+The best configuration found during the previous optimization is reused during the next one, iteratively until the total budget has expired.
+It is relatively fast for the optimizer to find a better pipeline configuration than the baseline but then stagnates.
+Therefore, the time would be better allocated to the search for a better algorithm configuration.
+If the data pipeline is modified, the data used to train the algorithm changes.
+Those variations might help during the hyperparameter tuning to explore a new region of the search space compared to the previous iteration.
+
+\paragraph{Adaptive Policy}
+This policy reuses the iterative policy.
+However, the time allocation is not fixed per iteration.
+If during an iteration the loss improves, the time allocated to the next iteration of the same type (data pipeline or algorithm configuration) is multiplied by two.
+Conversely, if after two iterations of the same type, the score is not improved, the allocated time for this type of iteration is divided by two.
+
+\paragraph{Joint Policy}
+This policy simply uses the union of both search spaces.
+In other words, it is equivalent to what is usually done in practice by current optimizers, i.e., searching over the whole space of ML pipelines.
+
+% This allows to concatenate transformations in pipelines and shape the data according to the ML algorithm at hand (e.g., Decision Tree \Cref{ex:decision_tree}), which performs the ultimate task (e.g., classification).
+
+
+
+% \begin{example}[Feature Engineering Transformation]
+%     A feature engineering transformation reduces the dimensionality of the input dataset, mapping instances represented in $\altmathcal{X}$ features into a new set of features $\altmathcal{X}'$ such that $|\altmathcal{X}'| < |\altmathcal{X}|$.
+%     According to the specific implementation, transformations either select the most relevant features (i.e., $\altmathcal{X}' \subset \altmathcal{X}$; e.g., ANOVA f-value test \cite{}) or create a new latent Cartesian space (i.e., by performing a linear transformation using a weight vector $\pmb{w}$; e.g., PCA \cite{}).
+
+%     Specifically, the linear transformation of a data point $\pmb{x}_i$ is given by:
+%     \begin{equation*}
+%         \pmb{x}_i' = \pmb{w}^T \pmb{x}_i = w_1x_{i1} + w_2x_{i2} + \ldots + w_px_{ip}
+%     \end{equation*}
+%     where $\pmb{w} = (w_1, w_2, \ldots, w_p)$ is the weight vector, and $\pmb{x}_i = (x_{i1}, x_{i2}, \ldots, x_{ip})$ is the original feature vector of data point $d_i$.
+% \end{example}
+
+
+% \begin{definition}[Linear Transformation]\label{def:linear-transformation}
+%     A \textit{linear transformation} \(L\) on the dataset \(\altmathcal{D}\) is a mapping that operates on each data point \(d_i\) by creating a linear combination of its features. Let \(\pmb{w} = (w_1, w_2, \ldots, w_p)\) be a vector of weights and \(\pmb{x}_i = (x_{i1}, x_{i2}, \ldots, x_{ip})\) be the feature vector of data point \(d_i\). The linear transformation is defined as follows:
+%     \begin{equation*}\label{eq:linear-transformation}
+%         L(\pmb{x}_i) = \pmb{w}^T \pmb{x}_i = w_1x_{i1} + w_2x_{i2} + \ldots + w_px_{ip}
+%     \end{equation*}
+%     The transformed dataset \(\altmathcal{D}'\) is obtained by applying the linear transformation \(L\) to each data point \(d_i\) in \(\altmathcal{D}\):
+%     \begin{equation*}\label{eq:transformed-dataset}
+%         \altmathcal{D}' = \left\lbrace\,
+%         (d_i')_{i=1}^N \quad \begin{array}{|@{}l@{}l@{\quad}l@{}}
+%             \quad d_i' = (\pmb{x}_i', y_i) & \in \mathbb{D}' \subset \mathbb{R} \times \altmathcal{Y} & \text{{if }} T = \text{{supervised}} \\
+%             \quad d_i' = \pmb{x}_i' & \in \mathbb{D}' \subset \mathbb{R} & \text{{if }} T = \text{{unsupervised}}
+%         \end{array}
+%         \right\rbrace
+%     \end{equation*}
+%     where \(\pmb{x}_i' = L(\pmb{x}_i)\) is the linearly transformed feature vector of data point \(d_i\).
+% \end{definition}
+
+
+% A Data (pre-processing) pipeline subsequentially concatenates transformations in steps, each one in charge of performing a specific pre-processing task (e.g., feature selection, normalization).
+% Analogously to the AS problem, electing the right pipeline, i.e., which transformations and in which order, is subject to the ML algorithm at hand.
+% Thus, analogously to typical AutoML problems, there are multiple transformations (e.g., PCA, select k best) for performing the same pre-processing task (e.g., feature selection), each with corresponding strengths and drawbacks.
+% Pip
+
+
+% Transformations (e.g., PCA, min-max scalarization) can be categorized depending on their scope classified according to the task performed
+% Different algorithms usually need different pre-processing transformations, which may depend also on the dataset at hand.
+% possibly concatenated in
+
+
+
+% \begin{definition}[Machine Learning Algorithm]\label{def:algorithm}
+%     Given the hyperparameters $\lambda_1, \dots, \lambda_M$, with corresponding spaces $\Lambda_1, \dots, \Lambda_M$, we refer with $\pmb{\lambda}$ to a hyperpaprameter configuration sampled from the space $\pmb{\Lambda} = \Lambda_1 \times \dots \times \Lambda_M$.
+%     Given a dataset $\altmathcal{D} \in \mathbb{D}$ and a hyperparameter configuration $\pmb{\lambda} \in \pmb{\Lambda}$, an algorithm $A(\altmathcal{D}, \pmb{\lambda})$  provides a model from the model space $\mathbb{H}$.
+%     \begin{equation*}\label{eq:algorithm}
+%         A: \mathbb{D} \times \pmb{\Lambda} \rightarrow \mathbb{H}
+%     \end{equation*}
+%     For brevity, we refer to $A(\altmathcal{D}, \pmb{\lambda})$ with the notation $A_{\pmb{\lambda}}(\altmathcal{D})$, and $H_{\pmb{\lambda}}$ for the resulting trained model.
+%     % For conciseness matter, we write $A_{\pmb{\lambda}}$ for $A(\altmathcal{D}, \pmb{\lambda})$ and refer to $H_{\pmb{\lambda}}$ as the corresponding model.
+% \end{definition}
+
+
+
+% Selecting the best pipeline can be
+% Similarly to hyperparameter tuning of ML algorithms, we have to deal with an optimization problem.
+
 

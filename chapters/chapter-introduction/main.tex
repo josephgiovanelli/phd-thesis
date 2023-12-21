@@ -1,4 +1,4 @@
-\chapter{Introduction}
+\chapter{Research Path Overview}
 \label{chap:intro}
 
 Artificial intelligence (AI) is currently the buzzword on everybody's lips.
@@ -69,7 +69,7 @@ While \Cref{chap:background} provides the necessary background, the remaining of
 % While \Cref{chap:background} provides the necessary background, the remaining of this thesis investigates these challenges evolving into two parts.
 
 
-\paragraph{Part I: Data-centric AI}
+\section*{Part I: Data-centric AI}
 
 During the past few decades, most of the efforts in AI were focused on improving ML algorithms, leading to numerous groundbreaking achievements.
 In many applications, modelling is considered the solved part of the puzzle and the vast majority of the time is spent on improving the data.
@@ -94,20 +94,54 @@ Indeed, given the huge combinatorial space, AutoML can help in designing efficie
 % Data scientists cannot easily foresee the impact of pipelines and hence require a method to discriminate between them and find the most relevant ones (e.g., with the highest positive impact) for their study at hand.
 
 In this part, we devise data-centric solutions for the main categories of ML i.e., supervised and unsupervised learning.
-The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
-Specifically, we focus on the following contributions.
-\begin{itemize}
-    \item As to supervised learning, we study the impact of transformations when chained together into data pipelines and when instantiated via various operators.
-    Then, we extract a set of rules according to their semantics and develop a generic method that allows the generation of efficient pipelines, leading to 90\% of the performance in the median, but with a time cost that is 24 times smaller.
-    \item As to unsupervised learning, we focus on cluster analysis---i.e., partitioning the data such that items in the same cluster are more similar than those in different clusters.
-    We design a framework that explores and returns a dashboard of both relevant and diverse partinionings via AutoML and diversification.
-    AutoML ensures that the explored pipelines for cluster analysis (also including pre-processing steps) compute good clusterings.
-    Then, diversification selects, out of the explored clusterings, the ones conveying different clues to the data scientists.
-\end{itemize}
+% The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
+Specifically, we focus on the following challenges and contributions.
 
-We supervised and unsupervised learning in \Cref{} and \Cref{}, respectively.
+% \begin{itemize}
+%     \item As to supervised learning, we study the impact of transformations when chained together into data pipelines and when instantiated via various operators.
+%     Then, we extract a set of rules according to their semantics and develop a generic method that allows the generation of efficient pipelines, leading to 90\% of the performance in the median, but with a time cost that is 24 times smaller.
+%     \item As to unsupervised learning, we focus on cluster analysis---i.e., partitioning the data such that items in the same cluster are more similar than those in different clusters.
+%     We design a framework that explores and returns a dashboard of both relevant and diverse partinionings via AutoML and diversification.
+%     AutoML ensures that the explored pipelines for cluster analysis (also including pre-processing steps) compute good clusterings.
+%     Then, diversification selects, out of the explored clusterings, the ones conveying different clues to the data scientists.
+% \end{itemize}
 
-\paragraph{Part I: Human-centered AutoML}
+\subsection*{Effective Data-preprocessing Pipelines in Supervised Learning}
+
+\paragraph{Challenge} Data pre-processing
+% plays a key role in the ML process.
+% It
+encompasses a broad range of transformations that span from correcting errors to selecting the most relevant features for the modelling phase.
+In supervised learning, during modelling, the ML algorithm is provided with ground truth to drive the learning toward a user-specified objective function.
+There is no clear evidence, or rules defined, on how these transformations impact the final results of the process.
+Besides, the problem is exacerbated when transformations can be combined into pipelines.
+Data scientists cannot easily foresee the overall impact, requiring a method to discriminate between them and hence find the most relevant ones for their study at hand.
+
+% in order to generate executable pipelines (i.e., with parametrized operators for each transformation).
+\paragraph{Contribution} In \Cref{data-centric:supervised}, we study the impact of transformations in general, and the impact of transformations when combined together into pipelines.
+% Once found, these prototypes can be instantiated and optimized e.g., using Bayesian Optimization. In this work, we study the impact of transformations when chained together into prototypes, and the impact of transformations when instantiated via various operators.
+% We develop and scrutinize a generic method that allows to generate pre-processing pipelines, as a step towards AutoETL.
+We make use of rules that enable the construction of prototypes (i.e., ordered series of transformations) and, once found, these prototypes can be tuned -- similarly to algorithm hyperparameters -- using AutoML.
+% rules that guide the instantiation of the transformations within a prototype (i.e., define the operator for each transformation).
+% Evaluated using Scikit-learn, our effective pipeline prototypes, when optimized, provide results that get 90\% of the optimal predictive accuracy in the median, but with a cost that is 24 times smaller.
+The optimization of our effective prototypes provides results that compared to an exhaustive search, get 90\% of the predictive accuracy in the median, but with a time cost that is 24 times smaller.
+
+\subsection*{Exploring Clustering Pipelines via AutoML and Diversificationg}
+
+
+\paragraph{Challenge} AutoML has witnessed effective applications in the field of supervised learning -- mainly in classification tasks --  where the goal is to find the best ML pipeline when a ground truth is available.
+This is not the case for unsupervised tasks that are by nature exploratory and they are performed to unveil hidden insights.
+Since there is no right result, analyzing different configurations is more important than returning the best-performing one.
+When it comes to exploratory unsupervised tasks -- such as cluster analysis --  different facets of the datasets could be interesting for the data scientist; for instance, data items can be effectively grouped together in different subspaces of features.
+
+\paragraph{Contribution} In \Cref{data-centric:unsupervised}, we design a framework that explores and returns a dashboard of both relevant and diverse clusterings via AutoML and diversification.
+AutoML ensures that the explored pipelines for cluster analysis (including pre-processing steps) compute good clusterings.
+Then, diversification selects, out of the explored clusterings, the ones conveying different clues to the data scientists.
+
+
+% As to the structure of this part, we address supervised and unsupervised learning in \Cref{data-centric:supervised} and \Cref{data-centric:unsupervised}, respectively.
+
+\paragraph{Part II: Human-centered AutoML}
 
 The original promise of AutoML was to automate certain ML tasks to a significant extent, thereby democratizing it and enabling non-experts to apply it in their respective domains.
 However, despite their success, many current AutoML tools were -- yet another time -- not built around the user but rather around algorithmic ideas.
@@ -160,7 +194,7 @@ In this part, we focus on precision farming, which plays a pivotal role in addre
     \item Devising an extensive and flexible architecture for a big-data smart-irrigation platform that allows to perform analytics by coupling (automated) machine learning with physically-based models.
     \item Controlling soil moisture in real-time by relying on a grid of sensors and building fine-grained 2D and 3D profiles that enable a comprehensive analysis of the field.
     \item Forecasting the soil moisture through a two-stage optimization technique that also enables the system to adapt to new in-situ conditions.
-    \item Providing a smart-irrigation approach that estimates the daily water amount needed by the plant and -- based on a grid of sensors and weather forecasts -- schedules the irrigation.
+    % \item Providing a smart-irrigation approach that estimates the daily water amount needed by the plant and -- based on a grid of sensors and weather forecasts -- schedules the irrigation.
 \end{itemize}
 
 
