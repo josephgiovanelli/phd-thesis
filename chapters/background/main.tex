@@ -464,6 +464,7 @@ Finally, steps are concatenated with a specific order in data pre-processing pip
 \end{definition}
 
 Given a set of pre-processing steps, with corresponding transformations and hyperparameter spaces, the best pipeline for the ML algorithm at hand is chosen from the disjoint union of all partial permutations of the pre-preprocessing steps.
+In a nutshell, not only do we have to decide which steps to include and in which order (pipeline selection) but, also, which are the best transformations per step and the corresponding hyperparameters (pipeline optimization).
 We are hence provided with a data pipeline selection and optimization (DPSO) problem \cite{} and, as CASH, it can be reformulated as a single combined hierarchical hyperparameter optimization problem.
 
 \begin{definition}[Data Pipeline Selection and Optimization (DPSO)]
@@ -474,12 +475,14 @@ We are hence provided with a data pipeline selection and optimization (DPSO) pro
     with $\altmathcal{D}_{train}$ and $\altmathcal{D}_{valid}$ representing two different splits in supervised learning, and corresponding to the same original dataset $\altmathcal{D}$ otherwise.
 \end{definition}
 
+In this thesis, to better distinguish between pipeline selection and its optimization, we follow the notation from \cite{Quemy20InfSystems}: a \textit{prototype} is the fixed and ordered sequence of pre-processing steps, its optimized instantiation of each transformation (with their hyperparameters) is known as \textit{executable pipeline}.
+
 Despite DPSO can be approached with the aforementioned optimization techniques for which CASH is addressed, different policies can be adopted to optimize the whole ML pipeline, i.e., the concatenation of a data pipeline with an ML algorithm.
 
 \paragraph{Split policy}
-The budget is split between $T1$ and $T2$, allocated respectively for the data pipeline configuration search and the algorithm hyperparameter tuning.
-In the first phase, the optimizer (e.g., BO) is used during $T1$ to build the data pipeline.
-During the second phase, the optimizer is used to configure the algorithm during $T2$.
+The budget is split between pre-pocessing and modelling, allocated respectively for the data pipeline configuration search and the algorithm hyperparameter tuning.
+% In the first phase, the optimizer (e.g., BO) is used to build the data pipeline.
+% During the second phase, the optimizer is used to configure the algorithm.
 
 \paragraph{Iterative Policy}
 Both the data pipeline and the ML algorithm alternate during a short runtime.
