@@ -5,7 +5,7 @@
 \begin{figure*}[t]
     \centering
     \includegraphics[width=1.0\textwidth]{chapters/data-centric/supervised/img/data-analytics-pipeline.pdf}
-    \caption{Data analytics pipeline generation in a knowledge discovery process.}
+    \caption{Data analytics pipeline generation in a knowledge discovery process. \textcolor{orange}{TODO: da allineare.}}
     \label{fig:data-analytics-pipeline}
 \end{figure*}
 
@@ -41,7 +41,7 @@ are evaluated over the dataset until an acceptable result is obtained.
 
 % Recent developments in algorithm configuration have raised the efficiency and effectiveness of automatic search, and therefore, for instance, AutoML is now considered a prominent technique for finding optimal models.
 It is well-known that the whole process requires expertise and is particularly challenging.
-Particularly, Data scientists spend most of their time on the heavily laborious work of pre-processing (i.e., around 50-80\% of the total \cite{Munson09Pre}).
+Particularly, data scientists spend most of their time on the heavily laborious work of pre-processing (i.e., around 50-80\% of the total \cite{Munson09Pre}).
 Some AutoML frameworks \cite{auto_sklearn, mohr2018ml}, mix-in pre-processing during modelling optimization, but typically include very few transformations or do not consider all the necessary steps (e.g., imputation, rebalancing), thus in a way overlooking it.
 Inspired from \cite{Munoz09DOLAP}, we contend that there is need for more data-centric techniques, encompassing all the steps of data pre-processing \cite{Vaisman14Book}.
 % ; from its inception via \textit{data extraction}, to the intermediate phase of \textit{data transformation}, up to the final phase, when data reaches its destination, via \textit{data loading}.
@@ -83,13 +83,13 @@ The main contributions can be summarized as follows.
 \begin{itemize}
     \item We empirically evaluate the impact of optimizing the exhaustive set of potential prototypes and find out that
 	% at least one pipeline works best for each dataset and algorithm considered, hence showing that
-	there is no universal pipeline---i.e., that works best for each dataset and algorithm considered.
-    \item We define a method that given an ML algorithm and a set of pre-processing transformations, is capable of generating the right order between transformations, obtaining effective pre-processing prototypes, which are then instantiated and further optimized via bayesian optimization.
-    \item We suggest a meta-learning step, where the relationship between pre-processing transformation and dataset characteristics is learned in order to create rules that help with the initial instantiation of the prototypes.
+	there is no universal solution---i.e., prototype that works best for each dataset and algorithm considered.
+    \item We define a method that given an ML algorithm and a set of pre-processing steps, is capable of generating the right order, obtaining effective pre-processing prototypes that are then instantiated via bayesian optimization.
+    \item We suggest a meta-learning step, where the relationship between pre-processing transformations and dataset characteristics is learned in order to create rules that help with the initial instantiation of the prototypes.
 
-	We exemplify our meta-learning study generating simple but not obvious and effective rules for two kinds of transformations, namely, Feature Engineering and Rebalancing.
+	We exemplify our meta-learning study generating simple but not obvious and effective rules for two kinds of pre-processing steps, namely, Feature Engineering and Rebalancing.
 
-    \item We perform a comprehensive evaluation by comparing the performance of optimizing the pipelines generated following our method, and find out that:
+    \item We perform a comprehensive evaluation by comparing the performance of optimizing prototypes generated following our method, and find out that:
     \begin{enumerate}
         \item with 24 times less time budget, our proposed pipelines obtain results whose median is above 90\% of the ones generated via exhaustive search.
         \item on average, in 73\% of the cases, splitting evenly the time budget between pre-processing and modelling outperforms the results of solely optimizing the latter.
@@ -128,7 +128,7 @@ The remaining of this paper is organized as follows:
 % \end{equation}
 
 % The dataset $D$ is divided into $D_{train}$ and $D_{test}$, to build and to evaluate the overall performance, calculated through the loss function $\mathcal{L}$. The problem is set up as an optimization problem and, as such, the configuration space is assumed to be known in advance (the set of algorithms $\{A^{1}, \dots , A^{k}\}$ and the related hyper-parameter spaces $\{\Lambda^{1}, \dots, \Lambda^{k}\}$).
-% The goal is then to find the best algorithm $A^{\ast}$ in the set of algorithms and its best hyperparameters $\lambda^{\ast}$ in the related hyperparameter space. 
+% The goal is then to find the best algorithm $A^{\ast}$ in the set of algorithms and its best hyperparameters $\lambda^{\ast}$ in the related hyperparameter space.
 
 % Many optimization techniques have been employed to solve the CASH problem and some of them are: Grid search\textcolor{red}{~\cite{montgomery2017design}}, Random search\textcolor{red}{~\cite{bergstra2012random}}, Simulating annealing\textcolor{red}{~\cite{van1987simulated}}, Genetic algorithms\textcolor{red}{~\cite{kramer2017genetic}}, Bayesian techniques\textcolor{red}{~\cite{gp_kernel}}, Bandit-based algorithms~\textcolor{red}{\cite{li2017hyperband}}.
 % However, due to their promising results, Bayesian techniques are perhaps the most popular ones~\cite{zoller2019survey,autoMLsurveyQuanming}. We explore their details and specifically focus on one of their incarnation, the Sequential Model-Based Optimization (SMBO) algorithm~\cite{hutter2011sequential}.
@@ -189,11 +189,12 @@ At the beginning, the AutoML community followed the AI trend of contributing und
 In \Cref{effective-ssec:cash}, we review these works.
 
 Recently however, the direction has shifted towards designing systems that additionally or specifically provide user assistance in the data pre-processing step---i.e., the DPSO problem.
-On the one hand, some works consider data pre-processing in isolation; that is, regardless of the task and analysis at hand.
+Some works consider data pre-processing in isolation; that is, regardless of the task and analysis at hand.
 For instance, applying pre-processing for the sake of either guaranteeing data quality, enabling data exchange, or even data integration \cite{Llunatic13VLDBEnd,BigDansing15SIGMOD,Katara15SIGMOD,Foofah17SIGMOD}.
-On the other hand, in \Cref{effective-ssec:dpso}, we discuss the works that see pre-processing as an integral part of the learning process, and hence apply it for the sake of improving the final result of the ultimate analysis.
+Instead, we are interested in those works that see pre-processing as an integral part of the learning process, and hence apply it for the sake of improving the final result of the ultimate analysis.
+In \Cref{effective-ssec:dpso}, we overview them.
 
-Finally, in \Cref{effective-ssec:dpso-cash}, we overview the works that aim at fully automating the learning process, combining DPSO with CASH, where the border line between the two becomes blurry.
+Finally, in \Cref{effective-ssec:dpso-cash}, we discuss the works that aim at fully automating the learning process, combining DPSO with CASH, where the border line between the two becomes blurry.
 % Nevertheless, we tentatively group the works based on the type of problem they aim to solve.
 
 \subsection{CASH}
@@ -207,20 +208,21 @@ Auto-WEKA \cite{Thornton13AutoWeka}, based on the Java machine learning library 
 % The authors formalized the problem of algorithm selection and their associated hyper-parameter optimization, and solved it in a combined search space.
 Sequential Model-based Algorithm Configuration (SMAC) is used to explore the large search space.
 
-Autostacker \cite{chen2018autostacker} combines a hierarchical stacking architecture and an evolutionary algorithm (EA).
+Autostacker \cite{chen2018autostacker} combines a hierarchical stacking architecture and an evolutionary algorithm.
 Stacking is an ensemble method that involves the concatenation of several classifiers, so that the later layers can learn the mistakes that classifiers in the previous layers make.
 Even if it brings some benefits, this approach affects the search space: way larger than that of a single classifier.
 In a nutshell, such concatenations are randomly generated and then optimized.
 The one that achieves the higher predictive accuracy is chosen.
-Rather than Bayesian Optimization, to find suitable hyper-parameters, the authors utilize a basic Evolutionary Algorithm.
+Rather than Bayesian Optimization, to find suitable hyper-parameters, the authors utilize a basic evolutionary algorithm.
 
 OBoe \cite{yang2019oboe} exploits collaborative filtering for AutoML, choosing models that have performed well on similar datasets.
-It collects a large number of datasets and applies different ML algorithms (with different hyper-parameters configurations). 
+It collects a large number of datasets and applies different ML algorithms (with different hyper-parameters configurations).
 In this way, a matrix of cross-validated errors is built.
 Common approaches typically compute dataset meta-features and use them to predict the error of a particular machine learning model, but OBoe works exactly the other way around.
 PCA is applied on such a matrix in order to find latent meta-features.
 Given a new dataset, some basic algorithms are applied to infer a feature vector (i.e., the value of the latent meta-features).
 Finally, the feature vector is leveraged to estimate the cross-validated error of more complex algorithms.
+\textcolor{orange}{TODO: Da espandere con lavori nuovi}
 
 \subsection{DPSO}
 \label{effective-ssec:dpso}
@@ -230,7 +232,7 @@ However, as we have already seen (\Cref{sec:eval-universal-pipeline}), a single 
 % Therefore, we build on top of \cite{Quemy20InfSystems}, and instead of relying on a fixed prototype, we define a method to generate the right pipeline prototypes to be optimized.
 
 In PRESISTANT~\cite{presistant18CSI,presistant18CAISE,presistant19DKE}, authors tackled the problem of recommending pre-processing transformations to non-expert users.
-They identify the pre-processing operators and rank them in advance, based on their potential impact to the final analysis.
+They identify the pre-processing transformations and rank them in advance, based on their potential impact to the final analysis.
 However, they do not consider pre-processing pipelines, but only single transformations, expecting that the analyst applies the process iteratively.
 % In this work, we consider sets of transformations and thus study the impact of combining transformations into a pipeline.
 
@@ -249,6 +251,7 @@ Moreover, it is not clear whether the logical plan is fixed as in \cite{Quemy20I
 
 \subsection{DPSO + CASH}
 \label{effective-ssec:dpso-cash}
+\textcolor{orange}{TODO: meta-learning non è ancora spiegato, da valutare: aggiungere al background o una frase veloce per introdurlo (forse meglio la seconda vsito che dopo si va deep in quello)}
 Auto-sklearn \cite{Feurer15AutoSklearn} is based on the popular Python library scikit-learn.
 The authors, inspired by Auto-Weka, address the problem with the Sequential Model-based Algorithm Configuration (SMAC).
 Furthermore, they improve the approach by adding a meta-learning phase at the beginning (to warm-start the Bayesian Optimization) and an ensemble technique at the end (to suggest multi-classifiers).
@@ -273,7 +276,7 @@ Secondly, the optimization process starts tuning the prototypes until either the
 In particular, a \textit{selector} and a \textit{tuner} work in synergy.
 The former decides which prototype should be optimized next.
 Such a task is treated as a multi-armed bandit problem.
-As to the tuner, Bayesian Optimization is chosen.
+As to the tuner, bayesian optimization is chosen.
 At the end, the prototype that achieved the higher predictive accuracy is elected.
 However, AutoBazaar strictly depends on the catalog.
 Such a component memorizes all the possible primitives and supported tasks.
@@ -289,67 +292,66 @@ Our approach of finding a set of effective prototypes can be seen as complementa
 \section{Data pre-processing pipeline generation}
 \label{sec:methodology}
 
+\textcolor{orange}{TODO: Chiamare il tool (e questa sezione) AutoPrep, che sarebbe il tool sviluppato con il reproducible paper, e aggiungerlo alle contribution.}
+
 \begin{figure*}[t]
     \centering
     \includegraphics[clip, trim=6.5cm 3.5cm 6.5cm 8cm,width=1.0\textwidth]{chapters/data-centric/supervised/img/bpmn.pdf}
-    \caption{A method for generating pre-processing pipelines.}
+    \caption{A method for generating pre-processing pipelines. \textcolor{orange}{TODO: da allineare.}}
     \label{fig:methodology}
 \end{figure*}
 
 % Following the notation from~\cite{Quemy20InfSystems}, we also distinguish between a fixed, ordered sequence of kinds of pre-processing transformations, known as \textit{pipeline prototypes}, and a fixed, ordered sequence of operators (i.e., instantiations of transformations) known as (executable) \textit{pipelines}.
-This is a challenging task due to the fact that there are no clear rules and guidelines in terms of which permutation of steps would work best for the prototype and which configurations of transformations (i.e., the final impact of a pipeline is difficult to foresee).
+Data pre-processing is a challenging task due to the fact that there are no clear rules and guidelines in terms of which permutation of steps would work best for the prototype and which configurations of transformations would have the highest impact on the result.
 
-\Cref{fig:methodology} sketches the proposed methodology.
+\Cref{fig:methodology} sketches the proposed methodology, some of the phases are generic and thus can be applied regardless the context, and yet others are specific (i.e., ML framework or dataset characteristics).
 We break the combinatorial problem of finding the best pipeline into: (i) studying pre-processing steps in pairs for generating effective prototypes and then (ii) feeding them to an optimizer (e.g., we use the SMBO~\cite{HyperOptICML13} variant) for their actual instantiation.
-Some of the pre-processing steps of the method are generic and thus can be applied regardless of the context, and yet others are specific (i.e., ML framework used or dataset characteristics).
 
-The method consists of two flows running in parallel.
-The first flow is responsible for selecting promising prototypes and the second for generating rules that warm-start the instantiation.
-% of the transformations within the prototype.
-% Indeed, the process concludes with the two flow converging to the actual optimization.
-% from the two flows is fed to the final step where the instantiation and optimization happens.
-The result is an executable pipeline.
+% The method consists of two flows running in parallel.
+% The first flow is responsible for selecting promising prototypes and the second for generating rules that warm-start the instantiation.
+% The result is an executable pipeline.
 
-\paragraph{Effective Prototypes Selection} The proposed method starts with the selection of the ML library (\Cref{effective-ssec:select-framework}).
+\paragraph{Effective Prototypes Generation} The proposed method starts with the selection of the ML library (\Cref{effective-ssec:select-framework}).
 %  and optimization framework to be used.
 This allows to consider solely the steps for which their implementation is available.
-Besides, with such a choice, we are also provided with a set of \textit{framework-related rules} (\Cref{effective-ssec:rules-framework}), constraining the possible orderings of the steps (e.g., in scikit-learn, imputation has to be the first step in the prototype).
-These rules are in the form of precedences of pre-processing steps (i.e. orderings that involve two steps at a time; imputation before normalization).
+Besides, with such a choice, we are also provided with a set of \textit{framework-related rules} (\Cref{effective-ssec:rules-framework}), constraining the possible orderings of the steps (e.g., in scikit-learn, Imputation has to be the first step in the prototype).
+These rules are in the form of precedences of pre-processing steps (i.e. orderings that involve two steps at a time;  e.g., Imputation before Normalization).
 % These rules enable the generation of precedence relationships between the steps for which they apply.
 Next, the flow on top continues with a study
 % over all the possible pairs of steps,
 aiming to find the correct/meaningful orderings according to
 % \textit{generic knowledge} about
-the transformations behavior.
-As a result, this generates a set of \textit{heuristic rules} ({effective-ssec:rules-heuristics}) that restrict the space of possible precedences.
+the behavior of the transformations in each step.
+As a result, this generates a set of \textit{heuristic rules} (\Cref{effective-ssec:rules-heuristics}) that restrict the space of possible precedences.
 Afterward, for the pairs for which an order cannot be clearly devised, an additional empirical study is proposed.
 This study relies on a test bed of representative datasets.
 % , and thus it may implicitly correspond to \textit{domain knowledge}.
-The output is a set of \textit{empirically learned rules} (\Cref{effective-ssec:rules-learned}) that determines yet other precedences of transformations, namely promising orderings that would potentially positively impact the final result of the analysis.
-However, even after this phase, for some pairs of transformations, a precedence order may not be found.
+The output is a set of \textit{empirically learned rules} (\Cref{effective-ssec:rules-learned}) that determines yet other precedences, namely promising those orderings that would potentially positively impact the final result of the analysis.
+However, even after this phase, for some pairs of pre-processing steps, a precedence order may not be found.
 These are pairs for whom the order is relevant but cannot be decided in advance, thus all their permutations need to be present.
 Finally, a step of composition follows  (\Cref{effective-ssec:composition}), where given the overall set of devised rules (i.e., \textit{framework-related}, \textit{heuristic} and \textit{empirically learned}), the pre-processing steps are composed into a set of valid and potentially effective prototypes.
 
-% When combining two different pre-processing steps, it is important to check if, (i) the input and output types of transformations are compatible, (ii) the combination makes sense, and (iii) the combination provides good results for the analysis.
-% As a result, when chaining a pair of transformations, the following precedence relationships arise:
+More formally, when combining two different pre-processing steps, it is important to check if, (i) the input and output types of the steps are compatible, (ii) the combination makes sense, and (iii) the combination provides good results for the analysis.
+As a result, when chaining a pair of steps, the following precedence relationships arise:
+\begin{enumerate}
+    \item Compatible/Incompatible. Depending on whether the representation output of the first step is accepted as the representation input of the second one (compatible), or not (incompatible).
+    \item Meaningful/Meaningless. Depending on whether the precedence between them makes sense based on generic knowledge (i.e., based on the literature) over the behaviour of transformations (meaningful), or not (meaningless).
+    \item Promising/Unpromising. Depending on whether the precedence between them is expected to provide a positive impact on the final result of the analysis (promising), or not (unpromising).
+\end{enumerate}
 
-% \begin{enumerate}
-%     \item Compatible/Incompatible pairs. Depending on whether the representation output of the first transformation is accepted as the representation input of the second one (compatible), or not (incompatible) (\Cref{effective-ssec:rules-framework}).
-%     \item Meaningful/Meaningless pairs. Depending on whether the precedence between them makes sense based on generic knowledge (i.e., based on the literature) over the behaviour of transformations (meaningful), or not (meaningless) (\Cref{effective-ssec:rules-heuristics}).
-%     \item Promising/Unpromising pairs. Depending on whether the precedence between them is expected to provide positive impact on the final result of the analysis (promising), or not (unpromising).
-% \end{enumerate}
-
-% Attending to the relationships between its transformations, a prototype can be described as either \textit{compatible}, \textit{well-formed}, or \textit{effective}.
-% A prototype is defined to be \textit{compatible}, if all its precedence relationships are compatible.
-% It is defined as \textit{well-formed}, if all its precedence relationships are both compatible and meaningful.
-% Finally, it is defined as \textit{effective}, if all its precedence relationships are compatible, meaningful, and promising at the same time.
-% In fact, the ultimate goal of our method is to find \textit{effective pipelines}.
+Attending to the relationships between its steps, a prototype can be described as either \textit{compatible}, \textit{well-formed}, or \textit{effective}.
+A prototype is defined to be \textit{compatible}, if all its precedence relationships are compatible.
+It is defined as \textit{well-formed}, if all its precedence relationships are both compatible and meaningful.
+Finally, it is defined as \textit{effective}, if all its precedence relationships are compatible, meaningful, and promising at the same time.
+In fact, the goal of this flow is to find \textit{effective prototypes}.
 
 \paragraph{Warm-starting via Meta-learning} Once the prototype is constructed, the flow running in parallel is proposed to help with its instantiation.
 It consists of a meta-learning step  (\Cref{effective-ssec:meta-learning}), where a set of ML experiments (e.g., pre-processing and classification algorithm runs) are used as training data to predict promising transformations for a pre-processing step.
 These rules extract knowledge from past experiments and are complementary to the rules obtained in the first flow.
 This practice is called warm-starting,
 They would be used, for example, to ease the cold start problem in the prototype instantiation phase  (\Cref{effective-ssec:prototype-insta}).
+\\
+
 
 We propose a generic methodology.
 However, for the sake of explanation, in the following, we will use the \texttt{Example} environment to illustrate our use case as a reference.
@@ -364,9 +366,9 @@ The first task in the process consists of selecting the data pre-processing step
 
 \begin{example}
 % The data pre-processing steps selected for the sake of our use case are the following.
-For our experiments, we selected the pre-processing steps, transformations and hyperparameters from those available in the scikit-learn\footnote{\url{https://scikit-learn.org}} library, and they are listed in \Cref{tbl:transformations}.
-textit{Input} denotes the compatible feature type for a given pre-processing step and can be continuous (CO) --- when it represents measurements on some continuous scale, or categorical (CA) --- when it represents information about some categorical or discrete characteristics.
-Similarly, \textit{Output} denotes the type of the features after a kind of transformation is applied.
+For our experiments, we selected the pre-processing steps, transformations and hyperparameters from those available in the scikit-learn library\footnote{\url{https://scikit-learn.org}} (\Cref{tbl:transformations}).
+\textit{Input} denotes the compatible feature type for a given pre-processing step and can be continuous (CO) -- when it represents measurements on some continuous scale -- or categorical (CA)---when it represents information about some categorical or discrete characteristics.
+Similarly, \textit{Output} denotes the type of the features after a pre-processing step is applied.
 
 \begin{itemize}[noitemsep,topsep=0pt]
 \item{Encoding ($E$).} The process of transforming categorical features into continuous ones (here, we refer solely to the encoded representation, not the semantic).
@@ -377,7 +379,7 @@ Similarly, \textit{Output} denotes the type of the features after a kind of tran
 \item{Feature Engineering ($F$).} The process of defining the set of relevant features to be used in model training.
 \end{itemize}
 
-Finally, \textit{Transformations} denotes the physical instantiation for the step, and it can be tuned using its \textit{Hyperparameters}.
+Finally, \textit{transformations} denotes the actual instantiation for the step, and it can be tuned using its \textit{hyperparameters}.
 
 % We recall that a transformation is considered an actual instantiation/implementation of the pre-processing step.
 % Thus, several transformations may implement the same step, each having its own set of hyperparameters.
@@ -391,7 +393,7 @@ Finally, \textit{Transformations} denotes the physical instantiation for the ste
 
 \begin{tabular}{@{}p{30mm}lll>{\ttfamily}l@{}}
 \toprule
-Transf. Kind& Input & Output & Operator & \textnormal{Parameters}
+Pre-processing Step& Input & Output & Transformation & \textnormal{Hyperparameters}
 \\	\cmidrule[.1em]{1-5}
 
 Encoding ($E$)  & CA & CO & Ordinal & -  \\ \cmidrule[.05em]{4-5} & & & One Hot & - \\
@@ -430,7 +432,7 @@ Feat. Eng. ($F$) & CA/CO & CA/CO & PCA & n\_components:[1,2,3,4]\\ \cmidrule[.05
 
 \begin{table*}[!t]
     \caption{
-        Precedence order between pairs of transformations, represented independently for each phase.
+        Precedence order between pairs of pre-processing steps, represented independently for each phase.
         }
     \renewcommand{\arraystretch}{0.3}
     \footnotesize
@@ -490,31 +492,31 @@ Feat. Eng. ($F$) & CA/CO & CA/CO & PCA & n\_components:[1,2,3,4]\\ \cmidrule[.05
 \label{effective-ssec:rules-framework}
 % \label{sec:rules-framework}
 
-Once the implementation framework is selected, one needs to study it and see if there exist constraints that limit the interaction between transformations.
-For instance, applying a transformation may actually invalidate the application of another transformation, because the compatibility of transformations is dependent on the selected ML framework.
+Once the implementation framework is selected, one needs to study it and see if there exist constraints that limit the interaction between the pre-processing steps.
+For instance, applying a step may actually invalidate the application of another one, because the compatibility of them is dependent on the selected ML framework.
 We aim at detecting a set of implicit rules that are shown through an adjacency matrix, corresponding to a precedence graph as those in \Cref{tbl:rules}.
 Each cell $a_{ij}$ denotes a precedence relationship between the row $i$ and column $j$.
 Hence, \texttt{1} means that an edge exists between the transformation in the row and the transformation in the column, whereas \texttt{0} means that such an edge does not exist, hence a precedence order is not established for that pair.
 
-
+\texcolor{orange}{TODO: Aggiungere le descrizioni degli esempio (e.g., qui sarebbe framework-related rules in our use case)}
 \begin{example}
-We studied the transformations implemented in Scikit-learn, the discovered rules are shown through the adjacency matrix in \Cref{tbl:rules}a.
-For example, most Scikit-learn transformations cannot be applied in the presence of missing values.
-This is why in every pair of transformations where Imputation is involved, except the one with Normalization\footnote{Normalization transformations are the only ones that Scikit-learn can apply on datasets with missing values.}, Imputation goes first.
-Furthermore, Scikit-learn transformations are applied only to all compatible features of a given dataset.
+We studied the pre-processing steps implemented in Scikit-learn, the discovered rules are shown through the adjacency matrix in \Cref{tbl:rules}a.
+For example, most Scikit-learn steps cannot be applied in the presence of missing values.
+This is why in every pair of them where Imputation is involved, except the one with Normalization\footnote{Normalization transformations are the only ones that Scikit-learn can apply on datasets with missing values.}, Imputation goes first.
+Furthermore, Scikit-learn steos are applied only to all compatible features of a given dataset.
 Generally, categorical features are physically represented as strings and continuous features as numbers.
 However, a transformation that is meant to be applied, say to continuous features, cannot be applied over a dataset that contains both continuous and categorical features (i.e., a dataset containing both numbers and strings); Scikit-learn cannot deal with arrays of mixed types.
 In that case, all the categorical features need to be encoded into numeric representations, even if they represent a categorical value.
 That is, a value can be a number but represent a category.
 This is what happens when Normalization and Discretization are meant to be applied to a dataset containing mixed types of features.
 In order for them to be applied to datasets of mixed types, an Encoding transformation needs to be applied first.
-A similar constraint is imposed when considering Rebalancing and Feature Engineering, since these transformations do not accept inputs containing strings (i.e., representing a categorical type).
-For the rest of the pairs of transformations, there are no constraints imposed by the framework, thus any order of such transformations is permitted, reflected by a \texttt{0} in \Cref{tbl:rules}a.
+A similar constraint is imposed when considering Rebalancing and Feature Engineering, since these steps do not accept inputs containing strings (i.e., representing a categorical type).
+For the rest of the pairs, there are no constraints imposed by the framework, thus any ordering is permitted, reflected by a \texttt{0} in \Cref{tbl:rules}a.
 The graph obtained in this case exclusively corresponds to the limitations of Scikit-learn (as a matter of fact, if another framework were to be chosen, it may have looked differently).
 \end{example}
 
 \begin{algorithm*}[!h]
-	\caption{Find a promising pipeline prototype for transformations $T_1$ and $T_2$}
+	\caption{Find a promising prototype for steps $S_1$ and $S_2$ \textcolor{orange}{Cambiare tutti i $T_1$ e $T_2$ con $S_1$ e $S_2$, qui e nelle figure}}
 	\label{alg:learned-rules}
 	\begin{algorithmic}[1]
 		\Require $d$, $a$ \Comment{dataset, classification algorithm}
@@ -537,22 +539,38 @@ The graph obtained in this case exclusively corresponds to the limitations of Sc
 \subsection{Heuristic rules}
 \label{effective-ssec:rules-heuristics}
 % \label{sec:rules-heuristics}
-In the previous section, we proposed to derive a precedence based on the constraints of the framework. Now, we want to study the precedence independently of the framework, and find \textit{meaningful pairs}. That is, for every given pair, we want to find the relative order based on generic domain-independent knowledge (i.e., literature) about transformations and their applicability.
-To this end, some of the constraints imposed by the framework may be contradicted here, but this is resolved in the last step of the proposed method, when we take the union of the rules and hence construct the final pipeline prototypes (see Section~\ref{sec:composition}). Briefly, in a combination where Imputation is involved, it is advised to apply Imputation first. Next, an Encoding transformation makes sense to be combined in any order with the rest of transformations, except Imputation. 
-Combining Discretization with Normalization does not make sense, due to the fact that after the Discretization step, continuous features are transformed into categorical ones, and hence Normalization cannot be applied. Similarly, applying Normalization first, changes the scale of the values and hence impacts the Discretization step. Finally, a meaningful precedence can be derived when combining Normalization with Rebalancing. In this case, Normalization should be applied first, since otherwise Rebalancing would impact the scale of the values to be normalized.
+Once we have derived precedences based on the constraints of the framework, we can study the precedence independently and find \textit{meaningful pairs}.
+That is, for every given pair, we want to find the relative order based on generic domain-independent knowledge (i.e., literature) about pre-processing steps and their applicability.
+To this end, some of the constraints imposed by the framework may be contradicted here, but this is resolved in the last step of the proposed method
+% when we take the union of the rules and hence construct the final pipeline prototypes
+(\Cref{sec:composition}).
+Briefly, in a combination where Imputation is involved, it is advised to apply Imputation first.
+Next, Encoding makes sense to be combined in any order with the rest of the transformations, except Imputation.
+Combining Discretization with Normalization does not make sense, due to the fact that after the Discretization step, continuous features are transformed into categorical ones, and hence Normalization cannot be applied.
+Similarly, applying Normalization first, changes the scale of the values and hence impacts the Discretization step.
+Finally, a meaningful precedence can be derived when combining Normalization with Rebalancing.
+In this case, Normalization should be applied first, since otherwise Rebalancing would impact the scale of the values to be normalized.
 
 \begin{example}
-For our use case, Table~\ref{tbl:rules}b shows the heuristic rules obtained considering domain-independent knowledge about transformations~\cite{BookExploratoryDM03Dasu}. In comparison with the results from Table~\ref{tbl:rules}a, observe that the constraints on the Imputation transformation still hold, that is, it is correct to apply Imputation first when combining it with another transformation. This time even when combining it with Normalization --- note the difference with Table~\ref{tbl:rules}a. The constraints of Encoding are however not present in Table~\ref{tbl:rules}a, hence not considering the framework, Discretization combined with Encoding is a meaningful combination --- when a mixed type dataset is considered, but incompatible from the point of view of Scikit-learn.
+For our use case, \Cref{tbl:rules}b shows the heuristic rules obtained considering domain-independent knowledge about the steps \cite{BookExploratoryDM03Dasu}.
+In comparison with the results from \Cref{tbl:rules}a, observe that the constraints on the Imputation still hold: when combining it ith another step, Imputation should go first.
+This time even when combining it with Normalization---note the difference with \Cref{tbl:rules}a.
+The constraints of Encoding are however not present in \Cref{tbl:rules}a, hence not considering the framework, Discretization combined with Encoding is a meaningful combination---when a mixed type dataset is considered, but incompatible from the point of view of Scikit-learn.
 \end{example}
 
 \subsection{Empirically learned rules}
 \label{effective-ssec:rules-learned}
 % \label{sec:rules-learned}
 
-The two previously proposed steps (i.e., \textit{framework-related} and \textit{heuristic rules}), do not guarantee that for each pair of transformations we will obtain a precedence order. Therefore, for the cases where they are not sufficient to determine the precedence, a third viewpoint can be considered. That of learning a promising order by empirically studying the impact of the combinations on the final result of the analysis, using different classification problems in the training. For every selected pair of transformations, for a given classification algorithm, we propose to check which order of the pair improves most the performance (e.g., predictive accuracy) of the algorithm over a set of datasets (preferably from different domains). Like this, for each dataset we can get a precedence order that gives better results (i.e., promising precedence) in terms of predictive accuracy (other metrics can be used as well). 
+The two previously proposed steps (i.e., \textit{framework-related} and \textit{heuristic rules}), do not guarantee that each pair of steps will obtain a precedence order.
+Therefore, for those cases left out, a third viewpoint should be considered.
+That of learning a promising order by empirically studying the impact of the combinations on the final result of the analysis, using different supervised problems in the training.
+For every selected pair of pre-processing steps, for a given ML algorithm, we propose to check which order of the pair improves most the performance (e.g., predictive accuracy) of the algorithm over a set of datasets (preferably from different domains).
+Like this, for each dataset, we can get a precedence order that gives better results (i.e., promising precedence) in terms of predictive accuracy (other metrics can be used as well).
+\textcolor{orange}{TODO: Da qua ci potrebbero essere incongruenze}
 
-\paragraph{Algorithm}
-\label{sec:rules-learned:algorithm}
+% \paragraph{Algorithm}
+% \label{sec:rules-learned:algorithm}
 
 \begin{table*}[t]
 \footnotesize
@@ -610,25 +628,40 @@ Nr. & Pipeline 1 & Pipeline 2 & Valid result & Valid score & Winner prototype\\\
 	\label{fig:learned-rules-results}
 \end{figure*}
 
-To find a promising precedence order between a given pair of transformations, we propose Algorithm~\ref{alg:learned-rules}. 
-To compute the impact of transformations, we first get the accuracy of the ML algorithm over the original non-transformed dataset (see line 1). %, which is used later for calculating the change in accuracy. 
-Afterwards, for each precedence order between the pairs of transformations, we find both their optimized executable pipelines (i.e., using SMBO), and the accuracies of the ML algorithm (with default parametrisation) over the datasets transformed using the respective pipelines (see lines 2-3). Based on the comparison between the respective optimized pipelines, we get the winner in line 5. However, beforehand, in line 4, we perform a validity check. This is because when optimizing a pre-processing pipeline, SMBO may not instantiate a transformation with an operator at all (i.e., represented with a $\varnothing$ symbol).
-Hence, given a pair of transformations, where one or both of them may not be instantiated, SMBO may generate 16 possible scenarios. They are listed in Table~\ref{tbl:validation-rules}, and make up the validation rules for Algorithm~\ref{alg:learned-rules} (see line 4). 
+\paragraph{Learning empirical rules}
+To find a promising precedence order between a given pair of pre-processing steps, we propose \Cref{alg:learned-rules}.
+To compute the impact of each, we first get the accuracy of the ML algorithm over the original non-transformed dataset (see line 1). %, which is used later for calculating the change in accuracy.
+Afterward, for each precedence order between the pairs of steps, we find both their optimized executable pipelines (i.e., using SMBO), and the accuracies of the ML algorithm (with default configuration) over the datasets transformed using the respective pipelines (see lines 2-3).
+Based on the comparison between the respective optimized pipelines, we get the winner in line 5.
+However, beforehand, in line 4, we perform a validity check.
+This is because when optimizing a pre-processing pipeline, SMBO may not instantiate a step with no transformation at all (i.e., represented with a $\varnothing$ symbol).
+Hence, given a pair of pre-processing steps, where one or both of them may not be instantiated, SMBO may generate 16 possible scenarios.
+They are listed in \Cref{tbl:validation-rules}, and make up the validation rules for \Cref{alg:learned-rules} (see line 4).
 
-Briefly, if among the optimized pairs of transformations (same transformations but in reverse order) obtained from SMBO, one or both of them contain a $\varnothing$ operator, their results are considered valid, only if they have equal scores (i.e., a draw). This is because, if one has a higher score, it means that during the optimization phase it was more advantageous than the other, since it could find a configuration that should have been found by both of the pairs, given enough budget. In our SMBO runs, such invalid results account for less than 10\% and in those cases datasets are discarded from the study (see line 7). 
+Briefly, if among the optimized pairs of steps (same steps but in reverse order) obtained from SMBO, one or both of them contain a $\varnothing$ transformation, their results are considered valid, only if they have equal scores (i.e., a draw).
+This is because, if one has a higher score, it means that during the optimization it was more advantageous than the other, since it could find a configuration that should have been found by both of the pairs (given enough budget).
+In our SMBO runs, such invalid results account for less than 10\% and in those cases datasets are discarded from the study (see line 7).
 
-In particular, in Table~\ref{tbl:validation-rules}, the first two columns denote the pipeline instantiations for the respective pairs of transformations (i.e., $T_1\rightarrow T_2$ and $T_2\rightarrow T_1$). Next, \textit{Valid result} denotes the expected result when comparing the results of the pipelines in the same row. For instance, in the first row, if both transformations in the pipelines are not instantiated during the optimization, a valid result is a draw, and a \textit{Valid score} for the respective result is the baseline accuracy, and the \textit{Winner prototype} is the prototype that is in accordance with the expected result, which in this case is the Baseline (i.e., prototype consisting of only the ML algorithm, where no transformations are applied).
+In particular, in \Cref{tbl:validation-rules}, the first two columns denote the pipeline instantiations for the respective pairs of steps (i.e., $S_1\rightarrow S_2$ and $S_2\rightarrow S_1$).
+Next, \textit{Valid result} denotes the expected result when comparing the results of the pipelines in the same row.
+For instance, in the first row, if both steps in the pipelines are not instantiated during the optimization, a valid result is a draw, a \textit{Valid score} is the baseline accuracy, and the \textit{Winner prototype} is the prototype that is in accordance with the expected result, which in this case is the Baseline (i.e., prototype where no transformations are applied).
 
-For the sake of another example, let us check row 2 in Table~\ref{tbl:validation-rules}. Running SMBO, the best result for the first pair is the pipeline $\varnothing \rightarrow \varnothing$, and for the second pair, the pipeline $T_2 \rightarrow \varnothing$. In this case, the comparison between the results of these pipelines should be equal (i.e., draw), and the score should be that of the baseline. Otherwise, if say, the score of the second pipeline was higher, it would mean that for the first pair, SMBO was not given enough time to find the pipeline with higher score (i.e., $T_2\rightarrow \varnothing$).
+For the sake of another example, let us check row 2 in \Cref{tbl:validation-rules}.
+Specifically, we consider the case in which, running SMBO, the best result for the first pair is the pipeline $\varnothing \rightarrow \varnothing$, and for the second pair is the pipeline $S_2 \rightarrow \varnothing$.
+Here, the comparison between the results of these pipelines should be equal (i.e., draw), and the score should be that of the baseline.
+Otherwise, if say, the score of the second pipeline was higher, it would mean that for the first pair, SMBO was not given enough budget to find the pipeline with higher score (i.e., $S_2\rightarrow \varnothing$).
 The same logic applies also for the other rows where a $\varnothing$ operator is involved.
 
-\color{black}
 
 \begin{example}
-For the sake of this work, we considered three classification algorithms (i.e., \textit{NB}, \textit{RF},  \textit{KNN}) and 80 datasets from the OpenML repository. The datasets, were compiled from three OpenML benchmarks, namely, the OpenMLCC18 benchmark\footnote{\url{https://www.openml.org/s/99/data}}, the AutoML benchmark\footnote{\url{https://www.openml.org/s/271/data}}, and the Classification algorithms benchmark\footnote{\url{https://www.openml.org/s/1/data}}. For the final set, we filtered out datasets with more than 10\% of missing values --- not to include bias due to the heavy pre-processing we need to perform on top of them, and we filtered out the datasets with more than 5 million instances --- because of the computation time required to process them. As a result we obtained 60 datasets from the first benchmark, 17 from the second, and 3 more from the third to reach a total of 80 datasets. 
+For the sake of this work, we considered three classification algorithms (i.e., \textit{NB}, \textit{RF},  \textit{KNN}) and 80 datasets from the OpenML repository. The datasets, were compiled from three OpenML benchmarks, namely, the OpenMLCC18 benchmark\footnote{\url{https://www.openml.org/s/99/data}}, the AutoML benchmark\footnote{\url{https://www.openml.org/s/271/data}}, and the Classification algorithms benchmark\footnote{\url{https://www.openml.org/s/1/data}}.
+For the final set, we filtered out datasets with more than 10\% of missing values --- not to include bias due to the heavy pre-processing we need to perform on top of them, and we filtered out the datasets with more than 5 million instances --- because of the computation time required to process them.
+As a result we obtained 60 datasets from the first benchmark, 17 from the second, and 3 more from the third to reach a total of 80 datasets.
 
-Given the proposed algorithm (i.e. Algorithm~\ref{alg:learned-rules}), we could try to learn the precedence of every pair of transformations, but would just be a waste of resources, because we can see in Table~\ref{tbl:rules}a and~\ref{tbl:rules}b, that some precedences are already decided for one reason or another. Hence, only pairs of transformations with a \texttt{0} for both directions (in both Table~\ref{tbl:rules}a and~\ref{tbl:rules}b) need to be studied further. That is, they make sense to be combined together, but a precedence order could not be determined through \textit{framework-related} or \textit{heuristic rules}. % for them. 
-Thus, for instance, pairs involving Encoding are not considered in this phase, since for them an order is already imposed by the framework (see Table~\ref{tbl:rules}a).
+Given the proposed algorithm (i.e., \Cref{alg:learned-rules}), we could try to learn the precedence of every pair of steps, but would just be a waste of resources because we can see in Table~\ref{tbl:rules}a and~\ref{tbl:rules}b that some precedences are already decided for one reason or another.
+Hence, only pairs of transformations with a \texttt{0} for both directions (in both Table~\ref{tbl:rules}a and~\ref{tbl:rules}b) need to be studied further.
+That is, they make sense to be combined together, but a precedence order could not be determined through \textit{framework-related} or \textit{heuristic rules}. % for them.
+Thus, for instance, pairs involving Encoding are not considered in this phase, since for them an order is already imposed by the framework (\Cref{tbl:rules}a).
 To this end, the pairs of transformations we consider for the third precedence graph include only $\{F,N\}$, $\{F,D\}$, $\{F,R\}$, and $\{R,D\}$.
 
 \begin{table}[t]
@@ -655,30 +688,47 @@ To this end, the pairs of transformations we consider for the third precedence g
 		\end{tablenotes}
 	\end{threeparttable}
 \end{table}
-Applying Algorithm~\ref{alg:learned-rules}, we obtain a pro\-mising order for each pair of transformations considered. %(i.e., $\{F,N\}$, $\{F,D\}$, $\{F,R\}$, $\{R,D\}$). 
-Since SMBO is a randomized algorithm we experimented with (i) running it several times splitting the budget, and (ii) running it only once with the entire budget. For the experiments considered, no significant differences where observed, therefore we opted for running it once with the entire budget (i.e., 200 seconds per run), which allows for more configurations to be visited in a single run. Aggregating all the results, Figure~\ref{fig:learned-rules-results} shows the number of datasets, for which a given prototype (see Table~\ref{tbl:validation-rules}, column \textit{Winner prototype} for the list of labels) is selected as the winner. For instance, for the pair $\{F,N\}$ (i.e., Feature Engineering, Normalization), the prototype winning in more datasets for \textit{KNN} and \textit{NB} is $N\rightarrow F$. This means that in general, better results are obtained if Normalization is applied before Feature Engineering. 
+Applying \Cref{alg:learned-rules}, we obtain a promising order for each pair of transformations considered (i.e., $\{F,N\}$, $\{F,D\}$, $\{F,R\}$, $\{R,D\}$).
+Since SMBO is a randomized algorithm, we experimented it with (i) running it several times splitting the budget, and (ii) running it only once with the entire budget.
+For the experiments considered, no significant differences where observed, therefore we opted for running it once with the entire budget (i.e., 200 seconds per run), which allows for more configurations to be visited in a single run. Aggregating all the results, \Cref{fig:learned-rules-results} shows the number of datasets, for which a given prototype (\Cref{tbl:validation-rules}, column \textit{Winner prototype} for the list of labels) is selected as the winner.
+For instance, for the pair $\{F,N\}$ (i.e., Feature Engineering, Normalization), the prototype winning in more datasets for \textit{KNN} and \textit{NB} is $N\rightarrow F$.
+This means that in general, better results are obtained if Normalization is applied before Feature Engineering.
 
-Next, only $N$ appears as first for \textit{RF} and second best for \textit{KNN} and \textit{NB}, which means that for many datasets, considering different algorithms, it results better to apply only Normalization without combining it with Feature Engineering. The third position is for $\varnothing\rightarrow \varnothing$, which means that for some datasets it is better not to apply any of the transformations (in any combination). The remaining prototypes winning in some datasets are $F$ (only Feature Engineering), and $F \rightarrow N$ (Feature Engineering preceding Normalization).  Finally, for three datasets, that are omitted from the figure, there were no winning pipelines (i.e., pipelines resulted in a draw).
+Next, only $N$ appears as first for \textit{RF} and second best for \textit{KNN} and \textit{NB}, which means that for many datasets, considering different algorithms, it results better to apply only Normalization without combining it with Feature Engineering.
+The third position is for $\varnothing\rightarrow \varnothing$, which means that for some datasets it is better not to apply any of the transformations (in any combination).
+The remaining prototypes winning in some datasets are $F$ (only Feature Engineering), and $F \rightarrow N$ (Feature Engineering preceding Normalization).
+Finally, for three datasets, that are omitted from the figure, there were no winning pipelines (i.e., pipelines resulted in a draw).
 
-Since our goal is to find the best order for a pair of transformations, we focus on the performances of the pipelines where both of the transformations are instantiated (i.e., $T_1\rightarrow T_2$ versus $T_2\rightarrow T_1$). To do this, we check whether the difference between the number of datasets where they each appear to win are statistically significant by running a binomial test assuming a theoretical probability of 0.5. The results are shown in Table~\ref{tbl:significance-test}.
-In summary, the results from Table~\ref{tbl:significance-test} indicate that, with 95\% confidence we can assume that for the pair $\{F,N\}$, $N\rightarrow F$ performs better than $F\rightarrow N$, hence Normalization should precede Feature Engineering. On the other hand, for $\{D,F\}$, $D\rightarrow F$ performs better than $F\rightarrow D$, hence Discretization should precede Feature Engineering. Finally, for the remaining transformations, $\{F,R\}$ and $\{R,D\}$, a precedence order can not be pre-assumed since the results obtained are not significant. 
-Using these results, we create the \textit{Promising precedence} adjacency matrix shown in Table~\ref{tbl:rules}c, where as one can observe, precedence edges are introduced for $\{N,F\}$ and $\{D,F\}$, but no edges exist neither for $\{F,R\}$, nor for $\{R,D\}$. 
+Since our goal is to find the best order for a pair of pre-processing steps, we focus on the performances of the pipelines where both of the steps are instantiated (i.e., $S_1\rightarrow S_2$ versus $S_2\rightarrow S_1$).
+To do this, we check whether the difference between the number of datasets where they each appear to win is statistically significant by running a binomial test assuming a theoretical probability of 0.5.
+The results are shown in \Cref{tbl:significance-test}.
+In summary, the results from \Cref{tbl:significance-test} indicate that, with 95\% confidence we can assume that for the pair $\{F,N\}$, $N\rightarrow F$ performs better than $F\rightarrow N$, hence Normalization should precede Feature Engineering.
+On the other hand, for $\{D,F\}$, $D\rightarrow F$ performs better than $F\rightarrow D$, hence Discretization should precede Feature Engineering.
+Finally, for the remaining transformations, $\{F,R\}$ and $\{R,D\}$, a precedence order can not be pre-assumed since the results obtained are not significant.
+Using these results, we create the \textit{Promising precedence} adjacency matrix shown in \Cref{tbl:rules}c, where as one can observe, precedence edges are introduced for $\{N,F\}$ and $\{D,F\}$, but no edges exist neither for $\{F,R\}$, nor for $\{R,D\}$.
 \end{example}
 
-\paragraph{Cross-validation}
+\paragraph{Chi-square test with cross-validation}
 \label{sec:learned-rules-validation}
-After running Algorithm~\ref{alg:learned-rules} to empirically find a winner between two pairs of transformations, we may obtain a different distribution of the number of wins for the pairs, depending on the datasets considered. To show that the results obtained with the initial set of datasets are generalizable, we propose to perform an additional cross-validated experiment, where the set of datasets considered can be randomly split into many folds. Then, for each fold, the results can be compared to the rest, with the aim of checking whether the distributions are similar. This check can be done via a significance test (e.g., chi-square). To this end, if the distributions between the folds are similar, it means that the obtained results are independent of the datasets considered, since no matter the combination of the datasets, the results are the same and thus generalizable.
+After running \Cref{alg:learned-rules} to empirically find a winner between two pairs of transformations, we may obtain a different distribution of the number of wins for the pairs, depending on the datasets considered.
+To show that the results obtained with the initial set of datasets are generalizable, we propose to perform an additional cross-validated experiment, where the set of datasets considered can be randomly split into many folds.
+Then, for each fold, the results can be compared to the rest, with the aim of checking whether the distributions are similar.
+This check can be done via a significance test (e.g., chi-square).
+To this end, if the distributions between the folds are similar, it means that the obtained results are independent of the datasets considered, since no matter the combination of the datasets, the results are the same and thus generalizable.
 
 
-\color{black}
+% \color{black}
 
 \begin{example}
-In our use case, to show that the results do not depend on the datasests selected, we re-run the experiments (i.e., 10-times each), but this time splitting the datasets into 4-folds. The goal was to check if the results of the precedence orders from the different folds (i.e., for each experiment considering a randomly different set of datasets) are similar between them (i.e., follow the same distributions).
-To confirm this hypothesis, we perform a chi-square test between the results (precedence orders) obtained in a single fold in comparison to the three remaining folds, hence comparing 25\% of the datasets to the rest. 
-In particular, to confirm the hypothesis, we need to find results that accept the null hypothesis of the chi-square test which states that "there is no significant difference between the distributions". To do that, sticking to the 95\% confidence interval, we need to look for p-values greater than 0.05. That is, the higher the p-values, the more we accept the null hypothesis, the more similar the distributions. Looking at the p-values we found out that they were all much higher than 0.05. Specifically, the scores of the chi-square tests of the folds (one fold compared to the rest) are averaged and, after having repeated this procedure 10 times, instead of using a table we depict the 10 averaged p-values using box-plots in Figure~\ref{fig:10-times-4-cv}.
-We conclude that, for both of the rules (i.e.,  $F\rightarrow N$ and $F\rightarrow D$), the significance test indicates a compliance between the new results (Figure~\ref{fig:10-times-4-cv}) and those illustrated above (Table~\ref{tbl:significance-test}).
-
-
+In our use case, to show that the results do not depend on the datasests selected, we re-run the experiments (i.e., 10-times each), but this time splitting the datasets into 4-folds.
+The goal was to check if the results of the precedence orders from the different folds (i.e., for each experiment considering a randomly different set of datasets) are similar between them (i.e., follow the same distributions).
+To confirm this hypothesis, we perform a chi-square test between the results (precedence orders) obtained in a single fold in comparison to the three remaining folds, hence comparing $25$\% of the datasets to the rest.
+In particular, to confirm the hypothesis, we need to find results that accept the null hypothesis of the chi-square test which states that ``there is no significant difference between the distributions''.
+To do that, sticking to the $95$\% confidence interval, we need to look for p-values greater than $0.05$.
+That is, the higher the p-values, the more we accept the null hypothesis, and the more similar the distributions.
+Looking at the p-values we found out that they were all much higher than $0.05$.
+Specifically, the scores of the chi-square tests of the folds (one fold compared to the rest) are averaged and, after having repeated this procedure 10 times, instead of using a table we depict the 10 averaged p-values using box-plots in \Cref{fig:10-times-4-cv}.
+We conclude that, for both of the rules (i.e.,  $F\rightarrow N$ and $F\rightarrow D$), the significance test indicates a compliance between the new results (\Cref{fig:10-times-4-cv}) and those illustrated above (\Cref{tbl:significance-test}).
 
 \begin{figure*}[!t]
 	\centering
@@ -800,42 +850,55 @@ We conclude that, for both of the rules (i.e.,  $F\rightarrow N$ and $F\rightarr
 
 \end{example}
 
-\subsection{Effective pipeline prototypes}
+\subsection{Composing Effective Prototypes}
 \label{effective-ssec:composition}
 % \label{sec:composition}
-In this task we foresee the composition of the previously defined rules (i.e., for the pairs of transformations), to generate the final set of rules that would allow to compose longer chains --- consisting of more than two transformations. This is when we resolve the inconsistencies and also define precedences for the pairs of transformations that may not have any precedence defined already --- in that case, we basically take into account all the permutations. This step allows to finally generate the possible effective pipeline prototypes. 
+In this, we foresee the composition of the previously defined rules (i.e., for the pairs of pre-processing steps), to generate the final set of rules that would allow to compose longer chains---consisting of more than two steps.
+This is when we also resolve the inconsistencies and define precedences for the pairs of steps that may not have any precedence defined already---in that case, we basically take into account all the permutations.
+This allows to finally generate the possible effective  prototypes.
 
 \begin{example}
-To generate the final pipeline prototypes, in this step we combine all the matrices generated by the previous steps. That is, we take the union of the edges (represented by \texttt{1}'s) from the matrices in Table~\ref{tbl:rules} (a,b,c), and create a new final adjacency matrix, shown in Table~\ref{tbl:rules-union}. This is the matrix that will allow us to generate the final effective pipeline prototypes. 
+To generate the final pipeline prototypes, in this step we combine all the matrices generated by the previous steps.
+That is, we take the union of the edges (represented by \texttt{1}'s) from the matrices in \Cref{tbl:rules} (a,b,c), and create a new final adjacency matrix, shown in \Cref{tbl:rules-union}.
+This is the matrix that will allow us to generate the final effective pipeline prototypes.
 
-Observing the table, one can realize that for pairs $\{F,R\}$ and $\{R,D\}$, no precedence edges exist. This means that these pairs are somewhat equally relevant from either direction (any order), and thus when generating the final prototypes, both options should appear.
+Observing the table, one can realize that for pairs $\{F,R\}$ and $\{R,D\}$, no precedence edges exist.
+This means that these pairs are somewhat equally relevant from either direction (any order), and thus when generating the final prototypes, both options should appear.
 
-For a better reading, in Figure~6, we visualize Table~\ref{tbl:rules-union} in form of a graph, where nodes represent the kinds of transformations and the directed edges represent a precedence order between them.
-Out of the graph, we generate the final pipeline prototypes by taking all the maximum length variations (ordered arrangements without repetition) of the nodes, respecting the precedence rules (i.e., not contradicting the direction of existing edges). The result is the set of five pipeline prototypes shown in Table 6. This set consisting of \textit{compatible}, \textit{meaningful} and \textit{promising} pairs of transformations is the set of recommended \textit{effective pipeline prototypes}.
+For a better reading, in Figure~3.6, we visualize \Cref{tbl:rules-union} in form of a graph, where nodes represent the pre-processing steps and the directed edges represent a precedence order between them.
+Out of the graph, we generate the final prototypes by taking all the maximum length variations (ordered arrangements without repetition) of the nodes, respecting the precedence rules (i.e., not contradicting the direction of existing edges).
+The result is the set of five prototypes shown in Table 3.7. This set consisting of \textit{compatible}, \textit{meaningful} and \textit{promising} pairs of transformations is the set of recommended \textit{effective pipeline prototypes}.
 \end{example}
-
-\color{black}
 
 \subsection{Meta-learning rules}
 \label{effective-ssec:meta-learning}
 % \label{sec:meta-learning}
 
-Once the pipeline prototype is constructed, that is, the order between the kinds of transformations is defined, what follows is the instantiation of transformations with the physical operators. For that, one can rely completely on the optimization algorithm, and let the algorithm choose the right operators. However, given the way optimization algorithms work (e.g., SMBO) --- successively finding better and better instantiations, there is a cold-start problem, where in the beginning, the algorithm does not have enough information in order to come up with the most promising initial instantiations, and a wrong choice may affect the optimization process. 
-\paragraph{Exploratory analysis}
-Given the availability of the experimental SMBO executions (executed in an exhaustive manner, considering all the pipeline prototypes), one can perform an exploratory analysis with the aim of removing useless prototypes, pipelines or operators. Hence, further tweaking the search space. In particular, starting from the highest level, that of prototypes, then going to the physical pipelines, and finally to the actual operators inside the pipeline, one can analyze if:
+Once the pipeline prototype is constructed (i.e., the order between the steps is defined), what follows is their instantiation with the actual transformations.
+For that, one can rely completely on SMBO, and let the optimization choose the right transformation for each step.
+However, as many optimization techniques, SMBO suffers from the cold-start problem where, in the beginning, it does not have enough information to come up with promising configurations, and a wrong choice may affect the whole process.
+
+\subsubsection{Exploratory analysis}
+Given the availability of the experimental SMBO executions (executed in an exhaustive manner, considering all the prototypes), one can perform an exploratory analysis with the aim of removing useless prototypes, executable pipelines or sngle transformations.
+Hence, further tweaking the search space.
+% In particular, starting from the highest level (i.e., the one regarding prototypes), then going to the executable pipelines, and finally to the single transformations.
+In particular, one might analyze whether:
 
 \begin{itemize}
-    \item there exist some combination of transformations in the form of prototypes (see Table~\ref{tbl:pipeline-enumeration} for the exhaustive list of prototypes), that are generally useless (i.e., in terms of their impact to the final accuracy), and thus can be discarded a priori in order to reduce the search space, 
-    \item there are some physical pipelines that are consistently chosen more often than others by the optimization algorithm, meaning that they are more useful than others,
-    \item within the physical pipelines, some transformations are chosen more often than others, meaning that they provide more positive impact. 
+    \item there exist some combination of steps (\Cref{tbl:pipeline-enumeration}), that are generally useless (i.e., in terms of their impact on the final accuracy), and thus can be discarded a priori to reduce the search space;
+    \item there are some executable pipelines that are consistently chosen more often than others by the optimization, meaning that they are more useful than others;
+    \item within the executable pipelines, some transformations are chosen more often than others, meaning that they provide a more positive impact.
     \end{itemize}
 
 \begin{example}
-We performed the above-mentioned analysis to our use case, but it did not lead to any conclusive or significant results. In particular, as shown in Figure~\ref{fig:prototypes-impact}, we could not find any useless prototypes --- not positively impacting the final accuracy, that could be discarded a priori from the potential list of prototypes.
-Actually, as we will show in Section~\ref{sec:eval-universal-pipeline}, all of them lead to the best in one case or another, which does not mean the epsilon improvement some provide is worth the search cost you incur in considering them (but this more in-depth analysis is done later).
-Next, as shown in Figure~\ref{fig:pipeline-frequency}, there were no physical pipelines shown to be more useful --- hence more often selected, than others. Even if $N \rightarrow R$ is clearly above, it barely reaches 30\% in KNN.
- Finally, observing Figure~\ref{fig:transformation-frequency}, it is clear that some kinds of transformations are chosen more often, but looking closely (i.e., the shaded bars), it is not clear which operator brings more benefit. For instance, Normalization is present in 90\% of the pipelines, but it is not easy to distinguish which kind of Normalization (i.e., actual operator) is more beneficial.
-For this, we need more complex rules or guidelines that may help in finding the right operator to use. 
+We performed the above-mentioned analysis on our use case, but it did not lead to any conclusive or significant results.
+In particular, as shown in \Cref{fig:prototypes-impact}, we could not find any useless prototypes---not positively impacting the final accuracy, that could be discarded a priori from the potential list of prototypes.
+Actually, as we will show in \Cref{sec:eval-universal-pipeline}, all of them lead to the best in one case or another, which does not mean the epsilon improvement some provide is worth the search cost you incur in considering them (but this more in-depth analysis is done later).
+Next, as shown in \Cref{fig:pipeline-frequency}, there were no physical pipelines shown to be more useful---hence more often selected, than others.
+Even if $N \rightarrow R$ is clearly above, it barely reaches 30\% in KNN.
+Finally, observing \Cref{fig:transformation-frequency}, it is clear that some kinds of transformations are chosen more often, but looking closely (i.e., the shaded bars), it is not clear which operator brings more benefit.
+For instance, Normalization is present in 90\% of the pipelines, but it is not easy to distinguish which kind of Normalization (i.e., actual operator) is more beneficial.
+For this, we need more complex rules or guidelines that may help in finding the right operator to use.
 \end{example}
 
 \begin{figure*}[!t]
@@ -859,29 +922,43 @@ For this, we need more complex rules or guidelines that may help in finding the 
 	\label{fig:transformation-frequency}
 \end{figure*}
 
-\subsection{Meta-learning}
-\color{black}
-To mitigate the red cold-start problem, we propose to perform meta-learning (shown in Figure~\ref{fig:methodology}), where we intend to use the knowledge extracted from historical data in order to devise rules that may help the optimization algorithm in its initial phase. 
-Meta-learning is the process of `learning on top of learning', or learning a model using historical data from ML experiments. Traditionally, it has been used for predicting the performance (e.g., predictive accuracy) of an algorithm on a given dataset. That is, given some historical runs of the performance of classification algorithms over various datasets (i.e., meta-database: consisting of datasets characteristics as predictive variables and the performance of the classification algorithm as the response variable), one can learn a model (i.e., meta-model), that is able to predict the performance of a given classification algorithm on a new dataset~\cite{Brazdil04Book}. Lately, this technique has been extended in order to predict the impact of transformations over the performance of classification algorithms and thus rank transformations based on their impact~\cite{Bilalli17AMCS, presistant18CSI, presistant19DKE}. The same idea can be applied for learning the best operator for a given transformation.
-That is, through meta-learning one can learn the intrinsic relationship between dataset characteristics and the operator performance, and thus come up with rules that are not obvious and are effective at the time of instantiating a transformation. 
-The main idea is to build a model, that is able to predict the operator for a certain kind of transformation, given the meta-features extracted from the dataset considered for the optimization. This translates to answering the following question: ``given that we know the dataset characteristics and having selected a certain kind of transformation (e.g., missing value imputation), what is the optimal physical algorithm (see Table~\ref{tbl:transformations}) we need to select, to obtain the highest improvement possible in terms of classification accuracy (i.e., when the classification algorithm is applied over the transformed dataset)?".  In particular, the model can generate a set of complementary rules that help in the optimization, providing a good starting instantiation for some of the transformations in the prototype.
+\subsubsection{Meta-learning}
+To mitigate the cold-start problem, we propose to perform meta-learning, where we intend to use the knowledge extracted from historical data in order to devise rules that may help the optimization in its initial settings.
+Meta-learning is the process of ``learning on top of learning'', or learning a model using historical data from ML experiments.
+Traditionally, it has been used for predicting the performance (e.g., predictive accuracy) of an algorithm on a given dataset.
+That is, given some historical runs of the performance of classification algorithms over various datasets (i.e., meta-dataset: consisting of datasets characteristics as meta-features and the performance of the ML algorithm as the desired outcome in a regression task), one can learn a model (i.e., meta-model), that is able to predict the performance of a given ML algorithm on a new dataset \cite{Brazdil04Book}.
+Lately, this technique has been extended in order to predict the impact of transformations over the performance of ML algorithms and thus rank transformations based on their impact \cite{Bilalli17AMCS, presistant18CSI, presistant19DKE}.
+The same idea can be applied to learning the best operator for a given transformation.
+That is, through meta-learning one can learn the intrinsic relationship between dataset characteristics and the transformation performance, and thus come up with rules that are not obvious and are effective at the time of instantiation.
+The main idea is to build a model, that is able to predict the operator for a certain pre-processing step, given the meta-features extracted from the dataset considered for the optimization.
+This translates to answering the following question: ``given that we know the dataset characteristics and having selected a certain pre-processing step (e.g., Imputation), what is the optimal transformation we need to obtain the highest improvement w.r.t. accuracy (i.e., when the ML algorithm is applied over the transformed dataset)?''.
+In particular, the model can generate a set of complementary rules that help in the optimization, providing a good starting instantiation for some of the transformations in the prototype.
 
-To train the model we need a meta-dataset that can be  (i) generated through optimization algorithms (e.g., SMBO executions), (ii) generated manually through simple evaluations of classification algorithms over transformed datasets, or (iii) assumed already given (e.g., OpenML). 
+To train the model we need a meta-dataset that can be  (i) generated through optimization algorithms (e.g., SMBO executions), (ii) generated manually through simple evaluations of classification algorithms over transformed datasets, or (iii) assumed already given (e.g., OpenML).
 
-Given a meta-dataset, we propose to learn to predict the best instantiation (operator) for a given transformation, where among the classes we can include the class \texttt{None} too. This means that one of the possible predictions is to not instantiate a transformation at all, hence remove it from the pipeline.
+Given a meta-dataset, we propose to learn to predict the best instantiation (transformation) for a given pre-processing step, where among the classes we can include the class \texttt{None} too.
+This means that one of the possible predictions is to not instantiate a transformation at all, hence removing it from the pipeline.
 
 \begin{example}
-Our training dataset (sometimes referred to as `meta-database' or `meta-dataset') for the meta-learning is compiled through SMBO runs on the OpenML datasets (see Section~\ref{sec:rules-learned:algorithm}). That is, we first extract the dataset characteristics/profiles (i.e., number of features, number of instances, number of missing values, etc), and then by applying SMBO optimization, on classification algorithms and pre-processing pipelines (as explained in Section~\ref{sec:composition}), for each dataset, we retrieve the evaluations (i.e., predictive accuracy) of the algorithms over the optimized pipelines. This gives us the presumably optimal physical pipelines and their impact on the accuracy of the learning algorithms for each dataset at hand. Given such information, our aim is to now save time and improve the instantiation of the operators for each transformation considered in the prototype. 
+Our training dataset for the meta-learning (i.e., meta-dataset) is built through SMBO runs on the OpenML datasets (see Section~\ref{sec:rules-learned:algorithm}).
+We first extract the dataset characteristics (i.e., meta-features; e.g., number of features, number of instances, number of missing values).
+Then, by applying SMBO optimization on classification algorithms and pre-processing prototypes, for each dataset, we retrieve the performance (i.e., predictive accuracy) of the ML algorithms over the optimized pipelines.
+This gives us the presumably (sub-)optimal executable pipelines and their impact on the accuracy of the learning algorithms for each dataset at hand.
+Given such information, our aim is to now save time and improve the instantiation of the transformations for each step considered in the prototype.
 
-We trained several different Conditional Inference Trees \cite{ctree} because they produce models that can be easily read and interpreted.
-Specifically, the independence of each variable (meta-features in our case) with the class (operator of a specific transformation) is tested through a statistical test. 
-The split is made on the variable with the lowest p-value. 
-We report the p-value too, so that it can be seen how strong the association is (i.e., why that variable was chosen).
-We stick with the p-value threshold of 0.05, and devise a rule from any branch of the tree that is within the threshold. In the following, we describe the rules obtained within the selected significance threshold.
+We trained several different conditional inference trees (i.e., a particular implementation of decision trees \cite{ctree}) because they produce models that can be easily read and interpreted.
+Specifically, the independence of each meta-feature with the class (transformation of a specific step) is tested through a statistical test.
+The split is made on the variable with the lowest p-value.
+We report the p-value too so that it can be seen how strong the association is (i.e., why that variable was chosen).
+We stick with the p-value threshold of $0.05$, and devise a rule from any branch of the tree that is within the threshold.
+In the following, we describe the rules obtained within the selected significance threshold.
 
-\textbf{Rules for Feature Engineering}. The available operators in Scikit-learn for Feature Engineering (see Table~\ref{tbl:transformations}) are: \texttt{PCA} (Principal Component Analysis), \texttt{Feature Selection} (Select K Best), \texttt{Both} (PCA + Select K Best), and \texttt{None}. The tree generated for the Feature Engineering transformation is shown in Figure~\ref{fig:features-meta-learning:feature-engineering}. The leaves show the selected operator frequency. For the sake of simplicity, we do not consider the union of PCA and Select K Best as an operator per se, instead we distribute that contribution to the two operators that compose it.
-Observe that there is a strong correlation between the Feature Engineering operator and the entropy of the class.
-Indeed, such a meta-feature achieved a p-value smaller than 0.001.
+\textbf{Rules for Feature Engineering}. The available transformations in scikit-learn for Feature Engineering are: Principal Component Analysis (\texttt{PCA}), \texttt{Feature Selection} (Select K Best), \texttt{Both} (PCA + Select K Best), and \texttt{None}.
+The tree generated for the Feature Engineering transformation is shown in \Cref{fig:features-meta-learning:feature-engineering}.
+The leaves show the selected transformation frequency.
+For the sake of simplicity, we do not consider the union of PCA and Select K Best as a transformation per se, instead we distribute that contribution to the two operators that compose it.
+Observe that there is a strong correlation between the Feature Engineering transformation and the entropy of the class.
+Indeed, such a meta-feature achieved a p-value smaller than $0.001$.
 We can clearly read that if the Class Entropy is low, then \texttt{Feature Selection} is way more chosen than the other options (see Node 2).
 Recall that entropy is a measure of how much disorder there is in its domain.
 The less is that value, the easier is the classification problem.
@@ -892,23 +969,23 @@ As a matter of fact, a high value of Class Entropy involves a high number of cla
 In such cases, reducing the dimensionality of the dataset does not lead to any improvement.
 Finally, when the Class Entropy is in between, there is no clear winner, and thus other non-obvious factors may affect the choice of the operator.
 
-\textbf{Rules for Rebalancing}. As for Rebalancing, the operators considered from the imblearn\footnote{\url{https://pypi.org/project/imbalanced-learn}} library are: \texttt{Near Miss}, \texttt{SMOTE}, and \texttt{None}. %\joseph{the rebalance implementations are of actually from imblearn (imbalanced-learn)}
-The first is an undersampling algorithm which randomly eliminates the samples from the larger class.
-Instead, the second is an oversampling technique that creates samples of the minority class, as a linear combination of them.
-As shown in Figure~\ref{fig:features-meta-learning:rebalancing}, the meta-feature Majority Class Percentage has a p-value of 0.014.
+\textbf{Rules for Rebalancing}. As for Rebalancing, the transformations considered from the imblearn\footnote{\url{https://pypi.org/project/imbalanced-learn}} library are: \texttt{Near Miss}, \texttt{SMOTE}, and \texttt{None}.
+The first is an undersampling algorithm which randomly eliminates the samples from the larger class; the second is an oversampling technique that creates samples of the minority class, as a linear combination of them.
+As shown in \Cref{fig:features-meta-learning:rebalancing}, the meta-feature Majority Class Percentage has a p-value of $0.014$.
 This can be read as, in case of an unbalanced class problem (i.e., Node 3: Majority Class Percentage greater than 56), an oversampling of the minority class(es) is preferred to a downsampling of the majority one(s).
 However, when the Majority Class Percentage is smaller than 56\%, the situation is not that clear, and there is no technique that is applied significantly more often than the rest; they are close to each other.
 Therefore, it is difficult to understand which problems (which dataset characteristics do they have) belong to Node 2.
-In summary, when the majority class has no more than 56\% , it implies that it is an unbalanced class, and as mentioned above, SMBO tends to choose the same operator. However, when the majority class has less than 56\%, it may imply that: (i) there are just two classes and the problem counts as a balanced problem, so no operator needs to be applied, or (ii) it is a multi-class problem, and thus there is no clear winner in terms of operators. 
+In summary, when the majority class has no more than 56\% , it implies that it is an unbalanced class, and as mentioned above, SMBO tends to choose the same transformation.
+However, when the majority class has less than 56\%, it may imply that: (i) there are just two classes and the problem counts as a balanced problem, so no transformation needs to be applied, or (ii) it is a multi-class problem, and thus there is no clear winner in terms of transformation.
 \end{example}
 
 \subsection{Prototype instantiation}
-\label{effective-ssec:protoype-insta}
+\label{effective-ssec:prototype-insta}
 
-The prototypes from the top flow and the meta-lerning rules from the bottom flow (if the optimization framework permits), are finally fed to the final step which deals with the instantiation and optimization of the prototypes. In this task we run an optimization algorithm that is executed until an optimal pipeline is found.
+The prototypes from the top flow and the meta-lerning rules from the bottom flow (if the optimization framework permits) are finally fed to the final step which deals with the instantiation and optimization of the prototypes. In this task we run an optimization algorithm that is executed until an optimal pipeline is found.
 
 \begin{example}
- In our final execution, we run SMBO to find a suitable instantiation for the suggested prototypes. The simple but not obvious meta-learning rules, even though not included in our final execution, because of the implementation considered (i.e., HyperOpt), can potentially be used to ease the cold-start problem. 
+ In our final execution, we run SMBO to find a suitable instantiation for the suggested prototypes. The simple but not obvious meta-learning rules, even though not included in our final execution, because of the implementation considered (i.e., HyperOpt), can potentially be used to ease the cold-start problem.
 \end{example}
 
 \begin{figure*}[!h]
@@ -925,14 +1002,16 @@ The prototypes from the top flow and the meta-lerning rules from the bottom flow
 	\label{fig:features-meta-learning:rebalancing}
 	\end{figure*}
 
-%In our recent future work we aim to extend HyperOpt with the functionality of incorporating mechanisms that ease the cold start problem. The technique of using meta-learning for the cold-start problem has for instance been applied in \cite{Feurer15AAAI}, however the overall method lacks the initial part of finding promising pipeline prototypes (i.e., works over single transformations), meaning that the instantiation via meta-learning may occur in the wrong place (not the optimal prototype), resulting into a solution that is a local optimum. 
+%In our recent future work we aim to extend HyperOpt with the functionality of incorporating mechanisms that ease the cold start problem. The technique of using meta-learning for the cold-start problem has for instance been applied in \cite{Feurer15AAAI}, however the overall method lacks the initial part of finding promising pipeline prototypes (i.e., works over single transformations), meaning that the instantiation via meta-learning may occur in the wrong place (not the optimal prototype), resulting into a solution that is a local optimum.
 
 \section{Evaluation}
 \label{sec:evaluation}
 
+\textcolor{orange}{TODO: Su questo ancora di devo ripassare}
+
 The aim of our experimental study is three-fold:
 \begin{enumerate}
-    \item Check whether there exists a universal pipeline prototype that works best for any classification problem considered  (i.e., dataset and ML algorithm) (Section~\ref{sec:eval-universal-pipeline}).
+    \item Check whether there exists a universal prototype that works best for any classification problem considered  (i.e., dataset and ML algorithm) (Section~\ref{sec:eval-universal-pipeline}).
     \item Assess and compare the performance of the effective pipelines constructed using our method against the set of exhaustively generated pipeline prototypes (Section~\ref{sec:eval-our-vs-rest}).
     \item Assess and compare the impact of dedicating a portion of the optimization time to the effective pipelines constructed using our method, with the impact of using the whole optimization time for the hyper-parameters of the ML algorithm (Section~\ref{sec:eval-dpso-vs-cash}).
 \end{enumerate}
