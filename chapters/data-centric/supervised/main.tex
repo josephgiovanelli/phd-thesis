@@ -498,7 +498,7 @@ We aim at detecting a set of implicit rules that are shown through an adjacency 
 Each cell $a_{ij}$ denotes a precedence relationship between the row $i$ and column $j$.
 Hence, \texttt{1} means that an edge exists between the transformation in the row and the transformation in the column, whereas \texttt{0} means that such an edge does not exist, hence a precedence order is not established for that pair.
 
-\texcolor{orange}{TODO: Aggiungere le descrizioni degli esempio (e.g., qui sarebbe framework-related rules in our use case)}
+\textcolor{orange}{TODO: Aggiungere le descrizioni degli esempio (e.g., qui sarebbe framework-related rules in our use case)}
 \begin{example}
 We studied the pre-processing steps implemented in Scikit-learn, the discovered rules are shown through the adjacency matrix in \Cref{tbl:rules}a.
 For example, most Scikit-learn steps cannot be applied in the presence of missing values.
@@ -516,20 +516,25 @@ The graph obtained in this case exclusively corresponds to the limitations of Sc
 \end{example}
 
 \begin{algorithm*}[!h]
-	\caption{Find a promising prototype for steps $S_1$ and $S_2$ \textcolor{orange}{Cambiare tutti i $T_1$ e $T_2$ con $S_1$ e $S_2$, qui e nelle figure}}
+	\caption{Find a promising prototype for steps $S_1$ and $S_2$}
 	\label{alg:learned-rules}
 	\begin{algorithmic}[1]
-		\Require $d$, $a$ \Comment{dataset, classification algorithm}
-		\Require \indent$T_1\rightarrow T_2$, $T_2 \rightarrow T_1$ \Comment{precedence orders of a pair of transformations}
-		\State $acc_{baseline} = Acc(d,a)$; \Comment{get baseline performance of algorithm on d}
-		\State $[pipeline_{T_1\rightarrow T_2},acc_{T_1\rightarrow T_2}] = SMBO(T_1\rightarrow T_2,d, a)$
-		\Comment{get pipeline and accuracy for $T_1\rightarrow T_2$}
-		\State $[pipeline_{T_2\rightarrow T_1},acc_{T_2\rightarrow T_1}] = SMBO(T_2\rightarrow T_1,d, a)$
-		\Comment{get pipeline and accuracy for $T_2\rightarrow T_1$}
-		\If{\textit{IsValid}($acc_{T_1\rightarrow T_2},acc_{T_2\rightarrow T_1},acc_{baseline}$)}
-        \Comment{see Table~\ref{tbl:validation-rules} for the rules applied}
-        \State \Return \textit{Winner}$([pipeline_{T_1\rightarrow T_2},acc_{T_1\rightarrow T_2}],[pipeline_{T_2\rightarrow T_1},acc_{T_2\rightarrow T_1}])$ 
-        \Comment{see column \textit{Winner prototype} in Table~\ref{tbl:validation-rules}}
+		\Require $\altmathcal{D}_{train}$, $\altmathcal{D}_{valid}$, $A$, $\altmathcal{L}$ $S_1$, $S_2$ \Comment{dataset split for train and validation, classification algorithm, loss function, two different pre-processing steps}
+		% \Require \indent$S_1\rightarrow S_2$, $S_2 \rightarrow S_1$ \Comment{precedence orders of a pair of transformations}
+		\State $\altmathcal{L}_{\varnothing} = \altmathcal{L}(A(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{get baseline performance of algorithm $A$ on $\altmathcal{D}$}
+		\State $P_1 = \langle S_1, S_2 \rangle, P_2 = \langle S_2, S_1 \rangle$ \Comment{define two prototypes}
+		\State $P_{1_{\lambda}} = SMBO(\langle P_1, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{optimize the 1st prototype and get the best pipe}
+		\State $\altmathcal{L}_{P_1} = \altmathcal{L}(\langle P_{1_{\lambda}}, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{get the corresponding loss}
+		\State $P_{2_{\lambda}} = SMBO(\langle P_2, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$
+		\Comment{optimize the 2nd prototype and get the best pipe}
+		\State $\altmathcal{L}_{P_2} = \altmathcal{L}(\langle P_{2_{\lambda}}, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{get the corresponding loss}
+		% \State $[pipeline_{S_2\rightarrow S_1},acc_{S_2\rightarrow S_1}] = SMBO(S_2\rightarrow S_1,d, a)$
+		% \Comment{get pipeline and accuracy for $S_2\rightarrow S_1$}
+		% \If{\textit{IsValid}($acc_{S_1\rightarrow S_2},acc_{S_2\rightarrow S_1},acc_{baseline}$)}
+		\If{$P_{1_{\lambda}}, P_{2_{\lambda}}$ are valid w.r.t. $\altmathcal{L}_{\varnothing}, \altmathcal{L}_{P_1}, \altmathcal{L}_{P_2}$}
+        \Comment{see \Cref{tbl:validation-rules} for the rules applied}
+        \State \Return Best of $P_1$ and $P_2$
+        \Comment{see column \textit{Winner prototype} in \Cref{tbl:validation-rules}}
 		\Else
 		\State \Return $\varnothing$
 		\EndIf
@@ -543,7 +548,7 @@ Once we have derived precedences based on the constraints of the framework, we c
 That is, for every given pair, we want to find the relative order based on generic domain-independent knowledge (i.e., literature) about pre-processing steps and their applicability.
 To this end, some of the constraints imposed by the framework may be contradicted here, but this is resolved in the last step of the proposed method
 % when we take the union of the rules and hence construct the final pipeline prototypes
-(\Cref{sec:composition}).
+(\Cref{effective-ssec:composition}).
 Briefly, in a combination where Imputation is involved, it is advised to apply Imputation first.
 Next, Encoding makes sense to be combined in any order with the rest of the transformations, except Imputation.
 Combining Discretization with Normalization does not make sense, due to the fact that after the Discretization step, continuous features are transformed into categorical ones, and hence Normalization cannot be applied.
@@ -562,12 +567,11 @@ The constraints of Encoding are however not present in \Cref{tbl:rules}a, hence 
 \label{effective-ssec:rules-learned}
 % \label{sec:rules-learned}
 
-The two previously proposed steps (i.e., \textit{framework-related} and \textit{heuristic rules}), do not guarantee that each pair of steps will obtain a precedence order.
+The two previously proposed phases (i.e., \textit{framework-related} and \textit{heuristic rules}), do not guarantee that each pair of steps will obtain a precedence order.
 Therefore, for those cases left out, a third viewpoint should be considered.
 That of learning a promising order by empirically studying the impact of the combinations on the final result of the analysis, using different supervised problems in the training.
 For every selected pair of pre-processing steps, for a given ML algorithm, we propose to check which order of the pair improves most the performance (e.g., predictive accuracy) of the algorithm over a set of datasets (preferably from different domains).
 Like this, for each dataset, we can get a precedence order that gives better results (i.e., promising precedence) in terms of predictive accuracy (other metrics can be used as well).
-\textcolor{orange}{TODO: Da qua ci potrebbero essere incongruenze}
 
 % \paragraph{Algorithm}
 % \label{sec:rules-learned:algorithm}
@@ -579,43 +583,43 @@ Like this, for each dataset, we can get a precedence order that gives better res
 \caption{
     Validation rules.
     }
-\begin{tabular}{@{}lllllc@{}}
+\begin{tabular}{lp{2.3cm}p{2.3cm}p{2cm}p{2cm}p{2.5cm}}
 \toprule
-Nr. & Pipeline 1 & Pipeline 2 & Valid result & Valid score & Winner prototype\\\toprule
-         1. &$\varnothing \rightarrow \varnothing$ & $\varnothing \rightarrow \varnothing$ & Draw          & $acc_{baseline}$ &  Baseline \\ \hline
-        2. &$\varnothing \rightarrow \varnothing$ & $con\!f_{T_2} \rightarrow \varnothing$ & Draw          & $acc_{baseline}$ & Baseline \\ \hline
-        3. &$\varnothing \rightarrow \varnothing$ & $\varnothing \rightarrow con\!f_{T_1}$ & Draw          & $acc_{baseline}$ & Baseline \\ \hline
-        \multirow{2}{*}{4.} &\multirow{2}{*}{$\varnothing \rightarrow \varnothing$} & \multirow{2}{*}{$con\!f_{T_2} \rightarrow con\!f_{T_1}$} & Draw & $acc_{baseline}$ & Baseline \\
-        & & & $con\!f_{T_2} \rightarrow con\!f_{T_1}$ & $acc_{T_2 \rightarrow  T_1}$ & $T_2 \rightarrow T_1$\\ \hline
-        5. & $\varnothing \rightarrow con\!f_{T_2}$ & $\varnothing \rightarrow \varnothing$ & Draw          & $acc_{baseline}$ & Baseline \\ \hline
-        \multirow{3}{*}{6.} & \multirow{3}{*}{$\varnothing \rightarrow con\!f_{T_2}$} & \multirow{3}{*}{$con\!f_{T_2} \rightarrow \varnothing$} & Draw &  \multirow{3}{*}{$acc_{T_2}$}  & $T_2$ \\
-        & & & $\varnothing \rightarrow con\!f_{T_2}$ & & $T_2$ \\
-        & & & $con\!f_{T_2} \rightarrow \varnothing$ & & $T_2$ \\ \hline
-        7. &$\varnothing \rightarrow con\!f_{T_2}$ & $\varnothing \rightarrow con\!f_{T_1}$ & Draw & $acc_{T_2}$ or $acc_{T_1}$ & $T_{1}\,or\, T_2$ \\ \hline
-        \multirow{2}{*}{8.} & \multirow{2}{*}{$\varnothing \rightarrow con\!f_{T_2}$} & \multirow{2}{*}{$con\!f_{T_2} \rightarrow con\!f_{T_1}$} & Draw & $acc_{T_2}$ & $T_2$\\
-        & & & $con\!f_{T_2} \rightarrow con\!f_{T_1}$ & $acc_{T_2 \rightarrow  T_1}$ & $T_2 \rightarrow T_1$ \\ \hline
-        9. & $con\!f_{T_1} \rightarrow \varnothing$ & $\varnothing \rightarrow \varnothing$ & Draw & $acc_{baseline}$ & Baseline \\ \hline
-        10. & $con\!f_{T_1} \rightarrow \varnothing$ & $con\!f_{T_2} \rightarrow \varnothing$ & Draw & $acc_{T_1}$ or $acc_{T_2}$ & $T_{1}\,or\, T_2$ \\ \hline
-        \multirow{3}{*}{11.} & \multirow{3}{*}{$con\!f_{T_1} \rightarrow \varnothing$} & \multirow{3}{*}{$\varnothing \rightarrow con\!f_{T_1}$} & Draw & \multirow{3}{*}{$acc_{T_1}$} & $T_1$\\
-        & & & $con\!f_{T_1} \rightarrow \varnothing$ & & $T_1$\\
-        & & & $\varnothing \rightarrow con\!f_{T_1}$ & & $T_1$\\ \hline
-        \multirow{2}{*}{12.} & \multirow{2}{*}{$con\!f_{T_1} \rightarrow \varnothing$} & \multirow{2}{*}{$con\!f_{T_2} \rightarrow con\!f_{T_1}$} & Draw & $acc_{T_1}$  & $T_1$\\
-        & & & $con\!f_{T_2} \rightarrow con\!f_{T_1}$ & $acc_{T_2 \rightarrow  T_1}$ & $T_2 \rightarrow T_1$ \\ \hline
-        \multirow{2}{*}{13.} & \multirow{2}{*}{$con\!f_{T_1} \rightarrow con\!f_{T_2}$} & \multirow{2}{*}{$\varnothing \rightarrow \varnothing$} & Draw & $acc_{baseline}$  & Baseline\\
-        & & & $con\!f_{T_1} \rightarrow con\!f_{T_2}$ & $acc_{T_1 \rightarrow  T_2}$ & $T_1 \rightarrow T_2$ \\ \hline
-        \multirow{2}{*}{14.} & \multirow{2}{*}{$con\!f_{T_1} \rightarrow con\!f_{T_2}$} & \multirow{2}{*}{$con\!f_{T_2} \rightarrow \varnothing$} & Draw & $acc_{T_2}$ & $T_2$\\
-        & & & $con\!f_{T_1} \rightarrow con\!f_{T_2}$ & $acc_{T_1 \rightarrow  T_2}$  & $T_1 \rightarrow T_2$ \\ \hline
-        \multirow{2}{*}{15.} & \multirow{2}{*}{$con\!f_{T_1} \rightarrow con\!f_{T_2}$} & \multirow{2}{*}{$\varnothing \rightarrow con\!f_{T_1}$} & Draw & $acc_{T_1}$ & $T_1$\\
-        & & & $con\!f_{T_1} \rightarrow con\!f_{T_1}$ & $acc_{T_1 \rightarrow  T_2}$ & $T_1 \rightarrow T_2$\\ \hline
-        \multirow{3}{*}{16.} & \multirow{3}{*}{$con\!f_{T_1} \rightarrow con\!f_{T_2}$} & \multirow{3}{*}{$con\!f_{T_2} \rightarrow con\!f_{T_1}$} & Draw & $acc_{T_1}$ or $acc_{T_2}$ & $T_{1}\,or\, T_2$ \\
-        & & & $con\!f_{T_1} \rightarrow con\!f_{T_2}$ & $acc_{T_1 \rightarrow  T_2}$ & $T_1 \rightarrow T_2$\\
-        & & & $con\!f_{T_2} \rightarrow con\!f_{T_1}$ & $acc_{T_2 \rightarrow  T_1}$ & $T_2 \rightarrow T_1$\\ \bottomrule
+Nr. & Ex. Pipeline $P_{1_{\lambda}}$ & Ex. Pipeline $P_{2_{\lambda}}$ & Valid result & Valid score & Winner prototype\\\toprule
+        1. &$\langle \varnothing, \varnothing \rangle$ & $\langle \varnothing, \varnothing \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ &  Baseline \\ \hline
+        2. &$\langle \varnothing, \varnothing \rangle$ & $\langle S_{2_{\lambda}}, \varnothing \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
+        3. &$\langle \varnothing, \varnothing \rangle$ & $\langle \varnothing, S_{1_{\lambda}} \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
+        \multirow{2}{*}{4.} &\multirow{2}{*}{$\langle \varnothing, \varnothing \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{\varnothing}$ & Baseline \\
+        & & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$\\ \hline
+        5. & $\langle \varnothing, S_{2_{\lambda}} \rangle$ & $\langle \varnothing, \varnothing \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
+        \multirow{3}{*}{6.} & \multirow{3}{*}{$\langle \varnothing, S_{2_{\lambda}} \rangle$} & \multirow{3}{*}{$\langle S_{2_{\lambda}}, \varnothing \rangle$} & Draw &  \multirow{3}{*}{$\altmathcal{L}_{S_2}$}  & $S_2$ \\
+        & & & $P_{1_{\lambda}}$ & & $S_2$ \\
+        & & & $P_{2_{\lambda}}$ & & $S_2$ \\ \hline
+        7. &$\langle \varnothing, S_{2_{\lambda}} \rangle$ & $\langle \varnothing, S_{1_{\lambda}} \rangle$ & Draw & $\altmathcal{L}_{S_2}$ or $\altmathcal{L}_{S_1}$ & $S_{1}\,or\, S_2$ \\ \hline
+        \multirow{2}{*}{8.} & \multirow{2}{*}{$\langle \varnothing, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_2}$ & $S_2$\\
+        & & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$ \\ \hline
+        9. & $\langle S_{1_{\lambda}}, \varnothing \rangle$ & $\langle \varnothing, \varnothing \rangle$ & Draw & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
+        10. & $\langle S_{1_{\lambda}}, \varnothing \rangle$ & $\langle S_{2_{\lambda}}, \varnothing \rangle$ & Draw & $\altmathcal{L}_{S_1}$ or $\altmathcal{L}_{S_2}$ & $S_{1}\,or\, S_2$ \\ \hline
+        \multirow{3}{*}{11.} & \multirow{3}{*}{$\langle S_{1_{\lambda}}, \varnothing \rangle$} & \multirow{3}{*}{$\langle \varnothing, S_{2_{\lambda}} \rangle$} & Draw & \multirow{3}{*}{$\altmathcal{L}_{S_1}$} & $S_1$\\
+        & & & $P_{1_{\lambda}}$ & & $S_1$\\
+        & & & $P_{2_{\lambda}}$ & & $S_1$\\ \hline
+        \multirow{2}{*}{12.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, \varnothing \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_1}$  & $S_1$\\
+        & & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$ \\ \hline
+        \multirow{2}{*}{13.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle \varnothing, \varnothing \rangle$} & Draw & $\altmathcal{L}_{\varnothing}$  & Baseline\\
+        & & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$ & $P_1$ \\ \hline
+        \multirow{2}{*}{14.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, \varnothing \rangle$} & Draw & $\altmathcal{L}_{S_2}$ & $S_2$\\
+        & & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$  & $P_1$ \\ \hline
+        \multirow{2}{*}{15.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle \varnothing, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_1}$ & $S_1$\\
+        & & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$ & $P_1$\\ \hline
+        \multirow{3}{*}{16.} & \multirow{3}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{3}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_1}$ or $\altmathcal{L}_{S_2}$ & $S_{1}\,or\, S_2$ \\
+        & & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$ & $P_1$\\
+        & & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$\\ \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \footnotesize
-\item $\varnothing$ - SMBO finds a better result without instantiating a transformation (or both) in the pair.
-\item $con\!f_T$ - The configuration (i.e., operator and its parameters) found for $T$ by SMBO.
-\item $acc_T$ - The accuracy of the ML algorithm over the data transformed with a pipeline $T$.
+\item $\varnothing$ - SMBO finds a better result without instantiating a transformation for the step at hand.
+\item $S_{1_{\lambda}}, S_{2_{\lambda}}, P_{1_{\lambda}}, P_{1_{\lambda}}$ - A specific hyperparmeter configuration by SMBO for -- respectively -- $S_{1}, S_{2}, P_{1}, P_{2}$.
+\item $\altmathcal{L}_{S_1}, \altmathcal{L}_{S_2}, \altmathcal{L}_{P_1}, \altmathcal{L}_{P_2}$ - The loss of the ML algorithm over the data transformed when applied -- respectively -- solely $S_{1}$ or $S_{2}$, and the whole pipelines $P_{1}, P_{2}$.
 \end{tablenotes}
     \label{tbl:validation-rules}
 \end{threeparttable}
@@ -642,14 +646,14 @@ Briefly, if among the optimized pairs of steps (same steps but in reverse order)
 This is because, if one has a higher score, it means that during the optimization it was more advantageous than the other, since it could find a configuration that should have been found by both of the pairs (given enough budget).
 In our SMBO runs, such invalid results account for less than 10\% and in those cases datasets are discarded from the study (see line 7).
 
-In particular, in \Cref{tbl:validation-rules}, the first two columns denote the pipeline instantiations for the respective pairs of steps (i.e., $S_1\rightarrow S_2$ and $S_2\rightarrow S_1$).
+In particular, in \Cref{tbl:validation-rules}, the first two columns denote the pipeline instantiations for the respective pairs of steps (i.e., $\langle S_1, S_2 \rangle$ and $\langle S_2, S_1 \rangle$).
 Next, \textit{Valid result} denotes the expected result when comparing the results of the pipelines in the same row.
 For instance, in the first row, if both steps in the pipelines are not instantiated during the optimization, a valid result is a draw, a \textit{Valid score} is the baseline accuracy, and the \textit{Winner prototype} is the prototype that is in accordance with the expected result, which in this case is the Baseline (i.e., prototype where no transformations are applied).
 
 For the sake of another example, let us check row 2 in \Cref{tbl:validation-rules}.
-Specifically, we consider the case in which, running SMBO, the best result for the first pair is the pipeline $\varnothing \rightarrow \varnothing$, and for the second pair is the pipeline $S_2 \rightarrow \varnothing$.
+Specifically, we consider the case in which, running SMBO, the best result for the first pair is the pipeline $langle \varnothing, \varnothing \rangle$, and for the second pair is the pipeline $\langle S_2, \varnothing \rangle$.
 Here, the comparison between the results of these pipelines should be equal (i.e., draw), and the score should be that of the baseline.
-Otherwise, if say, the score of the second pipeline was higher, it would mean that for the first pair, SMBO was not given enough budget to find the pipeline with higher score (i.e., $S_2\rightarrow \varnothing$).
+Otherwise, if say, the score of the second pipeline was higher, it would mean that for the first pair, SMBO was not given enough budget to find the pipeline with higher score (i.e., $\langle S_2, \varnothing \rangle$).
 The same logic applies also for the other rows where a $\varnothing$ operator is involved.
 
 
@@ -674,8 +678,8 @@ To this end, the pairs of transformations we consider for the third precedence g
 		\label{tbl:significance-test}
 		\begin{tabular}{@{}cccccc@{}}
 			\toprule
-			%$T_1$ & $T_2$ & $T_1 \rightarrow T_2$ & $T_2 \rightarrow T_1$ & alpha & \begin{tabular}[c]{@{}c@{}}p-value\\ $H_0:\pi = \pi_0=0.8$\end{tabular} \\ \midrule
-			$T_1$ & $T_2$ & $T_1 \rightarrow T_2$ & $T_2 \rightarrow T_1$ & alpha & p-value\\ \midrule
+			%$S_1$ & $S_2$ & $S_1 \rightarrow S_2$ & $S_2 \rightarrow S_1$ & alpha & \begin{tabular}[c]{@{}c@{}}p-value\\ $H_0:\pi = \pi_0=0.8$\end{tabular} \\ \midrule
+			$S_1$ & $S_2$ & $\langle S_1, S_2 \rangle$ & $\langle S_2, S_1 \rangle$ & alpha & p-value\\ \midrule
 			$F$ & $N$ & 3 & 88 & 0.05 &  \textbf{0} \\
 			$D$ & $F$ & 70 & 7 & 0.05 &  \textbf{0}  \\
 			$F$ & $R$ & 49 & 61 & 0.05 & 8.53e-01 \\
@@ -691,19 +695,19 @@ To this end, the pairs of transformations we consider for the third precedence g
 Applying \Cref{alg:learned-rules}, we obtain a promising order for each pair of transformations considered (i.e., $\{F,N\}$, $\{F,D\}$, $\{F,R\}$, $\{R,D\}$).
 Since SMBO is a randomized algorithm, we experimented it with (i) running it several times splitting the budget, and (ii) running it only once with the entire budget.
 For the experiments considered, no significant differences where observed, therefore we opted for running it once with the entire budget (i.e., 200 seconds per run), which allows for more configurations to be visited in a single run. Aggregating all the results, \Cref{fig:learned-rules-results} shows the number of datasets, for which a given prototype (\Cref{tbl:validation-rules}, column \textit{Winner prototype} for the list of labels) is selected as the winner.
-For instance, for the pair $\{F,N\}$ (i.e., Feature Engineering, Normalization), the prototype winning in more datasets for \textit{KNN} and \textit{NB} is $N\rightarrow F$.
+For instance, for the pair $\{F,N\}$ (i.e., Feature Engineering, Normalization), the prototype winning in more datasets for \textit{KNN} and \textit{NB} is $\langle N, F \rangle$.
 This means that in general, better results are obtained if Normalization is applied before Feature Engineering.
 
 Next, only $N$ appears as first for \textit{RF} and second best for \textit{KNN} and \textit{NB}, which means that for many datasets, considering different algorithms, it results better to apply only Normalization without combining it with Feature Engineering.
-The third position is for $\varnothing\rightarrow \varnothing$, which means that for some datasets it is better not to apply any of the transformations (in any combination).
-The remaining prototypes winning in some datasets are $F$ (only Feature Engineering), and $F \rightarrow N$ (Feature Engineering preceding Normalization).
+The third position is for $\langle \varnothing,  \varnothing \rangle$, which means that for some datasets it is better not to apply any of the transformations (in any combination).
+The remaining prototypes winning in some datasets are $F$ (only Feature Engineering), and $\langle F, N \rangle$ (Feature Engineering preceding Normalization).
 Finally, for three datasets, that are omitted from the figure, there were no winning pipelines (i.e., pipelines resulted in a draw).
 
-Since our goal is to find the best order for a pair of pre-processing steps, we focus on the performances of the pipelines where both of the steps are instantiated (i.e., $S_1\rightarrow S_2$ versus $S_2\rightarrow S_1$).
+Since our goal is to find the best order for a pair of pre-processing steps, we focus on the performances of the pipelines where both of the steps are instantiated (i.e., $\langle S_1, S_2 \rangle$ versus $\langle S_2, S_1 \rangle$).
 To do this, we check whether the difference between the number of datasets where they each appear to win is statistically significant by running a binomial test assuming a theoretical probability of 0.5.
 The results are shown in \Cref{tbl:significance-test}.
-In summary, the results from \Cref{tbl:significance-test} indicate that, with 95\% confidence we can assume that for the pair $\{F,N\}$, $N\rightarrow F$ performs better than $F\rightarrow N$, hence Normalization should precede Feature Engineering.
-On the other hand, for $\{D,F\}$, $D\rightarrow F$ performs better than $F\rightarrow D$, hence Discretization should precede Feature Engineering.
+In summary, the results from \Cref{tbl:significance-test} indicate that, with 95\% confidence we can assume that for the pair $\{F,N\}$, $\langle N, F \rangle$ performs better than $\langle F, N \rangle$, hence Normalization should precede Feature Engineering.
+On the other hand, for $\{D,F\}$, $\langle D, F \rangle$ performs better than $\langle F, D \rangle$, hence Discretization should precede Feature Engineering.
 Finally, for the remaining transformations, $\{F,R\}$ and $\{R,D\}$, a precedence order can not be pre-assumed since the results obtained are not significant.
 Using these results, we create the \textit{Promising precedence} adjacency matrix shown in \Cref{tbl:rules}c, where as one can observe, precedence edges are introduced for $\{N,F\}$ and $\{D,F\}$, but no edges exist neither for $\{F,R\}$, nor for $\{R,D\}$.
 \end{example}
@@ -728,12 +732,12 @@ To do that, sticking to the $95$\% confidence interval, we need to look for p-va
 That is, the higher the p-values, the more we accept the null hypothesis, and the more similar the distributions.
 Looking at the p-values we found out that they were all much higher than $0.05$.
 Specifically, the scores of the chi-square tests of the folds (one fold compared to the rest) are averaged and, after having repeated this procedure 10 times, instead of using a table we depict the 10 averaged p-values using box-plots in \Cref{fig:10-times-4-cv}.
-We conclude that, for both of the rules (i.e.,  $F\rightarrow N$ and $F\rightarrow D$), the significance test indicates a compliance between the new results (\Cref{fig:10-times-4-cv}) and those illustrated above (\Cref{tbl:significance-test}).
+We conclude that, for both of the rules (i.e.,  $\langle F, N \rangle$ and $\langle F, D \rangle$), the significance test indicates a compliance between the new results (\Cref{fig:10-times-4-cv}) and those illustrated above (\Cref{tbl:significance-test}).
 
 \begin{figure*}[!t]
 	\centering
 	\includegraphics[width=0.9\textwidth]{chapters/data-centric/supervised/img/10_times_4_folds_cv.pdf}
-	\caption{The distribution of the p-values obtained after repeating the chi-square test for 10 times, for the 10 times 4-fold cross-validation.}
+	\caption{The distribution of the p-values obtained after repeating the chi-square test for 10 times, for the 10 times 4-fold cross-validation. \textcolor{orange}{Cambiare tutti i $T_1$ e $T_2$ con $S_1$ e $S_2$ nelle figure}}
 	\label{fig:10-times-4-cv}
 \end{figure*}
 
@@ -771,11 +775,11 @@ We conclude that, for both of the rules (i.e.,  $F\rightarrow N$ and $F\rightarr
 \begin{tabular}{@{}ll}
 			\toprule
 			ID& Pipeline prototype                                             \\ \toprule
-			1&{\color[HTML]{000000} $I\rightarrow E\rightarrow N \rightarrow R\rightarrow F$} \\
-			2&{\color[HTML]{000000} $I\rightarrow E\rightarrow N \rightarrow F\rightarrow R$} \\
-			3&{\color[HTML]{000000} $I\rightarrow E\rightarrow R \rightarrow D\rightarrow F$} \\
-			4&{\color[HTML]{000000} $I\rightarrow E\rightarrow D \rightarrow R\rightarrow F$} \\
-			5&{\color[HTML]{000000} $I\rightarrow E\rightarrow D \rightarrow F\rightarrow R$} \\
+			1&{\color[HTML]{000000} $\langle I, E, N, R, F  \rangle$} \\
+			2&{\color[HTML]{000000} $\langle I, E, N, F, R \rangle$} \\
+			3&{\color[HTML]{000000} $\langle I, E, R, D, F \rangle$} \\
+			4&{\color[HTML]{000000} $\langle I, E, D, R, F \rangle$} \\
+			5&{\color[HTML]{000000} $\langle I, E, D , F, R \rangle$} \\
 			\bottomrule
 		\end{tabular}
 }{
@@ -837,11 +841,11 @@ We conclude that, for both of the rules (i.e.,  $F\rightarrow N$ and $F\rightarr
 		\begin{tabular}{@{}ll}
 			\toprule
 			ID& Pipeline prototype                                             \\ \toprule
-			1&{\color[HTML]{000000} $I\rightarrow E\rightarrow N \rightarrow R\rightarrow F$} \\
-			2&{\color[HTML]{000000} $I\rightarrow E\rightarrow N \rightarrow F\rightarrow R$} \\
-			3&{\color[HTML]{000000} $I\rightarrow E\rightarrow R \rightarrow D\rightarrow F$} \\
-			4&{\color[HTML]{000000} $I\rightarrow E\rightarrow D \rightarrow R\rightarrow F$} \\
-			5&{\color[HTML]{000000} $I\rightarrow E\rightarrow D \rightarrow F\rightarrow R$} \\
+			1&{\color[HTML]{000000} $\langle I, E, N , R, F \rangle$} \\
+			2&{\color[HTML]{000000} $\langle I, E, N , F, R \rangle$} \\
+			3&{\color[HTML]{000000} $\langle I, E, R , D, F \rangle$} \\
+			4&{\color[HTML]{000000} $\langle I, E, D , R, F \rangle$} \\
+			5&{\color[HTML]{000000} $\langle I, E, D , F, R \rangle$} \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -895,7 +899,7 @@ We performed the above-mentioned analysis on our use case, but it did not lead t
 In particular, as shown in \Cref{fig:prototypes-impact}, we could not find any useless prototypes---not positively impacting the final accuracy, that could be discarded a priori from the potential list of prototypes.
 Actually, as we will show in \Cref{sec:eval-universal-pipeline}, all of them lead to the best in one case or another, which does not mean the epsilon improvement some provide is worth the search cost you incur in considering them (but this more in-depth analysis is done later).
 Next, as shown in \Cref{fig:pipeline-frequency}, there were no physical pipelines shown to be more useful---hence more often selected, than others.
-Even if $N \rightarrow R$ is clearly above, it barely reaches 30\% in KNN.
+Even if $\langle N , R \rangle$ is clearly above, it barely reaches 30\% in KNN.
 Finally, observing \Cref{fig:transformation-frequency}, it is clear that some kinds of transformations are chosen more often, but looking closely (i.e., the shaded bars), it is not clear which operator brings more benefit.
 For instance, Normalization is present in 90\% of the pipelines, but it is not easy to distinguish which kind of Normalization (i.e., actual operator) is more beneficial.
 For this, we need more complex rules or guidelines that may help in finding the right operator to use.

@@ -470,9 +470,10 @@ We are hence provided with a data pipeline selection and optimization (DPSO) pro
 \begin{definition}[Data Pipeline Selection and Optimization (DPSO)]
     Given a set of data pre-processing steps $\altmathcal{S} = \{S_1, \dots, S_K\}$, with associated hyperparameter spaces  $\pmb{\Lambda}_1, \dots, \pmb{\Lambda}_K$, we define the hierarchical space $\pmb{\Lambda} = \pmb{\Lambda_1} \cup \dots \cup \pmb{\Lambda_K} \cup \{\lambda_r\}$, where $\lambda_r$ is a new root-level hyperparameter that selects the order of the steps---hence, the pipeline $P$ that should be instantiated. Then, the goal is to find the pipeline and corresponding configuration $P^{\star}_{\pmb{\lambda}^{\star}} \in \pmb{\Lambda}$ that, when used with the algorithm at hand $A$, leads to the optimal loss function.
     \begin{equation*}
-        P^{\star}_{\pmb{\lambda}^{\star}} \in \argmin_{P_{\pmb{\lambda}} \in \pmb{\Lambda}} \altmathcal{L}(A(P_{\pmb{\lambda}}(\altmathcal{D}_{train})), \altmathcal{D}_{valid})
+        P^{\star}_{\pmb{\lambda}^{\star}} \in \argmin_{P_{\pmb{\lambda}} \in \pmb{\Lambda}} \altmathcal{L}(\langle P_{\pmb{\lambda}}, A \rangle (\altmathcal{D}_{train}), \altmathcal{D}_{valid})
     \end{equation*}
-    with $\altmathcal{D}_{train}$ and $\altmathcal{D}_{valid}$ representing two different splits in supervised learning, and corresponding to the same original dataset $\altmathcal{D}$ otherwise.
+    with $\langle P_{\pmb{\lambda}}, A \rangle (\altmathcal{D}_{train})$ representing the concatenation of the algorithm $A$ at the end of the pipeline $P_{\pmb{\lambda}}$---i.e., so that $A$ is fed with the output of $P_{\pmb{\lambda}}$.
+    Besides, we note again that we refer to $\altmathcal{D}_{train}$ and $\altmathcal{D}_{valid}$ as two different splits in supervised learning. If the task is unsupervised, these both correspond to the same original dataset $\altmathcal{D}$.
 \end{definition}
 
 Despite DPSO can be approached with the aforementioned optimization techniques for which CASH is addressed, different policies can be adopted to optimize the whole ML pipeline, i.e., the concatenation of a data pipeline with an ML algorithm.
