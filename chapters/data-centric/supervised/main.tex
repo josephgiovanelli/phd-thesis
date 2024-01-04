@@ -515,32 +515,6 @@ For the rest of the pairs, there are no constraints imposed by the framework, th
 The graph obtained in this case exclusively corresponds to the limitations of Scikit-learn (as a matter of fact, if another framework were to be chosen, it may have looked differently).
 \end{example}
 
-\begin{algorithm*}[!h]
-	\caption{Find a promising prototype for steps $S_1$ and $S_2$}
-	\label{alg:learned-rules}
-	\begin{algorithmic}[1]
-		\Require $\altmathcal{D}_{train}$, $\altmathcal{D}_{valid}$, $A$, $\altmathcal{L}$ $S_1$, $S_2$ \Comment{dataset split for train and validation, classification algorithm, loss function, two different pre-processing steps}
-		% \Require \indent$S_1\rightarrow S_2$, $S_2 \rightarrow S_1$ \Comment{precedence orders of a pair of transformations}
-		\State $\altmathcal{L}_{\varnothing} = \altmathcal{L}(A(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{get baseline performance of algorithm $A$ on $\altmathcal{D}$}
-		\State $P_1 = \langle S_1, S_2 \rangle, P_2 = \langle S_2, S_1 \rangle$ \Comment{define two prototypes}
-		\State $P_{1_{\lambda}} = SMBO(\langle P_1, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{optimize the 1st prototype and get the best pipe}
-		\State $\altmathcal{L}_{P_1} = \altmathcal{L}(\langle P_{1_{\lambda}}, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{get the corresponding loss}
-		\State $P_{2_{\lambda}} = SMBO(\langle P_2, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$
-		\Comment{optimize the 2nd prototype and get the best pipe}
-		\State $\altmathcal{L}_{P_2} = \altmathcal{L}(\langle P_{2_{\lambda}}, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{get the corresponding loss}
-		% \State $[pipeline_{S_2\rightarrow S_1},acc_{S_2\rightarrow S_1}] = SMBO(S_2\rightarrow S_1,d, a)$
-		% \Comment{get pipeline and accuracy for $S_2\rightarrow S_1$}
-		% \If{\textit{IsValid}($acc_{S_1\rightarrow S_2},acc_{S_2\rightarrow S_1},acc_{baseline}$)}
-		\If{$P_{1_{\lambda}}, P_{2_{\lambda}}$ are valid w.r.t. $\altmathcal{L}_{\varnothing}, \altmathcal{L}_{P_1}, \altmathcal{L}_{P_2}$}
-        \Comment{see \Cref{tbl:validation-rules} for the rules applied}
-        \State \Return Best of $P_1$ and $P_2$
-        \Comment{see column \textit{Winner prototype} in \Cref{tbl:validation-rules}}
-		\Else
-		\State \Return $\varnothing$
-		\EndIf
-	\end{algorithmic}
-\end{algorithm*}
-
 \subsection{Heuristic rules}
 \label{effective-ssec:rules-heuristics}
 % \label{sec:rules-heuristics}
@@ -571,59 +545,125 @@ The two previously proposed phases (i.e., \textit{framework-related} and \textit
 Therefore, for those cases left out, a third viewpoint should be considered.
 That of learning a promising order by empirically studying the impact of the combinations on the final result of the analysis, using different supervised problems in the training.
 For every selected pair of pre-processing steps, for a given ML algorithm, we propose to check which order of the pair improves most the performance (e.g., predictive accuracy) of the algorithm over a set of datasets (preferably from different domains).
-Like this, for each dataset, we can get a precedence order that gives better results (i.e., promising precedence) in terms of predictive accuracy (other metrics can be used as well).
+Like this, for each dataset, we can get a precedence order that gives better results (i.e., promising precedence) in terms of the loss.
+
+
+\begin{algorithm*}[!h]
+	\caption{Find a promising prototype for steps $S_1$ and $S_2$}
+	\label{alg:learned-rules}
+	\begin{algorithmic}[1]
+		\Require $\altmathcal{D}_{train}$, $\altmathcal{D}_{valid}$, $A$, $\altmathcal{L}$ $S_1$, $S_2$ \Comment{dataset split for train and validation, classification algorithm, loss function, two different pre-processing steps}
+		% \Require \indent$S_1\rightarrow S_2$, $S_2 \rightarrow S_1$ \Comment{precedence orders of a pair of transformations}
+		\State $\altmathcal{L}_{\varnothing} = \altmathcal{L}(A(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{get baseline performance of algorithm $A$ on $\altmathcal{D}$}
+		\State $P_1 = \langle S_1, S_2 \rangle, P_2 = \langle S_2, S_1 \rangle$ \Comment{define two prototypes}
+		\State $P_{1_{\lambda}} = SMBO(\langle P_1, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{optimize the 1st prototype and get the best pipe}
+		\State $\altmathcal{L}_{P_1} = \altmathcal{L}(\langle P_{1_{\lambda}}, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{get the corresponding loss}
+		\State $P_{2_{\lambda}} = SMBO(\langle P_2, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$
+		\Comment{optimize the 2nd prototype and get the best pipe}
+		\State $\altmathcal{L}_{P_2} = \altmathcal{L}(\langle P_{2_{\lambda}}, A \rangle(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$ \Comment{get the corresponding loss}
+		% \State $[pipeline_{S_2\rightarrow S_1},acc_{S_2\rightarrow S_1}] = SMBO(S_2\rightarrow S_1,d, a)$
+		% \Comment{get pipeline and accuracy for $S_2\rightarrow S_1$}
+		% \If{\textit{IsValid}($acc_{S_1\rightarrow S_2},acc_{S_2\rightarrow S_1},acc_{baseline}$)}
+		\If{$P_{1_{\lambda}}, P_{2_{\lambda}}$ are valid w.r.t. $\altmathcal{L}_{\varnothing}, \altmathcal{L}_{P_1}, \altmathcal{L}_{P_2}$}
+        \Comment{see \Cref{tbl:validation-rules} for the rules applied}
+        \State \Return Best of $P_1$ and $P_2$
+        \Comment{see column \textit{Winner prototype} in \Cref{tbl:validation-rules}}
+		\Else
+		\State \Return $\varnothing$
+		\EndIf
+	\end{algorithmic}
+\end{algorithm*}
 
 % \paragraph{Algorithm}
 % \label{sec:rules-learned:algorithm}
 
+\paragraph{Learning empirical rules}
+To find a promising precedence order between a given pair of pre-processing steps $S_1$ and $S_2$, we propose \Cref{alg:learned-rules}.
+Let us consider a dataset split into $\altmathcal{D}_{train}$ and $\altmathcal{D}_{valid}$, a ML algorithm $A$, and a loss function $\altmathcal{L}$.
+We first calculate $\altmathcal{L}_{\varnothing}$ as the loss of the ML algorithm $A$ over the original non-transformed dataset (line 1). %, which is used later for calculating the change in accuracy.
+Afterward, to compute the impact of each possible prototype $P_1$ and $P_2$ (line 2),
+% i.e., precedence order between the pairs, rspectively, $\langle S_1, S_2 \rangle$ and $\langle S_2, S_1 \rangle$, 
+we leverage SMBO to find their optimized executable pipelines (line 3 and 5), and the losses of the ML algorithm (with default configuration) over the datasets transformed using the respective pipelines (line 4 and 6).
+Based on the comparison between the respective optimized pipelines, we get the winner (line 7).
+However, beforehand (line 6), we perform a validity check.
+This is because when optimizing a pre-processing pipeline, SMBO may not instantiate a step with no transformation at all (i.e., represented with a $\varnothing$ symbol).
+Hence, given a pair of pre-processing steps, where one or both of them may not be instantiated, SMBO may generate 16 possible scenarios.
+They are listed in \Cref{tbl:validation-rules}, and make up the validation rules for \Cref{alg:learned-rules}.
+
 \begin{table*}[t]
-\footnotesize
-\centering
-\begin{threeparttable}
-\caption{
-    Validation rules.
-    }
-\begin{tabular}{lp{2.3cm}p{2.3cm}p{2cm}p{2cm}p{2.5cm}}
-\toprule
-Nr. & Ex. Pipeline $P_{1_{\lambda}}$ & Ex. Pipeline $P_{2_{\lambda}}$ & Valid result & Valid score & Winner prototype\\\toprule
-        1. &$\langle \varnothing, \varnothing \rangle$ & $\langle \varnothing, \varnothing \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ &  Baseline \\ \hline
-        2. &$\langle \varnothing, \varnothing \rangle$ & $\langle S_{2_{\lambda}}, \varnothing \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
-        3. &$\langle \varnothing, \varnothing \rangle$ & $\langle \varnothing, S_{1_{\lambda}} \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
-        \multirow{2}{*}{4.} &\multirow{2}{*}{$\langle \varnothing, \varnothing \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{\varnothing}$ & Baseline \\
-        & & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$\\ \hline
-        5. & $\langle \varnothing, S_{2_{\lambda}} \rangle$ & $\langle \varnothing, \varnothing \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
-        \multirow{3}{*}{6.} & \multirow{3}{*}{$\langle \varnothing, S_{2_{\lambda}} \rangle$} & \multirow{3}{*}{$\langle S_{2_{\lambda}}, \varnothing \rangle$} & Draw &  \multirow{3}{*}{$\altmathcal{L}_{S_2}$}  & $S_2$ \\
-        & & & $P_{1_{\lambda}}$ & & $S_2$ \\
-        & & & $P_{2_{\lambda}}$ & & $S_2$ \\ \hline
-        7. &$\langle \varnothing, S_{2_{\lambda}} \rangle$ & $\langle \varnothing, S_{1_{\lambda}} \rangle$ & Draw & $\altmathcal{L}_{S_2}$ or $\altmathcal{L}_{S_1}$ & $S_{1}\,or\, S_2$ \\ \hline
-        \multirow{2}{*}{8.} & \multirow{2}{*}{$\langle \varnothing, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_2}$ & $S_2$\\
-        & & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$ \\ \hline
-        9. & $\langle S_{1_{\lambda}}, \varnothing \rangle$ & $\langle \varnothing, \varnothing \rangle$ & Draw & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
-        10. & $\langle S_{1_{\lambda}}, \varnothing \rangle$ & $\langle S_{2_{\lambda}}, \varnothing \rangle$ & Draw & $\altmathcal{L}_{S_1}$ or $\altmathcal{L}_{S_2}$ & $S_{1}\,or\, S_2$ \\ \hline
-        \multirow{3}{*}{11.} & \multirow{3}{*}{$\langle S_{1_{\lambda}}, \varnothing \rangle$} & \multirow{3}{*}{$\langle \varnothing, S_{2_{\lambda}} \rangle$} & Draw & \multirow{3}{*}{$\altmathcal{L}_{S_1}$} & $S_1$\\
-        & & & $P_{1_{\lambda}}$ & & $S_1$\\
-        & & & $P_{2_{\lambda}}$ & & $S_1$\\ \hline
-        \multirow{2}{*}{12.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, \varnothing \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_1}$  & $S_1$\\
-        & & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$ \\ \hline
-        \multirow{2}{*}{13.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle \varnothing, \varnothing \rangle$} & Draw & $\altmathcal{L}_{\varnothing}$  & Baseline\\
-        & & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$ & $P_1$ \\ \hline
-        \multirow{2}{*}{14.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, \varnothing \rangle$} & Draw & $\altmathcal{L}_{S_2}$ & $S_2$\\
-        & & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$  & $P_1$ \\ \hline
-        \multirow{2}{*}{15.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle \varnothing, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_1}$ & $S_1$\\
-        & & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$ & $P_1$\\ \hline
-        \multirow{3}{*}{16.} & \multirow{3}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{3}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_1}$ or $\altmathcal{L}_{S_2}$ & $S_{1}\,or\, S_2$ \\
-        & & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$ & $P_1$\\
-        & & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$\\ \bottomrule
-\end{tabular}
-\begin{tablenotes}
-\footnotesize
-\item $\varnothing$ - SMBO finds a better result without instantiating a transformation for the step at hand.
-\item $S_{1_{\lambda}}, S_{2_{\lambda}}, P_{1_{\lambda}}, P_{1_{\lambda}}$ - A specific hyperparmeter configuration by SMBO for -- respectively -- $S_{1}, S_{2}, P_{1}, P_{2}$.
-\item $\altmathcal{L}_{S_1}, \altmathcal{L}_{S_2}, \altmathcal{L}_{P_1}, \altmathcal{L}_{P_2}$ - The loss of the ML algorithm over the data transformed when applied -- respectively -- solely $S_{1}$ or $S_{2}$, and the whole pipelines $P_{1}, P_{2}$.
-\end{tablenotes}
-    \label{tbl:validation-rules}
-\end{threeparttable}
+	\footnotesize
+	\centering
+	\begin{threeparttable}
+	\caption{
+		Validation rules.
+		}
+	\begin{tabular}{lp{2.3cm}p{2.3cm}p{2cm}p{2cm}p{2.5cm}}
+	\toprule
+	Nr. & Ex. Pipeline $P_{1_{\lambda}}$ & Ex. Pipeline $P_{2_{\lambda}}$ & Valid result & Valid score & Winner prototype\\\toprule
+			1. &$\langle \varnothing, \varnothing \rangle$ & $\langle \varnothing, \varnothing \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ &  Baseline \\ \hline
+			2. &$\langle \varnothing, \varnothing \rangle$ & $\langle S_{2_{\lambda}}, \varnothing \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
+			3. &$\langle \varnothing, \varnothing \rangle$ & $\langle \varnothing, S_{1_{\lambda}} \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
+			\multirow{2}{*}{4.} &\multirow{2}{*}{$\langle \varnothing, \varnothing \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{\varnothing}$ & Baseline \\
+			& & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$\\ \hline
+			5. & $\langle \varnothing, S_{2_{\lambda}} \rangle$ & $\langle \varnothing, \varnothing \rangle$ & Draw          & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
+			\multirow{3}{*}{6.} & \multirow{3}{*}{$\langle \varnothing, S_{2_{\lambda}} \rangle$} & \multirow{3}{*}{$\langle S_{2_{\lambda}}, \varnothing \rangle$} & Draw &  \multirow{3}{*}{$\altmathcal{L}_{S_2}$}  & $S_2$ \\
+			& & & $P_{1_{\lambda}}$ & & $S_2$ \\
+			& & & $P_{2_{\lambda}}$ & & $S_2$ \\ \hline
+			7. &$\langle \varnothing, S_{2_{\lambda}} \rangle$ & $\langle \varnothing, S_{1_{\lambda}} \rangle$ & Draw & $\altmathcal{L}_{S_2}$ or $\altmathcal{L}_{S_1}$ & $S_{1}\,or\, S_2$ \\ \hline
+			\multirow{2}{*}{8.} & \multirow{2}{*}{$\langle \varnothing, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_2}$ & $S_2$\\
+			& & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$ \\ \hline
+			9. & $\langle S_{1_{\lambda}}, \varnothing \rangle$ & $\langle \varnothing, \varnothing \rangle$ & Draw & $\altmathcal{L}_{\varnothing}$ & Baseline \\ \hline
+			10. & $\langle S_{1_{\lambda}}, \varnothing \rangle$ & $\langle S_{2_{\lambda}}, \varnothing \rangle$ & Draw & $\altmathcal{L}_{S_1}$ or $\altmathcal{L}_{S_2}$ & $S_{1}\,or\, S_2$ \\ \hline
+			\multirow{3}{*}{11.} & \multirow{3}{*}{$\langle S_{1_{\lambda}}, \varnothing \rangle$} & \multirow{3}{*}{$\langle \varnothing, S_{2_{\lambda}} \rangle$} & Draw & \multirow{3}{*}{$\altmathcal{L}_{S_1}$} & $S_1$\\
+			& & & $P_{1_{\lambda}}$ & & $S_1$\\
+			& & & $P_{2_{\lambda}}$ & & $S_1$\\ \hline
+			\multirow{2}{*}{12.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, \varnothing \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_1}$  & $S_1$\\
+			& & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$ \\ \hline
+			\multirow{2}{*}{13.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle \varnothing, \varnothing \rangle$} & Draw & $\altmathcal{L}_{\varnothing}$  & Baseline\\
+			& & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$ & $P_1$ \\ \hline
+			\multirow{2}{*}{14.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle S_{2_{\lambda}}, \varnothing \rangle$} & Draw & $\altmathcal{L}_{S_2}$ & $S_2$\\
+			& & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$  & $P_1$ \\ \hline
+			\multirow{2}{*}{15.} & \multirow{2}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{2}{*}{$\langle \varnothing, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_1}$ & $S_1$\\
+			& & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$ & $P_1$\\ \hline
+			\multirow{3}{*}{16.} & \multirow{3}{*}{$\langle S_{1_{\lambda}}, S_{2_{\lambda}} \rangle$} & \multirow{3}{*}{$\langle S_{2_{\lambda}}, S_{1_{\lambda}} \rangle$} & Draw & $\altmathcal{L}_{S_1}$ or $\altmathcal{L}_{S_2}$ & $S_{1}\,or\, S_2$ \\
+			& & & $P_{1_{\lambda}}$ & $\altmathcal{L}_{P_1}$ & $P_1$\\
+			& & & $P_{2_{\lambda}}$ & $\altmathcal{L}_{P_2}$ & $P_2$\\ \bottomrule
+	\end{tabular}
+	\begin{tablenotes}
+	\footnotesize
+	\item $\varnothing$ - SMBO finds a better result without instantiating a transformation for the step at hand.
+	\item $S_{1_{\lambda}}, S_{2_{\lambda}}, P_{1_{\lambda}}, P_{1_{\lambda}}$ - A specific hyperparmeter configuration by SMBO for -- respectively -- $S_{1}, S_{2}, P_{1}, P_{2}$.
+	\item $\altmathcal{L}_{S_1}, \altmathcal{L}_{S_2}, \altmathcal{L}_{P_1}, \altmathcal{L}_{P_2}$ - The loss of the ML algorithm over the data transformed when applied -- respectively -- solely $S_{1}$ or $S_{2}$, and the whole pipelines $P_{1}, P_{2}$.
+	\end{tablenotes}
+		\label{tbl:validation-rules}
+	\end{threeparttable}
 \end{table*}
+
+Briefly, if among the optimized pairs of steps (same steps but in reverse order) obtained from SMBO, one or both of them contain a $\varnothing$ transformation, their results are considered valid, only if they have equal scores (i.e., a draw).
+This is because, if one has a higher score, it means that during the optimization it was more advantageous than the other, since it could find a configuration that should have been found by both of the pairs (given enough budget).
+In our SMBO runs, such invalid results account for less than 10\% and in those cases datasets are discarded from the study.
+
+In particular, in \Cref{tbl:validation-rules}, the first two columns denote the executable pipelines for the respective prototypes (i.e., $\langle S_1, S_2 \rangle$ and $\langle S_2, S_1 \rangle$).
+Next, \textit{valid result} denotes the expected result when comparing the results of the pipelines in the same row.
+For instance, in the first row, if both steps in the pipelines are not instantiated during the optimization, a valid result is a draw, a \textit{valid score} is the baseline accuracy, and the \textit{winner prototype} is the prototype that is in accordance with the expected result, which in this case is the baseline (i.e., prototype where no transformations are applied).
+
+For the sake of another example, let us check row 2 in \Cref{tbl:validation-rules}.
+Specifically, we consider the case in which, running SMBO, the best result for the first pair is the pipeline $\langle \varnothing, \varnothing \rangle$, and for the second pair is the pipeline $\langle S_2, \varnothing \rangle$.
+Here, the comparison between the results of these pipelines should be equal (i.e., draw), and the score should be that of the baseline.
+Otherwise, if say, the score of the second pipeline was higher, it would mean that for the first pair, SMBO was not given enough budget to find the pipeline with higher score (i.e., $\langle S_2, \varnothing \rangle$).
+The same logic applies also to the other rows where a $\varnothing$ operator is involved.
+
+\begin{example}
+For the sake of this work, we considered three classification algorithms (i.e., \textit{NB}, \textit{RF},  \textit{KNN}) and $80$ datasets from the OpenML repository. The datasets, were compiled from three OpenML benchmarks, namely, the OpenMLCC18 benchmark\footnote{\url{https://www.openml.org/s/99/data}}, the AutoML benchmark\footnote{\url{https://www.openml.org/s/271/data}}, and the Classification algorithms benchmark\footnote{\url{https://www.openml.org/s/1/data}}.
+For the final set, we filtered out datasets with more than 10\% of missing values -- not to include bias due to the heavy pre-processing we need to perform on top of them, and we filtered out the datasets with more than 5 million instances -- because of the computation time required to process them.
+As a result, we obtained 60 datasets from the first benchmark, 17 from the second, and 3 more from the third to reach a total of 80 datasets.
+
+Given the proposed algorithm (i.e., \Cref{alg:learned-rules}), we could try to learn the precedence of every pair of steps, but would just be a waste of resources because we can see in Table~\ref{tbl:rules}a and~\ref{tbl:rules}b that some precedences are already decided for one reason or another.
+Hence, only pairs with a \texttt{0} for both directions (in both Table~\ref{tbl:rules}a and~\ref{tbl:rules}b) need to be studied further.
+That is, they make sense to be combined together, but a precedence order could not be determined through \textit{framework-related} or \textit{heuristic rules}. % for them.
+Thus, for instance, pairs involving Encoding are not considered in this phase, since for them an order is already imposed by the framework (\Cref{tbl:rules}a).
+To this end, the pairs of transformations we consider for the third precedence graph include only $\{F,N\}$, $\{F,D\}$, $\{F,R\}$, and $\{R,D\}$.
+
 
 \begin{figure*}[!b]
 	\centering
@@ -632,41 +672,27 @@ Nr. & Ex. Pipeline $P_{1_{\lambda}}$ & Ex. Pipeline $P_{2_{\lambda}}$ & Valid re
 	\label{fig:learned-rules-results}
 \end{figure*}
 
-\paragraph{Learning empirical rules}
-To find a promising precedence order between a given pair of pre-processing steps, we propose \Cref{alg:learned-rules}.
-To compute the impact of each, we first get the accuracy of the ML algorithm over the original non-transformed dataset (see line 1). %, which is used later for calculating the change in accuracy.
-Afterward, for each precedence order between the pairs of steps, we find both their optimized executable pipelines (i.e., using SMBO), and the accuracies of the ML algorithm (with default configuration) over the datasets transformed using the respective pipelines (see lines 2-3).
-Based on the comparison between the respective optimized pipelines, we get the winner in line 5.
-However, beforehand, in line 4, we perform a validity check.
-This is because when optimizing a pre-processing pipeline, SMBO may not instantiate a step with no transformation at all (i.e., represented with a $\varnothing$ symbol).
-Hence, given a pair of pre-processing steps, where one or both of them may not be instantiated, SMBO may generate 16 possible scenarios.
-They are listed in \Cref{tbl:validation-rules}, and make up the validation rules for \Cref{alg:learned-rules} (see line 4).
+Applying \Cref{alg:learned-rules}, we obtain a promising order for each pair of transformations considered (i.e., $\{F,N\}$, $\{F,D\}$, $\{F,R\}$, $\{R,D\}$).
+Since SMBO is a randomized algorithm, we experimented it with (i) running it several times splitting the budget, and (ii) running it only once with the entire budget.
+For the experiments considered, no significant differences where observed, therefore we opted for running it once with the entire budget (i.e., 200 seconds per run), which allows for more configurations to be visited in a single run. Aggregating all the results, \Cref{fig:learned-rules-results} shows the number of datasets, for which a given prototype (\Cref{tbl:validation-rules}, column \textit{winner prototype} for the list of labels) is selected as the winner.
+For instance, for the pair $\{F,N\}$ (i.e., Feature Engineering, Normalization), the prototype winning in more datasets for \textit{KNN} and \textit{NB} is $\langle N, F \rangle$.
+This means that in general, better results are obtained if Normalization is applied before Feature Engineering.
 
-Briefly, if among the optimized pairs of steps (same steps but in reverse order) obtained from SMBO, one or both of them contain a $\varnothing$ transformation, their results are considered valid, only if they have equal scores (i.e., a draw).
-This is because, if one has a higher score, it means that during the optimization it was more advantageous than the other, since it could find a configuration that should have been found by both of the pairs (given enough budget).
-In our SMBO runs, such invalid results account for less than 10\% and in those cases datasets are discarded from the study (see line 7).
+Next, only $N$ appears as first for \textit{RF} and second best for \textit{KNN} and \textit{NB}, which means that for many datasets, considering different algorithms, it results better to apply only Normalization without combining it with Feature Engineering.
+The third position is for $\langle \varnothing, \varnothing \rangle$, which means that for some datasets it is better not to apply any of the steps (in any combination).
+The remaining prototypes winning in some datasets are $F$ (only Feature Engineering), and $\langle F, N \rangle$ (Feature Engineering preceding Normalization).
+Finally, for three datasets, that are omitted from the figure, there were no winning pipelines (i.e., pipelines resulted in a draw).
 
-In particular, in \Cref{tbl:validation-rules}, the first two columns denote the pipeline instantiations for the respective pairs of steps (i.e., $\langle S_1, S_2 \rangle$ and $\langle S_2, S_1 \rangle$).
-Next, \textit{Valid result} denotes the expected result when comparing the results of the pipelines in the same row.
-For instance, in the first row, if both steps in the pipelines are not instantiated during the optimization, a valid result is a draw, a \textit{Valid score} is the baseline accuracy, and the \textit{Winner prototype} is the prototype that is in accordance with the expected result, which in this case is the Baseline (i.e., prototype where no transformations are applied).
-
-For the sake of another example, let us check row 2 in \Cref{tbl:validation-rules}.
-Specifically, we consider the case in which, running SMBO, the best result for the first pair is the pipeline $langle \varnothing, \varnothing \rangle$, and for the second pair is the pipeline $\langle S_2, \varnothing \rangle$.
-Here, the comparison between the results of these pipelines should be equal (i.e., draw), and the score should be that of the baseline.
-Otherwise, if say, the score of the second pipeline was higher, it would mean that for the first pair, SMBO was not given enough budget to find the pipeline with higher score (i.e., $\langle S_2, \varnothing \rangle$).
-The same logic applies also for the other rows where a $\varnothing$ operator is involved.
+Since our goal is to find the best order for a pair of pre-processing steps, we focus on the performances of the pipelines where both of the steps are instantiated (i.e., $\langle S_1, S_2 \rangle$ versus $\langle S_2, S_1 \rangle$).
+To do this, we check whether the difference between the number of datasets where they each appear to win is statistically significant by running a binomial test assuming a theoretical probability of $0.5$.
+The results are shown in \Cref{tbl:significance-test}.
+In summary, the results from \Cref{tbl:significance-test} indicate that, with 95\% confidence we can assume that for the pair $\{F, N\}$, $\langle N, F \rangle$ performs better than $\langle F, N \rangle$, hence Normalization should precede Feature Engineering.
+On the other hand, for $\{D, F\}$, $\langle D, F \rangle$ performs better than $\langle F, D \rangle$, hence Discretization should precede Feature Engineering.
+Finally, for the remaining transformations, $\{F, R\}$ and $\{R, D\}$, a precedence order can not be pre-assumed since the results obtained are not significant.
+Using these results, we create the \textit{Promising precedence} adjacency matrix shown in \Cref{tbl:rules}c, where as one can observe, precedence edges are introduced for $\{N, F\}$ and $\{D, F\}$, but no edges exist neither for $\{F, R\}$, nor for $\{R, D\}$.
+\end{example}
 
 
-\begin{example}
-For the sake of this work, we considered three classification algorithms (i.e., \textit{NB}, \textit{RF},  \textit{KNN}) and 80 datasets from the OpenML repository. The datasets, were compiled from three OpenML benchmarks, namely, the OpenMLCC18 benchmark\footnote{\url{https://www.openml.org/s/99/data}}, the AutoML benchmark\footnote{\url{https://www.openml.org/s/271/data}}, and the Classification algorithms benchmark\footnote{\url{https://www.openml.org/s/1/data}}.
-For the final set, we filtered out datasets with more than 10\% of missing values --- not to include bias due to the heavy pre-processing we need to perform on top of them, and we filtered out the datasets with more than 5 million instances --- because of the computation time required to process them.
-As a result we obtained 60 datasets from the first benchmark, 17 from the second, and 3 more from the third to reach a total of 80 datasets.
-
-Given the proposed algorithm (i.e., \Cref{alg:learned-rules}), we could try to learn the precedence of every pair of steps, but would just be a waste of resources because we can see in Table~\ref{tbl:rules}a and~\ref{tbl:rules}b that some precedences are already decided for one reason or another.
-Hence, only pairs of transformations with a \texttt{0} for both directions (in both Table~\ref{tbl:rules}a and~\ref{tbl:rules}b) need to be studied further.
-That is, they make sense to be combined together, but a precedence order could not be determined through \textit{framework-related} or \textit{heuristic rules}. % for them.
-Thus, for instance, pairs involving Encoding are not considered in this phase, since for them an order is already imposed by the framework (\Cref{tbl:rules}a).
-To this end, the pairs of transformations we consider for the third precedence graph include only $\{F,N\}$, $\{F,D\}$, $\{F,R\}$, and $\{R,D\}$.
 
 \begin{table}[t]
 	\centering
@@ -692,25 +718,8 @@ To this end, the pairs of transformations we consider for the third precedence g
 		\end{tablenotes}
 	\end{threeparttable}
 \end{table}
-Applying \Cref{alg:learned-rules}, we obtain a promising order for each pair of transformations considered (i.e., $\{F,N\}$, $\{F,D\}$, $\{F,R\}$, $\{R,D\}$).
-Since SMBO is a randomized algorithm, we experimented it with (i) running it several times splitting the budget, and (ii) running it only once with the entire budget.
-For the experiments considered, no significant differences where observed, therefore we opted for running it once with the entire budget (i.e., 200 seconds per run), which allows for more configurations to be visited in a single run. Aggregating all the results, \Cref{fig:learned-rules-results} shows the number of datasets, for which a given prototype (\Cref{tbl:validation-rules}, column \textit{Winner prototype} for the list of labels) is selected as the winner.
-For instance, for the pair $\{F,N\}$ (i.e., Feature Engineering, Normalization), the prototype winning in more datasets for \textit{KNN} and \textit{NB} is $\langle N, F \rangle$.
-This means that in general, better results are obtained if Normalization is applied before Feature Engineering.
+% \color{black}
 
-Next, only $N$ appears as first for \textit{RF} and second best for \textit{KNN} and \textit{NB}, which means that for many datasets, considering different algorithms, it results better to apply only Normalization without combining it with Feature Engineering.
-The third position is for $\langle \varnothing,  \varnothing \rangle$, which means that for some datasets it is better not to apply any of the transformations (in any combination).
-The remaining prototypes winning in some datasets are $F$ (only Feature Engineering), and $\langle F, N \rangle$ (Feature Engineering preceding Normalization).
-Finally, for three datasets, that are omitted from the figure, there were no winning pipelines (i.e., pipelines resulted in a draw).
-
-Since our goal is to find the best order for a pair of pre-processing steps, we focus on the performances of the pipelines where both of the steps are instantiated (i.e., $\langle S_1, S_2 \rangle$ versus $\langle S_2, S_1 \rangle$).
-To do this, we check whether the difference between the number of datasets where they each appear to win is statistically significant by running a binomial test assuming a theoretical probability of 0.5.
-The results are shown in \Cref{tbl:significance-test}.
-In summary, the results from \Cref{tbl:significance-test} indicate that, with 95\% confidence we can assume that for the pair $\{F,N\}$, $\langle N, F \rangle$ performs better than $\langle F, N \rangle$, hence Normalization should precede Feature Engineering.
-On the other hand, for $\{D,F\}$, $\langle D, F \rangle$ performs better than $\langle F, D \rangle$, hence Discretization should precede Feature Engineering.
-Finally, for the remaining transformations, $\{F,R\}$ and $\{R,D\}$, a precedence order can not be pre-assumed since the results obtained are not significant.
-Using these results, we create the \textit{Promising precedence} adjacency matrix shown in \Cref{tbl:rules}c, where as one can observe, precedence edges are introduced for $\{N,F\}$ and $\{D,F\}$, but no edges exist neither for $\{F,R\}$, nor for $\{R,D\}$.
-\end{example}
 
 \paragraph{Chi-square test with cross-validation}
 \label{sec:learned-rules-validation}
@@ -720,12 +729,9 @@ Then, for each fold, the results can be compared to the rest, with the aim of ch
 This check can be done via a significance test (e.g., chi-square).
 To this end, if the distributions between the folds are similar, it means that the obtained results are independent of the datasets considered, since no matter the combination of the datasets, the results are the same and thus generalizable.
 
-
-% \color{black}
-
 \begin{example}
 In our use case, to show that the results do not depend on the datasests selected, we re-run the experiments (i.e., 10-times each), but this time splitting the datasets into 4-folds.
-The goal was to check if the results of the precedence orders from the different folds (i.e., for each experiment considering a randomly different set of datasets) are similar between them (i.e., follow the same distributions).
+The goal is to check if the results of the precedence orders from the different folds (i.e., for each experiment considering a randomly different set of datasets) are similar between them (i.e., follow the same distributions).
 To confirm this hypothesis, we perform a chi-square test between the results (precedence orders) obtained in a single fold in comparison to the three remaining folds, hence comparing $25$\% of the datasets to the rest.
 In particular, to confirm the hypothesis, we need to find results that accept the null hypothesis of the chi-square test which states that ``there is no significant difference between the distributions''.
 To do that, sticking to the $95$\% confidence interval, we need to look for p-values greater than $0.05$.
@@ -743,7 +749,7 @@ We conclude that, for both of the rules (i.e.,  $\langle F, N \rangle$ and $\lan
 
 \begin{table}[b]
 	\caption{
-		Union of rules from Table~\ref{tbl:rules}. $\boldsymbol{E}$ - Encoding; $\boldsymbol{N}$ - Normalization; $\boldsymbol{D}$ - Discretization; $\boldsymbol{I}$ - Imputation; $\boldsymbol{R}$ - Rebalancing; $\boldsymbol{F}$ - Feature Engineering \texttt{1} - an edge exists, \texttt{0} - edge does not exist, \texttt{X} - the combination is meaningless.
+		Union of rules from \Cref{tbl:rules}. $\boldsymbol{E}$ - Encoding; $\boldsymbol{N}$ - Normalization; $\boldsymbol{D}$ - Discretization; $\boldsymbol{I}$ - Imputation; $\boldsymbol{R}$ - Rebalancing; $\boldsymbol{F}$ - Feature Engineering \texttt{1} - an edge exists, \texttt{0} - edge does not exist, \texttt{X} - the combination is meaningless.
 	}
 	\renewcommand{\arraystretch}{0.3}
 	\footnotesize
@@ -764,93 +770,66 @@ We conclude that, for both of the rules (i.e.,  $\langle F, N \rangle$ and $\lan
 	\end{threeparttable}
 \end{table}
 
-\begin{figure}
-\begin{floatrow}
-\ffigbox{
-    \includegraphics[clip, trim=2.5cm 23cm 10.5cm 2cm,width=0.5\textwidth]{chapters/data-centric/supervised/img/graph.pdf}
-}{
-  	\caption{Precedence graph generated from Table~\ref{tbl:rules-union}. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering. }
-}
-\capbtabbox{
-\begin{tabular}{@{}ll}
-			\toprule
-			ID& Pipeline prototype                                             \\ \toprule
-			1&{\color[HTML]{000000} $\langle I, E, N, R, F  \rangle$} \\
-			2&{\color[HTML]{000000} $\langle I, E, N, F, R \rangle$} \\
-			3&{\color[HTML]{000000} $\langle I, E, R, D, F \rangle$} \\
-			4&{\color[HTML]{000000} $\langle I, E, D, R, F \rangle$} \\
-			5&{\color[HTML]{000000} $\langle I, E, D , F, R \rangle$} \\
-			\bottomrule
-		\end{tabular}
-}{
-  	\caption{Effective pipeline prototypes generated from Figure~6. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
-	}
-}
-\end{floatrow}
-\end{figure}
+% \iffalse
+
+% \begin{figure}[t]
+% 	\centering
+% 	\begin{tikzpicture}[]
+% 	\begin{scope}[xshift=10.5cm,yshift=-5cm,thick,
+% 	node distance=1.0cm,on grid,>=stealth',
+% 	block/.style={rectangle,draw,fill=cyan!20},
+% 	vertex/.style={circle,draw,fill=orange!40},
+% 	i/.style={circle,draw,fill=yellow!40},
+% 	e/.style={circle,draw,fill=blue!25},
+% 	f/.style={circle,draw,fill=orange!40},
+% 	r/.style={circle,draw,fill=cyan!40},
+% 	n/.style={circle,draw,fill=green!40},
+% 	d/.style={circle,draw,fill=red!40}]
+% 	decision/.style={diamond,draw,fill=white!40}]
+% 	%layer0
+% 	\node [i]	 (ti0) {$I$};
+% 	\node [e]	 (te0)	[right=of ti0,xshift=1.6cm,yshift=1.3cm]	{$E$} edge [<-] (ti0);
+% 	\node [n]	 (tn0)	[right=of te0,xshift=0.5cm,yshift=1.8cm]	{$N$} edge [<-] (te0);
+% 	\node [d]	 (td0)	[right=of te0,xshift=0.5cm,yshift=-1.3cm]	{$D$} edge [<-] (te0);
+% 	\node [r]	 (tr0)	[right=of tn0,xshift=1.6cm,yshift=-1.2cm]	{$R$} edge [<-] (tn0);
+% 	\node [f]	 (tf0)	[right=of tn0,xshift=1.6cm,yshift=-2.3cm]	{$F$} edge [<-] (tn0);
+% 	\path [->,draw,thick] (ti0) -- (tn0); 
+% 	\path [->,draw,thick] (ti0) -- (tr0);
+% 	\path [->,draw,thick] (ti0) -- (tf0);
+% 	\path [->,draw,thick] (ti0) -- (td0);
+% 	\path [->,draw,thick] (te0) -- (tr0);
+% 	\path [->,draw,thick] (ti0) -- (tf0);
+% 	\path [->,draw,thick] (td0) -- (tf0);
+% 	\path [->,draw,thick] (tn0.285) -- (td0.75);
+% 	\path [->,draw,thick] (td0.105) -- (tn0.255);
+% 	\end{scope}
+% 	\end{tikzpicture}
+% 	\caption{Precedence graph generated from Table~\ref{tbl:rules-union}. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
+% 	}
+% 	\label{fig:precedence-graph}
+% \end{figure}
 
 
-
-\iffalse
-
-\begin{figure}[t]
-	\centering
-	\begin{tikzpicture}[]
-	\begin{scope}[xshift=10.5cm,yshift=-5cm,thick,
-	node distance=1.0cm,on grid,>=stealth',
-	block/.style={rectangle,draw,fill=cyan!20},
-	vertex/.style={circle,draw,fill=orange!40},
-	i/.style={circle,draw,fill=yellow!40},
-	e/.style={circle,draw,fill=blue!25},
-	f/.style={circle,draw,fill=orange!40},
-	r/.style={circle,draw,fill=cyan!40},
-	n/.style={circle,draw,fill=green!40},
-	d/.style={circle,draw,fill=red!40}]
-	decision/.style={diamond,draw,fill=white!40}]
-	%layer0
-	\node [i]	 (ti0) {$I$};
-	\node [e]	 (te0)	[right=of ti0,xshift=1.6cm,yshift=1.3cm]	{$E$} edge [<-] (ti0);
-	\node [n]	 (tn0)	[right=of te0,xshift=0.5cm,yshift=1.8cm]	{$N$} edge [<-] (te0);
-	\node [d]	 (td0)	[right=of te0,xshift=0.5cm,yshift=-1.3cm]	{$D$} edge [<-] (te0);
-	\node [r]	 (tr0)	[right=of tn0,xshift=1.6cm,yshift=-1.2cm]	{$R$} edge [<-] (tn0);
-	\node [f]	 (tf0)	[right=of tn0,xshift=1.6cm,yshift=-2.3cm]	{$F$} edge [<-] (tn0);
-	\path [->,draw,thick] (ti0) -- (tn0); 
-	\path [->,draw,thick] (ti0) -- (tr0);
-	\path [->,draw,thick] (ti0) -- (tf0);
-	\path [->,draw,thick] (ti0) -- (td0);
-	\path [->,draw,thick] (te0) -- (tr0);
-	\path [->,draw,thick] (ti0) -- (tf0);
-	\path [->,draw,thick] (td0) -- (tf0);
-	\path [->,draw,thick] (tn0.285) -- (td0.75);
-	\path [->,draw,thick] (td0.105) -- (tn0.255);
-	\end{scope}
-	\end{tikzpicture}
-	\caption{Precedence graph generated from Table~\ref{tbl:rules-union}. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
-	}
-	\label{fig:precedence-graph}
-\end{figure}
-
-
-\begin{table}[t]
-	\caption{Effective pipeline prototypes generated from Figure~6%\ref{fig:precedence-graph}
-	. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
-	}
-	\footnotesize
-	\label{tbl:effective-pipelines}
-	\begin{center}
-		\begin{tabular}{@{}ll}
-			\toprule
-			ID& Pipeline prototype                                             \\ \toprule
-			1&{\color[HTML]{000000} $\langle I, E, N , R, F \rangle$} \\
-			2&{\color[HTML]{000000} $\langle I, E, N , F, R \rangle$} \\
-			3&{\color[HTML]{000000} $\langle I, E, R , D, F \rangle$} \\
-			4&{\color[HTML]{000000} $\langle I, E, D , R, F \rangle$} \\
-			5&{\color[HTML]{000000} $\langle I, E, D , F, R \rangle$} \\
-			\bottomrule
-		\end{tabular}
-	\end{center}
-\end{table}
-\fi
+% \begin{table}[t]
+% 	\caption{Effective pipeline prototypes generated from Figure~6%\ref{fig:precedence-graph}
+% 	. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
+% 	}
+% 	\footnotesize
+% 	\label{tbl:effective-pipelines}
+% 	\begin{center}
+% 		\begin{tabular}{@{}ll}
+% 			\toprule
+% 			ID& Pipeline prototype                                             \\ \toprule
+% 			1&{\color[HTML]{000000} $\langle I, E, N , R, F \rangle$} \\
+% 			2&{\color[HTML]{000000} $\langle I, E, N , F, R \rangle$} \\
+% 			3&{\color[HTML]{000000} $\langle I, E, R , D, F \rangle$} \\
+% 			4&{\color[HTML]{000000} $\langle I, E, D , R, F \rangle$} \\
+% 			5&{\color[HTML]{000000} $\langle I, E, D , F, R \rangle$} \\
+% 			\bottomrule
+% 		\end{tabular}
+% 	\end{center}
+% \end{table}
+% \fi
 
 \end{example}
 
@@ -862,9 +841,9 @@ This is when we also resolve the inconsistencies and define precedences for the 
 This allows to finally generate the possible effective  prototypes.
 
 \begin{example}
-To generate the final pipeline prototypes, in this step we combine all the matrices generated by the previous steps.
+To generate the final prototypes, in this phase, we combine all the matrices generated by the previous steps.
 That is, we take the union of the edges (represented by \texttt{1}'s) from the matrices in \Cref{tbl:rules} (a,b,c), and create a new final adjacency matrix, shown in \Cref{tbl:rules-union}.
-This is the matrix that will allow us to generate the final effective pipeline prototypes.
+This is the matrix that will allow us to generate the final effective prototypes.
 
 Observing the table, one can realize that for pairs $\{F,R\}$ and $\{R,D\}$, no precedence edges exist.
 This means that these pairs are somewhat equally relevant from either direction (any order), and thus when generating the final prototypes, both options should appear.
@@ -872,13 +851,41 @@ This means that these pairs are somewhat equally relevant from either direction 
 For a better reading, in Figure~3.6, we visualize \Cref{tbl:rules-union} in form of a graph, where nodes represent the pre-processing steps and the directed edges represent a precedence order between them.
 Out of the graph, we generate the final prototypes by taking all the maximum length variations (ordered arrangements without repetition) of the nodes, respecting the precedence rules (i.e., not contradicting the direction of existing edges).
 The result is the set of five prototypes shown in Table 3.7. This set consisting of \textit{compatible}, \textit{meaningful} and \textit{promising} pairs of transformations is the set of recommended \textit{effective pipeline prototypes}.
+
+
+\begin{figure}
+	\begin{floatrow}
+	\ffigbox{
+		\includegraphics[clip, trim=2.5cm 23cm 10.5cm 2cm,width=0.5\textwidth]{chapters/data-centric/supervised/img/graph.pdf}
+	}{
+		  \caption{Precedence graph generated from Table~\ref{tbl:rules-union}. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering. }
+	}
+	\capbtabbox{
+	\begin{tabular}{@{}ll}
+				\toprule
+				ID& Pipeline prototype                                             \\ \toprule
+				1&{\color[HTML]{000000} $\langle I, E, N, R, F  \rangle$} \\
+				2&{\color[HTML]{000000} $\langle I, E, N, F, R \rangle$} \\
+				3&{\color[HTML]{000000} $\langle I, E, R, D, F \rangle$} \\
+				4&{\color[HTML]{000000} $\langle I, E, D, R, F \rangle$} \\
+				5&{\color[HTML]{000000} $\langle I, E, D , F, R \rangle$} \\
+				\bottomrule
+			\end{tabular}
+	}{
+		  \caption{Effective pipeline prototypes generated from Figure~6. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
+		}
+	}
+	\end{floatrow}
+\end{figure}
 \end{example}
+
+
 
 \subsection{Meta-learning rules}
 \label{effective-ssec:meta-learning}
 % \label{sec:meta-learning}
 
-Once the pipeline prototype is constructed (i.e., the order between the steps is defined), what follows is their instantiation with the actual transformations.
+Once the pipeline prototypes are constructed (i.e., the order between the steps is defined), what follows is their instantiation with the actual transformations.
 For that, one can rely completely on SMBO, and let the optimization choose the right transformation for each step.
 However, as many optimization techniques, SMBO suffers from the cold-start problem where, in the beginning, it does not have enough information to come up with promising configurations, and a wrong choice may affect the whole process.
 
@@ -889,7 +896,7 @@ Hence, further tweaking the search space.
 In particular, one might analyze whether:
 
 \begin{itemize}
-    \item there exist some combination of steps (\Cref{tbl:pipeline-enumeration}), that are generally useless (i.e., in terms of their impact on the final accuracy), and thus can be discarded a priori to reduce the search space;
+    \item there exist some combination of steps (\Cref{tbl:pipeline-enumeration}), that are generally useless (i.e., in terms of their impact on the final performance), and thus can be discarded a priori to reduce the search space;
     \item there are some executable pipelines that are consistently chosen more often than others by the optimization, meaning that they are more useful than others;
     \item within the executable pipelines, some transformations are chosen more often than others, meaning that they provide a more positive impact.
     \end{itemize}
@@ -931,23 +938,22 @@ To mitigate the cold-start problem, we propose to perform meta-learning, where w
 Meta-learning is the process of ``learning on top of learning'', or learning a model using historical data from ML experiments.
 Traditionally, it has been used for predicting the performance (e.g., predictive accuracy) of an algorithm on a given dataset.
 That is, given some historical runs of the performance of classification algorithms over various datasets (i.e., meta-dataset: consisting of datasets characteristics as meta-features and the performance of the ML algorithm as the desired outcome in a regression task), one can learn a model (i.e., meta-model), that is able to predict the performance of a given ML algorithm on a new dataset \cite{Brazdil04Book}.
-Lately, this technique has been extended in order to predict the impact of transformations over the performance of ML algorithms and thus rank transformations based on their impact \cite{Bilalli17AMCS, presistant18CSI, presistant19DKE}.
-The same idea can be applied to learning the best operator for a given transformation.
-That is, through meta-learning one can learn the intrinsic relationship between dataset characteristics and the transformation performance, and thus come up with rules that are not obvious and are effective at the time of instantiation.
-The main idea is to build a model, that is able to predict the operator for a certain pre-processing step, given the meta-features extracted from the dataset considered for the optimization.
-This translates to answering the following question: ``given that we know the dataset characteristics and having selected a certain pre-processing step (e.g., Imputation), what is the optimal transformation we need to obtain the highest improvement w.r.t. accuracy (i.e., when the ML algorithm is applied over the transformed dataset)?''.
-In particular, the model can generate a set of complementary rules that help in the optimization, providing a good starting instantiation for some of the transformations in the prototype.
+Lately, this technique has been extended in order to predict the impact of pre-processing steps over the performance of ML algorithms and thus rank them based on the impact \cite{Bilalli17AMCS, presistant18CSI, presistant19DKE}.
+The same idea can be applied to learning the best trnasformation for a given step.
+That is, through meta-learning one can learn the intrinsic relationship between dataset characteristics and the transformation performance, and thus come up with rules that are not obvious and are effective at the time of pipeline instantiation.
+The main idea is to build a model, that is able to predict the transformation for a certain pre-processing step, given the meta-features extracted from the dataset considered for the optimization.
+This translates to answering the following question: ``given that we know the dataset characteristics and having selected a certain pre-processing step (e.g., Imputation), what is the optimal transformation we need to obtain the highest improvement w.r.t. loss (i.e., when the ML algorithm is applied over the transformed dataset)?''.
+In particular, the model can generate a set of complementary rules that help in the optimization, providing a good starting instantiation for some of the steps in the prototype.
 
 To train the model we need a meta-dataset that can be  (i) generated through optimization algorithms (e.g., SMBO executions), (ii) generated manually through simple evaluations of classification algorithms over transformed datasets, or (iii) assumed already given (e.g., OpenML).
-
-Given a meta-dataset, we propose to learn to predict the best instantiation (transformation) for a given pre-processing step, where among the classes we can include the class \texttt{None} too.
-This means that one of the possible predictions is to not instantiate a transformation at all, hence removing it from the pipeline.
+Given a meta-dataset, we propose to learn to predict the best instantiation (transformation) for a given pre-processing step, including skipping the step (class \texttt{None}).
+% This means that one of the possible predictions is to not instantiate a transformation at all, hence removing it from the pipeline.
 
 \begin{example}
-Our training dataset for the meta-learning (i.e., meta-dataset) is built through SMBO runs on the OpenML datasets (see Section~\ref{sec:rules-learned:algorithm}).
+Our training dataset for the meta-learning (i.e., meta-dataset) is built through SMBO runs on the OpenML datasets (\Cref{sec:rules-learned:algorithm}).
 We first extract the dataset characteristics (i.e., meta-features; e.g., number of features, number of instances, number of missing values).
-Then, by applying SMBO optimization on classification algorithms and pre-processing prototypes, for each dataset, we retrieve the performance (i.e., predictive accuracy) of the ML algorithms over the optimized pipelines.
-This gives us the presumably (sub-)optimal executable pipelines and their impact on the accuracy of the learning algorithms for each dataset at hand.
+Then, by applying SMBO optimization on classification algorithms and pre-processing prototypes, for each dataset, we retrieve the loss (in our case, predictive accuracy) of the ML algorithms over the optimized pipelines.
+This gives us the optimized executable pipelines and their impact on the accuracy of the learning algorithms for each dataset at hand.
 Given such information, our aim is to now save time and improve the instantiation of the transformations for each step considered in the prototype.
 
 We trained several different conditional inference trees (i.e., a particular implementation of decision trees \cite{ctree}) because they produce models that can be easily read and interpreted.
@@ -986,7 +992,7 @@ However, when the majority class has less than 56\%, it may imply that: (i) ther
 \subsection{Prototype instantiation}
 \label{effective-ssec:prototype-insta}
 
-The prototypes from the top flow and the meta-lerning rules from the bottom flow (if the optimization framework permits) are finally fed to the final step which deals with the instantiation and optimization of the prototypes. In this task we run an optimization algorithm that is executed until an optimal pipeline is found.
+The prototypes from the top flow and the meta-lerning rules from the bottom flow (if the optimization framework permits) are finally fed to the final phase which deals with the instantiation and optimization of the prototypes. In this, we run SMBO until an optimized pipeline is found.
 
 \begin{example}
  In our final execution, we run SMBO to find a suitable instantiation for the suggested prototypes. The simple but not obvious meta-learning rules, even though not included in our final execution, because of the implementation considered (i.e., HyperOpt), can potentially be used to ease the cold-start problem.
@@ -1015,22 +1021,24 @@ The prototypes from the top flow and the meta-lerning rules from the bottom flow
 
 The aim of our experimental study is three-fold:
 \begin{enumerate}
-    \item Check whether there exists a universal prototype that works best for any classification problem considered  (i.e., dataset and ML algorithm) (Section~\ref{sec:eval-universal-pipeline}).
-    \item Assess and compare the performance of the effective pipelines constructed using our method against the set of exhaustively generated pipeline prototypes (Section~\ref{sec:eval-our-vs-rest}).
-    \item Assess and compare the impact of dedicating a portion of the optimization time to the effective pipelines constructed using our method, with the impact of using the whole optimization time for the hyper-parameters of the ML algorithm (Section~\ref{sec:eval-dpso-vs-cash}).
+    \item Check whether there exists a universal prototype that works best for any classification problem considered  (i.e., dataset and ML algorithm) (\Cref{sec:eval-universal-pipeline}).
+    \item Assess and compare the performance of the effective pipelines constructed using our method against the set of exhaustively generated prototypes (\Cref{sec:eval-our-vs-rest}).
+    \item Assess and compare the impact of dedicating a portion of the optimization time to the effective pipelines constructed using our method, with the impact of using the whole optimization time for the hyper-parameters of the ML algorithm (\Cref{sec:eval-dpso-vs-cash}).
 \end{enumerate}
 
-The experiments were performed on an Intel Core i7 machine with 12 cores, running at 3.20 GHz with 64 GB of main memory. As a platform for running the SMBO optimization algorithm we use HyperOpt. Furthermore, the datasets used in the experiments are the ones from the OpenML repository (see Section~\ref{sec:rules-learned:algorithm}). Finally, the classification algorithms considered are \textit{NB}, \textit{KNN}, and \textit{RF}. All the experiments for a single algorithm, on average took approximately two weeks\footnote{The source code and the datasets for reproducing the experiments can be found in 
+The experiments were performed on an Intel Core i7 machine with 12 cores, running at 3.20 GHz with 64 GB of main memory. As a platform for running the SMBO optimization algorithm we use HyperOpt. Furthermore, the datasets used in the experiments are the ones from the OpenML repository. Finally, the classification algorithms considered are \textit{NB}, \textit{KNN}, and \textit{RF}. All the experiments for a single algorithm, on average took approximately two weeks\footnote{The source code and the datasets for reproducing the experiments can be found in
 \href{https://github.com/josephgiovanelli/effective\_preprocessing\_pipeline\_evaluation}{https://github.com/josephgiovanelli/effective\_preprocessing\_pipeline\_evaluation}}.
 
 \subsection{Universal pipeline prototype}
 \label{sec:eval-universal-pipeline}
-The goal of this experiment is to demonstrate the difficulty of blindly finding the right pipeline prototype (i.e., without considering any meaningful or promising precedence).
-In Table~\ref{tbl:pipeline-enumeration}, we list the exhaustive set of pipeline prototypes generated considering the compatible precedence graph in Table~\ref{tbl:rules}a (i.e., 24 compatible permutations). In a real scenario, this number would be too high for splitting the time budget in order to optimize them. 
-Yet, for the sake of this experiment, we exhaustively optimize all the prototypes, for each dataset. Thus, for each pipeline prototype and for each dataset, the SMBO algorithm is configured to assign a 200 seconds time budget to the phase of instantiating and optimizing the pipeline prototype, and another 200 seconds to the phase of optimizing the hyper-parameters of the ML algorithm.
+The goal of this experiment is to demonstrate the difficulty of blindly finding the right prototype (i.e., without considering any meaningful or promising precedence).
+In \Cref{tbl:pipeline-enumeration}, we list the exhaustive set of pipeline prototypes generated considering the compatible precedence graph in Table~\ref{tbl:rules}a (i.e., 24 compatible permutations).
+In a real scenario, this number would be too high for splitting the time budget in order to optimize them.
+Yet, for the sake of this experiment, we exhaustively optimize all the prototypes, for each dataset.
+Thus, for each prototype and for each dataset, the SMBO algorithm is configured to assign a 200 seconds time budget to the phase of instantiating and optimizing the prototype, and another 200 seconds to the phase of optimizing the hyper-parameters of the ML algorithm.
 
 \begin{table}[t]
-\caption[Enumeration of the pipelines that can be generated by compatible precedence]{Exhaustive set of pipeline prototypes generated using the compatible precedence graph of Table~\ref{tbl:rules}a. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
+\caption[Enumeration of the prototypes that can be generated by compatible precedence]{Exhaustive set of prototypes generated using the compatible precedence graph of Table~\ref{tbl:rules}a. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
 }
 \footnotesize
 \label{tbl:pipeline-enumeration}
@@ -1038,25 +1046,28 @@ Yet, for the sake of this experiment, we exhaustively optimize all the prototype
 \begin{tabular}{@{}lllll@{}}
 \toprule
 ID & Pipeline prototype & ID & Pipeline prototype                                                                   \\ \toprule
-1  & {\color[HTML]{000000} $I\veryshortarrow E\veryshortarrow N \veryshortarrow D\veryshortarrow F \veryshortarrow R$} & 13 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow F \veryshortarrow N \veryshortarrow D\veryshortarrow R$} \\
-2  & {\color[HTML]{000000} $I\veryshortarrow E\veryshortarrow N \veryshortarrow D\veryshortarrow R \veryshortarrow F$} & 14 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow F \veryshortarrow N \veryshortarrow R \veryshortarrow D$} \\
-3  & {\color[HTML]{000000} $I\veryshortarrow E\veryshortarrow N \veryshortarrow F \veryshortarrow D\veryshortarrow R$} & 15 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow F \veryshortarrow D\veryshortarrow N \veryshortarrow R$} \\
-4  & {\color[HTML]{000000} $I\veryshortarrow E\veryshortarrow N \veryshortarrow F \veryshortarrow R \veryshortarrow D$} & 16 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow F \veryshortarrow D\veryshortarrow R \veryshortarrow N$} \\
-5  & {\color[HTML]{000000} $I\veryshortarrow E\veryshortarrow N \veryshortarrow R \veryshortarrow D\veryshortarrow F$} & 17 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow F \veryshortarrow R \veryshortarrow N \veryshortarrow D$} \\
-6  & {\color[HTML]{000000} $I\veryshortarrow E\veryshortarrow N \veryshortarrow R \veryshortarrow F \veryshortarrow D$} & 18 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow F \veryshortarrow R \veryshortarrow D\veryshortarrow N$} \\
-7  & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow D\veryshortarrow N \veryshortarrow F \veryshortarrow R$} & 19 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow R \veryshortarrow N \veryshortarrow D \veryshortarrow F$} \\
-8  & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow D\veryshortarrow N \veryshortarrow R \veryshortarrow F$} & 20 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow R \veryshortarrow N \veryshortarrow F \veryshortarrow D$} \\
-9  & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow D\veryshortarrow F\veryshortarrow N \veryshortarrow R$} & 21 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow R \veryshortarrow D\veryshortarrow N \veryshortarrow F$} \\
-10 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow D\veryshortarrow F \veryshortarrow R\veryshortarrow N$} & 23 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow R \veryshortarrow D \veryshortarrow F \veryshortarrow N$} \\
-11 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow D\veryshortarrow R \veryshortarrow N \veryshortarrow F$} & 23 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow R \veryshortarrow F \veryshortarrow N \veryshortarrow D$} \\
-12 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow D\veryshortarrow R \veryshortarrow F\veryshortarrow N$} & 24 & {\color[HTML]{000000} $I\veryshortarrow E \veryshortarrow R \veryshortarrow F \veryshortarrow D\veryshortarrow N$}
+1  & {\color[HTML]{000000} $\langle I, E, N, D, F, R \rangle$} & 13 & {\color[HTML]{000000} $\langle I, E, F, N, D, R \rangle$} \\
+2  & {\color[HTML]{000000} $\langle I, E, N, D, R, F \rangle$} & 14 & {\color[HTML]{000000} $\langle I, E, F, N, R, D \rangle$} \\
+3  & {\color[HTML]{000000} $\langle I, E, N, F, D, R \rangle$} & 15 & {\color[HTML]{000000} $\langle I, E, F, D, N, R \rangle$} \\
+4  & {\color[HTML]{000000} $\langle I, E, N, F, R, D \rangle$} & 16 & {\color[HTML]{000000} $\langle I, E, F, D, R, N \rangle$} \\
+5  & {\color[HTML]{000000} $\langle I, E, N, R, D, F \rangle$} & 17 & {\color[HTML]{000000} $\langle I, E, F, R, N, D \rangle$} \\
+6  & {\color[HTML]{000000} $\langle I, E, N, R, F, D \rangle$} & 18 & {\color[HTML]{000000} $\langle I, E, F, R, D, N \rangle$} \\
+7  & {\color[HTML]{000000} $\langle I, E, D, N, F, R \rangle$} & 19 & {\color[HTML]{000000} $\langle I, E, R, N, D, F \rangle$} \\
+8  & {\color[HTML]{000000} $\langle I, E, D, N, R, F \rangle$} & 20 & {\color[HTML]{000000} $\langle I, E, R, N, F, D \rangle$} \\
+9  & {\color[HTML]{000000} $\langle I, E, D, F, N, R \rangle$} & 21 & {\color[HTML]{000000} $\langle I, E, R, D, N, F \rangle$} \\
+10 & {\color[HTML]{000000} $\langle I, E, D, F, R, N \rangle$} & 23 & {\color[HTML]{000000} $\langle I, E, R, D, F, N \rangle$} \\
+11 & {\color[HTML]{000000} $\langle I, E, D, R, N, F \rangle$} & 23 & {\color[HTML]{000000} $\langle I, E, R, F, N, D \rangle$} \\
+12 & {\color[HTML]{000000} $\langle I, E, D, R, F, N \rangle$} & 24 & {\color[HTML]{000000} $\langle I, E, R, F, D, N \rangle$}
 \\ \bottomrule
 \end{tabular}
 \end{center}
 \end{table}
 
-The results obtained are shown in Figure~\ref{fig:eval-universal-pipeline}.
-The enumerated prototypes are listed in the ordinate axis and each stacked bar represents the percentage of cases for which that prototype achieved the best performance across different ML algorithms (the contribution of each algorithm is represented with a different color). In an ideal scenario, for a pipeline to be considered \textit{universal}, it should perform best in all or at least most of the cases, which is clearly not happening. Observe that, even the best performing pipeline is only the best in 19\% of the cases, which is obviously far from being \textit{universal}. Hence all (or at least several) pipelines need to be evaluated together, in order to obtain better solutions. 
+The results obtained are shown in \Cref{fig:eval-universal-pipeline}.
+The enumerated prototypes are listed in the abscissa axis and each stacked bar represents the percentage of cases for which that prototype achieved the best performance across different ML algorithms (the contribution of each algorithm is represented with a different color).
+In an ideal scenario, for a prototype to be considered \textit{universal}, it should perform best in all or at least most of the cases, which is clearly not happening.
+Observe that, even the best-performing prototype is only the best in 19\% of the cases, which is obviously far from being \textit{universal}.
+Hence all (or at least several) prototypes need to be evaluated together, in order to obtain better solutions.
 
 \begin{figure}[t]
     \centering
@@ -1067,20 +1078,29 @@ The enumerated prototypes are listed in the ordinate axis and each stacked bar r
 
 \subsection{Exhaustive versus effective prototypes}
 \label{sec:eval-our-vs-rest}
-Given that there is no single universal pipeline, one can opt for feeding all the possible prototypes (see Table~\ref{tbl:pipeline-enumeration}) to the optimization algorithm in order to get the best solutions out of them. 
-As before, we assign a budget of 200 seconds for the optimization of each prototype, hence 80 minutes in total for all the set of 24 \textit{exhaustive prototypes} in order to find the optimal pipeline for every dataset. On the other hand, we take only the five \textit{effective prototypes} resulting from the application of our method and assign just 40 seconds time budget for the optimization of each one of them, hence 200 seconds in total. With the aim of comparing the two, and thus roughly understanding how close we are to the optimal case, in both cases, we dedicated the same time budget (i.e., 200 seconds) for the phase of optimizing the hyper-parameters of the ML algorithm.
-In order to evaluate how close the \textit{effective prototypes} are to the \textit{exhaustive ones}, we calculate the \textit{normalized distance} from the result to the optimum:
+Given that there is no single universal prototype, one can opt for feeding all the possible prototypes (see \Cref{tbl:pipeline-enumeration}) to the optimization algorithm in order to get the best solutions out of them.
+As before, we assign a budget of 200 seconds for the optimization of each prototype, hence 80 minutes in total for all the set of 24 \textit{exhaustive prototypes} in order to find the optimal pipeline for every dataset.
+On the other hand, we take only the five \textit{effective prototypes} resulting from the application of our method and assign just 40 seconds time budget for the optimization of each one of them, hence 200 seconds in total. With the aim of comparing the two, and thus roughly understanding how close we are to the optimal case, in both cases, we dedicated the same time budget (i.e., 200 seconds) for the phase of optimizing the hyper-parameters of the ML algorithm.
+In order to evaluate how close the \textit{effective prototypes} are to the \textit{exhaustive ones}, we calculate the \textit{normalized distance} from the result to the optimum---w.r.t. accuracy.
 
 \begin{equation*}
-    normalized\;distance = \frac{Acc(d_{e\!f\!f\!ective},a^*) - Acc(d,a)}{Acc(d_{exhaustive},a^*) - Acc(d,a)}
+    normalized\;distance = \frac{ACC_{\textup{eff}} - ACC_{\varnothing}}{ACC_{\textup{exh}} - ACC_{\varnothing}}
 \end{equation*}
 
-where, $Acc(d,a)$ is the baseline performance (i.e., predictive accuracy of the algorithm $a$ with default hyper-parameters over the original dataset $d$). $Acc(d_{e\!f\!f\!ective},a^*)$ is the accuracy of the optimized algorithm $a^*$ over the dataset $d_{e\!f\!f\!ective}$ transformed using the optimized instantiation of the effective set of prototypes (i.e., our approach). Finally, ~$Acc(d_{exhaustive},a^*)$ is the accuracy of the optimized algorithm $a^*$ over the dataset $d_{exhaustive}$ transformed using the optimized pipeline instantiation of the exhaustive set of prototypes. The subtraction by $Acc(d,a)$ is done with the aim of weighting the difficulty of a dataset, hence allowing for comparisons in terms of the gain in accuracy. To this end, the bigger the potential gain (denominator) is, the bigger the obtained gain (numerator) must be, for the latter to be relevant. 
+$ACC_{\varnothing}$ is the baseline performance (i.e., predictive accuracy of the algorithm $A$ with default hyper-parameters over the original dataset $\altmathcal{D}$), formally $ACC_{\varnothing} = ACC(A(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
+$ACC_{\textup{eff}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized instantiation of the effective set of prototypes (i.e., our approach), formally $ACC_{\textup{eff}} = ACC(\langle P^{\star}_{\textup{eff}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
+Finally, $ACC_{\textup{exh}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized pipeline instantiation of the exhaustive set of prototypes, formally $ACC_{\textup{exh}} = ACC(\langle P^{\star}_{\textup{exh}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
+The subtraction by $ACC_{\varnothing}$ is done with the aim of weighting the difficulty of a dataset, hence allowing for comparisons in terms of the gain in accuracy.
+To this end, the bigger the potential gain (denominator) is, the bigger the obtained gain (numerator) must be, for the latter to be relevant.
 
-The results obtained for every dataset and algorithm are shown as boxplots in Figure~\ref{fig:eval-exhaustive-vs-effective}. Observe that, most of the cases are very close to the results obtained using the exhaustive set, the median distances being 91.51\%, 93.13\%, 88.97\%, for NB, KNN, and RF, respectively. 
-In general, in 75\% of the cases the chosen pipelines are above 80\%, and only few outliers are below 60\%. Curiously, in some cases, we outperform the results over the exhaustive set of pipelines, but this is due to the randomness of the optimization algorithm, which unless it is given an unrealistically high budget of time, is not capable of finding the true optimal solution. We discarded the option of assigning a larger budget since this was not practical considering the huge search space and the lack of any guarantee of improvement. 
+The results obtained for every dataset and algorithm are shown as boxplots in \Cref{fig:eval-exhaustive-vs-effective}.
+Observe that, most of the cases are very close to the results obtained using the exhaustive set, the median distances being 91.51\%, 93.13\%, 88.97\%, for NB, KNN, and RF, respectively.
+In general, in 75\% of the cases the chosen pipelines are above 80\%, and only few outliers are below 60\%.
+Curiously, in some cases, we outperform the results over the exhaustive set of pipelines, but this is due to the randomness of the optimization algorithm, which unless it is given an unrealistically high budget of time, is not capable of finding the true optimal solution.
+We discarded the option of assigning a larger budget since this was not practical considering the huge search space and the lack of any guarantee of improvement.
 
-To summarize, the experiment shows that with roughly 24 times less time budget, we can obtain results that are as good as 90\% in the median compared to the exhaustive ones. The raw results (i.e., without the normalized distances) can be found on the aforementioned github page.
+To summarize, the experiment shows that with roughly 24 times less time budget, we can obtain results that are as good as 90\% in the median compared to the exhaustive ones.
+The raw results (i.e., without the normalized distances) can be found on the aforementioned GitHub page.
 
 \begin{figure}[!t]
     \centering
@@ -1099,48 +1119,61 @@ To summarize, the experiment shows that with roughly 24 times less time budget, 
 	\label{fig:eval-pre-processing-hyper-parameter}
 \end{figure*}
 
-We have just shown that our effective pipeline prototypes have similar impact as the exhaustive prototypes. Now we want to compare the impact of effective prototypes against optimizing only the hyper-parameters of the ML algorithm. That is, we want to examine whether dedicating a part of the optimization budget to the pre-processing pipeline impacts more (positively) the results of the analysis, than using the whole budget for the hyper-parameter optimization\footnote{To enable the application of the ML algorithms on all the datasets, whenever required, we apply the necessary transformation (e.g, imputation or encoding).}. 
+We have just shown that our effective prototypes have similar impact as the exhaustive ones.
+Now we want to compare the impact of the effective prototypes against optimizing only the hyper-parameters of the ML algorithm.
+That is, we want to examine whether dedicating a part of the optimization budget to the pre-processing impacts more (positively) the results of the analysis, than using the whole budget for the hyper-parameter optimization\footnote{To enable the application of the ML algorithms on all the datasets, whenever required, we apply the necessary transformation (e.g, imputation or encoding).}.
 
-To this end, for the latter we now dedicate the total optimization budget (i.e., 400 seconds), and for the former, inspired by \cite{Quemy20InfSystems}, we split the budget 50-50 between the pre-processing pipeline optimization and the hyper-parameter optimization (i.e., 200 seconds for the pre-processing, and 200 seconds for the hyper-parameter optimization). The time for the pre-processing is further split among the five different pipeline prototypes (i.e., 40 seconds each).
+To this end, for the latter we now dedicate the total optimization budget (i.e., 400 seconds), and for the former, inspired by \cite{Quemy20InfSystems}, we split the budget 50-50 between the pre-processing pipeline optimization and the hyper-parameter optimization (i.e., 200 seconds for the pre-processing, and 200 seconds for the hyper-parameter optimization).
+The time for the pre-processing is further split among the five different pipeline prototypes (i.e., 40 seconds each).
 
-To compare the results, we calculate the impact using the formulas below, that correspond to the normalized distance from either pre-processing or hyper-parameter optimization to the maximum improvement that can be achieved, regardless of whether pre-processing is applied or not. 
+To compare the results, we calculate the impact using the formulas below, which correspond to the normalized distance from either pre-processing or hyper-parameter optimization to the maximum improvement that can be achieved, regardless of whether pre-processing is applied or not.
 
 \begin{equation*}
-    \text{\textit{pp impact}} = \frac{Acc(d_{e\!f\!f\!ective},a^*) - Acc(d,a)}{max(Acc(d_{e\!f\!f\!ective},a^*),Acc(d,a^*)) - Acc(d,a)}
+    \text{\textit{pp impact}} = \frac{ACC_{\textup{eff}} - ACC_{\varnothing}}{max(ACC_{\textup{eff}}, ACC_{\textup{hpo}}) - ACC_{\varnothing}}
 \end{equation*}
 
 \begin{equation*}
-    \text{\textit{hp impact}} = \frac{Acc(d,a^*) - Acc(d,a)}{max(Acc(d_{e\!f\!f\!ective},a^*),Acc(d,a^*)) - Acc(d,a)}
+    \text{\textit{hp impact}} = \frac{ACC_{\textup{hpo}} - ACC_{\varnothing}}{max(ACC_{\textup{eff}}, ACC_{\textup{hpo}}) - ACC_{\varnothing}}
 \end{equation*}
 
-where, $Acc(d,a)$ is the baseline accuracy (i.e., predictive accuracy of the algorithm $a$ with default hyper-parameters over the original dataset $d$). $Acc(d_{e\!f\!f\!ective},a^*)$ is the accuracy of the optimized algorithm $a^*$ over the dataset $d_{e\!f\!f\!ective}$ transformed using the optimized instantiation of the effective set of prototypes obtained using our method. Finally,  $Acc(d,a^*)$ is the accuracy of the optimized algorithm $a^*$ (i.e, using the entire budget) over the original dataset $d$.
+$ACC_{\varnothing}$ is yet again the baseline performance (i.e., predictive accuracy of the algorithm $A$ with default hyper-parameters over the original dataset $\altmathcal{D}$).
+$ACC_{\textup{eff}}$ is still the accuracy of our approach, i.e., the optimized algorithm $A_{{\lambda}^{\star}}$ with half of the whole budget over the dataset transformed using the optimized instantiation of the effective set of prototypes (with half of the whole budget).
+Finally, $ACC_{\textup{hpo}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ (i.e, using the entire budget) over the original dataset, formally $ACC_{\textup{hpo}} = ACC(A_{{\lambda}^{\star}}(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 
-To obtain relative values that sum to 1, we normalize the impacts dividing them by their sum. For instance, for the pre-processing score we calculate the following:
+To obtain relative values that sum to 1, we normalize the impacts dividing them by their sum.
+For instance, for the pre-processing score we calculate the following:
 \begin{equation*}
     \text{\textit{normalized pp impact}} = \frac{\text{\textit{pp impact}}}
     {\text{\textit{pp impact}} + \text{\textit{hp impact}}}
 \end{equation*}
 
 
-We perform the same for the hyper-parameter impact and plot the results obtained for all the algorithms and datasets in Figure~\ref{fig:eval-pre-processing-hyper-parameter}, where each bar represents the results obtained for a single dataset. The different colors represent the impact values of pre-processing and hyper-parameter optimization. 
+We perform the same for the hyper-parameter impact and plot the results obtained for all the algorithms and datasets in \Cref{fig:eval-pre-processing-hyper-parameter}, where each bar represents the results obtained for a single dataset.
+The different colors represent the impact values of pre-processing and hyper-parameter optimization.
 
-Observing the bar-charts one can see that (i) dedicating a portion of the budget to pre-processing, brings benefit to the analysis in most of the cases (i.e., $73\%$ of the cases), and (ii) the impact of hyper-parameter optimization, increases with the increase of the number of hyper-parameters of the ML algorithm (e.g., hyper-parameter optimization impacts more RF than NB). Overall, we can conclude that pre-processing is a critical step that once effectively applied may have a high positive impact on the final result of the analysis.
+Observing the bar charts one can see that (i) dedicating a portion of the budget to pre-processing, brings benefit to the analysis in most of the cases (i.e., $73\%$ of the cases), and (ii) the impact of hyper-parameter optimization, increases with the increase of the number of hyper-parameters of the ML algorithm (e.g., hyper-parameter optimization impacts more RF than NB).
+Overall, we can conclude that pre-processing is a critical step that once effectively applied may have a high positive impact on the final result of the analysis.
 
 \section{Conclusions and future work}
 \label{sec:conclusions}
 
-In this work, we first studied the overall impact of transformations when chained together inside pre-processing prototypes and then delved into examining the impact of instantiating transformations via various operators. As a result, we defined a method that allows to generate effective pre-processing pipelines. That is, pipelines that consist of, (i) compatible pairs of transformations with respect to the framework used,  (ii) meaningful pairs of transformations in terms of general knowledge (best practices), and (iii) promising pairs of transformations that once applied are expected to provide higher overall impact (domain knowledge). 
-In addition, via the meta-learning step proposed, we aim to guide the instantiation of transformations in order to facilitate finding better instantiations.
+In this chapter, we first studied the overall impact of pre-processing steps when chained together inside prototypes and then delved into examining the impact of instantiating steps via various transformations.
+As a result, we defined a method that allows to generate effective pre-processing pipelines.
+That is, pipelines that consist of, (i) compatible pairs of steps concerning the framework used,  (ii) meaningful pairs of steps in terms of general knowledge (best practices), and (iii) promising pairs of steps that once applied are expected to provide higher overall impact (domain knowledge).
+In addition, via the meta-learning phase proposed, we aim to guide the pipeline instantiation in order to facilitate finding better transformations.
 
-An extensive evaluation on 80 datasets with heterogeneous characteristics, from sample size to feature types, and a set of classification algorithms (i.e., Naive Bayes, Random Forest, K-Nearest Neighbours), showed that our devised pipeline prototypes give promising results. More specifically, we were able to observe that:
+An extensive evaluation on 80 datasets with heterogeneous characteristics, from sample size to feature types, and a set of classification algorithms (i.e., Naive Bayes, Random Forest, K-Nearest Neighbours), showed that our devised prototypes give promising results.
+More specifically, we were able to observe that:
 \begin{itemize}
     \item [--] The overall impact of optimizing pre-processing is not negligible and it may boost the performance of the overall analytics (e.g., predictive accuracy).
-    \item [--] There is no universal pre-processing pipeline prototype that works best for every dataset and algorithm.
-    \item [--] With 24 times less time budget, our proposed pipeline prototypes were able to obtain results that were as good as 90\% in the median of the optimal ones found through an exhaustive search.
-    \item [--] Dedicating a portion of the time to the pre-processing optimization, instead of dedicating it entirely to hyper-parameter optimization may boost %(have a higher impact on?!) 
-    the final result of the analysis. On average, in 73\% of the cases including pre-processing in the optimization, outperformed the results of only optimizing hyper-parameters.
+    \item [--] There is no universal pre-processing prototype that works best for every dataset and algorithm.
+    \item [--] With 24 times less time budget, our proposed prototypes were able to obtain results that were as good as 90\% in the median of the optimal ones found through an exhaustive search.
+    \item [--] Dedicating a portion of the time to the pre-processing optimization, instead of dedicating it entirely to hyper-parameter optimization may boost %(have a higher impact on?!)
+    the final result of the analysis.
+	On average, in 73\% of the cases including pre-processing in the optimization, outperformed the results of only optimizing hyper-parameters.
 \end{itemize}
 
-The results indicate that pre-processing can boost the performance of the ML algorithm. Hence, it must be considered as an integral part of the data analytics optimization process. 
+The results indicate that pre-processing can boost the performance of the ML algorithm.
+Hence, it must be considered as an integral part of the data analytics optimization process.
 
-Finally, previous works have shown the effectiveness of meta-learning for solving the cold start problem~\cite{Feurer15AAAI}, hence as immediate future work, we intend to extend an optimization framework (i.e., HyperOpt) with a complementary meta-learning module that can ease the cold-start problem, facilitating the search for optimal instantiations.
+Finally, previous works have shown the effectiveness of meta-learning for solving the cold start problem \cite{Feurer15AAAI}, hence as immediate future work, we intend to extend an optimization framework (i.e., HyperOpt) with a complementary meta-learning module that can ease the cold-start problem, facilitating the search for optimal instantiations.
