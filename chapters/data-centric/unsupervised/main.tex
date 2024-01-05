@@ -183,7 +183,7 @@ Each hyperparameter has a domain, and the possible algorithm configurations are 
 % Given a hyperparameter configuration $\pmb{\aambda} \in \pmb{\Lambda}$, i.e., an (ordered) tuple in which each hyperparameter has been assigned with a value from its domain.
 % $A_{\lambda}$
 %
-% For instance, a clustering algorithm is KMeans and two tunable hyperparameters can be: the number of clusters $k \in \mathbb{N}^+$ and the maximum iterations $iter \in \mathbb{N}^+$. 
+% For instance, a clustering algorithm is KMeans and two tunable hyperparameters can be: the number of clusters $k \in \mathbb{N}^+$ and the maximum iterations $iter \in \mathbb{N}^+$.
 %
 % Hence, $\Lambda_\textup{KMeans} = [2..12] \times \mathbb{N}^+$.
 % An example of algorithm instance is $\lambda_\textup{KMeans} = (3, 10^3)$, where $k=3$ and $iter=10^3$.
@@ -270,7 +270,7 @@ $rel(\hat{\altmathcal{C}})$ entails a multiplication factor $|\hat{\altmathcal{C
 
 
 \Cref{clustering-tbl:processing} reports the pipeline with steps, algorithms, and hyperparameters; AutoClues implementation can be found at \url{https://github.com/anonymous-pakdd-24/autoclues}.
-The first step is \textit{Feature selection}. 
+The first step is \textit{Feature selection}.
 Since cluster analysis is particularly sensitive to non-informative and correlated features, we leverage algorithms from spectral family and based on the Pearson correlation, respectively. 
 % Since cluster analysis is particularly sensitive to irrelevant features, this step aids in identifying the most informative ones.
 % We leverage algorithms from the spectral family (SPEC and WKMeans), techniques that demonstrated to be effective in unsupervised tasks \cite{alelyani2018feature}, and based on the Pearson correlation.
@@ -278,38 +278,33 @@ Follows, \textit{Normalization} to adjust values on different scales and ensure 
 Here, the literature has a considerable consensus on the well-known techniques such as Standardization, Robust scaling, and Min-max.
 % Follows, \textit{Normalization} to adjust values on different scales and ensure that all the features contribute equally to the cluster formation.
 % Here, the literature has a considerable consensus on the well-known techniques such as Standardization, Robust scaling, and Min-max that leverage statistical indicators; respectively: mean and standard deviation, median and quantile range, and max and min.
-The last pre-processing step is \textit{Outlier Removal} for discarding any data points that are not representative of the cluster, we leverage Local Outlier Factor \cite{breunig2000lof} and and Isolation Forest \cite{liu2012isolation}.
+The last pre-processing step is \textit{Outlier Removal} for discarding any data points that are not representative of the cluster, we leverage Local Outlier Factor \cite{breunig2000lof} and Isolation Forest \cite{liu2012isolation}.
 % The last pre-processing step is \textit{Outlier Removal} for discarding any data points that are not representative of the cluster.
 % Local Outlier Factor \cite{breunig2000lof} measures the anomaly score of each data item based on its local density deviation compared to its neighbors and Isolation Forest \cite{liu2012isolation} isolates elements by randomly selecting a feature and a split value within its minimum and maximum values.
 Finally, the \textit{Clustering} step.
 Since we focus on \textit{crisp spherical} clustering algorithms, we consider KMeans \cite{arthur2006k} and Agglomerative Clustering \cite{murtagh2017algorithms} with complete linkage.
-% The former separates the data items into groups so that each of them has an equal variance, minimizing a criterion known as the inertia or within-cluster sum-of-squares. 
-% The latter builds a hierarchy of clusters by merging smaller clusters into larger ones. 
+% The former separates the data items into groups so that each of them has an equal variance, minimizing a criterion known as the inertia or within-cluster sum-of-squares.
+% The latter builds a hierarchy of clusters by merging smaller clusters into larger ones.
 As to the order of steps, in \cite{giovanelli2022data}, the authors reduce the combinations of the former steps; we further constrained the order of the steps by computing several experiments and observing the impact of different alternatives.
 % Our implementation imports the algorithms from the sklearn Python library.
 % While the algorithms can require the assignment of additional hyperparameters (e.g., the maximum number of iterations in KMeans), we reduce the pipeline domain by considering only the most influential.
 
-\vspace{-0.4cm}
 \subsubsection{Optimization}
-To explore promising pipeline instances, rather than exhaustive or grid searches, we leverage Bayesian Optimization (BO) \cite{hutter2011sequential}.
-%
-BO is iterative: as it explores hyperparameter configurations, it progressively builds an accurate model of the domain to decide the next configuration to explore.
-The exploration continues until a budget in terms of either iterations or time is reached.
-
-Selecting the optimal pipeline instance requires the relevance metric (i.e., $rel(C)$) to evaluate the goodness of the retrieved clustering.
+To explore promising pipelines, we leverage Bayesian Optimization (BO) \cite{hutter2011sequential}.
+% BO is iterative: as it explores hyperparameter configurations, it progressively builds an accurate model of the domain to decide the next configuration to explore.
+% The exploration continues until a budget in terms of either iterations or time is reached.
+Selecting the optimal pipeline requires the relevance metric (i.e., $rel(C)$) to evaluate the goodness of the corresponding retrieved clustering.
 In AutoClues, such a metric is customizable.
-%
 Well-known metrics leveraged for spherical clustering are: the silhouette index (SIL) \cite{zhu2010clustering}, contrasting the average distance to elements in the same cluster with the average distance to elements in other clusters, and the Davies-Bouldin Index (DBI) \cite{dbi}, computing the average similarity between clusters by comparing it with the size of the clusters themselves.
 % ; and the Calinski-Harabasz Index (CHI) \cite{chi}, which is the ratio of the sum of between-clusters dispersion and of within-cluster dispersion for all clusters (where dispersion is defined as the sum of distances squared).
 %
-However, clustering metrics show a bias toward lower dimensionalities i.e., yielding higher scores when fewer features are chosen \cite{lensen2017using,hancer2020new}. 
-To overcome this issue, we employ t-SNE \cite{van2008visualizing} for projecting the clusterings into a latent 2D space. 
+However, clustering metrics show a bias toward lower dimensionalities i.e., yielding higher scores when fewer features are chosen \cite{lensen2017using,hancer2020new}.
+To overcome this issue, we employ t-SNE \cite{van2008visualizing} for projecting the clusterings into a latent 2D space.
 Then, we compute the chosen metric in this transformed space, thereby removing the bias and enabling a fair evaluation of the clusterings across diverse feature spaces.
 % have different optimal feature subsets and different clustering solutions
 
-During the optimization, we also store the computed pipeline instances since our goal is returning diverse and relevant clusterings.
+% During the optimization, we also store the computed pipeline instances since our goal is returning diverse and relevant clusterings.
 
-\vspace{-0.4cm}
 \subsubsection{Diversification}
 % Implementing diversification in cluster analysis consists of evaluating the extent to which two clusterings differ from each other.
 % This affects how the dashboard of returned clusterings looks like, ensuring the goal of returning different dataset facets.
@@ -320,8 +315,9 @@ It is crucial to rely on a metric that considers not only shared cluster members
 Information theory introduces the concept of Mutual Information, quantifying the degree of dependence between two variables and, more specifically, Adjusted Mutual Information (AMI) allows for chance agreement\footnote{In statistics, it serves as a baseline for assessing the significance in random variations.}---providing more robust and meaningful measures.
 When applied to cluster analysis, AMI $\in [0, 1]$ considers the labels assigned to data points within clusters, assuming higher values when the clusters in one partition align with those in another.
 Since we need a diversity metric, we adapt the formula as in:
-$$div(C_i, C_j) = 1- AMI(C_i, C_j)$$ 
-where $C_i, C_j$ clusterings coming from different pipeline instances.
+$$div(C_i, C_j) = 1- AMI(C_i, C_j)$$
+where $C_i, C_j$ clusterings come from different pipeline instances.
+\textcolor{orange}{TODO: Qua ci starebbe bene la definizione formale dell'AMI (e delle altre come sil, dbi, ch), tipo come con accuracy}
 
 Finally, considering that the diversification problem is NP-hard, we compute it by exploiting the MMR heuristic solution \cite{vieira2011query} that selects the best-performing clustering and iteratively adds the clusterings that most diversify the outcome.
 
@@ -385,13 +381,13 @@ Finally, in \Cref{clustering-ssec:comparison}, we rely on real datasets to provi
 \subsection{Benchmark Generation}
 \label{clustering-ssec:benchmark}
 % \mg{Storytelling: generiamo dei cluster naturali fissandone le caratteristiche ..... e poi li nascondiamo (to blur) aggiungendo un insieme di deformazioni ..... di cui governiamo le caratteristiche. $SIL_N$ è la complessità dei cluster naturali $SIL_B$ è la complessità dei cluster blurred.}
-The synthetic benchmarking generator is available at \url{https:/github.com/anonymous-pakdd-24/clustering_benchmarking}.
+The synthetic benchmarking generator is available via GitHub\footnote{\url{https:/github.com/anonymous-pakdd-24/clustering_benchmarking}}.
 We create datasets of $|D|$ instances, defining $|C|$ natural iper-spherical clusters in a space of $|\altmathcal{F}|$ features.
-Then, we blur such clusters by posing common challenges faced by clustering algorithms. 
+Then, we blur such clusters by posing common challenges faced by clustering algorithms.
 This includes noise on instances $\sigma(D)$, such as the presence of outliers, and
 noise on features $\sigma(F)$, such as irrelevant, correlated, or distorted features.
-% Our benchmark generation is based on well-known dimensions that characterize the dataset complexity. 
-% One the one hand, some of these are intrinsic such as cardinality i.e., the number of instances $|D|$; 
+% Our benchmark generation is based on well-known dimensions that characterize the dataset complexity.
+% One the one hand, some of these are intrinsic such as cardinality i.e., the number of instances $|D|$;
 % which affects the efficiency of most algorithms; 
 % dimensionality i.e., the number of features $|\altmathcal{F}|$; 
 % which has a significant impact on distance measures; 
@@ -403,16 +399,16 @@ noise on features $\sigma(F)$, such as irrelevant, correlated, or distorted feat
 % that complicate the task by distorting the feature space,  resulting in a dataset that is more skewed or less representative of the underlying patterns. 
 
 %\vspace{-0.03cm}
-To obtain datasets with different characteristics, we set boundaries for each of these dimensions and sample within them according to the Sobol sequence \cite{sobol1967distribution}, a quasi-random low-discrepancy search converging to an equi-distributed coverage. 
+To obtain datasets with different characteristics, we set boundaries for each of these dimensions and sample within them according to the Sobol sequence \cite{sobol1967distribution}, a quasi-random low-discrepancy search converging to an equi-distributed coverage.
 In particular, the defined boundaries are: $|D|$ between $100$ and $5000$, $|F|$ between $2$ and $10$, $|C|$ between $2$ and $\sqrt{|D|}$, $\sigma(D)$ between $0.1$ and $0.3$, and $\sigma(F)$ between $0$ and $1$.
 % Subsequently, datasets can be sampled within these predefined ranges.
-\Cref{clustering-tbl:synthetic} provides a suite of $20$ synthetic datasets. 
+\Cref{clustering-tbl:synthetic} provides a suite of $20$ synthetic datasets.
 
 %\vspace{-0.03cm}
-Dataset complexity can be examined via the silhouette $SIL \in [0, 1]$, the higher the simpler. 
+Dataset complexity can be examined via the silhouette $SIL \in [0, 1]$, the higher the simpler.
 $SIL_N$ measures the cohesion and separability of the natural clusters $C$ in their original feature space, while  $SIL_B$ measures the silhouette of blurred clusters (i.e. after introducing noise ($\sigma$)).
 The former $SIL_N$ indicates the presence of well-separated clusters.
-With the first quartile $Q1=0.64$, median $Q2=0.66$, and third quartile $Q3=0.72$, we observe that 25\% of datasets are complex already at this stage. 
+With the first quartile $Q1=0.64$, median $Q2=0.66$, and third quartile $Q3=0.72$, we observe that 25\% of datasets are complex already at this stage.
 The latter $SIL_B$ registers significantly lower values: \texttt{syn11} emerges as an especially complex dataset with $SIL_B=0.17$ but, overall, we confirm the presence of a good distribution between more and less challenging datasets: $Q1 = 0.36$, $Q2 = 0.43$, and $Q3 = 0.55$.
 % Lastly, $SIL_{\Delta} = SIL_B - SIL_N$ reports the difference between $SIL_N$ and $SIL_B$, highlighting critical datasets such as syn14 and syn17 with drops of $0.44$ and $0.47$ respectively.
 
