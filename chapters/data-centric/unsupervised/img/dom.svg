@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="259mm"
+   height="55mm"
+   viewBox="0 0 259 55"
+   version="1.1"
+   id="svg1696"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="dom.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1698"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.78127806"
+     inkscape:cx="396.78575"
+     inkscape:cy="254.71085"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="1432"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1693">
+    <clipPath
+       id="clip0">
+      <rect
+         x="77"
+         y="305"
+         width="968"
+         height="211"
+         id="rect1700" />
+    </clipPath>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       clip-path="url(#clip0)"
+       transform="matrix(0.26458333,0,0,0.26458333,-18.748635,-81.252701)"
+       id="g1839">
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="19px"
+         transform="translate(356.921,365)"
+         id="text1705">Standardization</text>
+      <path
+         d="m 478.5,360 c 0,-2.485 2.239,-4.5 5,-4.5 2.761,0 5,2.015 5,4.5 0,2.485 -2.239,4.5 -5,4.5 -2.761,0 -5,-2.015 -5,-4.5 z"
+         stroke="#2f528f"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#ed7d31"
+         fill-rule="evenodd"
+         id="path1707" />
+      <text
+         font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="24px"
+         transform="translate(407.937,328)"
+         id="text1711">S<tspan
+   font-size="18px"
+   x="11.8333"
+   y="5"
+   id="tspan1709">nor</tspan></text>
+      <path
+         d="m 354.5,361.667 c 0,-13.899 11.268,-25.167 25.167,-25.167 h 100.666 c 13.899,0 25.167,11.268 25.167,25.167 v 123.666 c 0,13.899 -11.268,25.167 -25.167,25.167 H 379.667 c -13.899,0 -25.167,-11.268 -25.167,-25.167 z"
+         stroke="#000000"
+         stroke-width="0.666667"
+         stroke-miterlimit="8"
+         fill="none"
+         fill-rule="evenodd"
+         id="path1713" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="19px"
+         transform="translate(379.506,405)"
+         id="text1715">MinMax</text>
+      <path
+         d="m 478.5,400 c 0,-2.485 2.239,-4.5 5,-4.5 2.761,0 5,2.015 5,4.5 0,2.485 -2.239,4.5 -5,4.5 -2.761,0 -5,-2.015 -5,-4.5 z"
+         stroke="#2f528f"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="none"
+         fill-rule="evenodd"
+         id="path1717" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="19px"
+         transform="translate(392.422,443)"
+         id="text1721">Robust<tspan
+   font-size="19px"
+   x="0"
+   y="22"
+   id="tspan1719">Scaling</tspan></text>
+      <path
+         d="m 467.5,455 h 27.719 v 3 H 467.5 Z m 26.219,-3 9,4.5 -9,4.5 z"
+         fill="#4472c4"
+         id="path1723" />
+      <path
+         d="M 1.5,-4.61358e-6 1.50008,26.6341 h -3 L -1.5,4.61358e-6 Z M 4.50008,25.1341 l -4.499975013,9 -4.500024987,-9 z"
+         fill="#4472c4"
+         transform="matrix(1,0,0,-1,468.5,458.634)"
+         id="path1725" />
+      <path
+         d="M 1.0699,-1.05134 12.5432,10.6246 10.4034,12.7272 -1.0699,1.05134 Z M 13.6317,7.45198 16.73,17.0254 7.21225,13.76 Z"
+         fill="#4472c4"
+         transform="matrix(-1,0,0,1,468.23,456.5)"
+         id="path1727" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="19px"
+         transform="translate(437.742,500)"
+         id="text1729">I</text>
+      <path
+         d="m 478.5,494.5 c 0,-2.761 2.239,-5 5,-5 2.761,0 5,2.239 5,5 0,2.761 -2.239,5 -5,5 -2.761,0 -5,-2.239 -5,-5 z"
+         stroke="#2f528f"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="none"
+         fill-rule="evenodd"
+         id="path1731" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="19px"
+         transform="translate(546.361,383)"
+         id="text1741">Local Outlier<tspan
+   font-size="19px"
+   x="52.333302"
+   y="22"
+   id="tspan1733">Facto</tspan><tspan
+   font-size="19px"
+   x="93.833397"
+   y="22"
+   id="tspan1735">r</tspan><tspan
+   font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+   font-size="24px"
+   x="53.1371"
+   y="-37"
+   id="tspan1737">S</tspan><tspan
+   font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+   font-size="18px"
+   x="64.970497"
+   y="-32"
+   id="tspan1739">out</tspan></text>
+      <path
+         d="m 539.5,377.667 c 0,-12.795 10.372,-23.167 23.167,-23.167 h 115.666 c 12.795,0 23.167,10.372 23.167,23.167 v 92.666 c 0,12.795 -10.372,23.167 -23.167,23.167 H 562.667 c -12.795,0 -23.167,-10.372 -23.167,-23.167 z"
+         stroke="#000000"
+         stroke-width="0.666667"
+         stroke-miterlimit="8"
+         fill="none"
+         fill-rule="evenodd"
+         id="path1743" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="19px"
+         transform="translate(580.933,431)"
+         id="text1747">Isolation<tspan
+   font-size="19px"
+   x="18.6667"
+   y="22"
+   id="tspan1745">Forest</tspan></text>
+      <path
+         d="M 650.5,385 H 691 v 3 h -40.5 z m 39,-3 9,4.5 -9,4.5 z"
+         fill="#4472c4"
+         id="path1749" />
+      <path
+         d="M 650.5,437 H 691 v 3 h -40.5 z m 39,-3 9,4.5 -9,4.5 z"
+         fill="#4472c4"
+         id="path1751" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="19px"
+         transform="translate(641.177,483)"
+         id="text1753">I</text>
+      <path
+         d="m 668.5,477 c 0,-2.485 2.015,-4.5 4.5,-4.5 2.485,0 4.5,2.015 4.5,4.5 0,2.485 -2.015,4.5 -4.5,4.5 -2.485,0 -4.5,-2.015 -4.5,-4.5 z"
+         stroke="#2f528f"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#ed7d31"
+         fill-rule="evenodd"
+         id="path1755" />
+      <path
+         d="m 171.5,383 c 0,-11.322 9.178,-20.5 20.5,-20.5 h 107 c 11.322,0 20.5,9.178 20.5,20.5 v 82 c 0,11.322 -9.178,20.5 -20.5,20.5 H 192 c -11.322,0 -20.5,-9.178 -20.5,-20.5 z"
+         stroke="#000000"
+         stroke-width="0.666667"
+         stroke-miterlimit="8"
+         fill="none"
+         fill-rule="evenodd"
+         id="path1757" />
+      <text
+         font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="24px"
+         transform="translate(226.055,354)"
+         id="text1763">S<tspan
+   font-size="18px"
+   x="11.8333"
+   y="5"
+   id="tspan1759">fea</tspan><tspan
+   font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+   font-size="19px"
+   x="-45.836399"
+   y="78"
+   id="tspan1761">WKMeans</tspan></text>
+      <path
+         d="M 265.5,424 H 306 v 3 h -40.5 z m 39,-3 9,4.5 -9,4.5 z"
+         fill="#4472c4"
+         id="path1765" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="19px"
+         transform="translate(255.284,474)"
+         id="text1767">I</text>
+      <path
+         d="m 281.5,467.5 c 0,-2.761 2.015,-5 4.5,-5 2.485,0 4.5,2.239 4.5,5 0,2.761 -2.015,5 -4.5,5 -2.485,0 -4.5,-2.239 -4.5,-5 z"
+         stroke="#2f528f"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="none"
+         fill-rule="evenodd"
+         id="path1769" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="19px"
+         transform="translate(216.91,389)"
+         id="text1771">SPEC</text>
+      <path
+         d="M 265.5,381 H 306 v 3 h -40.5 z m 39,-3 9,4.5 -9,4.5 z"
+         fill="#4472c4"
+         id="path1773" />
+      <path
+         d="m 280.039,382.5 c 0,-3.031 2.47,-5.501 5.5,-5.501 3.041,0 5.5,2.47 5.5,5.501 0,3.04 -2.459,5.499 -5.5,5.499 -3.03,0 -5.5,-2.459 -5.5,-5.499 z"
+         fill="#ed7d31"
+         fill-rule="evenodd"
+         id="path1775" />
+      <text
+         font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="24px"
+         transform="translate(807.066,349)"
+         id="text1779">S<tspan
+   font-size="18px"
+   x="11.8333"
+   y="5"
+   id="tspan1777">clu</tspan></text>
+      <path
+         d="m 735.5,378.834 c 0,-12.335 9.999,-22.334 22.334,-22.334 h 137.332 c 12.335,0 22.334,9.999 22.334,22.334 v 89.332 c 0,12.335 -9.999,22.334 -22.334,22.334 H 757.834 c -12.335,0 -22.334,-9.999 -22.334,-22.334 z"
+         stroke="#000000"
+         stroke-width="0.666667"
+         stroke-miterlimit="8"
+         fill="none"
+         fill-rule="evenodd"
+         id="path1781" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="19px"
+         transform="translate(743.211,422)"
+         id="text1785">Agglomerative<tspan
+   font-size="19px"
+   x="34.166599"
+   y="22"
+   id="tspan1783">Clustering</tspan></text>
+      <path
+         d="M 856.5,426 H 897 v 3 h -40.5 z m 39,-3 9,4.5 -9,4.5 z"
+         fill="#4472c4"
+         id="path1787" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="16px"
+         transform="translate(901.806,396)"
+         id="text1791">k<tspan
+   font-size="19px"
+   x="-52.728802"
+   y="83"
+   id="tspan1789">I</tspan></text>
+      <path
+         d="m 873.5,474 c 0,-2.485 2.239,-4.5 5,-4.5 2.761,0 5,2.015 5,4.5 0,2.485 -2.239,4.5 -5,4.5 -2.761,0 -5,-2.015 -5,-4.5 z"
+         stroke="#2f528f"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="none"
+         fill-rule="evenodd"
+         id="path1793" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="19px"
+         transform="translate(791.184,386)"
+         id="text1795">KMeans</text>
+      <path
+         d="M 856.5,379 H 897 v 3 h -40.5 z m 39,-3 9,4.5 -9,4.5 z"
+         fill="#4472c4"
+         id="path1797" />
+      <path
+         d="m 871.039,380.5 c 0,-3.031 2.47,-5.501 5.5,-5.501 3.041,0 5.5,2.47 5.5,5.501 0,3.04 -2.459,5.499 -5.5,5.499 -3.03,0 -5.5,-2.459 -5.5,-5.499 z"
+         fill="#ed7d31"
+         fill-rule="evenodd"
+         id="path1799" />
+      <rect
+         x="952.5"
+         y="386.5"
+         width="91.999901"
+         height="73"
+         stroke="#000000"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         stroke-dasharray="1.33333, 1.33333"
+         fill="none"
+         id="rect1801" />
+      <path
+         d="m 958.5,408.5 c 0,-2.761 2.239,-5 5,-5 2.761,0 5,2.239 5,5 0,2.761 -2.239,5 -5,5 -2.761,0 -5,-2.239 -5,-5 z"
+         stroke="#000000"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#4472c4"
+         fill-rule="evenodd"
+         id="path1803" />
+      <path
+         d="m 973.5,412.5 c 0,-2.761 2.239,-5 5,-5 2.761,0 5,2.239 5,5 0,2.761 -2.239,5 -5,5 -2.761,0 -5,-2.239 -5,-5 z"
+         stroke="#000000"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#4472c4"
+         fill-rule="evenodd"
+         id="path1805" />
+      <path
+         d="m 1020.5,406 c 0,-2.485 2.24,-4.5 5,-4.5 2.76,0 5,2.015 5,4.5 0,2.485 -2.24,4.5 -5,4.5 -2.76,0 -5,-2.015 -5,-4.5 z"
+         stroke="#000000"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#ff0000"
+         fill-rule="evenodd"
+         id="path1807" />
+      <path
+         d="m 1005.5,410.5 c 0,-2.761 2.24,-5 5,-5 2.76,0 5,2.239 5,5 0,2.761 -2.24,5 -5,5 -2.76,0 -5,-2.239 -5,-5 z"
+         stroke="#000000"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#ff0000"
+         fill-rule="evenodd"
+         id="path1809" />
+      <path
+         d="m 973.5,396.5 c 0,-2.761 2.239,-5 5,-5 2.761,0 5,2.239 5,5 0,2.761 -2.239,5 -5,5 -2.761,0 -5,-2.239 -5,-5 z"
+         stroke="#000000"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#4472c4"
+         fill-rule="evenodd"
+         id="path1811" />
+      <path
+         d="m 1018.5,418 c 0,-2.485 2.01,-4.5 4.5,-4.5 2.49,0 4.5,2.015 4.5,4.5 0,2.485 -2.01,4.5 -4.5,4.5 -2.49,0 -4.5,-2.015 -4.5,-4.5 z"
+         stroke="#000000"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#ff0000"
+         fill-rule="evenodd"
+         id="path1813" />
+      <path
+         d="m 968.5,443.5 c 0,-2.761 2.239,-5 5,-5 2.761,0 5,2.239 5,5 0,2.761 -2.239,5 -5,5 -2.761,0 -5,-2.239 -5,-5 z"
+         stroke="#000000"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#92d050"
+         fill-rule="evenodd"
+         id="path1815" />
+      <path
+         d="m 983.5,438.5 c 0,-2.761 2.015,-5 4.5,-5 2.485,0 4.5,2.239 4.5,5 0,2.761 -2.015,5 -4.5,5 -2.485,0 -4.5,-2.239 -4.5,-5 z"
+         stroke="#000000"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#92d050"
+         fill-rule="evenodd"
+         id="path1817" />
+      <path
+         d="m 980.5,451.5 c 0,-2.761 2.015,-5 4.5,-5 2.485,0 4.5,2.239 4.5,5 0,2.761 -2.015,5 -4.5,5 -2.485,0 -4.5,-2.239 -4.5,-5 z"
+         stroke="#000000"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#92d050"
+         fill-rule="evenodd"
+         id="path1819" />
+      <path
+         d="m 77.5001,402.167 c 0,-5.891 13.4314,-10.667 29.9999,-10.667 16.569,0 30,4.776 30,10.667 v 42.666 c 0,5.891 -13.431,10.667 -30,10.667 -16.5685,0 -29.9999,-4.776 -29.9999,-10.667 z"
+         fill="#ffffff"
+         fill-rule="evenodd"
+         id="path1821" />
+      <path
+         d="m 137.5,402.167 c 0,5.891 -13.431,10.666 -30,10.666 -16.5685,0 -29.9999,-4.775 -29.9999,-10.666"
+         stroke="#000000"
+         stroke-width="0.666667"
+         stroke-miterlimit="8"
+         fill="none"
+         fill-rule="evenodd"
+         id="path1823" />
+      <path
+         d="m 77.5001,402.167 c 0,-5.891 13.4314,-10.667 29.9999,-10.667 16.569,0 30,4.776 30,10.667 v 42.666 c 0,5.891 -13.431,10.667 -30,10.667 -16.5685,0 -29.9999,-4.776 -29.9999,-10.667 z"
+         stroke="#000000"
+         stroke-width="0.666667"
+         stroke-miterlimit="8"
+         fill="none"
+         fill-rule="evenodd"
+         id="path1825" />
+      <text
+         font-family="'Times New Roman', 'Times New Roman_MSFontService', sans-serif"
+         font-weight="400"
+         font-size="24px"
+         transform="translate(98.3374,437)"
+         id="text1827">D</text>
+      <path
+         d="m 140.5,420 h 22 v -3.5 l 7,7 -7,7 V 427 h -22 z"
+         stroke="#787878"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#a5a5a5"
+         fill-rule="evenodd"
+         id="path1829" />
+      <path
+         d="m 322.5,420 h 22 v -3.5 l 7,7 -7,7 V 427 h -22 z"
+         stroke="#787878"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#a5a5a5"
+         fill-rule="evenodd"
+         id="path1831" />
+      <path
+         d="m 508.5,420 h 21 v -3.5 l 7,7 -7,7 V 427 h -21 z"
+         stroke="#787878"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#a5a5a5"
+         fill-rule="evenodd"
+         id="path1833" />
+      <path
+         d="m 704.5,420 h 22 v -3.5 l 7,7 -7,7 V 427 h -22 z"
+         stroke="#787878"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#a5a5a5"
+         fill-rule="evenodd"
+         id="path1835" />
+      <path
+         d="m 920.5,420 h 22 v -3.5 l 7,7 -7,7 V 427 h -22 z"
+         stroke="#787878"
+         stroke-width="1.33333"
+         stroke-miterlimit="8"
+         fill="#a5a5a5"
+         fill-rule="evenodd"
+         id="path1837" />
+    </g>
+  </g>
+</svg>
