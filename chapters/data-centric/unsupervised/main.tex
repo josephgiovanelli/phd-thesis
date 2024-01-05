@@ -139,19 +139,24 @@ Besides, such approaches retrieve just one solution.
     \label{clustering-fig:overview}
 \end{figure}
 
-AutoClues aims at (i) tuning the whole ML pipeline and (ii) suggesting multiple clusterings to provide the data scientist different facets of the datasets. 
-% by combining both model-based (AutoML) techniques and diversification.
-%
-In literature, these two problems are addressed through \textit{optimization} and \textit{diversification} techniques respectively.
-\Cref{clustering-fig:overview} shows an overview of the architecture.
+% AutoClues aims at (i) tuning the whole ML pipeline and (ii) suggesting multiple clusterings to provide the data scientist with different facets of the datasets.
+% % by combining both model-based (AutoML) techniques and diversification.
+% %
+% In literature, these two problems are addressed through \textit{optimization} and \textit{diversification} techniques respectively.
+% \Cref{clustering-fig:overview} shows an overview of the architecture.
 %
 % !!!!!!!!!!!!! ALTERNATIVA
-% AutoClues aims at tuning the whole ML pipeline and suggests multiple clusterings by combining both model-based (AutoML) techniques and diversification.
-% \Cref{clustering-fig:overview} shows an overview of the architecture. In Section \Cref{clustering-ssec:formalization} we formalize the approach and in \Cref{clustering-sec:implementation} we delve into the implementation.
+AutoClues aims at tuning the whole ML pipeline and suggests multiple clusterings by combining both model-based (AutoML) techniques and diversification.
+\Cref{clustering-fig:overview} shows an overview of the architecture. In Section \Cref{clustering-ssec:formalization} we formalize the approach and in \Cref{clustering-sec:implementation} we delve into the implementation.
 
 %\vspace{-0.3cm}
 \subsection{Formalization}
 \label{clustering-ssec:formalization}
+
+AutoClues aims at (i) tuning the whole ML pipeline and (ii) suggesting multiple clusterings to provide the data scientist with different facets of the datasets.
+% by combining both model-based (AutoML) techniques and diversification.
+%
+In literature, these two problems are addressed through \textit{optimization} and \textit{diversification} techniques respectively.
 
 % Intuitively, a pipeline is a sequence of steps where, at each step, an algorithm can be picked among several alternatives.
 
@@ -161,25 +166,35 @@ In literature, these two problems are addressed through \textit{optimization} an
 % Let assume $D$ be a dataset and denote $\lambda \in \Lambda^{(i)}$ a hyperparameter configuration, then $\altmathcal{M}(P^{(i)}_{\lambda}, D)$ is the quality metric that evaluates the pipeline instance $P^{(i)}_{\lambda}$ on the dataset $D$.
 % %
 % Hence, the optimization problem can be formulated as:
-\subsubsection{Optimization} We seek for the most ``correct'' pipeline.
-A pipeline is a sequence of steps that process a dataset in order to return a clustering and, at each step, an algorithm can be picked among several alternatives.
+\subsubsection{Optimization}
+In cluster analysis, we seek for the most ``correct'' pipeline.
+Let us refresh the used formalization.
+An ML pipeline is a sequence of pre-processing steps that shape a dataset and an ML algorithm that tackles the task---in our case, deliver a clustering.
+At each step, including the final ML steps, an implementation can be picked among several alternatives---transformation for pre-processing steps, and algorithms for the ML step.
+In the following, for the sake of simplicity and readability, we refer to \textit{algorithm} to a generic candidate implementation for the step at---either pre-processing or ML.
 
 More formally, a \textit{dataset} $D$ is a collection of $|D|$ data items that is characterized by a set of features $\altmathcal{F}$ (i.e., columns).
 %
-An \textit{Algorithm} $A$ is a function that transforms a dataset $D'$ into a new dataset $D''$ and has a set of (possibly empty) \textit{hyperparameters} that regulates its behavior.
+An \textit{Algorithm} $A$ trains a model that satisfy a certain task, which nature can be either the one of pre-processing -- transforming a dataset $\altmathcal{D}$ into a new dataset $\altmathcal{D}'$ -- or the one of ML---learn from $\altmathcal{D}$ a way to cluster/partition data items.
+Algorithms have a set of (possibly empty) \textit{hyperparameters} that regulates its behavior.
 %
-Each hyperparameter has a domain, and the possible algorithm configurations are represented as the Cartesian product of all the hyperparameter domains, denoted with $\Lambda_A$.
+Each hyperparameter has a domain, and the possible algorithm configurations are represented as the Cartesian product of all the hyperparameter domains, here denoted with $\pmb{\Lambda}_A$.
 %
-We call \textit{algorithm instance} $\lambda_A \in \Lambda_A$ an (ordered) tuple in which each hyperparameter has been assigned with a value from its domain.
+% Given a hyperparameter configuration $\pmb{\aambda} \in \pmb{\Lambda}$, i.e., an (ordered) tuple in which each hyperparameter has been assigned with a value from its domain.
+% $A_{\lambda}$
 %
-For instance, a clustering algorithm is KMeans and two tunable hyperparameters can be: the number of clusters $k \in \mathbb{N}^+$ and the maximum iterations $iter \in \mathbb{N}^+$. 
+% For instance, a clustering algorithm is KMeans and two tunable hyperparameters can be: the number of clusters $k \in \mathbb{N}^+$ and the maximum iterations $iter \in \mathbb{N}^+$. 
 %
 % Hence, $\Lambda_\textup{KMeans} = [2..12] \times \mathbb{N}^+$.
 % An example of algorithm instance is $\lambda_\textup{KMeans} = (3, 10^3)$, where $k=3$ and $iter=10^3$.
 
-A pipeline \textit{step} $S$ is a set of algorithms that can be selected as alternatives to carry out the step goal, including the possibility to return the dataset as-is through the ``Identity'' algorithm $I$.
+A \textit{step} $S$ of the pipeline can be instantiated from several alternative algorithms; in terms of optimization search space, this can be formulated as
+% including the possibility to return the dataset as-is through the ``Identity'' algorithm $I$.
 %
-The step domain is defined as $\Lambda_S = \Lambda_{A_1} \cupdot \ldots \cupdot \Lambda_{A_{|S|}}$, therefore the disjoint union of the domain of each algorithm\footnote{If an algorithm has no hyperparameters ($\Lambda_{A} = \varnothing$), we set a placeholder $\Lambda_{A} = \{ 1 \}$.}. $\lambda_{S}$ denotes the algorithm instance selected for the step.
+% The step domain is defined as
+$\Lambda_S = \Lambda_{A_1} \cup \ldots \cup \Lambda_{A_{|S|}} \cup \lambda_r$, with $\lambda_r$ a new root-hyperparameter that selects the algorithm.
+% therefore the disjoint union of the domain of each algorithm.
+% \footnote{If an algorithm has no hyperparameters ($\Lambda_{A} = \varnothing$), we set a placeholder $\Lambda_{A} = \{ 1 \}$.}. $\lambda_{S}$ denotes the algorithm instance selected for the step.
 %
 % The $\cupdot$ combines all the algorithm domains while retaining their original membership (i.e., it is possible to distinguish each algorithm domain included in the step domain).
 % \footnote{
@@ -188,19 +203,21 @@ The step domain is defined as $\Lambda_S = \Lambda_{A_1} \cupdot \ldots \cupdot 
 %.
 % This is necessary to distinguish hyperparameters from different algorithms (e.g., $k$ is the number clusters in both KMeans and Agglomerative clustering algorithms).
 
-A \textit{Pipeline} $P$ is a sequence of steps, its domain is the Cartesian Product of the step domains $\Lambda_P = \Lambda_{S_1} \times \ldots \times \Lambda_{S_{|P|}}$, and a \textit{pipeline instance} is an ordered tuple of algorithm instances $\lambda_P = (\lambda_{S_1}, \ldots, \lambda_{S_{|P|}}) \in \Lambda_P$.
-The input of $\lambda_{A_i}$ is the output of $\lambda_{A_{i-1}}$ and the initial dataset $D$ is the input of $\lambda_{A_{1}}$.
-In our use case, the last step is mandatory since it fulfills cluster analysis by returning a clustering.
+a \textit{pipeline} $P$ is a sequence of steps, which search space translates to the Cartesian Product of the step spaces $\Lambda_P = \Lambda_{S_1} \times \ldots \times \Lambda_{S_{|P|}}$.
+Note that we do not consider multiple possible prototypes here, so no more root hyperparameters are introduced to select the order of the steps.
+% We refer to an \textit{executable instance} as an ordered tuple of algorithm instances $P_{\lambda} = ({S_1}, \ldots, \lambda_{S_{|P|}}) \in \Lambda_P$.
+% The input of $\lambda_{A_i}$ is the output of $\lambda_{A_{i-1}}$ and the initial dataset $D$ is the input of $\lambda_{A_{1}}$.
+% In our use case, the last step is mandatory since it fulfills cluster analysis by returning a clustering.
 
-A \textit{(crisp) Clustering} is a partition of the dataset into a set of (non-overlapping) clusters  $C=\{c_1, \ldots, c_{|C|}\}$ (i.e., groups of data items) by minimizing the distance of data items in the same cluster and maximizing the distance of different clusters. 
-Given a pipeline domain $\Lambda_P$ and a dataset $D$, the optimal pipeline instance is 
+A \textit{(crisp) Clustering} is a partition of the dataset into a set of (non-overlapping) clusters  $C=\{c_1, \ldots, c_{|C|}\}$ (i.e., groups of data items) by minimizing the distance of data items in the same cluster and maximizing the distance of different clusters.
+Given the search space $\Lambda_P$, a dataset $\altmathcal{D}$, the optimal pipeline instance is
 \begin{equation}
 \label{eq:optimization}
-    \lambda_P^* = argmax_{\lambda_P \in \Lambda_P} rel(C)
+    \lambda^* = argmin_{\lambda_P \in \Lambda_P} rel(P_{\lambda}(\altmathcal{D}))
 \end{equation}
-where $rel$ is a goodness metric for $C$ obtained by applying $\lambda_P$ on $D$.
+where $rel$ is a goodness metric for the clustering $C$ obtained by partitioning the dataset through the pipeline at hand $P_{\lambda}(\altmathcal{D})$.
 
-\vspace{-0.3cm}
+
 \subsubsection{Diversification} The process of returning a set of relevant and diverse solutions -- clusterings in our case -- is known as diversification, a multi-objective optimization problem that can be formulated as follows.
 %
 Let $\altmathcal{C}$ be the set of clusterings that have been previously explored in the pipeline optimization process (\Cref{eq:optimization}), then our goal is selecting a set of $\alpha$ clusterings $\altmathcal{C}^* \subseteq \altmathcal{C}$ maximizing a \textit{score} that represents a tradeoff between finding \textit{relevance} and \textit{diversity}.
