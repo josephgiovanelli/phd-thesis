@@ -1,4 +1,4 @@
-\chapter{HAMLET: a Framework for Human-centered AutoML via Structured Argumentation}
+\chapter{Human-centric AutoML via Structured Argumentation}
 \label{human-centric-chap:hamlet}
 
 \begin{figure*}[t]
@@ -24,14 +24,14 @@ AutoML has been demonstrated to provide accurate performance, even in a limited 
 Yet, when setting up the search space, it is highly important for the data scientist to inject her knowledge about the problem into constraints that prevent the AutoML tool from retrieving invalid solutions (i.e., the result of those cannot be deemed correct).
 However, the support for constraint/knowledge injection is limited and the AutoML tools became that complex to make it difficult for the data scientist to understand their functioning, hence losing control over the process \cite{XinWLSP21automationml}.
 
-\paragraph{Motivation} The need for a Human-centered and explainable framework for AutoML is real \cite{gil2019towards, lee2020human, wang2019human} (or even mandatory in recent analytic scenarios where the user is interacting with mixed-reality and smart assistants \cite{DBLP:conf/dolap/FranciaGR19,DBLP:journals/is/FranciaGG22}).
+\paragraph{Motivation} The need for a Human-centric and explainable framework for AutoML is real \cite{gil2019towards, lee2020human, wang2019human} (or even mandatory in recent analytic scenarios where the user is interacting with mixed-reality and smart assistants \cite{DBLP:conf/dolap/FranciaGR19,DBLP:journals/is/FranciaGG22}).
 It is crucial for the data scientist to augment her knowledge by learning new insights (e.g., new constraints) from the retrieved solutions.
 Indeed, the data scientist requires understanding the AutoML process in order to trust the proposed solutions \cite{drozdal2020trust}.
-Some works \cite{gil2019towards, lee2020human, wang2019human} prescribe the usage of a Human-centered framework for AutoML, yet they only suggest design requirements.
+Some works \cite{gil2019towards, lee2020human, wang2019human} prescribe the usage of a human-centric framework for AutoML, yet they only suggest design requirements.
 Alternatively, the authors in \cite{ono2020pipelineprofiler} have proposed a tool that visualizes the best and the worst solutions retrieved by an AutoML tool.
-We claim that a Human-centered framework should provide the mechanisms to: (i) help the data scientist to structure her knowledge about the problem in an effective search space; and (ii) augment the knowledge initially possessed by the data scientist with the one produced by the AutoML optimization process.
+We claim that a human-centric framework should provide the mechanisms to: (i) help the data scientist to structure her knowledge about the problem in an effective search space; and (ii) augment the knowledge initially possessed by the data scientist with the one produced by the AutoML optimization process.
 
-\paragraph{Contributions} We introduce HAMLET (Human-centered AutoMl via Logic and argumEnTation; \Cref{hamlet-fig:approach}), a framework that enhances AutoML with Structured Argumentation to:
+\paragraph{Contributions} We introduce HAMLET (Human-centric AutoMl via Logic and argumEnTation; \Cref{hamlet-fig:approach}), a framework that enhances AutoML with Structured Argumentation to:
 structure the constraints and the AutoML solutions in a Logical Knowledge Base (LogicalKB);
 parse the LogicalKB into a human- and machine-readable medium called Problem Graph;
 devise the AutoML search space from the Problem Graph;
@@ -69,13 +69,13 @@ To the best of our knowledge, no contribution lies in this intersection to provi
 % We believe that the data scientist has the duty to revise and supervise the suggested solutions as well as the process producing them.
 % Yet, stacking (more and more) complex mechanisms on top of each other unavoidably led to a less understandable optimization that can be hardly controlled by the data scientist (especially if without a strong computer science background).
 
-\subsection{Human-centered AutoML Approaches}
+\subsection{Human-centric AutoML Approaches}
 In current state-of-the-art tools, the data scientist role in AutoML is limited to choosing the dataset to analyze, the validation technique (e.g., cross validation, hold out), and the metric to optimize (e.g., accuracy, F1 score).
 AutoML researchers aim at making ML accessible to a wider audience;
 this has been addressed first by improving automation and now by improving transparency, which also enables human intervention when needed.
 Auto-Weka \cite{kotthoff2019auto} and Auto-Sklearn \cite{feurer2019auto} enables non-expert users to build ML models, but the ``black-box'' can be barely open.
 Indeed, as advocated in \cite{drozdal2020trust}, data scientists require to understand the process to trust the proposed solutions.
-This direction, named ``Human-centered AutoML'', is pursued by both researchers and companies.
+This direction, named ``Human-centric AutoML'', is pursued by both researchers and companies.
 
 As to research contributions, we found plenty of visualization wrappers.
 In \cite{drozdal2020trust}, the authors raise the need of incorporating transparency into AutoML: after a session interview, they discover that -- out of all their proposed features -- model performance metrics and visualizations are the most important information to data scientists when establishing their trust in the proposed solutions.
@@ -91,8 +91,8 @@ As to IBM, AutoAI \cite{wang2020autoai} and AutoDS \cite{wang2021autods} are the
 Specifically, the former enables non-technical users to define and customize their business goals as constraints. 
 The latter assists the data scientist team throughout the CRISP-DM process (e.g., in data collection and pipeline design \cite{muller2019data, wang2021autods} and in the augmentation of the DS's knowledge about the dataset features \cite{drozdal2020trust}).
 
-Overall, several studies have been made to understand the proper design of a Human-centered AutoML tool.
-In \cite{pfisterer2019towards}, the authors overview the main AutoML issues; while in \cite{khuat2022roles} authors suggest improvements towards the Human-centered shift.
+Overall, several studies have been made to understand the proper design of a human-centric AutoML tool.
+In \cite{pfisterer2019towards}, the authors overview the main AutoML issues; while in \cite{khuat2022roles} authors suggest improvements towards the human-centric shift.
 In \cite{gil2019towards, XinWLSP21automationml, crisan2021fits}, interviews with data scientists are conducted to reveal their perception of AutoML as well as their needs and expectations in the next-generation tools.
 The main insight is that the future of data science work will be a collaboration between humans and AI systems, in which both automation and human expertise are indispensable \cite{wang2019human}.
 To this end, AutoML should focus on: simplicity, reproducibility, and reliability \cite{XinWLSP21automationml, crisan2021fits}.
@@ -118,8 +118,8 @@ Once defined the right logical language for encoding the data scientist and Auto
 
 \section{Problem Formulation}\label{hamlet-sec:problem}
 
-\Cref{hamlet-fig:approach} illustrates the overview of HAMLET.
-When addressing end-to-end data analysis, a data scientist usually follows a process model such as CRISP-DM.
+\Cref{hamlet-fig:approach} illustrates the overview of HAMLET and its interactions during the CRISP-DM process.
+% When addressing end-to-end data analysis, a data scientist usually follows a process model such as CRISP-DM.
 The data scientist starts by collecting raw data in an arbitrary format.
 Then, domain understanding is conducted.
 The data scientist works in close cooperation with domain experts and enlists \emph{domain-related constraints} (i.e., intrinsic of the problem).
@@ -132,102 +132,75 @@ The data scientist instantiates different pipelines among a large set of transfo
 While seeking the best performing and valid solution, the data scientist should consider the already known constraints -- domain- and data-related -- and the ones she discovers during data pre-processing and modelling, respectively: \emph{transformation-} and \emph{algorithm-related constraints} (e.g., due to the intrinsic semantic of transformations and algorithms at hand).
 Finally, the process concludes with the deployment of the solution.
 
-HAMLET intersects CRISP-DM, allowing the data scientist to inject and augment her knowledge while automatizing the exploration towards the solution (i.e., instantiate the best ML pipeline). 
-We now dig the foundation of HAMLET by incrementally introducing the concepts necessary to move from AutoML to Logic and Argumentation.
+HAMLET intersects CRISP-DM, allowing the data scientist to inject and augment her knowledge while automatizing the exploration towards the solution (i.e., instantiate the best ML pipeline).
+We now dig the foundation of HAMLET by incrementally introducing the concepts necessary to move from AutoML (\Cref{hamlet-ssec:automl-formalization}) to Logic and Argumentation(\Cref{hamlet-ssec:argumentation-formalization}).
 % To support the reader, we summarize the main notation in \Cref{hamlet-tbl:symbols}.
 
-\begin{table}[t]
-    \centering
-    \footnotesize
-    \caption{Main symbols used in the formalization.}
-    \begin{tabular}{cl}
-        \toprule
-        \textbf{Symbol} & \textbf{Meaning} \\
-        \midrule
-        $A$ & Algorithm \\
-        $h$ & Algorithm hyperparameter \\
-        $S$ & Step \\
-        $P$ & Pipeline \\
-        $\lambda_*$ & Instance of * \\
-        $\Lambda_*$ & Domain of * \\
-        $\Lambda$ & Search space \\
-        \bottomrule
-    \end{tabular}
-    \label{hamlet-tbl:symbols}
-\end{table}
+% \begin{table}[t]
+%     \centering
+%     \footnotesize
+%     \caption{Main symbols used in the formalization.}
+%     \begin{tabular}{cl}
+%         \toprule
+%         \textbf{Symbol} & \textbf{Meaning} \\
+%         \midrule
+%         $A$ & Algorithm \\
+%         $h$ & Algorithm hyperparameter \\
+%         $S$ & Step \\
+%         $P$ & Pipeline \\
+%         $\lambda_*$ & Instance of * \\
+%         $\Lambda_*$ & Domain of * \\
+%         $\Lambda$ & Search space \\
+%         \bottomrule
+%     \end{tabular}
+%     \label{hamlet-tbl:symbols}
+% \end{table}
 
 \subsection{AutoML Formalization}
-We provide a novel formalization necessary to move from single algorithms to the optimal pipeline.
-For the sake of clarity, we refer to a Classification task, but the formalization also holds for supervised ML tasks in general. % regression tasks.
+\label{hamlet-ssec:automl-formalization}
+We recall the formalization of interest.
 
-\begin{definition}[Dataset]
-A \emph{dataset} $X$ is a matrix where data items (i.e., rows) are characterized by features (i.e., columns).
-\end{definition}
+We aim to find the best ML pipeline (i.e., with higher performance) for the dataset $\altmathcal{D}$ and the task considered.
+In the following, for the sake of simplicity and readability, we refer with \textit{algorithm} to a generic candidate implementation of each pipeline step---either pre-processing or ML.
+In particular, we are interested in formalizing the overall search space.
+Each algorithm $A$ exposes a set of $K$ hyperparameters, producing the Cartesian product $\Lambda_A = \Lambda_1 \times \dots \times \Lambda_K$, and a \textit{step} $S$ can be instantiated from several alternative algorithms, hence $\Lambda_S = \Lambda_{A_1} \cup \ldots \cup \Lambda_{A_{|S|}} \cup \lambda_s$, with $\lambda_s$ a new root-hyperparameter that selects the algorithm.
 
-\begin{definition}[Algorithm]
-An \emph{algorithm} $A$ is a function that transforms an input dataset $X'$ into a new dataset $X''$.
-The algorithm exposes a (possibly empty) set $H$ of \emph{hyperparameters}.
-Each hyperparameter $h \in H$ has a \emph{domain} $\Lambda_h$.
-We call the \emph{algorithm domain} $\Lambda_A$ the Cartesian product of all hyperparameter domains (i.e., $\Lambda_A = \Lambda_{h_1} \times \ldots \times \Lambda_{h_{|H|}}$).
-We call \emph{algorithm instance} $\lambda_A \in \Lambda_A$ an algorithm whose hyperparameters have been assigned with values from their respective domains.
-\end{definition}
-
-A Classification algorithm returns a vector (i.e., a matrix with a single column) of labels $Y$ out of the input dataset $X'$.
-
-\begin{definition}[Step]
-A \emph{step} $S$ is a set of alternative algorithms with the same goal.
-The \emph{step domain} is defined as a disjoint union of the algorithm domains $\Lambda_S = \Lambda_{A_1} \cupdot \ldots \cupdot \Lambda_{A_{|S|}}$.
-\end{definition}
-
-Where $\cupdot$ combines the domains of the given algorithms, while retaining the original domain membership (i.e., it is possible to refer to the domain of each algorithm included in a step).
-
-We identify two types of steps: Data Pre-preprocessing steps (e.g., Discretization, Normalization) shape the dataset for the last mandatory step, which fulfill the task---Classification in this case.
 
 \begin{example}[Algorithm and step]
-Examples of steps are Normalization ($\altmathcal{N}$), Discretization ($\altmathcal{D}$), and Classification ($\altmathcal{C}l$). 
-An algorithm for Classification is Decision Tree  ($\altmathcal{D}t$) \cite{DBLP:books/wa/BreimanFOS84},
-examples of hyperparameters for $\altmathcal{D}t$ are its maximum $\textup{depth}$ $(\mathbb{N}^+)$ and the minimum $\textup{samples split}$ $(\mathbb{N}^+)$ required to split a node; hence $\Lambda_{\altmathcal{D}t} = \mathbb{N}^+ \times \mathbb{N}^+$.
-An example of algorithm instance is $\lambda_{\altmathcal{D}t}= \{ \textup{depth}=3,\textup{samples\_split}=10 \}$.
-\end{example}
+    Examples of steps are Normalization ($\altmathcal{N}$), Discretization ($\altmathcal{D}$), and Classification ($\altmathcal{C}l$).
+    An algorithm for classification is decision tree  ($\altmathcal{D}t$) \cite{DBLP:books/wa/BreimanFOS84},
+    examples of hyperparameters for $\altmathcal{D}t$ are its maximum $\textup{depth}$ $(\mathbb{N}^+)$ and the minimum $\textup{samples split}$ $(\mathbb{N}^+)$ required to split a node; hence $\Lambda_{\altmathcal{D}t} = \mathbb{N}^+ \times \mathbb{N}^+$.
+    An example of algorithm instance is $\lambda_{\altmathcal{D}t}= \{ \textup{depth}=3,\textup{samples\_split}=10 \}$.
+    \end{example}
 
-\begin{definition}[Pipeline]
-Given a (possibly empty) set of Pre-processing steps $\altmathcal{S} = \{S_1,\ldots, S_{|\altmathcal{S}|}\}$ and a Classification algorithm $A$ from the Classification step, a \emph{pipeline} $P$ is a sequence that concatenates steps from $\altmathcal{S}$ and $A$.
-The domain of a pipeline is $\Lambda_P = \Lambda_{S_1} \times \ldots \times \Lambda_{S_{|\altmathcal{S}|}} \times \Lambda_A$.
-We call \emph{pipeline instance} $\lambda_P$ a sequence of algorithm instances $\lambda_P = \langle \lambda_{A_1}, \ldots, \lambda_{A_{|P|}} \rangle$ such that $\lambda_P \in \Lambda_P$.
-\end{definition}
+Finally, an ML pipeline $P$ is a sequence of pre-processing steps that shape a dataset $\altmathcal{D}$ and a subsequent final ML step in which we address the task---in our case, either classification or regression.
+We can write the search space as: $\Lambda_P = \Lambda_{S_1} \times \ldots \times \Lambda_{S_{|P|}} \times \lambda_p$, with $\lambda_p$ a new root-hyperparameter that selects the order of the pre-processing steps---i.e., among all possible partial permutations.
 
-\begin{example}[Pipeline and pipeline instance]
-Given the pre-processing steps Normalization ($\altmathcal{N}$) and Discretization ($\altmathcal{D}$), the possible pipelines for the DecisionTree ($\altmathcal{D}t$) are:
-\begin{align*}
-    P_1 &= \langle \altmathcal{D}t \rangle &
-    P_2 &= \langle \altmathcal{D}, \altmathcal{D}t \rangle & 
-    P_4 &= \langle \altmathcal{D}, \altmathcal{N}, \altmathcal{D}t \rangle \\
-    &&
-    P_3 &= \langle \altmathcal{N}, \altmathcal{D}t \rangle & P_5 &= \langle \altmathcal{N}, \altmathcal{D}, \altmathcal{D}t \rangle
-\end{align*}
-Given \textup{Binarizer} ($\altmathcal{B}$) and  \textup{KBinsDiscretizer} ($\altmathcal{K}b$) as algorithms of Discretization ($\altmathcal{D}$), and \textup{MinMaxScaler} ($\altmathcal{M}m$) and \textup{StandardScaler} ($\altmathcal{S}s$) and  as algorithms of Normalization ($\altmathcal{N}$), we provide examples of instances of $P_2$ and $P_4$:
-\begin{align*}
-    \lambda_{P_2} &= \langle \lambda_{\altmathcal{B}},~ \lambda_{\altmathcal{D}t} \rangle, &\lambda_{P_4} &= \langle \lambda_{\altmathcal{K}b},~ \lambda_{\altmathcal{M}m},~ \lambda_{\altmathcal{D}t} \rangle \\
-    \lambda_{\altmathcal{B}}&=\{ \textup{thr}=5.5 \}, &\lambda_{\altmathcal{K}b}&=\{ \textup{n\_bins}=3, \ldots \}\\
-    \lambda_{\altmathcal{M}m}&=\{ \varnothing \}, &\lambda_{\altmathcal{D}t}&= \{ \textup{depth}=3,\ldots\}
-\end{align*}
-\Cref{hamlet-fig:space} depicts the pipeline domain $\Lambda_{P_4}$ and the pipeline instance $\lambda_{P_4}$.
-\label{ex:pipelineinstance}
-\end{example}
-
-Depending the on the involved algorithms, their order and hyperparameters, the search space -- out of which the best pipeline instance is select -- is defined as follows.
-While, its extraction is later discussed in \Cref{spacealgorithm}.
-
-\begin{definition}[Search space]
-The \emph{search space} $\Lambda$ is the Cartesian product of the domain of the Classification step and the disjoint union of the all partial permutations of the pre-preprocessing steps domains.
-\end{definition}
+\begin{example}[Pipeline]
+    Given the pre-processing steps Normalization ($\altmathcal{N}$) and Discretization ($\altmathcal{D}$), the possible pipelines for the DecisionTree ($\altmathcal{D}t$) are:
+    \begin{align*}
+        P_1 &= \langle \altmathcal{D}t \rangle &
+        P_2 &= \langle \altmathcal{D}, \altmathcal{D}t \rangle &
+        P_4 &= \langle \altmathcal{D}, \altmathcal{N}, \altmathcal{D}t \rangle \\
+        &&
+        P_3 &= \langle \altmathcal{N}, \altmathcal{D}t \rangle & P_5 &= \langle \altmathcal{N}, \altmathcal{D}, \altmathcal{D}t \rangle
+    \end{align*}
+    Given \textup{Binarizer} ($\altmathcal{B}$) and  \textup{KBinsDiscretizer} ($\altmathcal{K}b$) as algorithms of Discretization ($\altmathcal{D}$), and \textup{MinMaxScaler} ($\altmathcal{M}m$) and \textup{StandardScaler} ($\altmathcal{S}s$) and  as algorithms of Normalization ($\altmathcal{N}$), we provide examples of executable pipelines for $P_2$ and $P_4$:
+    \begin{align*}
+        \lambda_{P_2} &= \langle \lambda_{\altmathcal{B}},~ \lambda_{\altmathcal{D}t} \rangle, &\lambda_{P_4} &= \langle \lambda_{\altmathcal{K}b},~ \lambda_{\altmathcal{M}m},~ \lambda_{\altmathcal{D}t} \rangle \\
+        \lambda_{\altmathcal{B}}&=\{ \textup{thr}=5.5 \}, &\lambda_{\altmathcal{K}b}&=\{ \textup{n\_bins}=3, \ldots \}\\
+        \lambda_{\altmathcal{M}m}&=\{ \varnothing \}, &\lambda_{\altmathcal{D}t}&= \{ \textup{depth}=3,\ldots\}
+    \end{align*}
+    \Cref{hamlet-fig:space} depicts the pipeline domain $\Lambda_{P_4}$ and the pipeline instance $\lambda_{P_4}$.
+    \label{ex:pipelineinstance}
+    \end{example}
 
 AutoML optimizes the exploration of such space.
 However, it is not only about algorithms and hyperparameters but also about constraints.
 
 \begin{definition}[Constraint]\label{constraints}
 A \emph{constraint} $C \subseteq \Lambda$ is a region of search space that is either \emph{mandatory} or \emph{forbidden}.
-Given a pipeline instance $\lambda_P \in \Lambda_P \subseteq \Lambda$
+Given a pipeline $\lambda_P \in \Lambda_P \subseteq \Lambda$
 \begin{itemize}
     \item a mandatory constraint $C$ is fulfilled if  $\lambda_P \in C$;
     \item a forbidden constraint $C$ is fulfilled if  $\lambda_P \notin C$.
@@ -256,6 +229,7 @@ Given a search space $\Lambda$ and a set of constraints $\altmathcal{C}$, findin
 \end{definition}
 
 \subsection{Argumentation Formalization}
+\label{hamlet-ssec:argumentation-formalization}
 
 AutoML is not explainable, hence it does not provide the data scientist with feedbacks that would help her to augment the knowledge about the problem.
 It is necessary to represent both (i) the data scientist knowledge about the problem and (ii) the outcome of the AutoML tool in a uniform human-readable medium.
@@ -773,7 +747,7 @@ Data platforms support Data Scientists in performing end-to-end data analysis; t
 However, the complexity and heterogeneity of (Automated) Machine Learning processes are leading Data Scientists to lose control over such processes.
 Human awareness about the constraints and solutions of Machine Learning tasks is a fundamental aspect to consider, and consequently, the Data Scientist should play a central role in the design of next-generation data platforms.
 
-According to this vision, we present HAMLET, a framework for Human-centered AutoML based on Logic and Structured Argumentation.
+According to this vision, we present HAMLET, a framework for human-centric AutoML based on Logic and Structured Argumentation.
 Logic is exploited to structure the knowledge that the Data Scientist gathers while designing, modeling, and deploying a solution.
 The logical encoding of the knowledge provides a medium that is both human- and machine-readable and it allows an easy exploration and verification of all the constraints that may apply to the case at hand---it is overwhelming for the Data Scientist to correctly handle the vast amount of them.
 The preliminary evaluation of HAMLET shows promising results against state-of-the-art AutoML algorithms both in terms of effectiveness and efficiency, with argumentation introducing a small overhead with respect to the duration of the exploration process.

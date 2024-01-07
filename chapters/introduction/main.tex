@@ -141,12 +141,12 @@ Then, diversification selects, out of the explored clusterings, the ones conveyi
 
 % As to the structure of this part, we address supervised and unsupervised learning in \Cref{data-centric:supervised} and \Cref{data-centric:unsupervised}, respectively.
 
-\section*{Part II: Human-centered AutoML}
+\section*{Part II: Human-centric AI}
 
 The original promise of AutoML was to automate certain ML tasks to a significant extent, thereby democratizing it and enabling non-experts to apply it in their respective domains.
 However, despite their success, many current AutoML tools were -- yet another time -- not built around the user but rather around algorithmic ideas.
 The stacking of complex mechanisms on top of each other unavoidably led to a less understanding of the process -- even by ML experts -- and allowing for very limited interaction.
-Parts of the community have hence pushed towards a more human-centered AutoML process aimed at complementing, instead of replacing, human intelligence.
+Parts of the community have hence pushed towards a more human-centric AutoML process aimed at complementing, instead of replacing, human intelligence.
 % This becomes even more crucial nowadays
 % Motivated by ethical concerns and social bias issues arising at each step of the ML process, this becomes imperative in such a mitigating call nowadays.
 Besides, motivated by ethical concerns and social bias issues arising at each step of the ML process, this approach becomes even imperative in such a mitigating call nowadays.
@@ -154,12 +154,12 @@ By placing the user back in the loop, we let the user to revise and supervise th
 
 In \Cref{part:human-centric}, we focus on the following challenges and contributions.
 
-\subsection*{HAMLET: a Framework for Human-centered AutoML via Structured Argumentation}
+\subsection*{Human-centric AutoML via Structured Argumentation}
 
 \paragraph{Challenge} In the last decade, we have witnessed exponential growth in both the complexity and the number of ML techniques; leveraging such techniques to solve real-case problems has become difficult for Data Scientists.
 Automated Machine Learning (AutoML) tools have been devised to alleviate this task, but easily became as complex as the ML techniques themselves---with Data Scientists losing control over the process.
 
-\paragraph{Contribution} In \Cref{human-centric-chap:hamlet}, we design HAMLET (Human-centered AutoMl via Logic and argumEnTation), a framework that helps data scientists to redeem their centrality.
+\paragraph{Contribution} In \Cref{human-centric-chap:hamlet}, we design HAMLET (Human-centric AutoMl via Logic and argumEnTation), a framework that helps data scientists to redeem their centrality.
 HAMLET enables data scientists to express ML constraints in a uniform human- and machine-readable medium.
 User-defined constraints are interpreted to drive the exploration of ML pipelines (i.e., data pre-processing transformations shape the data so that the ML task can be performed at its best).
 AutoML retrieves the most performing pipeline instance, and finally, new constraints are learned and integrated through Logic and Argumentation.
@@ -176,7 +176,7 @@ Optimizing the hyperparameters of such algorithms is non-trivial as evaluating a
 In literature, there are known indicators that assess the quality of a Pareto front (e.g., hypervolume, R2) by quantifying different properties (e.g., volume, proximity to a reference point).
 However, choosing the indicator that leads to the desired Pareto front might be a hard task for a user.
 
-\paragraph{Contribution} In \Cref{human-centric-chap:moo}, we propose a human-centered interactive HPO approach tailored towards multi-objective ML leveraging preference learning to extract desiderata from users that guide the optimization.
+\paragraph{Contribution} In \Cref{human-centric-chap:moo}, we propose a human-centric interactive HPO approach tailored towards multi-objective ML leveraging preference learning to extract desiderata from users that guide the optimization.
 Instead of relying on the user guessing the most suitable indicator for their needs, our approach automatically learns an appropriate indicator.
 Concretely, we leverage pairwise comparisons of distinct Pareto fronts to learn such an appropriate quality indicator.
 Then, we optimize the hyperparameters of the underlying MO-ML algorithm towards this learned indicator using a state-of-the-art HPO approach.
@@ -197,25 +197,25 @@ By highlighting conceivable synergies, but also risks, we aim to foster further 
 
 % \begin{itemize}
 %     % \item Providing the AutoML formalization to explicitly deal with thorough pipelines i.e., concatenations of pre-processing transformations and ML algorithms.
-%     \item Devising a human-centered framework for supervised learning in a single-objective of a user-specified function.
+%     \item Devising a human-centric framework for supervised learning in a single-objective of a user-specified function.
 %     Specifically, we design a framework that enablesusers to express ML constraints in a uniformed human- and machine-readable medium.
 %     Constraints are interpreted to drive the AutoML exploration, which retrieves the most performing pipelines and, finally, new constraints are learned and integrated through logic and argumentation.
 %     \item Addressing multi-objective ML, i.e. optimization of more than one loss or objective function, by interactively learning user preferences and drive the optimization towards it.
-%     \item Showcasing potential challenges, opportunities, and risks of novel (human-centered) AutoML interfaces with large language models (LLMs), i.e. AI models trained on large corpora of text to understand and produce human-like answers.
+%     \item Showcasing potential challenges, opportunities, and risks of novel (human-centric) AutoML interfaces with large language models (LLMs), i.e. AI models trained on large corpora of text to understand and produce human-like answers.
 % \end{itemize}
 
 % We organize this part as follows.
 % \Cref{automl-chap:supervised} addresses the supervised single-objective optimization.
-% \Cref{automl-chap:moo} delves into multi-objective ML and, lastly, \Cref{automl-chap:llm} discusses the novel human-centered AutoML interfaces with LLMs.
+% \Cref{automl-chap:moo} delves into multi-objective ML and, lastly, \Cref{automl-chap:llm} discusses the novel human-centric AutoML interfaces with LLMs.
 
 % \Cref{automl-chap:formalization} provides the comprehensive AutoML formalization for ML pipelines.
-% In this part, we devise human-centered AutoML solutions for the main categories of ML.
+% In this part, we devise human-centric AutoML solutions for the main categories of ML.
 % While in \Cref{automl-chap:formalization} we provide the AutoML formalization to explicitly deal with thorough pipelines i.e., concatenations of pre-processing transformations and ML algorithms, \Cref{automl-chap:supervised} and \Cref{automl-chap:unsupervised} address supervised and unsupervised learning respectively.
 % The former is provided with a ground truth to drive the learning towards a user-specified objective function, the latter is by nature exploratory -- does not benefit from any ground truth -- and optimizing an objective is even more challenging.
 % Then, \Cref{automl-chap:moo} delves into multi-objective ML, i.e. optimization of more than one loss or objective function.
-% Lastly, \Cref{automl-chap:llm} showcases the potential challenges, opportunities, and risks of novel (human-centered) AutoML interfaces with large language models, i.e. AI models trained on large corpora of text to understand and produce human-like answers.
+% Lastly, \Cref{automl-chap:llm} showcases the potential challenges, opportunities, and risks of novel (human-centric) AutoML interfaces with large language models, i.e. AI models trained on large corpora of text to understand and produce human-like answers.
 
-\section*{Part III: Physics-aware AutoML}
+\section*{Part III: Physics-aware AI}
 
 As application areas go, there are domains in which ML models are not yet widespread.
 Usually related to earth observations, the deployed applications tend to be particularly high-impact, trying to mitigate challenges such as climate change by delivering (more) eco-friendly systems.
