@@ -1096,7 +1096,7 @@ wish to left align your text}
     \renewcommand{\printnomencl}[1][2]{}
     \renewcommand{\printthesisindex}{}
     \renewcommand{\bibname}{}
-    \renewcommand{\bibliography}[1]{\thispagestyle{empty}}
+    % \renewcommand{\bibliography}[1]{\thispagestyle{empty}}
 \else
     \defineAbstractfalse
 \fi

@@ -22,7 +22,7 @@
 
 % Add `customfont' in the document class option to use this section
 
-\ifsetCustomFont
+% \ifsetCustomFont
   % Set your custom font here and use `customfont' in options. Leave empty to
   % load computer modern font (default LaTeX font).
   %\RequirePackage{helvet}
@@ -39,8 +39,8 @@
   %  {libertine}
   %  % load font from system font
   %  \newfontfamily\libertinesystemfont{Linux Libertine O}
-\fi
-
+% \fi
+% 
 % *****************************************************************************
 % **************************** Custom Packages ********************************
 
@@ -71,15 +71,15 @@
 %\usepackage{cleveref} %Referencing without need to explicitly state fig /table
 
 % Add `custombib' in the document class option to use this section
-\ifuseCustomBib
-   \RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
+% \ifuseCustomBib
+%    \RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
 
 % If you would like to use biblatex for your reference management, as opposed to the default `natbibpackage` pass the option `custombib` in the document class. Comment out the previous line to make sure you don't load the natbib package. Uncomment the following lines and specify the location of references.bib file
 
 %\RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=nty, natbib=true]{biblatex}
 %\addbibresource{References/references} %Location of references.bib only for biblatex, Do not omit the .bib extension from the filename.
 
-\fi
+% \fi
 
 % ******************************************************************************
 % ************************* User Defined Commands ******************************
@@ -135,6 +135,7 @@
 % *****************************************************************************
 % ******************* Better enumeration my MB*************
 % \usepackage{enumitem}
+% \usepackage{sty/aaai24}
 \usepackage{tabularx}
 \usepackage{rotating}
 \usepackage{pdfpages}
@@ -157,7 +158,6 @@
 \usepackage{amssymb}
 \usepackage{pifont}
 \usepackage{quoting}
-\usepackage{cleveref}
 \usepackage{epigraph}
 \usepackage[flushleft]{threeparttable}
 % \usepackage{subfig}
@@ -165,6 +165,7 @@
 \usepackage[shortlabels]{enumitem}
 \usepackage{relsize}
 \usepackage{siunitx}
+
 
 
 \newtheorem{example}{Example}
@@ -268,7 +269,12 @@
 % \usepackage{blindtext}
 % \usepackage{makeidx}  % allows for indexgeneration
 % \usepackage{graphicx}
-% \usepackage{natbib}
+\usepackage{natbib}
+\let\cite\citep
+\let\shortcite\citeyearpar
+\setcitestyle{aysep={}}
+\setlength\bibhang{0pt}
+\bibliographystyle{Classes/aaai24}
 % \usepackage{rotating}
 % \usepackage[noend]{algpseudocode}
 % \usepackage{paralist}
