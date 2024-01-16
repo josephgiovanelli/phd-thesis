@@ -93,7 +93,6 @@ In real-world problems, those facets may help the data scientist to understand t
 We organize this chapter as follows.
 \Cref{clustering-sec:related} discusses the related works; \Cref{clustering-sec:autoclues} introduces the problem formulation and how AutoClues tackles it; \Cref{clustering-sec:test} illustrates the benchmark generator and dives into the empirical evaluation of the approach; finally, \Cref{clustering-sec:conclusion} draws the conclusion and future research directions.
 
-%\vspace{-0.2cm}
 \section{Related Works}\label{clustering-sec:related}
 
 Although the active development of data pre-processing techniques in cluster analysis (e.g., outlier removal, feature selection), and the evidence of their benefits, there is no trace of automatic solutions that tunes a thorough ML pipeline.
@@ -111,7 +110,6 @@ Authors in \cite{Tschechlov2021,poulakis2020autoclust,Liu2021} apply such techni
 In MALSS \cite{Kamoshida2020}, the authors apply AutoML with simple (no-clustering-oriented) pre-processing, and still for the aim of suggesting the number of clusters.
 Besides, such approaches retrieve just one solution.
 
-%\vspace{-0.3cm}
 \section{AutoClues}\label{clustering-sec:autoclues}
 
 % \begin{table}[t]
@@ -146,17 +144,17 @@ Besides, such approaches retrieve just one solution.
 % \Cref{clustering-fig:overview} shows an overview of the architecture.
 %
 % !!!!!!!!!!!!! ALTERNATIVA
-AutoClues aims at tuning the whole ML pipeline and suggests multiple clusterings by combining both model-based (AutoML) techniques and diversification.
-\Cref{clustering-fig:overview} shows an overview of the architecture. In Section \Cref{clustering-ssec:formalization} we formalize the approach and in \Cref{clustering-sec:implementation} we delve into the implementation.
+\Cref{clustering-fig:overview} shows an overview of the AutoClues architecture:  the optimization phase tunes the whole ML pipeline by leveraging AutoML techniques (\Cref{clustering-ssec:automl}), diversification suggests a dashboard of diverse and relevant clusterings (\Cref{clustering-ssec:diversification}).
 
-%\vspace{-0.3cm}
-\subsection{Formalization}
-\label{clustering-ssec:formalization}
+% In Section \Cref{clustering-ssec:formalization} we formalize the approach and in \Cref{clustering-sec:implementation} we delve into the implementation.
 
-AutoClues aims at (i) tuning the whole ML pipeline and (ii) suggesting multiple clusterings to provide the data scientist with different facets of the datasets.
-% by combining both model-based (AutoML) techniques and diversification.
-%
-In literature, these two problems are addressed through \textit{optimization} and \textit{diversification} techniques respectively.
+% \subsection{Formalization}
+% \label{clustering-ssec:formalization}
+
+% AutoClues aims at (i) tuning the whole ML pipeline and (ii) suggesting multiple clusterings to provide the data scientist with different facets of the datasets.
+% % by combining both model-based (AutoML) techniques and diversification.
+% %
+% In literature, these two problems are addressed through \textit{optimization} and \textit{diversification} techniques respectively.
 
 % Intuitively, a pipeline is a sequence of steps where, at each step, an algorithm can be picked among several alternatives.
 
@@ -166,7 +164,7 @@ In literature, these two problems are addressed through \textit{optimization} an
 % Let assume $D$ be a dataset and denote $\lambda \in \Lambda^{(i)}$ a hyperparameter configuration, then $\altmathcal{M}(P^{(i)}_{\lambda}, D)$ is the quality metric that evaluates the pipeline instance $P^{(i)}_{\lambda}$ on the dataset $D$.
 % %
 % Hence, the optimization problem can be formulated as:
-\subsubsection{Optimization}
+\subsection{Optimization}
 In cluster analysis, we seek for the most ``correct'' pipeline.
 Let us refresh the used formalization.
 An ML pipeline is a sequence of pre-processing steps that shape a dataset and an ML algorithm that tackles the task---in our case, deliver a clustering.
@@ -218,34 +216,6 @@ Given the search space $\Lambda_P$, a dataset $\altmathcal{D}$, the optimal pipe
 where $rel$ is a goodness metric for the clustering $C$ obtained by partitioning the dataset through the pipeline at hand $P_{\lambda}(\altmathcal{D})$.
 
 
-\subsubsection{Diversification} The process of returning a set of relevant and diverse solutions -- clusterings in our case -- is known as diversification, a multi-objective optimization problem that can be formulated as follows.
-%
-Let $\altmathcal{C}$ be the set of clusterings that have been previously explored in the pipeline optimization process (\Cref{eq:optimization}), then our goal is selecting a set of $\alpha$ clusterings $\altmathcal{C}^* \subseteq \altmathcal{C}$ maximizing a \textit{score} that represents a tradeoff between finding \textit{relevance} and \textit{diversity}.
-%
-\begin{align}\label{def:score}
-&\altmathcal{C}^* = argmax_{\hat{\altmathcal{C}} \subseteq \altmathcal{C}, \alpha=|\hat{\altmathcal{C}}|} score(\beta, \hat{\altmathcal{C}})\\
-&score(\beta, \hat{\altmathcal{C}}) = (1-\beta)~rel(\hat{\altmathcal{C}}) + \beta~div(\hat{\altmathcal{C}})
-\end{align}
-where $\beta \in [0.. 1]$ is the tradeoff parameter and
-\begin{align}
-rel(\hat{\altmathcal{C}}) &= (|\hat{\altmathcal{C}}|-1)\sum_{C \in \hat{\altmathcal{C}}} rel(C)
-\label{def:rel}
-\end{align}
-\vspace{-1cm}
-\begin{align}
-div(\hat{\altmathcal{C}}) &= \sum_{C_i \in \hat{\altmathcal{C}}}~\sum_{C_j \in (\hat{\altmathcal{C}} \setminus C_i)} div(C_i, C_j)
-\label{def:div}
-\end{align}
-
-\noindent $div(\hat{\altmathcal{C}})$ is the sum of pair-wise clustering diversity comparisons and $rel(\hat{\altmathcal{C}})$ is the sum of clustering relevance;
-$rel(\hat{\altmathcal{C}})$ entails a multiplication factor $|\hat{\altmathcal{C}}|-1$ to make $rel(\hat{\altmathcal{C}})$ and $div(\hat{\altmathcal{C}})$ comparable.
-
-% Relevance and diversity functions will be further discussed in the following.
-% In our prototype, we set $\beta=0.7$ after empirical evaluation.
-
-%\vspace{-0.2cm}
-\subsection{Implementation}\label{clustering-sec:implementation}
-
 \begin{table}[t]
     \centering
     \begin{tabular}{llcc}
@@ -263,13 +233,12 @@ $rel(\hat{\altmathcal{C}})$ entails a multiplication factor $|\hat{\altmathcal{C
         Clustering  & KMeans \cite{arthur2006k} & 1 & $\sqrt{|D|}$\\
         & Agglomerative clustering  \cite{murtagh2017algorithms} & 1 & $\sqrt{|D|}$\\\hline
     \end{tabular}
-    \vspace{0.2cm}
     \caption{Steps and algorithms optimized by AutoClues.}
     \label{clustering-tbl:processing}
 \end{table}
 
 
-\Cref{clustering-tbl:processing} reports the pipeline with steps, algorithms, and hyperparameters; AutoClues implementation can be found at \url{https://github.com/anonymous-pakdd-24/autoclues}.
+\paragraph{Implementation} \Cref{clustering-tbl:processing} reports the pipeline with steps, algorithms, and hyperparameters; AutoClues implementation can be found at \url{https://github.com/anonymous-pakdd-24/autoclues}.
 The first step is \textit{Feature selection}.
 Since cluster analysis is particularly sensitive to non-informative and correlated features, we leverage algorithms from spectral family and based on the Pearson correlation, respectively. 
 % Since cluster analysis is particularly sensitive to irrelevant features, this step aids in identifying the most informative ones.
@@ -289,7 +258,7 @@ As to the order of steps, in \cite{giovanelli2022data}, the authors reduce the c
 % Our implementation imports the algorithms from the sklearn Python library.
 % While the algorithms can require the assignment of additional hyperparameters (e.g., the maximum number of iterations in KMeans), we reduce the pipeline domain by considering only the most influential.
 
-\subsubsection{Optimization}
+% \subsubsection{Optimization}
 To explore promising pipelines, we leverage Bayesian Optimization (BO) \cite{hutter2011sequential}.
 % BO is iterative: as it explores hyperparameter configurations, it progressively builds an accurate model of the domain to decide the next configuration to explore.
 % The exploration continues until a budget in terms of either iterations or time is reached.
@@ -305,7 +274,36 @@ Then, we compute the chosen metric in this transformed space, thereby removing t
 
 % During the optimization, we also store the computed pipeline instances since our goal is returning diverse and relevant clusterings.
 
-\subsubsection{Diversification}
+
+\subsection{Diversification}
+The process of returning a set of relevant and diverse solutions -- clusterings in our case -- is known as diversification, a multi-objective optimization problem that can be formulated as follows.
+%
+Let $\altmathcal{C}$ be the set of clusterings that have been previously explored in the pipeline optimization process (\Cref{eq:optimization}), then our goal is selecting a set of $\alpha$ clusterings $\altmathcal{C}^* \subseteq \altmathcal{C}$ maximizing a \textit{score} that represents a tradeoff between finding \textit{relevance} and \textit{diversity}.
+%
+\begin{align}\label{def:score}
+&\altmathcal{C}^* = argmax_{\hat{\altmathcal{C}} \subseteq \altmathcal{C}, \alpha=|\hat{\altmathcal{C}}|} score(\beta, \hat{\altmathcal{C}})\\
+&score(\beta, \hat{\altmathcal{C}}) = (1-\beta)~rel(\hat{\altmathcal{C}}) + \beta~div(\hat{\altmathcal{C}})
+\end{align}
+where $\beta \in [0.. 1]$ is the tradeoff parameter and
+\begin{align}
+rel(\hat{\altmathcal{C}}) &= (|\hat{\altmathcal{C}}|-1)\sum_{C \in \hat{\altmathcal{C}}} rel(C)
+\label{def:rel}
+\end{align}
+\begin{align}
+div(\hat{\altmathcal{C}}) &= \sum_{C_i \in \hat{\altmathcal{C}}}~\sum_{C_j \in (\hat{\altmathcal{C}} \setminus C_i)} div(C_i, C_j)
+\label{def:div}
+\end{align}
+
+\noindent $div(\hat{\altmathcal{C}})$ is the sum of pair-wise clustering diversity comparisons and $rel(\hat{\altmathcal{C}})$ is the sum of clustering relevance;
+$rel(\hat{\altmathcal{C}})$ entails a multiplication factor $|\hat{\altmathcal{C}}|-1$ to make $rel(\hat{\altmathcal{C}})$ and $div(\hat{\altmathcal{C}})$ comparable.
+
+% Relevance and diversity functions will be further discussed in the following.
+% In our prototype, we set $\beta=0.7$ after empirical evaluation.
+
+% \subsection{Implementation}\label{clustering-sec:implementation}
+
+
+\paragraph{Implementation}
 % Implementing diversification in cluster analysis consists of evaluating the extent to which two clusterings differ from each other.
 % This affects how the dashboard of returned clusterings looks like, ensuring the goal of returning different dataset facets.
 % It is crucial to rely on a metric that goes beyond the mere identification of shared cluster membership among different clusterings but, instead, takes into account structural interrelationships within them.
@@ -321,7 +319,6 @@ where $C_i, C_j$ clusterings come from different pipeline instances.
 
 Finally, considering that the diversification problem is NP-hard, we compute it by exploiting the MMR heuristic solution \cite{vieira2011query} that selects the best-performing clustering and iteratively adds the clusterings that most diversify the outcome.
 
-%\vspace{-0.2cm}
 \section{Benchmark Generation and Empirical Evaluation}\label{clustering-sec:test}
 
 
@@ -352,7 +349,6 @@ Finally, considering that the diversification problem is NP-hard, we compute it 
         \texttt{syn19} & 2905 & 2  & 3 & 0.15  & 0.50  & 0.72 & 0.53 & 0.86 & 0.87 & 4.79 & \num{1.28e03} \\ 
         \texttt{syn20} & 264 & 5 & 3 & 0.25 & 0.20 & 0.64 & 0.44 & 0.7 & 0.88 & 3.74 & \num{2.13e02} \\ \hline
     \end{tabular}
-    \vspace{0.2cm}
     \caption{Dataset characteristics and performance achieved by AutoClues.}
     \label{clustering-tbl:synthetic}
 \end{table}
@@ -377,7 +373,6 @@ This translates into approaches relying upon datasets from supervised tasks, wit
 In \Cref{clustering-ssec:benchmark}, we introduce a benchmarking generator and a suite of synthetic datasets. In \Cref{clustering-ssec:effectiveness}, we leverage such a suite to assess the effectiveness and efficiency of AutoClues.
 Finally, in \Cref{clustering-ssec:comparison}, we rely on real datasets to provide a comparison against other approaches in the literature.
 
-\vspace{-0.2cm}
 \subsection{Benchmark Generation}
 \label{clustering-ssec:benchmark}
 % \mg{Storytelling: generiamo dei cluster naturali fissandone le caratteristiche ..... e poi li nascondiamo (to blur) aggiungendo un insieme di deformazioni ..... di cui governiamo le caratteristiche. $SIL_N$ è la complessità dei cluster naturali $SIL_B$ è la complessità dei cluster blurred.}
@@ -388,23 +383,21 @@ This includes noise on instances $\sigma(D)$, such as the presence of outliers, 
 noise on features $\sigma(F)$, such as irrelevant, correlated, or distorted features.
 % Our benchmark generation is based on well-known dimensions that characterize the dataset complexity.
 % One the one hand, some of these are intrinsic such as cardinality i.e., the number of instances $|D|$;
-% which affects the efficiency of most algorithms; 
-% dimensionality i.e., the number of features $|\altmathcal{F}|$; 
-% which has a significant impact on distance measures; 
+% which affects the efficiency of most algorithms;
+% dimensionality i.e., the number of features $|\altmathcal{F}|$;
+% which has a significant impact on distance measures;
 % the number of natural clusters $|C|$.
-% influencing cohesion and separability within the one known partinioning---among the potential ones. 
+% influencing cohesion and separability within the one known partinioning---among the potential ones.
 % On the other hand, we apply noise with a certain degree to pose common challenges faced by clustering algorithms. This includes noise on instances $\sigma(D)$, such as the presence of outliers, and
 % i.e., anomalous data which deviate to typical or expected patterns within the dataset;
 % noise on features $\sigma(F)$, such as irrelevant, correlated, or distorted features.
-% that complicate the task by distorting the feature space,  resulting in a dataset that is more skewed or less representative of the underlying patterns. 
+% that complicate the task by distorting the feature space,  resulting in a dataset that is more skewed or less representative of the underlying patterns.
 
-%\vspace{-0.03cm}
 To obtain datasets with different characteristics, we set boundaries for each of these dimensions and sample within them according to the Sobol sequence \cite{sobol1967distribution}, a quasi-random low-discrepancy search converging to an equi-distributed coverage.
 In particular, the defined boundaries are: $|D|$ between $100$ and $5000$, $|F|$ between $2$ and $10$, $|C|$ between $2$ and $\sqrt{|D|}$, $\sigma(D)$ between $0.1$ and $0.3$, and $\sigma(F)$ between $0$ and $1$.
 % Subsequently, datasets can be sampled within these predefined ranges.
 \Cref{clustering-tbl:synthetic} provides a suite of $20$ synthetic datasets.
 
-%\vspace{-0.03cm}
 Dataset complexity can be examined via the silhouette $SIL \in [0, 1]$, the higher the simpler.
 $SIL_N$ measures the cohesion and separability of the natural clusters $C$ in their original feature space, while  $SIL_B$ measures the silhouette of blurred clusters (i.e. after introducing noise ($\sigma$)).
 The former $SIL_N$ indicates the presence of well-separated clusters.
@@ -412,8 +405,7 @@ With the first quartile $Q1=0.64$, median $Q2=0.66$, and third quartile $Q3=0.72
 The latter $SIL_B$ registers significantly lower values: \texttt{syn11} emerges as an especially complex dataset with $SIL_B=0.17$ but, overall, we confirm the presence of a good distribution between more and less challenging datasets: $Q1 = 0.36$, $Q2 = 0.43$, and $Q3 = 0.55$.
 % Lastly, $SIL_{\Delta} = SIL_B - SIL_N$ reports the difference between $SIL_N$ and $SIL_B$, highlighting critical datasets such as syn14 and syn17 with drops of $0.44$ and $0.47$ respectively.
 
-\vspace{-0.2cm}
-\subsection{Effectiveness and efficiency}
+\subsection{Effectiveness and Efficiency}
 \label{clustering-ssec:effectiveness}
 
 
@@ -426,7 +418,6 @@ Given an AutoClues dashboard, \Cref{clustering-tbl:synthetic} provides
 the maximum $SIL\in [0, 1]$ as the cohesion of the found clusters and the maximum $AMI \in [0, 1]$ as the alignment with the natural ones. Besides, we report the dashboard score of \Cref{def:score}, summarizing the overall relevance and diversity in the dashboard, and the computation time (in seconds) spent during the diversification process. 
 % \mg{l'inglese è un po' contorto}
 
-\vspace{-0.5cm}
 \subsubsection{Effectiveness}\label{sssec:effectiveness}
 % \mg{ Fare notarare che $SIL > SIL_N$ perchè AutoClues può eliminare dei punti (dei cluster naturali) che considera di rumore determinando quindi dei cluster più compatti}
 The achieved silhouette not only shows AutoClues' ability to find particularly well-separated clusters in 19 cases out of 20, but it also demonstrates to overcome the silhouette of natural clusters $SIL_N$. 
@@ -452,7 +443,6 @@ Analogously, quartile values of the score ($Q1=4$, $Q2=4.34$, $Q3=4.47$) confirm
 % As to the remaining, 
 % we observe quartile values of $Q1=4$, $Q2=4.34$, and $Q3=4.47$.
 
-\vspace{-0.5cm}
 \subsubsection{Efficiency}\label{sssec:efficiency}
 \Cref{clustering-tbl:synthetic} reports the computation time for diversification, when the optimization budget is set to 2 hours.
 We can observe 25\% of datasets compute the dashboard in less than $Q1=\num{2.44e02}$ seconds ($4$ minutes), $50\%$ in less than $Q2=\num{1.07e03}$ seconds ($18$ minutes), and $75\%$ in less than $Q3=\num{1.56e03}$ seconds ($26$ minutes).
@@ -481,7 +471,6 @@ The trends of $SIL$ and $AMI$ saturated $100\%$ right afterward, while both dash
 After such a threshold, improvements in the score are not considered worth it for the computation cost.
 This is due to the increasing number of available solutions that have to be evaluated during the diversification, while relevant and diverse clusterings are already present in the dashboard.
 
-\vspace{-0.2cm}
 \subsection{Comparison}\label{clustering-ssec:comparison}
 
 % \begin{table}[t]
@@ -555,7 +544,6 @@ This is due to the increasing number of available solutions that have to be eval
         \texttt{vehicle} & 846 & 18 & 4 & - & - & 0.6 & \textbf{0.15} & 0.61 & \textbf{0.72} \\ 
         \texttt{wine} & 178 & 13 & 3 & \textbf{0.77} & 1.22 & 1.4 & 1.01 & 0.28 & \textbf{0.38} \\ \hline
     \end{tabular}
-    \vspace{0.2cm}
     \caption{Comparison with other approaches in the literature.}
     \label{clustering-tbl:comparison}
 \end{table}
@@ -579,7 +567,6 @@ As to $SIL$, MALLS achieves $0.4$ and $0.45$ for \texttt{ecoli} and \texttt{seed
 
 % Overall, these results confirm that optimizing pre-processing boosts the performance of AutoClues. \mg{questa è la conclusione principale}
 
-\vspace{-0.2cm}
 \section{Conclusion and Future Work}\label{clustering-sec:conclusion}
 We introduced AutoClues, an end-to-end cluster analysis approach that leverages AutoML techniques to provide a diverse and relevant dashboard of clusterings. Our findings demonstrate that optimizing pre-processing significantly enhances performance, allowing AutoClues to overcome current state-of-the-art approaches. For future research, we plan to explore (i) meta-learning approaches to identify more effective pre-processing steps, (ii) integrating human feedback in the loop, and (iii) providing automatic explanations for the retrieved dashboard.
 

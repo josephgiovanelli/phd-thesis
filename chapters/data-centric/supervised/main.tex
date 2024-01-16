@@ -51,15 +51,15 @@ Assistance is required in every phase \cite{Bilalli16IOTBD}.
 By considering pre-processing as an integral component of the learning process, and carefully selecting and optimizing data pipelines, it is easy to obtain results that go beyond the ones obtained by only optimizing ML algorithms.
 
 To briefly illustrate this, we perform an experiment on the well known \texttt{bank-marketing}\footnote{\url{https://archive.ics.uci.edu/ml/datasets/Bank+Marketing}} dataset, using HyperOpt~\cite{HyperOptICML13} as an AutoML approach to optimize the parameters of three different ML algorithms, namely Naive Bayes (NB), K-Nearest Neighbor (KNN), and Random Forest (RF).
-We provide an initial budget of 50 iterations for optimizing the hyper-parameters of the algorithms, and after the 50th iteration, we fix the algorithm configuration to the best one achieved so far and start optimizing the pre-processing pipeline\footnote{This order is used only for the sake of illustration.}.
+We provide an initial budget of 50 iterations for optimizing the hyperparameters of the algorithms, and after the 50th iteration, we fix the algorithm configuration to the best one achieved so far and start optimizing the pre-processing pipeline\footnote{This order is used only for the sake of illustration.}.
 In \Cref{effective-fig:pre-processing-impact}, the ratio of the change in terms of accuracy (i.e., obtained after the i-th iteration to the baseline/default accuracy) is plotted against the number of different configurations visited by HyperOpt (i.e., iterations).
 Observe that after the 11th iteration for NB and KNN, and after the 26th iteration for RF, the lines remain flat.
-That is, from there on, no improvement is achieved by optimizing the hyper-parameters of the algorithms until the 50th iteration is reached. At this point, a sudden jump is observed and the results start to improve again, going clearly beyond the ones obtained before, thanks to the optimizations performed now over the pre-processing pipeline.
+That is, from there on, no improvement is achieved by optimizing the hyperparameters of the algorithms until the 50th iteration is reached. At this point, a sudden jump is observed and the results start to improve again, going clearly beyond the ones obtained before, thanks to the optimizations performed now over the pre-processing pipeline.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.7\textwidth]{chapters/data-centric/supervised/img/pre-processing-impact.pdf}
-    \caption{Evolution of accuracy during the optimization process. The first 50 configurations optimize only the hyper-parameters and after the 50th configuration, the pre-processing pipeline is optimized instead.}
+    \caption{Evolution of accuracy during the optimization process. The first 50 configurations optimize only the hyperparameters and after the 50th configuration, the pre-processing pipeline is optimized instead.}
     \label{effective-fig:pre-processing-impact}
 \end{figure}
 
@@ -112,7 +112,7 @@ The remaining of this chapter is organized as follows:
 % CASH and DPSO can be treated as a single optimization problem ~\cite{auto_weka, auto_sklearn}. However, we consider them separately because this allows to, (i) reduce the search space and, (ii) to explicitly assign different optimization budgets and/or optimization techniques, depending on their respective impact to the final result of the analysis.
 % Since these problems are similar, the methods initially employed in CASH have been recently considered to solve the DPSO problem too. Therefore, in the following we first delve into more details about CASH and then DPSO. In particular, we formalize them and discuss the methods they employ.
 
-% \subsection{Combined Algorithm Selection and Hyper-parameter optimization (CASH)}
+% \subsection{Combined Algorithm Selection and Hyperparameter optimization (CASH)}
 
 % The algorithm selection problem is known to exist for a long time and many approaches have been proposed to solve it~\cite{Serban13survey}. Recently, in the context of ML algorithms, the problem has been extended to include the optimization of the hyperparameters too, and thus has been formalized as follows~\cite{auto_weka}.
 
@@ -127,7 +127,7 @@ The remaining of this chapter is organized as follows:
 %     A^{\ast}_{\lambda^{\ast}} \in \argmin\limits_{A^i \in \mathcal{A}, \lambda \in \Lambda^i} \mathcal{L}(A^i_\lambda,D_{train},D_{test}) \tag{CASH}
 % \end{equation}
 
-% The dataset $D$ is divided into $D_{train}$ and $D_{test}$, to build and to evaluate the overall performance, calculated through the loss function $\mathcal{L}$. The problem is set up as an optimization problem and, as such, the configuration space is assumed to be known in advance (the set of algorithms $\{A^{1}, \dots , A^{k}\}$ and the related hyper-parameter spaces $\{\Lambda^{1}, \dots, \Lambda^{k}\}$).
+% The dataset $D$ is divided into $D_{train}$ and $D_{test}$, to build and to evaluate the overall performance, calculated through the loss function $\mathcal{L}$. The problem is set up as an optimization problem and, as such, the configuration space is assumed to be known in advance (the set of algorithms $\{A^{1}, \dots , A^{k}\}$ and the related hyperparameter spaces $\{\Lambda^{1}, \dots, \Lambda^{k}\}$).
 % The goal is then to find the best algorithm $A^{\ast}$ in the set of algorithms and its best hyperparameters $\lambda^{\ast}$ in the related hyperparameter space.
 
 % Many optimization techniques have been employed to solve the CASH problem and some of them are: Grid search\textcolor{red}{~\cite{montgomery2017design}}, Random search\textcolor{red}{~\cite{bergstra2012random}}, Simulating annealing\textcolor{red}{~\cite{van1987simulated}}, Genetic algorithms\textcolor{red}{~\cite{kramer2017genetic}}, Bayesian techniques\textcolor{red}{~\cite{gp_kernel}}, Bandit-based algorithms~\textcolor{red}{\cite{li2017hyperband}}.
@@ -167,45 +167,35 @@ The remaining of this chapter is organized as follows:
 % \paragraph{SMBO as solver for DPSO}
 
 % Since DPSO is formalized as an optimization problem, SMBO has been proposed as a valid solver\textcolor{red}{~\cite{hutter2011sequential}}. In the previous section, we saw the application of SMBO to CASH, but in fact the process of selecting the best algorithm, and its hyperparameters configuration, is identical to selecting the best operator for a transformation, and its parameter configuration. Yet, DPSO requires one more layer, in that transformations need to be chained together into a pipeline.
-% To this end, given a pipeline prototype as input and a budget either in terms of time or number of iterations, SMBO can be configured to iterate over different configurations until a near to optimal physical pipeline is found. The objective function of the pipeline is however measured in the context of a given parametrised ML algorithm by applying the pipeline on a dataset, and measuring the performance of the ML algorithm (e.g., accuracy) on the transformed output. In this context, by fixing the hyper-parameters of the ML algorithm to the default ones, the performance of the learner is set to measure the effectiveness of the considered data pipeline.
+% To this end, given a pipeline prototype as input and a budget either in terms of time or number of iterations, SMBO can be configured to iterate over different configurations until a near to optimal physical pipeline is found. The objective function of the pipeline is however measured in the context of a given parametrised ML algorithm by applying the pipeline on a dataset, and measuring the performance of the ML algorithm (e.g., accuracy) on the transformed output. In this context, by fixing the hyperparameters of the ML algorithm to the default ones, the performance of the learner is set to measure the effectiveness of the considered data pipeline.
 
 
 \section{Related Works}
 \label{effective-sec:related-work}
-A lot of ongoing research directions are committed to the AutoML mission of democratizing AI, specifically the learning process.
-We group the works based on the type of problem they aim to solve.
-% at addressing the problem of providing user assistance for the data analytics process.
-% According to the deployment environment, they can be classified into three main categories \cite{elshawi2019automated}: distributed, cloud-based, and centralized.
-% The first two try to address the problem of Big Data.
-% Thus, clusters of several machines are employed to distribute the workload.
-% On the contrary, this is not a fundamental requirement for centralized solutions.
-% Indeed, the overhead of using a cluster is not worth it for relatively small datasets.
-% Since our work belongs to the category of centralized solutions, in the following, we provide examples of them.
-%
-% As already mentioned before, the learning process consists of different stages.
-% In general, there is a trend to develop (semi) automatic systems that assist the user in one or many steps altogether.
-At the beginning, the AutoML community followed the AI trend of contributing under a more algorithmic perspective, focusing on the resolution of the CASH problem during the modelling stage.
-% At the beginning, the focus was to provide support exclusively for the learning step (i.e., the CASH problem).
-In \Cref{effective-ssec:cash}, we review these works.
-
-Recently however, the direction has shifted towards designing systems that additionally or specifically provide user assistance in the data pre-processing step---i.e., the DPSO problem.
-Some works consider data pre-processing in isolation; that is, regardless of the task and analysis at hand.
-For instance, applying pre-processing for the sake of either guaranteeing data quality, enabling data exchange, or even data integration \cite{Llunatic13VLDBEnd,BigDansing15SIGMOD,Katara15SIGMOD,Foofah17SIGMOD}.
-Instead, we are interested in those works that see pre-processing as an integral part of the learning process, and hence apply it for the sake of improving the final result of the ultimate analysis.
-In \Cref{effective-ssec:dpso}, we overview them.
-
-Finally, in \Cref{effective-ssec:dpso-cash}, we discuss the works that aim at fully automating the learning process, combining DPSO with CASH, where the border line between the two becomes blurry.
+% A lot of ongoing research directions are committed to the AutoML mission of democratizing AI, specifically the learning process.
+% We group the works based on the type of problem they aim to solve.
+At the beginning, the AutoML community followed the AI trend of contributing under a more algorithmic perspective, focusing on modelling---i.e., the resolution of the CASH problem.
+Recently however, the direction has shifted towards designing systems that additionally or specifically provide user assistance in the data pre-processing step---i.e., solving the DPSO problem.
+On the one hand, some works automate data pre-processing in isolation from modelling---i.e., addressing solely DPSO (\Cref{effective-ssec:dpso}).
+% consider data pre-processing in isolation; that is, regardless of the task and analysis at hand.
+% For instance,
+% apply pre-processing for the sake of either guaranteeing data quality, enabling data exchange, or even data integration \cite{Llunatic13VLDBEnd,BigDansing15SIGMOD,Katara15SIGMOD,Foofah17SIGMOD}.
+% Specifically, we are interested in those works that see pre-processing as an integral part of the learning process, and hence apply it for the sake of improving the final result of the ultimate analysis.
+% In \Cref{effective-ssec:dpso}, we overview them.
+On the other hand, some consider data pre-processing in synergy with modelling---i.e., combining DPSO and CASH (\Cref{effective-ssec:dpso-cash}).
+% Finally, in \Cref{effective-ssec:dpso-cash}, we discuss the works that
+% aim at fully automating the learning process, combining DPSO with CASH, where the border line between the two becomes blurry.
 % Nevertheless, we tentatively group the works based on the type of problem they aim to solve.
 
 % \subsection{CASH}
 % \label{effective-ssec:cash}
-% The task in solving the CASH problem is to automatically find an optimized instantiation for the hyper-parameters of a set of ML algorithms.
+% The task in solving the CASH problem is to automatically find an optimized instantiation for the hyperparameters of a set of ML algorithms.
 % Most of the works use Bayesian optimization methods to tune and optimize them \cite{Feurer15AutoSklearn,Thornton13AutoWeka,Olson16Tpot}.
 % Since Bayesian optimization is randomized, meta-learning has been used to find a good initial setting for the search \cite{Feurer15AAAI}.
 % Most of these works however, only minimally consider the data pre-processing step.
 
 % Auto-WEKA \cite{Thornton13AutoWeka}, based on the Java machine learning library Weka, is the pioneer of the field.
-% % The authors formalized the problem of algorithm selection and their associated hyper-parameter optimization, and solved it in a combined search space.
+% % The authors formalized the problem of algorithm selection and their associated hyperparameter optimization, and solved it in a combined search space.
 % Sequential Model-based Algorithm Configuration (SMAC) is used to explore the large search space.
 
 % Autostacker \cite{chen2018autostacker} combines a hierarchical stacking architecture and an evolutionary algorithm.
@@ -213,10 +203,10 @@ Finally, in \Cref{effective-ssec:dpso-cash}, we discuss the works that aim at fu
 % Even if it brings some benefits, this approach affects the search space: way larger than that of a single classifier.
 % In a nutshell, such concatenations are randomly generated and then optimized.
 % The one that achieves the higher accuracy is chosen.
-% Rather than Bayesian Optimization, to find suitable hyper-parameters, the authors utilize a basic evolutionary algorithm.
+% Rather than Bayesian Optimization, to find suitable hyperparameters, the authors utilize a basic evolutionary algorithm.
 
 % OBoe \cite{yang2019oboe} exploits collaborative filtering for AutoML, choosing models that have performed well on similar datasets.
-% It collects a large number of datasets and applies different ML algorithms (with different hyper-parameters configurations).
+% It collects a large number of datasets and applies different ML algorithms (with different hyperparameters configurations).
 % In this way, a matrix of cross-validated errors is built.
 % Common approaches typically compute dataset meta-features and use them to predict the error of a particular machine learning model, but OBoe works exactly the other way around.
 % PCA is applied on such a matrix in order to find latent meta-features.
@@ -224,7 +214,7 @@ Finally, in \Cref{effective-ssec:dpso-cash}, we discuss the works that aim at fu
 % Finally, the feature vector is leveraged to estimate the cross-validated error of more complex algorithms.
 % \textcolor{orange}{TODO: Da espandere con lavori nuovi}
 
-\subsection{DPSO}
+\subsection{Stand-alone Automation of Data Pre-processing Pipelines}
 \label{effective-ssec:dpso}
 
 In \cite{Quemy20InfSystems}, authors demonstrate the impact of optimizing the pre-processing pipelines, but considering only a single fixed prototype and only a few datasets.
@@ -249,7 +239,7 @@ The physical plan is generated through a combination of Bayesian optimization, m
 For the logical plans, they rely on rules but without clear evidence on how they are generated.
 Moreover, it is not clear whether the logical plan is fixed as in \cite{Quemy20InfSystems} and if some further adjustment from the user is required.
 
-\subsection{DPSO + CASH}
+\subsection{Thorough Automation of Machine Learning Pipelines}
 \label{effective-ssec:dpso-cash}
 \textcolor{orange}{TODO: meta-learning non è ancora spiegato, da valutare: aggiungere al background o una frase veloce per introdurlo (forse meglio la seconda vsito che dopo si va deep in quello)}
 Auto-sklearn \cite{Feurer15AutoSklearn} is based on the popular Python library scikit-learn.
@@ -289,7 +279,14 @@ Yet, such automation has shown to be computationally expensive, mainly due to th
 Therefore, the usability of these approaches in realistic scenarios is sometimes limited.
 Our approach of finding a set of effective prototypes can be seen as complementary to these solutions, since it helps in pruning the large space and guiding the search, hence reducing their cost.
 
-\section{Data pre-processing pipeline generation}
+
+
+
+
+% A data pipeline $P$ is a sequence of pre-processing steps that shape a dataset $\altmathcal{D}$ and a subsequent final ML step in which we address the task---in our case, either classification or regression.
+% We can write the search space as: $\Lambda_P = \Lambda_{S_1} \times \ldots \times \Lambda_{S_{|P|}} \times \lambda_p$, with $\lambda_p$ a new root-hyperparameter that selects the order of the pre-processing steps---i.e., among all possible partial permutations.
+
+\section{Data Pre-processing Pipeline Generation}
 \label{effective-sec:methodology}
 
 \textcolor{orange}{TODO: Chiamare il tool (e questa sezione) AutoPrep, che sarebbe il tool sviluppato con il reproducible paper, e aggiungerlo alle contribution.}
@@ -301,11 +298,26 @@ Our approach of finding a set of effective prototypes can be seen as complementa
     \label{effective-fig:methodology}
 \end{figure*}
 
-% Following the notation from~\cite{Quemy20InfSystems}, we also distinguish between a fixed, ordered sequence of kinds of pre-processing transformations, known as \textit{pipeline prototypes}, and a fixed, ordered sequence of operators (i.e., instantiations of transformations) known as (executable) \textit{pipelines}.
-Data pre-processing is a challenging task due to the fact that there are no clear rules and guidelines in terms of which permutation of steps would work best for the prototype and which configurations of transformations would have the highest impact on the result.
 
-\Cref{effective-fig:methodology} sketches the proposed methodology, some of the phases are generic and thus can be applied regardless the context, and yet others are specific (i.e., ML framework or dataset characteristics).
-We break the combinatorial problem of finding the best pipeline into: (i) studying pre-processing steps in pairs for generating effective prototypes and then (ii) feeding them to an optimizer (e.g., we use the SMBO~\cite{HyperOptICML13} variant) for their actual instantiation.
+We aim to find the best data pipeline (i.e., with higher performance) for the dataset $\altmathcal{D}$ and the ML algorithm $A$ considered, hence solving DPSO.
+Let us refresh the formalization of interest.
+
+Each transformation $T$ exposes a set of $K$ hyperparameters, producing the Cartesian product $\Lambda_T = \Lambda_1 \times \dots \times \Lambda_K$.
+A pre-processing \textit{step} $S$ can be instantiated from several alternative transformations, hence $\Lambda_S = \Lambda_{T_1} \cup \ldots \cup \Lambda_{T_{|S|}} \cup \lambda_s$, with $\lambda_s$ a new root-hyperparameter that selects the transformation.
+The problem exacerbates when steps are combined together into data pipelines.
+Indeed, the complete search space for our optimization problem is defined as $\Lambda_P = \Lambda_{S_1} \times \ldots \times \Lambda_{S_{|P|}} \times \lambda_p$, with $\lambda_p$ as yet another root-hyperparameter to select -- this time -- the order between the transformations (translating into the disjoint union of all partial permutations).
+% Qua ci va la formalizzazione dello spazio abnorme
+
+To mitigate the problem's complexity, we distinguish between pipeline selection and its optimization.
+Specifically, following the notation from \cite{Quemy20InfSystems}:
+% si cerca il prototipo (è più semplice)
+pipeline selection aims at finding promising \textit{prototypes}, i.e. fixed and ordered sequence of pre-processing steps, pipeline optimization instantiates the best \textit{executable pipeline}, i.e. assigning a transformation (along with the hyperparameters)to each pre-processing step.
+
+% Following the notation from~\cite{Quemy20InfSystems}, we also distinguish between a fixed, ordered sequence of kinds of pre-processing transformations, known as \textit{pipeline prototypes}, and a fixed, ordered sequence of operators (i.e., instantiations of transformations) known as (executable) \textit{pipelines}.
+% Data pre-processing is a challenging task due to the fact that there are no clear rules and guidelines in terms of which permutation of steps would work best for the prototype and which transformations -- with corresponding hyperparameters -- would have the highest impact on the result.
+
+\Cref{effective-fig:methodology} sketches the proposed methodology, some of the phases are generic and thus can be applied regardless of the context, and yet others are specific (i.e., ML framework or dataset characteristics).
+According to \cite{Quemy20InfSystems}, we break the combinatorial problem into two workflows: (i) studying pre-processing steps in pairs for generating effective prototypes and then (ii) feeding them to an optimizer (e.g., we use the SMBO \cite{HyperOptICML13} variant) for their actual instantiation.
 
 % The method consists of two flows running in parallel.
 % The first flow is responsible for selecting promising prototypes and the second for generating rules that warm-start the instantiation.
@@ -354,17 +366,15 @@ They would be used, for example, to ease the cold start problem in the prototype
 
 
 We propose a generic methodology.
-However, for the sake of explanation, in the following, we will use the \texttt{Example} environment to illustrate our use case as a reference.
+However, to keep the reader from losing, we will illustrate our use case and corresponding findings along with the explanation of the methodology.
 % Specifically, we used the OpenML repository \cite{OpenML2013}, the Scikit-learn library, and the HyperOpt tool, which internally uses SMBO, to provide a use case.
 
-
-
-\subsection{ML framework, Data Pre-processing Steps and Transformations}
+\subsection{ML Framework Assessment}
 \label{effective-ssec:select-framework}
 
 The first task in the process consists of selecting the data pre-processing steps and their available transformations according to the selected ML library.
 
-\begin{example}
+\paragraph{Use case}
 % The data pre-processing steps selected for the sake of our use case are the following.
 For our experiments, we selected the pre-processing steps, transformations and hyperparameters from those available in the scikit-learn library\footnote{\url{https://scikit-learn.org}} (\Cref{effective-tbl:transformations}).
 \textit{Input} denotes the compatible feature type for a given pre-processing step and can be continuous (CO) -- when it represents measurements on some continuous scale -- or categorical (CA)---when it represents information about some categorical or discrete characteristics.
@@ -428,7 +438,6 @@ Feat. Eng. ($F$) & CA/CO & CA/CO & PCA & n\_components:[1,2,3,4]\\ \cmidrule[.05
 \end{threeparttable}
 \label{effective-tbl:transformations}
 \end{table}
-\end{example}
 
 \begin{table*}[!t]
     \caption{
@@ -488,7 +497,7 @@ Feat. Eng. ($F$) & CA/CO & CA/CO & PCA & n\_components:[1,2,3,4]\\ \cmidrule[.05
     \label{effective-tbl:rules}
     \end{table*}
 
-\subsection{Framework-related rules}
+\subsection{Framework-related Rules Extraction}
 \label{effective-ssec:rules-framework}
 % \label{sec:rules-framework}
 
@@ -498,8 +507,7 @@ We aim at detecting a set of implicit rules that are shown through an adjacency 
 Each cell $a_{ij}$ denotes a precedence relationship between the row $i$ and column $j$.
 Hence, \texttt{1} means that an edge exists between the transformation in the row and the transformation in the column, whereas \texttt{0} means that such an edge does not exist, hence a precedence order is not established for that pair.
 
-\textcolor{orange}{TODO: Aggiungere le descrizioni degli esempio (e.g., qui sarebbe framework-related rules in our use case)}
-\begin{example}
+\paragraph{Use case}
 We studied the pre-processing steps implemented in Scikit-learn, the discovered rules are shown through the adjacency matrix in \Cref{effective-tbl:rules}a.
 For example, most Scikit-learn steps cannot be applied in the presence of missing values.
 This is why in every pair of them where Imputation is involved, except the one with Normalization\footnote{Normalization transformations are the only ones that Scikit-learn can apply on datasets with missing values.}, Imputation goes first.
@@ -513,9 +521,8 @@ In order for them to be applied to datasets of mixed types, an Encoding transfor
 A similar constraint is imposed when considering Rebalancing and Feature Engineering, since these steps do not accept inputs containing strings (i.e., representing a categorical type).
 For the rest of the pairs, there are no constraints imposed by the framework, thus any ordering is permitted, reflected by a \texttt{0} in \Cref{effective-tbl:rules}a.
 The graph obtained in this case exclusively corresponds to the limitations of Scikit-learn (as a matter of fact, if another framework were to be chosen, it may have looked differently).
-\end{example}
 
-\subsection{Heuristic rules}
+\subsection{Heuristic Rules Discovery}
 \label{effective-ssec:rules-heuristics}
 % \label{sec:rules-heuristics}
 Once we have derived precedences based on the constraints of the framework, we can study the precedence independently and find \textit{meaningful pairs}.
@@ -530,14 +537,13 @@ Similarly, applying Normalization first, changes the scale of the values and hen
 Finally, a meaningful precedence can be derived when combining Normalization with Rebalancing.
 In this case, Normalization should be applied first, since otherwise Rebalancing would impact the scale of the values to be normalized.
 
-\begin{example}
-For our use case, \Cref{effective-tbl:rules}b shows the heuristic rules obtained considering domain-independent knowledge about the steps \cite{BookExploratoryDM03Dasu}.
+\paragraph{Use case}
+\Cref{effective-tbl:rules}b shows the heuristic rules obtained considering domain-independent knowledge about the steps \cite{BookExploratoryDM03Dasu}.
 In comparison with the results from \Cref{effective-tbl:rules}a, observe that the constraints on the Imputation still hold: when combining it ith another step, Imputation should go first.
 This time even when combining it with Normalization---note the difference with \Cref{effective-tbl:rules}a.
 The constraints of Encoding are however not present in \Cref{effective-tbl:rules}a, hence not considering the framework, Discretization combined with Encoding is a meaningful combination---when a mixed type dataset is considered, but incompatible from the point of view of Scikit-learn.
-\end{example}
 
-\subsection{Empirically learned rules}
+\subsection{Empirical Rules Learning}
 \label{effective-ssec:rules-learned}
 % \label{sec:rules-learned}
 
@@ -574,7 +580,7 @@ Like this, for each dataset, we can get a precedence order that gives better res
 	\end{algorithmic}
 \end{algorithm*}
 
-\paragraph{Learning empirical rules}
+\subsubsection{Experimental Learning Design}
 To find a promising precedence order between a given pair of pre-processing steps $S_1$ and $S_2$, we propose \Cref{effective-alg:learned-rules}.
 Let us consider a dataset split into $\altmathcal{D}_{train}$ and $\altmathcal{D}_{valid}$, a ML algorithm $A$, and a loss function $\altmathcal{L}$.
 We first calculate $\altmathcal{L}_{\varnothing}$ as the loss of the ML algorithm $A$ over the original non-transformed dataset (line 1). %, which is used later for calculating the change in accuracy.
@@ -650,7 +656,7 @@ Here, the comparison between the results of these pipelines should be equal (i.e
 Otherwise, if say, the score of the second pipeline was higher, it would mean that for the first pair, SMBO was not given enough budget to find the pipeline with higher score (i.e., $\langle S_2, \varnothing \rangle$).
 The same logic applies also to the other rows where a $\varnothing$ operator is involved.
 
-\begin{example}
+\paragraph{Use case}
 For the sake of this work, we considered three classification algorithms (i.e., \textit{NB}, \textit{RF},  \textit{KNN}) and $80$ datasets from the OpenML repository. The datasets, were compiled from three OpenML benchmarks, namely, the OpenMLCC18 benchmark\footnote{\url{https://www.openml.org/s/99/data}}, the AutoML benchmark\footnote{\url{https://www.openml.org/s/271/data}}, and the Classification algorithms benchmark\footnote{\url{https://www.openml.org/s/1/data}}.
 For the final set, we filtered out datasets with more than 10\% of missing values -- not to include bias due to the heavy pre-processing we need to perform on top of them, and we filtered out the datasets with more than 5 million instances -- because of the computation time required to process them.
 As a result, we obtained 60 datasets from the first benchmark, 17 from the second, and 3 more from the third to reach a total of 80 datasets.
@@ -687,7 +693,7 @@ In summary, the results from \Cref{effective-tbl:significance-test} indicate tha
 On the other hand, for $\{D, F\}$, $\langle D, F \rangle$ performs better than $\langle F, D \rangle$, hence Discretization should precede Feature Engineering.
 Finally, for the remaining transformations, $\{F, R\}$ and $\{R, D\}$, a precedence order can not be pre-assumed since the results obtained are not significant.
 Using these results, we create the \textit{Promising precedence} adjacency matrix shown in \Cref{effective-tbl:rules}c, where as one can observe, precedence edges are introduced for $\{N, F\}$ and $\{D, F\}$, but no edges exist neither for $\{F, R\}$, nor for $\{R, D\}$.
-\end{example}
+
 
 
 
@@ -718,7 +724,7 @@ Using these results, we create the \textit{Promising precedence} adjacency matri
 % \color{black}
 
 
-\paragraph{Chi-square test with cross-validation}
+\subsubsection{Cross-validation with Chi-square Test}
 \label{sec:learned-rules-validation}
 After running \Cref{effective-alg:learned-rules} to empirically find a winner between two pairs of transformations, we may obtain a different distribution of the number of wins for the pairs, depending on the datasets considered.
 To show that the results obtained with the initial set of datasets are generalizable, we propose to perform an additional cross-validated experiment, where the set of datasets considered can be randomly split into many folds.
@@ -726,8 +732,7 @@ Then, for each fold, the results can be compared to the rest, with the aim of ch
 This check can be done via a significance test (e.g., chi-square).
 To this end, if the distributions between the folds are similar, it means that the obtained results are independent of the datasets considered, since no matter the combination of the datasets, the results are the same and thus generalizable.
 
-\begin{example}
-In our use case, to show that the results do not depend on the datasests selected, we re-run the experiments (i.e., 10-times each), but this time splitting the datasets into 4-folds.
+\paragraph{Use case} To show that the results do not depend on the datasests selected, we re-run the experiments (i.e., 10-times each), but this time splitting the datasets into 4-folds.
 The goal is to check if the results of the precedence orders from the different folds (i.e., for each experiment considering a randomly different set of datasets) are similar between them (i.e., follow the same distributions).
 To confirm this hypothesis, we perform a chi-square test between the results (precedence orders) obtained in a single fold in comparison to the three remaining folds, hence comparing $25$\% of the datasets to the rest.
 In particular, to confirm the hypothesis, we need to find results that accept the null hypothesis of the chi-square test which states that ``there is no significant difference between the distributions''.
@@ -828,16 +833,14 @@ We conclude that, for both of the rules (i.e.,  $\langle F, N \rangle$ and $\lan
 % \end{table}
 % \fi
 
-\end{example}
-
-\subsection{Composing Effective Prototypes}
+\subsection{Effective Prototypes Composition}
 \label{effective-ssec:composition}
 % \label{sec:composition}
 In this, we foresee the composition of the previously defined rules (i.e., for the pairs of pre-processing steps), to generate the final set of rules that would allow to compose longer chains---consisting of more than two steps.
 This is when we also resolve the inconsistencies and define precedences for the pairs of steps that may not have any precedence defined already---in that case, we basically take into account all the permutations.
 This allows to finally generate the possible effective  prototypes.
 
-\begin{example}
+\paragraph{Use case}
 To generate the final prototypes, in this phase, we combine all the matrices generated by the previous steps.
 That is, we take the union of the edges (represented by \texttt{1}'s) from the matrices in \Cref{effective-tbl:rules} (a,b,c), and create a new final adjacency matrix, shown in \Cref{effective-tbl:rules-union}.
 This is the matrix that will allow us to generate the final effective prototypes.
@@ -874,11 +877,8 @@ The result is the set of five prototypes shown in Table 3.7. This set consisting
 	}
 	\end{floatrow}
 \end{figure}
-\end{example}
 
-
-
-\subsection{Meta-learning rules}
+\subsection{Instantiation Rules (Meta-)Learning}
 \label{effective-ssec:meta-learning}
 % \label{sec:meta-learning}
 
@@ -886,7 +886,7 @@ Once the pipeline prototypes are constructed (i.e., the order between the steps 
 For that, one can rely completely on SMBO, and let the optimization choose the right transformation for each step.
 However, as many optimization techniques, SMBO suffers from the cold-start problem where, in the beginning, it does not have enough information to come up with promising configurations, and a wrong choice may affect the whole process.
 
-\subsubsection{Exploratory analysis}
+\subsubsection{Exploratory Analysis}
 Given the availability of the experimental SMBO executions (executed in an exhaustive manner, considering all the prototypes), one can perform an exploratory analysis with the aim of removing useless prototypes, executable pipelines or sngle transformations.
 Hence, further tweaking the search space.
 % In particular, starting from the highest level (i.e., the one regarding prototypes), then going to the executable pipelines, and finally to the single transformations.
@@ -898,8 +898,8 @@ In particular, one might analyze whether:
     \item within the executable pipelines, some transformations are chosen more often than others, meaning that they provide a more positive impact.
     \end{itemize}
 
-\begin{example}
-We performed the above-mentioned analysis on our use case, but it did not lead to any conclusive or significant results.
+\paragraph{Use case}
+We performed the above-mentioned analysis, but this did not lead to any conclusive or significant results.
 In particular, as shown in \Cref{effective-fig:prototypes-impact}, we could not find any useless prototypes---not positively impacting the final accuracy, that could be discarded a priori from the potential list of prototypes.
 Actually, as we will show in \Cref{effective-sec:eval-universal-pipeline}, all of them lead to the best in one case or another, which does not mean the epsilon improvement some provide is worth the search cost you incur in considering them (but this more in-depth analysis is done later).
 Next, as shown in \Cref{effective-fig:pipeline-frequency}, there were no physical pipelines shown to be more useful---hence more often selected, than others.
@@ -907,7 +907,7 @@ Even if $\langle N , R \rangle$ is clearly above, it barely reaches 30\% in KNN.
 Finally, observing \Cref{effective-fig:transformation-frequency}, it is clear that some kinds of transformations are chosen more often, but looking closely (i.e., the shaded bars), it is not clear which operator brings more benefit.
 For instance, Normalization is present in 90\% of the pipelines, but it is not easy to distinguish which kind of Normalization (i.e., actual operator) is more beneficial.
 For this, we need more complex rules or guidelines that may help in finding the right operator to use.
-\end{example}
+
 
 \begin{figure*}[!t]
 	\centering
@@ -946,7 +946,7 @@ To train the model we need a meta-dataset that can be  (i) generated through opt
 Given a meta-dataset, we propose to learn to predict the best instantiation (transformation) for a given pre-processing step, including skipping the step (class \texttt{None}).
 % This means that one of the possible predictions is to not instantiate a transformation at all, hence removing it from the pipeline.
 
-\begin{example}
+\paragraph{Use case}
 Our training dataset for the meta-learning (i.e., meta-dataset) is built through SMBO runs on the OpenML datasets (\Cref{effective-ssec:rules-learned}).
 We first extract the dataset characteristics (i.e., meta-features; e.g., number of features, number of instances, number of missing values).
 Then, by applying SMBO optimization on classification algorithms and pre-processing prototypes, for each dataset, we retrieve the loss (in our case, accuracy) of the ML algorithms over the optimized pipelines.
@@ -984,16 +984,15 @@ However, when the Majority Class Percentage is smaller than 56\%, the situation 
 Therefore, it is difficult to understand which problems (which dataset characteristics do they have) belong to Node 2.
 In summary, when the majority class has no more than 56\% , it implies that it is an unbalanced class, and as mentioned above, SMBO tends to choose the same transformation.
 However, when the majority class has less than 56\%, it may imply that: (i) there are just two classes and the problem counts as a balanced problem, so no transformation needs to be applied, or (ii) it is a multi-class problem, and thus there is no clear winner in terms of transformation.
-\end{example}
 
-\subsection{Prototype instantiation}
+\subsection{Data Pipeline Instantiation}
 \label{effective-ssec:prototype-insta}
 
 The prototypes from the top flow and the meta-lerning rules from the bottom flow (if the optimization framework permits) are finally fed to the final phase which deals with the instantiation and optimization of the prototypes. In this, we run SMBO until an optimized pipeline is found.
 
-\begin{example}
+\paragraph{Use case}
  In our final execution, we run SMBO to find a suitable instantiation for the suggested prototypes. The simple but not obvious meta-learning rules, even though not included in our final execution, because of the implementation considered (i.e., HyperOpt), can potentially be used to ease the cold-start problem.
-\end{example}
+
 
 \begin{figure*}[!h]
 	\centering
@@ -1020,19 +1019,19 @@ The aim of our experimental study is three-fold:
 \begin{enumerate}
     \item Check whether there exists a universal prototype that works best for any classification problem considered  (i.e., dataset and ML algorithm) (\Cref{effective-sec:eval-universal-pipeline}).
     \item Assess and compare the performance of the effective pipelines constructed using our method against the set of exhaustively generated prototypes (\Cref{effective-sec:eval-our-vs-rest}).
-    \item Assess and compare the impact of dedicating a portion of the optimization time to the effective pipelines constructed using our method, with the impact of using the whole optimization time for the hyper-parameters of the ML algorithm (\Cref{effective-sec:eval-dpso-vs-cash}).
+    \item Assess and compare the impact of dedicating a portion of the optimization time to the effective pipelines constructed using our method, with the impact of using the whole optimization time for the hyperparameters of the ML algorithm (\Cref{effective-sec:eval-dpso-vs-cash}).
 \end{enumerate}
 
 The experiments were performed on an Intel Core i7 machine with 12 cores, running at 3.20 GHz with 64 GB of main memory. As a platform for running the SMBO optimization algorithm we use HyperOpt. Furthermore, the datasets used in the experiments are the ones from the OpenML repository. Finally, the classification algorithms considered are \textit{NB}, \textit{KNN}, and \textit{RF}. All the experiments for a single algorithm, on average took approximately two weeks\footnote{The source code and the datasets for reproducing the experiments can be found in
 \href{https://github.com/josephgiovanelli/effective\_preprocessing\_pipeline\_evaluation}{https://github.com/josephgiovanelli/effective\_preprocessing\_pipeline\_evaluation}}.
 
-\subsection{Universal pipeline prototype}
+\subsection{Universal Pipeline Prototype}
 \label{effective-sec:eval-universal-pipeline}
 The goal of this experiment is to demonstrate the difficulty of blindly finding the right prototype (i.e., without considering any meaningful or promising precedence).
 In \Cref{effective-tbl:pipeline-enumeration}, we list the exhaustive set of pipeline prototypes generated considering the compatible precedence graph in Table~\ref{effective-tbl:rules}a (i.e., 24 compatible permutations).
 In a real scenario, this number would be too high for splitting the time budget in order to optimize them.
 Yet, for the sake of this experiment, we exhaustively optimize all the prototypes, for each dataset.
-Thus, for each prototype and for each dataset, the SMBO algorithm is configured to assign a 200 seconds time budget to the phase of instantiating and optimizing the prototype, and another 200 seconds to the phase of optimizing the hyper-parameters of the ML algorithm.
+Thus, for each prototype and for each dataset, the SMBO algorithm is configured to assign a 200 seconds time budget to the phase of instantiating and optimizing the prototype, and another 200 seconds to the phase of optimizing the hyperparameters of the ML algorithm.
 
 \begin{table}[t]
 \caption[Enumeration of the prototypes that can be generated by compatible precedence]{Exhaustive set of prototypes generated using the compatible precedence graph of Table~\ref{effective-tbl:rules}a. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
@@ -1073,18 +1072,18 @@ Hence all (or at least several) prototypes need to be evaluated together, in ord
     \label{effective-fig:eval-universal-pipeline}
 \end{figure}
 
-\subsection{Exhaustive versus effective prototypes}
+\subsection{Exhaustive Versus Effective Prototypes}
 \label{effective-sec:eval-our-vs-rest}
 Given that there is no single universal prototype, one can opt for feeding all the possible prototypes (see \Cref{effective-tbl:pipeline-enumeration}) to the optimization algorithm in order to get the best solutions out of them.
 As before, we assign a budget of 200 seconds for the optimization of each prototype, hence 80 minutes in total for all the set of 24 \textit{exhaustive prototypes} in order to find the optimal pipeline for every dataset.
-On the other hand, we take only the five \textit{effective prototypes} resulting from the application of our method and assign just 40 seconds time budget for the optimization of each one of them, hence 200 seconds in total. With the aim of comparing the two, and thus roughly understanding how close we are to the optimal case, in both cases, we dedicated the same time budget (i.e., 200 seconds) for the phase of optimizing the hyper-parameters of the ML algorithm.
+On the other hand, we take only the five \textit{effective prototypes} resulting from the application of our method and assign just 40 seconds time budget for the optimization of each one of them, hence 200 seconds in total. With the aim of comparing the two, and thus roughly understanding how close we are to the optimal case, in both cases, we dedicated the same time budget (i.e., 200 seconds) for the phase of optimizing the hyperparameters of the ML algorithm.
 In order to evaluate how close the \textit{effective prototypes} are to the \textit{exhaustive ones}, we calculate the \textit{normalized distance} from the result to the optimum---w.r.t. accuracy.
 
 \begin{equation*}
     normalized\;distance = \frac{ACC_{\textup{eff}} - ACC_{\varnothing}}{ACC_{\textup{exh}} - ACC_{\varnothing}}
 \end{equation*}
 
-$ACC_{\varnothing}$ is the baseline performance (i.e., accuracy of the algorithm $A$ with default hyper-parameters over the original dataset $\altmathcal{D}$), formally $ACC_{\varnothing} = ACC(A(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
+$ACC_{\varnothing}$ is the baseline performance (i.e., accuracy of the algorithm $A$ with default hyperparameters over the original dataset $\altmathcal{D}$), formally $ACC_{\varnothing} = ACC(A(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 $ACC_{\textup{eff}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized instantiation of the effective set of prototypes (i.e., our approach), formally $ACC_{\textup{eff}} = ACC(\langle P^{\star}_{\textup{eff}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 Finally, $ACC_{\textup{exh}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized pipeline instantiation of the exhaustive set of prototypes, formally $ACC_{\textup{exh}} = ACC(\langle P^{\star}_{\textup{exh}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 The subtraction by $ACC_{\varnothing}$ is done with the aim of weighting the difficulty of a dataset, hence allowing for comparisons in terms of the gain in accuracy.
@@ -1106,24 +1105,24 @@ The raw results (i.e., without the normalized distances) can be found on the afo
     \label{effective-fig:eval-exhaustive-vs-effective}
 \end{figure}
 
-\subsection{Complementing hyper-parameter optimization with pre-processing}
+\subsection{Complementing Hyperparameter Optimization with Pre-processing}
 \label{effective-sec:eval-dpso-vs-cash}
 
 \begin{figure*}[!t]
 	\centering
 	\includegraphics[width=1.0\textwidth]{chapters/data-centric/supervised/img/barplot-10.pdf}
-	\caption{The impact of dedicating a portion of the optimization budget to pre-processing compared to using the whole optimization budget for the hyper-parameter optimization.}
-	\label{effective-fig:eval-pre-processing-hyper-parameter}
+	\caption{The impact of dedicating a portion of the optimization budget to pre-processing compared to using the whole optimization budget for the hyperparameter optimization.}
+	\label{effective-fig:eval-pre-processing-hyperparameter}
 \end{figure*}
 
 We have just shown that our effective prototypes have similar impact as the exhaustive ones.
-Now we want to compare the impact of the effective prototypes against optimizing only the hyper-parameters of the ML algorithm.
-That is, we want to examine whether dedicating a part of the optimization budget to the pre-processing impacts more (positively) the results of the analysis, than using the whole budget for the hyper-parameter optimization\footnote{To enable the application of the ML algorithms on all the datasets, whenever required, we apply the necessary transformation (e.g, imputation or encoding).}.
+Now we want to compare the impact of the effective prototypes against optimizing only the hyperparameters of the ML algorithm.
+That is, we want to examine whether dedicating a part of the optimization budget to the pre-processing impacts more (positively) the results of the analysis, than using the whole budget for the hyperparameter optimization\footnote{To enable the application of the ML algorithms on all the datasets, whenever required, we apply the necessary transformation (e.g, imputation or encoding).}.
 
-To this end, for the latter we now dedicate the total optimization budget (i.e., 400 seconds), and for the former, inspired by \cite{Quemy20InfSystems}, we split the budget 50-50 between the pre-processing pipeline optimization and the hyper-parameter optimization (i.e., 200 seconds for the pre-processing, and 200 seconds for the hyper-parameter optimization).
+To this end, for the latter we now dedicate the total optimization budget (i.e., 400 seconds), and for the former, inspired by \cite{Quemy20InfSystems}, we split the budget 50-50 between the pre-processing pipeline optimization and the hyperparameter optimization (i.e., 200 seconds for the pre-processing, and 200 seconds for the hyperparameter optimization).
 The time for the pre-processing is further split among the five different pipeline prototypes (i.e., 40 seconds each).
 
-To compare the results, we calculate the impact using the formulas below, which correspond to the normalized distance from either pre-processing or hyper-parameter optimization to the maximum improvement that can be achieved, regardless of whether pre-processing is applied or not.
+To compare the results, we calculate the impact using the formulas below, which correspond to the normalized distance from either pre-processing or hyperparameter optimization to the maximum improvement that can be achieved, regardless of whether pre-processing is applied or not.
 
 \begin{equation*}
     \text{\textit{pp impact}} = \frac{ACC_{\textup{eff}} - ACC_{\varnothing}}{max(ACC_{\textup{eff}}, ACC_{\textup{hpo}}) - ACC_{\varnothing}}
@@ -1133,7 +1132,7 @@ To compare the results, we calculate the impact using the formulas below, which 
     \text{\textit{hp impact}} = \frac{ACC_{\textup{hpo}} - ACC_{\varnothing}}{max(ACC_{\textup{eff}}, ACC_{\textup{hpo}}) - ACC_{\varnothing}}
 \end{equation*}
 
-$ACC_{\varnothing}$ is yet again the baseline performance (i.e., accuracy of the algorithm $A$ with default hyper-parameters over the original dataset $\altmathcal{D}$).
+$ACC_{\varnothing}$ is yet again the baseline performance (i.e., accuracy of the algorithm $A$ with default hyperparameters over the original dataset $\altmathcal{D}$).
 $ACC_{\textup{eff}}$ is still the accuracy of our approach, i.e., the optimized algorithm $A_{{\lambda}^{\star}}$ with half of the whole budget over the dataset transformed using the optimized instantiation of the effective set of prototypes (with half of the whole budget).
 Finally, $ACC_{\textup{hpo}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ (i.e, using the entire budget) over the original dataset, formally $ACC_{\textup{hpo}} = ACC(A_{{\lambda}^{\star}}(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 
@@ -1145,13 +1144,13 @@ For instance, for the pre-processing score we calculate the following:
 \end{equation*}
 
 
-We perform the same for the hyper-parameter impact and plot the results obtained for all the algorithms and datasets in \Cref{effective-fig:eval-pre-processing-hyper-parameter}, where each bar represents the results obtained for a single dataset.
-The different colors represent the impact values of pre-processing and hyper-parameter optimization.
+We perform the same for the hyperparameter impact and plot the results obtained for all the algorithms and datasets in \Cref{effective-fig:eval-pre-processing-hyperparameter}, where each bar represents the results obtained for a single dataset.
+The different colors represent the impact values of pre-processing and hyperparameter optimization.
 
-Observing the bar charts one can see that (i) dedicating a portion of the budget to pre-processing, brings benefit to the analysis in most of the cases (i.e., $73\%$ of the cases), and (ii) the impact of hyper-parameter optimization, increases with the increase of the number of hyper-parameters of the ML algorithm (e.g., hyper-parameter optimization impacts more RF than NB).
+Observing the bar charts one can see that (i) dedicating a portion of the budget to pre-processing, brings benefit to the analysis in most of the cases (i.e., $73\%$ of the cases), and (ii) the impact of hyperparameter optimization, increases with the increase of the number of hyperparameters of the ML algorithm (e.g., hyperparameter optimization impacts more RF than NB).
 Overall, we can conclude that pre-processing is a critical step that once effectively applied may have a high positive impact on the final result of the analysis.
 
-\section{Conclusions and future work}
+\section{Conclusions and Future Works}
 \label{effective-sec:conclusions}
 
 In this chapter, we first studied the overall impact of pre-processing steps when chained together inside prototypes and then delved into examining the impact of instantiating steps via various transformations.
@@ -1165,9 +1164,9 @@ More specifically, we were able to observe that:
     \item [--] The overall impact of optimizing pre-processing is not negligible and it may boost the performance of the overall analytics (e.g., accuracy).
     \item [--] There is no universal pre-processing prototype that works best for every dataset and algorithm.
     \item [--] With 24 times less time budget, our proposed prototypes were able to obtain results that were as good as 90\% in the median of the optimal ones found through an exhaustive search.
-    \item [--] Dedicating a portion of the time to the pre-processing optimization, instead of dedicating it entirely to hyper-parameter optimization may boost %(have a higher impact on?!)
+    \item [--] Dedicating a portion of the time to the pre-processing optimization, instead of dedicating it entirely to hyperparameter optimization may boost %(have a higher impact on?!)
     the final result of the analysis.
-	On average, in 73\% of the cases including pre-processing in the optimization, outperformed the results of only optimizing hyper-parameters.
+	On average, in 73\% of the cases including pre-processing in the optimization, outperformed the results of only optimizing hyperparameters.
 \end{itemize}
 
 The results indicate that pre-processing can boost the performance of the ML algorithm.
