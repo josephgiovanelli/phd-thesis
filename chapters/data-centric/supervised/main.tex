@@ -52,14 +52,14 @@ By considering pre-processing as an integral component of the learning process, 
 
 To briefly illustrate this, we perform an experiment on the well known \texttt{bank-marketing}\footnote{\url{https://archive.ics.uci.edu/ml/datasets/Bank+Marketing}} dataset, using HyperOpt~\cite{HyperOptICML13} as an AutoML approach to optimize the parameters of three different ML algorithms, namely Naive Bayes (NB), K-Nearest Neighbor (KNN), and Random Forest (RF).
 We provide an initial budget of 50 iterations for optimizing the hyper-parameters of the algorithms, and after the 50th iteration, we fix the algorithm configuration to the best one achieved so far and start optimizing the pre-processing pipeline\footnote{This order is used only for the sake of illustration.}.
-In \Cref{effective-fig:pre-processing-impact}, the ratio of the change in terms of predictive accuracy (i.e., ratio of the accuracy obtained after the i-th iteration to the baseline/default accuracy) is plotted against the number of different configurations visited by HyperOpt (i.e., iterations).
+In \Cref{effective-fig:pre-processing-impact}, the ratio of the change in terms of accuracy (i.e., obtained after the i-th iteration to the baseline/default accuracy) is plotted against the number of different configurations visited by HyperOpt (i.e., iterations).
 Observe that after the 11th iteration for NB and KNN, and after the 26th iteration for RF, the lines remain flat.
 That is, from there on, no improvement is achieved by optimizing the hyper-parameters of the algorithms until the 50th iteration is reached. At this point, a sudden jump is observed and the results start to improve again, going clearly beyond the ones obtained before, thanks to the optimizations performed now over the pre-processing pipeline.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.7\textwidth]{chapters/data-centric/supervised/img/pre-processing-impact.pdf}
-    \caption{Evolution of predictive accuracy during the optimization process. The first 50 configurations optimize only the hyper-parameters and after the 50th configuration, the pre-processing pipeline is optimized instead.}
+    \caption{Evolution of accuracy during the optimization process. The first 50 configurations optimize only the hyper-parameters and after the 50th configuration, the pre-processing pipeline is optimized instead.}
     \label{effective-fig:pre-processing-impact}
 \end{figure}
 
@@ -85,7 +85,7 @@ The main contributions can be summarized as follows.
 	% at least one pipeline works best for each dataset and algorithm considered, hence showing that
 	there is no universal solution---i.e., prototype that works best for each dataset and algorithm considered.
     \item We define a method that given an ML algorithm and a set of pre-processing steps, is capable of generating the right order, obtaining effective pre-processing prototypes that are then instantiated via bayesian optimization.
-    \item We suggest a meta-learning step, where the relationship between pre-processing transformations and dataset characteristics is learned in order to create rules that help with the initial instantiation of the prototypes.
+    \item We suggest a meta-learning step (i.e., learning on top of learning) where the relationships between pre-processing transformations and dataset characteristics are learned in order to create rules that help with the initial instantiation of the prototypes.
 
 	We exemplify our meta-learning study generating simple but not obvious and effective rules for two kinds of pre-processing steps, namely, Feature Engineering and Rebalancing.
 
@@ -96,7 +96,7 @@ The main contributions can be summarized as follows.
     \end{enumerate}
 \end{itemize}
 
-The remaining of this paper is organized as follows:
+The remaining of this chapter is organized as follows:
 % Section~\ref{sec:background} provides a brief background on AutoETL and AutoML.
 \Cref{effective-sec:related-work} discusses the related work,
 \Cref{effective-sec:methodology} presents our method of generating effective pipelines,
@@ -167,7 +167,7 @@ The remaining of this paper is organized as follows:
 % \paragraph{SMBO as solver for DPSO}
 
 % Since DPSO is formalized as an optimization problem, SMBO has been proposed as a valid solver\textcolor{red}{~\cite{hutter2011sequential}}. In the previous section, we saw the application of SMBO to CASH, but in fact the process of selecting the best algorithm, and its hyperparameters configuration, is identical to selecting the best operator for a transformation, and its parameter configuration. Yet, DPSO requires one more layer, in that transformations need to be chained together into a pipeline.
-% To this end, given a pipeline prototype as input and a budget either in terms of time or number of iterations, SMBO can be configured to iterate over different configurations until a near to optimal physical pipeline is found. The objective function of the pipeline is however measured in the context of a given parametrised ML algorithm by applying the pipeline on a dataset, and measuring the performance of the ML algorithm (e.g., predictive accuracy) on the transformed output. In this context, by fixing the hyper-parameters of the ML algorithm to the default ones, the performance of the learner is set to measure the effectiveness of the considered data pipeline.
+% To this end, given a pipeline prototype as input and a budget either in terms of time or number of iterations, SMBO can be configured to iterate over different configurations until a near to optimal physical pipeline is found. The objective function of the pipeline is however measured in the context of a given parametrised ML algorithm by applying the pipeline on a dataset, and measuring the performance of the ML algorithm (e.g., accuracy) on the transformed output. In this context, by fixing the hyper-parameters of the ML algorithm to the default ones, the performance of the learner is set to measure the effectiveness of the considered data pipeline.
 
 
 \section{Related Works}
@@ -197,32 +197,32 @@ In \Cref{effective-ssec:dpso}, we overview them.
 Finally, in \Cref{effective-ssec:dpso-cash}, we discuss the works that aim at fully automating the learning process, combining DPSO with CASH, where the border line between the two becomes blurry.
 % Nevertheless, we tentatively group the works based on the type of problem they aim to solve.
 
-\subsection{CASH}
-\label{effective-ssec:cash}
-The task in solving the CASH problem is to automatically find an optimized instantiation for the hyper-parameters of a set of ML algorithms.
-Most of the works use Bayesian optimization methods to tune and optimize them \cite{Feurer15AutoSklearn,Thornton13AutoWeka,Olson16Tpot}.
-Since Bayesian optimization is randomized, meta-learning has been used to find a good initial setting for the search \cite{Feurer15AAAI}.
-Most of these works however, only minimally consider the data pre-processing step.
+% \subsection{CASH}
+% \label{effective-ssec:cash}
+% The task in solving the CASH problem is to automatically find an optimized instantiation for the hyper-parameters of a set of ML algorithms.
+% Most of the works use Bayesian optimization methods to tune and optimize them \cite{Feurer15AutoSklearn,Thornton13AutoWeka,Olson16Tpot}.
+% Since Bayesian optimization is randomized, meta-learning has been used to find a good initial setting for the search \cite{Feurer15AAAI}.
+% Most of these works however, only minimally consider the data pre-processing step.
 
-Auto-WEKA \cite{Thornton13AutoWeka}, based on the Java machine learning library Weka, is the pioneer of the field.
-% The authors formalized the problem of algorithm selection and their associated hyper-parameter optimization, and solved it in a combined search space.
-Sequential Model-based Algorithm Configuration (SMAC) is used to explore the large search space.
+% Auto-WEKA \cite{Thornton13AutoWeka}, based on the Java machine learning library Weka, is the pioneer of the field.
+% % The authors formalized the problem of algorithm selection and their associated hyper-parameter optimization, and solved it in a combined search space.
+% Sequential Model-based Algorithm Configuration (SMAC) is used to explore the large search space.
 
-Autostacker \cite{chen2018autostacker} combines a hierarchical stacking architecture and an evolutionary algorithm.
-Stacking is an ensemble method that involves the concatenation of several classifiers, so that the later layers can learn the mistakes that classifiers in the previous layers make.
-Even if it brings some benefits, this approach affects the search space: way larger than that of a single classifier.
-In a nutshell, such concatenations are randomly generated and then optimized.
-The one that achieves the higher predictive accuracy is chosen.
-Rather than Bayesian Optimization, to find suitable hyper-parameters, the authors utilize a basic evolutionary algorithm.
+% Autostacker \cite{chen2018autostacker} combines a hierarchical stacking architecture and an evolutionary algorithm.
+% Stacking is an ensemble method that involves the concatenation of several classifiers, so that the later layers can learn the mistakes that classifiers in the previous layers make.
+% Even if it brings some benefits, this approach affects the search space: way larger than that of a single classifier.
+% In a nutshell, such concatenations are randomly generated and then optimized.
+% The one that achieves the higher accuracy is chosen.
+% Rather than Bayesian Optimization, to find suitable hyper-parameters, the authors utilize a basic evolutionary algorithm.
 
-OBoe \cite{yang2019oboe} exploits collaborative filtering for AutoML, choosing models that have performed well on similar datasets.
-It collects a large number of datasets and applies different ML algorithms (with different hyper-parameters configurations).
-In this way, a matrix of cross-validated errors is built.
-Common approaches typically compute dataset meta-features and use them to predict the error of a particular machine learning model, but OBoe works exactly the other way around.
-PCA is applied on such a matrix in order to find latent meta-features.
-Given a new dataset, some basic algorithms are applied to infer a feature vector (i.e., the value of the latent meta-features).
-Finally, the feature vector is leveraged to estimate the cross-validated error of more complex algorithms.
-\textcolor{orange}{TODO: Da espandere con lavori nuovi}
+% OBoe \cite{yang2019oboe} exploits collaborative filtering for AutoML, choosing models that have performed well on similar datasets.
+% It collects a large number of datasets and applies different ML algorithms (with different hyper-parameters configurations).
+% In this way, a matrix of cross-validated errors is built.
+% Common approaches typically compute dataset meta-features and use them to predict the error of a particular machine learning model, but OBoe works exactly the other way around.
+% PCA is applied on such a matrix in order to find latent meta-features.
+% Given a new dataset, some basic algorithms are applied to infer a feature vector (i.e., the value of the latent meta-features).
+% Finally, the feature vector is leveraged to estimate the cross-validated error of more complex algorithms.
+% \textcolor{orange}{TODO: Da espandere con lavori nuovi}
 
 \subsection{DPSO}
 \label{effective-ssec:dpso}
@@ -277,7 +277,7 @@ In particular, a \textit{selector} and a \textit{tuner} work in synergy.
 The former decides which prototype should be optimized next.
 Such a task is treated as a multi-armed bandit problem.
 As to the tuner, bayesian optimization is chosen.
-At the end, the prototype that achieved the higher predictive accuracy is elected.
+At the end, the prototype that achieved the higher accuracy is elected.
 However, AutoBazaar strictly depends on the catalog.
 Such a component memorizes all the possible primitives and supported tasks.
 The prototypes are hard-coded for each task.
@@ -544,7 +544,7 @@ The constraints of Encoding are however not present in \Cref{effective-tbl:rules
 The two previously proposed phases (i.e., \textit{framework-related} and \textit{heuristic rules}), do not guarantee that each pair of steps will obtain a precedence order.
 Therefore, for those cases left out, a third viewpoint should be considered.
 That of learning a promising order by empirically studying the impact of the combinations on the final result of the analysis, using different supervised problems in the training.
-For every selected pair of pre-processing steps, for a given ML algorithm, we propose to check which order of the pair improves most the performance (e.g., predictive accuracy) of the algorithm over a set of datasets (preferably from different domains).
+For every selected pair of pre-processing steps, for a given ML algorithm, we propose to check which order of the pair improves most the performance (e.g., accuracy) of the algorithm over a set of datasets (preferably from different domains).
 Like this, for each dataset, we can get a precedence order that gives better results (i.e., promising precedence) in terms of the loss.
 
 
@@ -573,9 +573,6 @@ Like this, for each dataset, we can get a precedence order that gives better res
 		\EndIf
 	\end{algorithmic}
 \end{algorithm*}
-
-% \paragraph{Algorithm}
-% \label{sec:rules-learned:algorithm}
 
 \paragraph{Learning empirical rules}
 To find a promising precedence order between a given pair of pre-processing steps $S_1$ and $S_2$, we propose \Cref{effective-alg:learned-rules}.
@@ -658,8 +655,8 @@ For the sake of this work, we considered three classification algorithms (i.e., 
 For the final set, we filtered out datasets with more than 10\% of missing values -- not to include bias due to the heavy pre-processing we need to perform on top of them, and we filtered out the datasets with more than 5 million instances -- because of the computation time required to process them.
 As a result, we obtained 60 datasets from the first benchmark, 17 from the second, and 3 more from the third to reach a total of 80 datasets.
 
-Given the proposed algorithm (i.e., \Cref{effective-alg:learned-rules}), we could try to learn the precedence of every pair of steps, but would just be a waste of resources because we can see in Table~\ref{tbl:rules}a and~\ref{tbl:rules}b that some precedences are already decided for one reason or another.
-Hence, only pairs with a \texttt{0} for both directions (in both Table~\ref{tbl:rules}a and~\ref{tbl:rules}b) need to be studied further.
+Given the proposed algorithm (i.e., \Cref{effective-alg:learned-rules}), we could try to learn the precedence of every pair of steps, but would just be a waste of resources because we can see in Table~\ref{effective-tbl:rules}a and~\ref{effective-tbl:rules}b that some precedences are already decided for one reason or another.
+Hence, only pairs with a \texttt{0} for both directions (in both Table~\ref{effective-tbl:rules}a and~\ref{effective-tbl:rules}b) need to be studied further.
 That is, they make sense to be combined together, but a precedence order could not be determined through \textit{framework-related} or \textit{heuristic rules}. % for them.
 Thus, for instance, pairs involving Encoding are not considered in this phase, since for them an order is already imposed by the framework (\Cref{effective-tbl:rules}a).
 To this end, the pairs of transformations we consider for the third precedence graph include only $\{F,N\}$, $\{F,D\}$, $\{F,R\}$, and $\{R,D\}$.
@@ -858,7 +855,7 @@ The result is the set of five prototypes shown in Table 3.7. This set consisting
 	\ffigbox{
 		\includegraphics[clip, trim=2.5cm 23cm 10.5cm 2cm,width=0.5\textwidth]{chapters/data-centric/supervised/img/graph.pdf}
 	}{
-		  \caption{Precedence graph generated from Table~\ref{tbl:rules-union}. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering. }
+		  \caption{Precedence graph generated from \Cref{effective-tbl:rules-union}. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering. }
 	}
 	\capbtabbox{
 	\begin{tabular}{@{}ll}
@@ -936,7 +933,7 @@ For this, we need more complex rules or guidelines that may help in finding the 
 \subsubsection{Meta-learning}
 To mitigate the cold-start problem, we propose to perform meta-learning, where we intend to use the knowledge extracted from historical data in order to devise rules that may help the optimization in its initial settings.
 Meta-learning is the process of ``learning on top of learning'', or learning a model using historical data from ML experiments.
-Traditionally, it has been used for predicting the performance (e.g., predictive accuracy) of an algorithm on a given dataset.
+Traditionally, it has been used for predicting the performance (e.g., accuracy) of an algorithm on a given dataset.
 That is, given some historical runs of the performance of classification algorithms over various datasets (i.e., meta-dataset: consisting of datasets characteristics as meta-features and the performance of the ML algorithm as the desired outcome in a regression task), one can learn a model (i.e., meta-model), that is able to predict the performance of a given ML algorithm on a new dataset \cite{Brazdil04Book}.
 Lately, this technique has been extended in order to predict the impact of pre-processing steps over the performance of ML algorithms and thus rank them based on the impact \cite{Bilalli17AMCS, presistant18CSI, presistant19DKE}.
 The same idea can be applied to learning the best trnasformation for a given step.
@@ -950,9 +947,9 @@ Given a meta-dataset, we propose to learn to predict the best instantiation (tra
 % This means that one of the possible predictions is to not instantiate a transformation at all, hence removing it from the pipeline.
 
 \begin{example}
-Our training dataset for the meta-learning (i.e., meta-dataset) is built through SMBO runs on the OpenML datasets (\Cref{sec:rules-learned:algorithm}).
+Our training dataset for the meta-learning (i.e., meta-dataset) is built through SMBO runs on the OpenML datasets (\Cref{effective-ssec:rules-learned}).
 We first extract the dataset characteristics (i.e., meta-features; e.g., number of features, number of instances, number of missing values).
-Then, by applying SMBO optimization on classification algorithms and pre-processing prototypes, for each dataset, we retrieve the loss (in our case, predictive accuracy) of the ML algorithms over the optimized pipelines.
+Then, by applying SMBO optimization on classification algorithms and pre-processing prototypes, for each dataset, we retrieve the loss (in our case, accuracy) of the ML algorithms over the optimized pipelines.
 This gives us the optimized executable pipelines and their impact on the accuracy of the learning algorithms for each dataset at hand.
 Given such information, our aim is to now save time and improve the instantiation of the transformations for each step considered in the prototype.
 
@@ -1032,13 +1029,13 @@ The experiments were performed on an Intel Core i7 machine with 12 cores, runnin
 \subsection{Universal pipeline prototype}
 \label{effective-sec:eval-universal-pipeline}
 The goal of this experiment is to demonstrate the difficulty of blindly finding the right prototype (i.e., without considering any meaningful or promising precedence).
-In \Cref{effective-tbl:pipeline-enumeration}, we list the exhaustive set of pipeline prototypes generated considering the compatible precedence graph in Table~\ref{tbl:rules}a (i.e., 24 compatible permutations).
+In \Cref{effective-tbl:pipeline-enumeration}, we list the exhaustive set of pipeline prototypes generated considering the compatible precedence graph in Table~\ref{effective-tbl:rules}a (i.e., 24 compatible permutations).
 In a real scenario, this number would be too high for splitting the time budget in order to optimize them.
 Yet, for the sake of this experiment, we exhaustively optimize all the prototypes, for each dataset.
 Thus, for each prototype and for each dataset, the SMBO algorithm is configured to assign a 200 seconds time budget to the phase of instantiating and optimizing the prototype, and another 200 seconds to the phase of optimizing the hyper-parameters of the ML algorithm.
 
 \begin{table}[t]
-\caption[Enumeration of the prototypes that can be generated by compatible precedence]{Exhaustive set of prototypes generated using the compatible precedence graph of Table~\ref{tbl:rules}a. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
+\caption[Enumeration of the prototypes that can be generated by compatible precedence]{Exhaustive set of prototypes generated using the compatible precedence graph of Table~\ref{effective-tbl:rules}a. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
 }
 \footnotesize
 \label{effective-tbl:pipeline-enumeration}
@@ -1087,7 +1084,7 @@ In order to evaluate how close the \textit{effective prototypes} are to the \tex
     normalized\;distance = \frac{ACC_{\textup{eff}} - ACC_{\varnothing}}{ACC_{\textup{exh}} - ACC_{\varnothing}}
 \end{equation*}
 
-$ACC_{\varnothing}$ is the baseline performance (i.e., predictive accuracy of the algorithm $A$ with default hyper-parameters over the original dataset $\altmathcal{D}$), formally $ACC_{\varnothing} = ACC(A(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
+$ACC_{\varnothing}$ is the baseline performance (i.e., accuracy of the algorithm $A$ with default hyper-parameters over the original dataset $\altmathcal{D}$), formally $ACC_{\varnothing} = ACC(A(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 $ACC_{\textup{eff}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized instantiation of the effective set of prototypes (i.e., our approach), formally $ACC_{\textup{eff}} = ACC(\langle P^{\star}_{\textup{eff}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 Finally, $ACC_{\textup{exh}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized pipeline instantiation of the exhaustive set of prototypes, formally $ACC_{\textup{exh}} = ACC(\langle P^{\star}_{\textup{exh}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 The subtraction by $ACC_{\varnothing}$ is done with the aim of weighting the difficulty of a dataset, hence allowing for comparisons in terms of the gain in accuracy.
@@ -1136,7 +1133,7 @@ To compare the results, we calculate the impact using the formulas below, which 
     \text{\textit{hp impact}} = \frac{ACC_{\textup{hpo}} - ACC_{\varnothing}}{max(ACC_{\textup{eff}}, ACC_{\textup{hpo}}) - ACC_{\varnothing}}
 \end{equation*}
 
-$ACC_{\varnothing}$ is yet again the baseline performance (i.e., predictive accuracy of the algorithm $A$ with default hyper-parameters over the original dataset $\altmathcal{D}$).
+$ACC_{\varnothing}$ is yet again the baseline performance (i.e., accuracy of the algorithm $A$ with default hyper-parameters over the original dataset $\altmathcal{D}$).
 $ACC_{\textup{eff}}$ is still the accuracy of our approach, i.e., the optimized algorithm $A_{{\lambda}^{\star}}$ with half of the whole budget over the dataset transformed using the optimized instantiation of the effective set of prototypes (with half of the whole budget).
 Finally, $ACC_{\textup{hpo}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ (i.e, using the entire budget) over the original dataset, formally $ACC_{\textup{hpo}} = ACC(A_{{\lambda}^{\star}}(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 
@@ -1165,7 +1162,7 @@ In addition, via the meta-learning phase proposed, we aim to guide the pipeline 
 An extensive evaluation on 80 datasets with heterogeneous characteristics, from sample size to feature types, and a set of classification algorithms (i.e., Naive Bayes, Random Forest, K-Nearest Neighbours), showed that our devised prototypes give promising results.
 More specifically, we were able to observe that:
 \begin{itemize}
-    \item [--] The overall impact of optimizing pre-processing is not negligible and it may boost the performance of the overall analytics (e.g., predictive accuracy).
+    \item [--] The overall impact of optimizing pre-processing is not negligible and it may boost the performance of the overall analytics (e.g., accuracy).
     \item [--] There is no universal pre-processing prototype that works best for every dataset and algorithm.
     \item [--] With 24 times less time budget, our proposed prototypes were able to obtain results that were as good as 90\% in the median of the optimal ones found through an exhaustive search.
     \item [--] Dedicating a portion of the time to the pre-processing optimization, instead of dedicating it entirely to hyper-parameter optimization may boost %(have a higher impact on?!)
