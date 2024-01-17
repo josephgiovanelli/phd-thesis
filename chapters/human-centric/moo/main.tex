@@ -1,3 +1,381 @@
-
 \chapter{Interactive Hyperparameter Optimization in Multi-Objective Problems via Preference Learning}
 \label{human-centric-chap:moo}
+
+Practical applications of machine learning often call for the optimization of more than one loss or objective function, called multi-objective machine learning (MO-ML) \cite{jin-momlbook06a} borrowing from the notion of multi-objective optimization (MO) \cite{deb-ds16,gunantara-ce18}.
+For example, instead of only focusing on the performance of a model, its energy consumption is becoming more and more important in various domains such as edge computing, but also in general, sparked by efforts in the area of green artificial intelligence (Green AI) \cite{schwartz-arxiv19a,wynsberghe-aiethics21a}.
+Comparing two ML models with respect to several objectives is non-trivial and most approaches solve this problem by returning a set of solutions that cannot be improved further without going to the expense of at least one of the objectives, called the Pareto front.
+Naturally, as standard ML algorithms, MO-ML algorithms expose hyperparameters controlling their learning behavior and thus, also the resulting Pareto front.
+To unleash the full potential of the MO-ML algorithms, these hyperparameters should be optimized with adequate methods.
+
+\paragraph{Challenges} Unfortunately, optimizing the hyperparameters of such MO-ML algorithms is challenging for a user with standard hyperparameter optimization (HPO) \cite{feurer-automlbook19a,bischl-dmkd23a} approaches, such as SMAC \cite{hutter-lion11a,lindauer-jmlr22a}, Optuna \cite{akiba-kdd19a}, Hyperopt \cite{komer-scipy14a}, HpBandSter \cite{falkner-icml18a} or SyneTune \cite{salinas-automl22}, which iteratively evaluate configurations.
+This is the case, as evaluating a hyperparameter configuration of an MO-ML algorithm involves evaluating the quality of the Pareto front of models returned by the corresponding algorithm.
+Several so-called (quality) indicators, such as hypervolume \cite{zitzler1999multiobjective}, are used to assess different properties of the shape of the Pareto front and in principle can also be used for the purpose of rating a configuration in the context of HPO.
+Nevertheless, although a user might have a clear idea about what kind of Pareto front shape they would like to choose their final model from, choosing the quality indicator leading to this Pareto front shape is a challenging task in practice. At the same time, however, correctly configuring the HPO tool with the right loss function, i.e. quality indicator in our case, is crucial to achieve the desired result.
+
+\paragraph{Contributions} We propose an interactive human-centric HPO \cite{pfisterer-arxiv2019a,souza-ecmlpkdd21a,moosbauer-neurips21a,hvarfner-iclr22a,moosbauer-arxiv22a,francia-fgcs23a,segel-automl23a,mallik-arxiv23} approach for MO-ML algorithms that frees users from choosing a predefined quality indicator suitable for their needs by learning one tailored towards them based on feedback.
+To achieve this, it first learns the desired Pareto front shape from the user in a short interactive session and then starts a corresponding HPO process optimizing towards the previously learned Pareto front shapes.
+Instead of requiring the user to present us with a concrete Pareto front they would favor, we interactively and iteratively present them a few pairs of Pareto fronts asking them for their preferences.
+Based on these pairwise comparisons, we leverage methods from the field of preference learning (PL) \cite{furnkranz-plbook10a} to learn a latent utility function serving as a Pareto front quality indicator customized to the user.
+In the subsequent stage, we run a state-of-the-art HPO tool
+instantiated with the learned Pareto front quality indicator to evaluate configurations and the corresponding Pareto fronts.
+
+In summary, we make the following contributions:
+\begin{enumerate}
+    \item We propose an interactive approach to learn a Pareto front quality indicator from pairwise comparisons based on a latent utility function with methods from the field of preference learning. This quality indicator is customized to the user and can be learned from a small number of pairwise comparisons. 
+    \item We combine the aforementioned learned quality indicator with an HPO tool 
+    to provide a full-fledged HPO approach for multi-objective MO-ML algorithms, which frees the user to choose an appropriate Pareto front quality indicator offering less opportunity for a mistake and thus, bad optimization results.
+    \item In an experimental case study, we demonstrate that our approach leads to substantially better Pareto fronts compared to optimizing based on a wrong indicator pre-selected by the user, and performs comparable in case of an advanced user knowing which indicator to pick. Thus, our approach makes HPO for MO-ML algorithms substantially more easily and robustly applicable in practice.
+\end{enumerate}
+
+\section{Background}
+\label{moo-sec:background}
+
+Since our work is spanned along the dimensions of hyperparameter optimization (HPO), multi-objective optimization (MO), and preference learning (PL), in the following, we refresh the formalization of the former two concepts (\Cref{moo-ssec:hpo} and \Cref{moo-ssec:moo} respectively) and introduce the latter (\Cref{moo-ssec:preference_learning_related}).
+
+\subsection{Hyperparameter Optimization} \label{moo-ssec:hpo}
+HPO formalizes the task of finding a hyperparameter configuration for a machine learning algorithm leading to a well-performing model on a given dataset 
+\begin{equation}
+    \altmathcal{D} = \{(\vec{x}_n, y_n)\}_{n=1}^N \in \mathbb{D} \subset \altmathcal{X} \times \altmathcal{Y}
+\end{equation}
+with an instance space $\altmathcal{X}$ and a target space $\altmathcal{Y}$. 
+In addition to the dataset, we are provided with a hyperparameter configuration space $\boldsymbol{\Lambda} = \Lambda_1 \times \dots \times \Lambda_K$ with $K$ hyperparameters, where $\Lambda_k$ is the domain of the $k^{\mathit{th}}$ hyperparameter, and an algorithm $A: \mathbb{D} \times \vec{\Lambda} \rightarrow \altmathcal{H}$ which trains a model from the model space $\altmathcal{H}$ given a dataset and a hyperparameter configuration. 
+Furthermore, we are provided with a loss function $\altmathcal{L}: \altmathcal{H} \times \mathbb{D} \rightarrow \mathbb{R}$ quantifying how well a given model performs on a given dataset. 
+The loss function can be used to assess the quality of a hyperparameter configuration by splitting the original dataset $\altmathcal{D}$ into two disjoint datasets $\altmathcal{D}_\mathit{train}$ and $\altmathcal{D}_\mathit{test}$, where the model is trained only based on $\altmathcal{D}_\mathit{train}$ but evaluated with $\altmathcal{L}$ on $\altmathcal{D}_\mathit{test}$. 
+Overall, we seek to find the optimal hyperparameter configuration $\vec{\lambda}^* \in \vec{\Lambda}$ defined as 
+\begin{equation}\label{moo-eq:hpo}
+    \vec{\lambda}^* \in \arg\min_{\vec{\lambda} \in \vec{\Lambda}} \altmathcal{L}\left( A \left( \altmathcal{D}_{\mathit{train}}, \vec{\lambda} \right), \altmathcal{D}_\mathit{test} \right) \, .
+\end{equation}
+
+There exist several approaches to automatically solving the optimization problem defined in \eqref{moo-eq:hpo}, many of which are powered by Bayesian optimization (BO) \cite{frazier-arxiv18a} or evolutionary approaches \cite{bischl-dmkd23a}. 
+Most of these techniques internally iteratively evaluate a large set of configurations based on their true estimated loss. 
+To this end, they split up a so-called validation dataset $\altmathcal{D}_\mathit{val}$ from the training dataset $\altmathcal{D}_\mathit{train}$ to estimate the loss $\altmathcal{L}(A(\altmathcal{D}_{\mathit{train}}, \vec{\lambda}), \altmathcal{D}_\mathit{test})$ of a configuration $\vec{\lambda}$ by $\altmathcal{L}(A(\altmathcal{D}_{\mathit{train}}, \vec{\lambda}), \altmathcal{D}_\mathit{val})$ and avoid a biased overfit to $\altmathcal{D}_\mathit{test}$.
+
+\subsection{Multi-Objective Machine Learning}
+\label{moo-ssec:moo}
+
+When it comes to learning a machine learning model with more than one (possibly conflicting) objective or loss function $\altmathcal{L}_1, \dots, \altmathcal{L}_M$ in mind, comparing the quality of models becomes difficult. For instance, in the context of Green AI, searching for a model with higher performance usually leads to one with higher power consumption, and vice versa. Thus, in multi-objective ML, learning algorithms leverage the concept of dominance formalizing that one model $h_1 \in \altmathcal{H}$ is better than another $h_2 \in \altmathcal{H}$, if $h_1$ performs better in at least one of the objectives while not performing worse than $h_2$ in the remaining ones. Yet, this leaves us with a set of non-dominated models, which are indistinguishable with respect to this dominance idea. These models form a so-called Pareto front $P_{\altmathcal{D}_{\mathit{val}}}(H)$ evaluated on dataset $\altmathcal{D}_{\mathit{val}}$ for a given set of models $H \subset \altmathcal{H}$. Formally, a Pareto front is defined as
+
+\begin{equation}
+    \label{moo-eq:pareto_def}
+        P_{\altmathcal{D}_{\mathit{val}}}(\altmathcal{H}) = \left\{ H \,\, \begin{array}{|l}
+        H \in \altmathcal{H}, \nexists H' \in \altmathcal{H},
+        \forall m \in \{1, \dots, M\} : \\
+        \quad\quad\altmathcal{L}_m(H',\altmathcal{D}_{\mathit{val}}) \leq \altmathcal{L}_m(H,\altmathcal{D}_{\mathit{val}}), \\
+        \exists j \in \{1, \dots, M\} : \\
+        \quad\quad\altmathcal{L}_j(H',\altmathcal{D}_{\mathit{val}}) < \altmathcal{L}_j(H, \altmathcal{D}_{\mathit{val}})
+        \end{array}\right\} \, .
+    \end{equation}
+
+Due to the problem of further distinguishing non-dominated models among each other, MO-ML algorithms usually resolve to returning the complete Pareto front of models instead of a single model. Thus, formally, the signature of an algorithm changes to $A: \mathbb{D} \times \vec{\Lambda} \rightarrow 2^{\altmathcal{H}}$. As a consequence, the evaluation of each hyperparameter configuration of such an MO-ML algorithm also involves quantifying the quality of a Pareto front of models instead of a single model returned by the algorithm, yielding a much more difficult problem. As such, the signature of our HPO loss function used in \Cref{moo-eq:hpo} also needs to change to $\altmathcal{L}: 2^{\altmathcal{H}} \times \mathbb{D} \rightarrow \mathbb{R}$ and thus can no longer be instantiated with simple loss functions such as accuracy. 
+
+One way of assessing the quality of a Pareto front and thus instantiating the HPO loss function $\altmathcal{L}$ in this case, are so-called Pareto front quality indicators \cite{audet-ejor21}. 
+These can be categorized into so-called external and internal indicators where external indicators measure the convergence of a Pareto front to the optimal one, i.e., the one that the user prefers. 
+Yet, in real-case problems, computing the entire Pareto front space is unfeasible and there is no way to describe the desiderata beforehand.
+In contrast, internal indicators assess the Pareto front quality by measuring specific characteristics. 
+A very common indicator is called hypervolume \cite{zitzler1999multiobjective} quantifying the volume occupied by the Pareto front w.r.t. a reference point.
+Other indicators evaluate factors such as uniformity of solution distribution (e.g., spacing indicator \cite{schott1995fault}), range of values covered by the Pareto front (e.g., maximum spread indicator \cite{zitzler2000comparison}), or proximity to specific threshold points (e.g., R2 indicator \cite{hansen1994evaluating}).
+Even though internal indicators can be effectively used as a loss function in HPO of MO-ML algorithms to quantify the quality of Pareto front and thus of a configuration, choosing the measure leading to a Pareto front which has a desired shape requires deep expert knowledge and thus, is a hard task for the user. In particular, a user has to map their implicit desiderata for the Pareto front shape to properties of the quality indicators without a concrete way of tailoring the HPO approach to these desiderata.
+
+\subsection{Preference Learning}
+\label{moo-ssec:preference_learning_related}
+
+Preference learning (PL) \cite{furnkranz-plbook10a} is a subfield of machine learning dealing with the problem of learning from different forms of preferences. Although, PL in general comprises a large set of learning problems, we  focus on the object ranking problem \cite{furnkranz-plbook10a} and in particular of learning to rank objects based on a given set of pairwise preferences. 
+
+In the object ranking problem, we consider a space of objects $\altmathcal{O}$, where each object $o \in \altmathcal{O}$ is represented as a feature vector $\vec{f}_o$. Such an object can be an item, a document, or (in our case) a Pareto front. Preferences among two objects $o_i, o_j \in \altmathcal{O}$ are denoted as $o_i \succ o_j$ indicating that object $o_i$ is preferred over $o_j$. The corresponding space of pairwise rankings over $\altmathcal{O}$ is denoted as $\altmathcal{R}(\altmathcal{O})$. Then, given a dataset of the form $\altmathcal{U} = \{o_{i,1} \succ o_{i,2}\}_{i=1}^U$, the goal is to learn a function $f: \altmathcal{O} \times \altmathcal{O} \rightarrow \altmathcal{R}(\altmathcal{O})$ that, given two objects, returns the correct pairwise ranking of these two objects. 
+
+Most approaches to object ranking work by learning a utility function $u: \altmathcal{O} \rightarrow \mathbb{R}$ returning a utility score for an object that can be used to create a ranking of two objects by sorting them according to their utility score. 
+
+\section{Related Works}\label{moo-sec:background_work}
+In the following, we give a short overview of related work in the areas of human-centric HPO/AutoML and the usage of preference learning in AutoML-related fields.
+
+The field of human-centric HPO/AutoML has gained increasing traction in the last years with approaches targeted at explaining the hyperparameter optimization process to increase the trust in automated tools \cite{pfisterer-arxiv2019a,moosbauer-neurips21a,moosbauer-arxiv22a,segel-automl23a}. This also includes concrete tools developed to help a user interpret the results such as XAutoML \cite{zoller-arxiv22a} or DeepCave \cite{sass-realml22a}. 
+
+Motivated from a similar stance that the user should be put back into the loop of the AutoML process to a certain extent, \citet{francia-fgcs23a} propose to leverage structured argumentation to semi-automatically constrain search spaces based on user input. Further going into this direction and most similar to our approach is the work by \citet{kulbach-ecai20a} building upon the observation that users are often unable to concretely configure a loss function in an AutoML tool fitting for their problem at hand. They suggest to learn a loss function customized to the user as a scalarization over several frequently used standard loss functions via PL methods. Our work differs from theirs in two main aspects: 
+\begin{itemize}[(1)]
+    \item First, we consider tuning the hyperparameters of MO-ML algorithms, while they try to find complete AutoML pipelines with standard classification/regression algorithms. Hence, there is not only a difference in the considered meta-problem (AutoML vs. HPO), but also in the types of machine learning algorithms to be composed / tuned (pipelines of standard ML algorithms vs MO-ML algorithms).
+    \item Second, we demonstrate pairwise comparisons of Pareto fronts to the user compared to pairwise comparisons of feature vectors, targets and predictions presented by \citet{kulbach-ecai20a}. We believe that our comparisons are much easier to make for a user.
+    \item Moreover, the Pareto front quality indicator learned by us is not constrained to be a scalarization of existing loss functions or quality indicators. Instead, we can, in principle, leverage any object ranking approach that allows for the extraction of a utility function.
+\end{itemize}
+
+Lastly, our approach is not to be confused with multi-objective HPO \cite{moraleshernandez-arxiv21a,karl-arxiv22a}, where HPO problem itself features multiple loss functions to be optimized, but the ML algorithm itself only returns a single solution.
+
+\begin{figure*}[!ht]
+\centering
+\includegraphics[width=1\columnwidth]{chapters/human-centric/moo/img/method.pdf} 
+\caption{Overview of the three phases of our approach: Preliminary Sampling provides the user with different Pareto fronts, Interactive Preference Learning allows the user to express their preferences, finally, Utility-driven HPO guides the optimization to the user desiderata.}
+\label{moo-fig:method}
+\end{figure*}
+
+\section{Interactive Hyperparameter Optimization in Multi-Objective Problems}
+\label{moo-sec:method}
+
+Our approach tackles the HPO problem (cf. \Cref{moo-eq:hpo}) for MO-ML algorithms, i.e., learning algorithms that return a Pareto front of models instead of a single model as a result of the learning process, works in three phases as depicted in \Cref{moo-fig:method}: 
+\begin{enumerate}
+    \item \textbf{Preliminary Sampling}: In the preliminary sampling phase we sample a fixed but small amount of hyperparameter configurations, evaluate these configurations and store the corresponding Pareto fronts of models returned by the MO-ML algorithm. 
+    \item \textbf{Interactive Preference Learning}: In the interactive preference learning phase, we construct pairs of Pareto fronts from the ones obtained in the preliminary sampling phase and show these pairs to the user, who rates which of two shown Pareto fronts they prefer. Based on the pairwise preferences obtained from the user and feature representations of the Pareto fronts underlying these pairwise preferences, we learn a latent utility function, which, given a Pareto front, outputs a utility score.
+    \item \textbf{Utility-driven HPO}: In this HPO phase, we instantiate an HPO tool (e.g. SMAC \cite{hutter-lion11a,lindauer-jmlr22a} as in our experiments) with the previously learned utility function as a loss function and perform standard HPO.
+\end{enumerate}
+
+\subsection{Preliminary Sampling}
+\label{moo-ssec:sampling}
+
+The underlying goal of the preliminary sampling phase is to obtain a set of Pareto fronts which we can use to construct pairs of Pareto fronts, which the user can rate in the subsequent stage. Keeping in mind, that we want to learn a utility function from the pairwise comparisons provided by the user, our set of Pareto fronts should ideally reasonably cover the space of possible Pareto fronts. This avoids potential generalization problems of the learned utility function, if it is provided with a Pareto front from a part of the Pareto front space which is very far off from any training data. 
+
+Recall that we perform HPO and our MO-ML algorithm $A: \mathbb{D} \times \vec{\Lambda} \rightarrow 2^\altmathcal{H}$ returns different Pareto fronts of models for a given dataset $\altmathcal{D}_\mathit{train} \in \mathbb{D}$ based on different hyperparameter configurations $\vec{\lambda} \in \vec{\Lambda}$. As such, we can obtain a set of Pareto fronts of models by sampling a fixed number of hyperparameter configurations $\vec{\Lambda}_\mathit{random} \subset \vec{\Lambda}$ at random, training the algorithm instantiated with the corresponding hyperparameter configuration on the training data $\altmathcal{D}_\mathit{train}$ and evaluating it according to our loss functions $\altmathcal{L}_m$ on $\altmathcal{D}_\mathit{val}$. This leads to a set of Pareto fronts defined as
+\begin{equation}
+    \altmathcal{P} = \{ P_{\altmathcal{D}_\mathit{val}}(A(\altmathcal{D}_\mathit{train}, \vec{\lambda})) \vert \vec{\lambda} \in \vec{\Lambda}_\mathit{random}\} \, .
+\end{equation}
+
+As the rich literature on AutoML and HPO shows, random search leads to a good coverage of the hyperparameter configuration space \cite{bischl-dmkd23a}. However, this does not automatically entail a reasonable coverage of the corresponding Pareto front space. 
+
+\subsection{Interactive Preference Learning}
+\label{moo-ssec:preference_learning_method}
+
+The goal underlying this phase of our approach is construct pairs of Pareto fronts to show to the user and learn a utility function of the form $u: \altmathcal{P} \rightarrow \mathbb{R}$, which, given a Pareto front, returns a utility score of the Pareto front based on the preferences obtained from the user. 
+
+\subsubsection*{Acquiring User Preferences}
+
+More formally, we start by constructing a set of pairs of Pareto fronts as 
+\begin{equation}
+    \Omega = \{ (P_1, P_2) \vert P_1,P_2 \in \altmathcal{P}, P_1 \neq P_2\} \, ,
+\end{equation}
+which leads to a number of pairs quadratic in the number of samples Pareto fronts. Since we do not want to overwhelm the user by showing them too many of such pairs, we can fallback to subsampling $\Omega$ to decrease the number of pairs to show to the user. However, as we show in the experimental evaluation later, we can also simply have a rather short preliminary sampling phase leading to a small number of Pareto fronts and thus also to a reasonably sized set $\Omega$ of pairs of Pareto fronts without compromising too much of the performance of our approach.
+Once the user has rated for each of such pairs $(P_1, P_2) \in \Omega$ whether he prefers the Pareto front $P_1$ over $P_2$, we have an object ranking dataset of the form
+\begin{equation}\label{moo-eq:object_ranking_dataset}
+    \altmathcal{U} = \{ P_{i,1} \succ P_{i,2}\}_{i=1}^U \, ,
+\end{equation} where, without loss of generality, we assume that the user prefers Pareto front $P_{i,1}$ over Pareto front $P_{i,2}$. 
+
+\subsubsection*{Feature Representation of Pareto Fronts}
+To learn a utility function based on the object ranking dataset defined in \Cref{moo-eq:object_ranking_dataset}, we additionally require a feature representation of a Pareto front such that the object ranking learning algorithm we employ can generalize over unseen Pareto fronts.
+More precisely, we aim to encode the Pareto front $P_{\altmathcal{D}_\mathit{val}(H)}$ returned by $A$ in a $d$-dimensional feature representation $\vec{f}_{P_{\altmathcal{D}_\mathit{val}(H)}} \in \mathbb{R}^d$ as depicted in \Cref{moo-fig:preference_preparation}. To this end, we assume to have access to all models returned by $A$, i.e. $H$ including all dominated models internally learned by $A$ and that there is some order imposed on the model space $\altmathcal{H}$ and hence on $H$. We evaluate all of these models $h_b \in H$ with each loss function $\altmathcal{L}_i$ on $\altmathcal{D}_\mathit{val}$ resulting in the following matrix
+\begin{equation}
+    \vec{L} = \left( \begin{array}{ccc}
+         \altmathcal{L}_1(h_1,\altmathcal{D}_{\mathit{val}}) & \ldots & \altmathcal{L}_M(h_1,\altmathcal{D}_{\mathit{val}}) \\
+         \vdots & \ddots & \vdots \\
+         \altmathcal{L}_1(h_B,\altmathcal{D}_{\mathit{val}}) & \ldots & \altmathcal{L}_M(h_B,\altmathcal{D}_{\mathit{val}}) \\
+    \end{array} \right) \, ,
+\end{equation} 
+where $B \geq \vert H \vert$ is the maximal number of models returned by $A$. If $A$ returns $B' < B$ values, we forward impute missing values for $B' + 1 \leq b \leq B' + (B - B')$ as 
+\begin{equation}\label{moo-eq:replace_dominated}
+    \vec{L}_{m,b} \leftarrow \altmathcal{L}_m(h_{b-1},\altmathcal{D}_{\mathit{val}}) ~ \forall 1 \leq m \leq M \, . 
+\end{equation} 
+For each model $h_b$ we check if it is dominated by the previous model $h_{b-1}$ as defined in \Cref{moo-eq:pareto_def}. If it is dominated, its loss values in the matrix are replaced by the ones from the previous non-dominated model following \Cref{moo-eq:replace_dominated}.
+At the end of this process, this matrix only contains loss values of 
+models contained in the Pareto front.
+Last, the matrix is flattened and standardized ($\altmathcal{N}(\cdot)$) across $\Omega$: 
+\begin{equation}\label{moo-eq:feature_representation}
+    \vec{f}_{P_{\altmathcal{D}_\mathit{val}(H)}} = \left[ \altmathcal{N}(\vec{L}_{1,1}), 
+    \ldots, \altmathcal{N}(\vec{L}_{B,M}) \right] \, .
+\end{equation}
+
+Note that we assume the order on our models to, on one hand ensure that the replacement and imputation strategy works as described above, and on the other hand works as a positional encoding which, assuming a suitable order relation is defined, in itself contains valuable domain knowledge. For our experimental evaluation, we define an ordering based on loss values of one of the considered loss functions.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\columnwidth]{chapters/human-centric/moo/img/preference_preparation.pdf}
+\caption{Visualization of the feature representation of a Pareto front based on two loss functions.}
+\label{moo-fig:preference_preparation}
+\end{figure}
+
+\subsubsection*{Learning A Utility Function for Pareto Fronts}
+
+With the object ranking dataset as defined in \Cref{moo-eq:object_ranking_dataset} and the feature representation previously described in \Cref{moo-eq:feature_representation}, we can now learn the utlity function. To this end, we leverage the RankSVM approach by \citet{joachims2002optimizing} which generalizes a standard SVM to the case of object ranking. This approach is very appealing for our use case as it allows to easily extract the latent utility function learned as part of the object ranker, which we want to use in the subsequent stage. 
+
+The idea underlying the (linear) RankSVM is that for every pairwise comparison $P_{1} \succ P_{2}$ in our object ranking dataset $\altmathcal{U}$ we want that, without loss of generality, the hyperplane defined by the learned weight vector $\vec{w} \in \mathbb{R}^d$ separates $P_{1}$ and $P_{2}$. Formally, it should hold for every pair: % $P_{1} \succ P_{2} \in \altmathcal{U}$ that
+\begin{align}
+    P_{1} \succ P_{2} &\Leftrightarrow \vec{w}^\intercal\vec{f}_{P_{1}} > \vec{w}^\intercal\vec{f}_{P_{2}} \label{moo-eq:rank_svm_1} \\ 
+    &\Leftrightarrow \vec{w}^\intercal\left(\vec{f}_{P_{1}}-\vec{f}_{P_{2}}\right) > 0 \label{moo-eq:rank_svm_2} \\ 
+    &\Leftrightarrow \vec{w}^\intercal\left(\vec{f}_{P_{2}}-\vec{f}_{P_{1}}\right) < 0 \label{moo-eq:rank_svm_3} \, . 
+\end{align}
+
+As in the standard case of SVMs this problem is NP-hard as noted by \cite{joachims2002optimizing}, which can be solved by the standard problem relaxation leveraging slack variables as for normal SVMs. We refer to \cite{joachims2002optimizing} for details. 
+
+With the observations formalized in \Cref{moo-eq:rank_svm_1} and \Cref{moo-eq:rank_svm_3} in mind, one can implement a RankSVM with a standard classification SVM trained with a dataset of the form 
+\begin{equation}
+\begin{split}
+    \altmathcal{D}_{\mathit{SVM}} &= \left\{ \left(\left(\vec{f}_{P_{1}}-\vec{f}_{P_{2}}\right), 1\right) \middle\vert  P_{1} \succ P_{2} \in \altmathcal{U} \right\} \\
+    &\cup \left\{ \left(\left(\vec{f}_{P_{2}}-\vec{f}_{P_{1}}\right), 0\right) \middle\vert  P_{1} \succ P_{2} \in \altmathcal{U} \right\} \, .
+\end{split}
+\end{equation}
+We add a positive example to encourage \Cref{moo-eq:rank_svm_2} and at the same time a negative example to encourage \Cref{moo-eq:rank_svm_3}, which both enforce a balanced dataset.
+
+After training a standard classification SVM on $\altmathcal{D}_{\mathit{SVM}}$, we define the utility function $u: \altmathcal{P} \rightarrow \mathbb{R}$ via the SVM weight vector $\vec{w}$ leveraging the feature representation of a Pareto front $P \in \altmathcal{P}$ defined in \Cref{moo-eq:feature_representation} as $u(P) = \vec{w}^T\vec{f}_P$.
+
+Although we only explained the linear RankSVM, the kernel trick \cite{scholkopf-book02} can be applied as usual in the case of SVMs leading to non-linear versions.
+
+
+
+All in all, preference learning and in particular object ranking offers a way to quantify the quality of a Pareto front in terms of a single scalar value w.r.t. the user desiredata without asking the user for this concrete scalar value.
+The RankSVM idea leverages the robustness and effectiveness of support vector machines to operationalize this idea while offering a clear and interpretable ranking mechanism. 
+
+\subsection{Utility-driven HPO}
+\label{moo-ssec:utility_automl}
+
+As we learned the utility function $u: \altmathcal{P} \rightarrow \mathbb{R}$ from the user preferences, we want to leverage it as a Pareto front quality indicator to optimize with a standard HPO tool. To this end, we leverage the well-known HPO tool SMAC \cite{hutter-lion11a,lindauer-jmlr22a} instantiated with the learned utility function $u$ as a cost function. 
+\section{Evaluation}
+\label{moo-sec:evaluation}
+
+We evaluate our approach in a case-study related to decreasing the energy consumption of ML models and in particular consider an MO-ML algorithm optimizing for both accuracy and energy consumption showing how our approach can be used in the context of Green AutoML \cite{tornede-jair23a}. In the following, we first detail the general experimental setup and then present two experiments performed.
+
+All code including detailed documentation can be found on Github\footnote{\url{https://github.com/automl/interactive-mo-ml}}, the technical appendix at the end of the document---after the references.
+
+\subsection{General Experimental Setup}
+\label{moo-ssec:experimental_setup}
+
+The MO-ML algorithm, whose hyperparameters we want to tune, is a wrapper for a funnel-shaped deep neural network (DNN) learning algorithm that exposes the same hyperparameters as the underlying DNN learning algorithm, but performs a grid-search over the number of epochs to train the DNN to return a Pareto front of models (\Cref{moo-fig:grid_search}).
+Indeed, it is known that the \textit{number of epochs} has an obvious influence on the objectives, hence, on the shape of the retrieved Pareto front.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\columnwidth]{chapters/human-centric/moo/img/grid_search.pdf}
+    \caption{Working example of the DNN wrapper: the grid search over the number of epochs allows us to have a Pareto front as output.}
+    \label{moo-fig:grid_search}
+\end{figure}
+
+These models are all identical, but trained for different number of epochs and can thus be seen as snapshots of the DNN learning curve \cite{mohr-arxiv22a} at different epochs. A lower number of epochs usually leads to a lower energy consumption, but also to a lower accuracy indicating that the two objectives are potentially conflicting. The concrete hyperparameters our DNN algorithms exposes are defined by LCBench \cite{zimmer-tpami21a}, a well-known multi-fidelity deep learning benchmark.
+LCBench comprises evaluations of over 2000 funnel-shaped MLP neural networks with varying hyperparameters on 35 datasets of the OpenML CC-18 suite \cite{bischl-arxiv17a}.
+The networks use SGD with cosine annealing without restarts and, overall, $7$ parameters are sampled (4 float, 3 integer).
+These are reported in \Cref{moo-tbl:lc_bench_space}.
+More details can be found at \url{https://github.com/automl/LCBench}.
+In the spirit of Green AutoML \cite{tornede-jair23a}, we leverage the benchmark surrogate for LCBench provided by YAHPO-GYM \cite{pfisterer-arxiv21a}.\footnote{We use the surrogate model to estimate the performance of those configurations for which no result is available in LCBench.} We measure the accuracy of a model as the validation accuracy on $33\%$ of the corresponding OpenML CC-18 dataset. We estimate the power consumption in watts~($W$) for training a model by assuming the maximum consumption for the whole provided training time. The evaluations present in LCBench were performend on an Intel Xeon Gold 6242 with a maximum consumption of $150~Wh$.
+
+\begin{table}[t]
+    \centering
+    \begin{tabular}{@{}llll@{}}
+    \toprule
+    Hyperparameter & Type & Range & Distribution \\ \midrule
+    Batch size & Integer & [16, 512] & Log \\
+    Learning rate & Float & [1e-4, 1e-1] & Log \\
+    Momentum & Float & [0.1, 0.99] & Linear \\
+    Weight decay & Float & [1e-5, 1e-1] & Linear \\
+    No. layers & Integer & [1, 5] & Linear \\
+    No. units per layer & Integer & [64, 1024] & Log \\
+    Dropout & Float & [0.0, 1.0] & Linear \\\bottomrule
+    \end{tabular}
+    \caption{Search space of LCBench.}
+    \label{moo-tbl:lc_bench_space}
+    \end{table}
+
+
+As noted earlier, many users struggle to choose a Pareto front quality indicator as a loss function for an HPO tool that yields Pareto fronts with their desired shape. Our evaluation focuses on users that are likely to make a wrong decision wrt. choosing the correct quality indicator, but can very well label pariwise comparisons of Pareto fronts according to an indicator without knowing the indicator itself.
+As such, we simulate users by labeling pairwise comparisons according to hypervolume (HV), spacing (SP), maximum spread (MS) and R2 as Pareto front quality indicators.
+
+\begin{definition}[Hypervolume (HV)]
+    Hypervolume quantifies the volume of the front by merging the hypercubes determined by each of its solutions $h \in H$ and the reference point $r$ (i.e., the worst possible solution), formally:
+     $$HV(H) = \beta \left(\bigcup_{h \in H} \{ x \mid h \prec x \prec r \} \right)$$
+     where $\beta$ denotes the Lebesgue measure. This ranges from $0$ to $1$, the highest the better.
+\end{definition}
+
+\begin{definition}[Spacing (SP)]
+    Spacing is the most popular uniformity indicator and it gauges the variation of the distance between solutions in a set;
+    $$SP(H) = \sqrt{\frac{1}{N-1} \sum_{h \in H} ( \bar{d} - d_1 ( h, H/h ) )^2}$$
+    where $\bar{d}$ is the mean of all the $d_1 ( h, H/h ) : h \in H$ and $d_1 ( h, H/h )$ means the $L^1$ norm distance (Manhattan distance) of $h$ to the set $H/h$. A SP value of zero indicates all members of the solution set are spaced equidistantly on the basis of Manhattan distance.
+\end{definition}
+
+\begin{definition}[Maximum Spread (MS)]
+    Maximum Spread is a widely used spread indicator, and it measures the range of a solution set by considering the maximum extent on each objective:
+    $$MS(H) = \sqrt{ \sum_{j = 1}^{m} \max_{h, h' \in H} (\altmathcal{L}_{j}(h) - \altmathcal{L}_{j}(h'))^2}$$
+    where $m$ denotes the number of objectives. MS is to be maximized; the higher the value, the better the extensity to be claimed.
+\end{definition}
+
+\begin{definition}[R2]
+    This indicator measures the proximity to a specific reference point $r$ via the Chebyshev norm:
+     $$R2(H) = \min_{h \in H} d_{\inf}(h, r)$$
+     Given $m$ objectives, $d_{\inf}(h, r)$ corresponds to $\max_{i=1}^{m}(\mid \altmathcal{L}_i(h) - \altmathcal{L}_i(r))$. Lower values translate into Pareto fronts closer to the reference point, taken as the ideal solution.
+\end{definition}
+
+The order over the models returned by $A$, which we assume for the feature representation, is given by the energy consumption loss function, which means that models are ordered based on their energy consumption.
+
+All code and documentation required to reproduce any of the results can be found on GitHub\footnote{\url{https://github.com/automl/interactive-mo-ml}}.
+There is no need for the user to locally build the project, we deployed a Docker Image that instantiates a pre-built container with all the needed Python dependencies and runs the experiments.
+In particular, we leverage: the package cs-rank \cite{csrank2018, csrank2019} as a basis for our preference learning models and the package pymoo\cite{pymoo} for the quality indicator implementations.
+Finally, we exploit the well-known HPO tool SMAC \cite{hutter-lion11a,lindauer-jmlr22a} to apply Bayesian optimization.
+The experiments were tested varying three different seeds on an AMD Ryzen $5$ $3600$ $6$-Core Processor with $64$ GB.
+The total computation time was $21984$ seconds (around $6$ hours), for an overall power consumption of $520~W$.
+
+\subsection{Object Ranking Performance}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.7\columnwidth]{chapters/human-centric/moo/img/preference_evaluation.pdf}
+\caption{Kendall's Tau of the preference learning models.}
+\label{moo-fig:preference_evaluation}
+\end{figure}
+
+In the following, we evaluate our object ranker.
+% (cf. Sec.~\ref{moo-ssec:preference_learning_method}).
+
+\paragraph{Additional Experimental Setup}
+We tune the hyperparameters of our preference learning models, one for each quality indicator, on top of the first 3 datasets of LCBench: KDDCup09\_appetency, covertype, Amazon\_employee\_access.
+Each configuration has been evaluated by averaging the performance achieved in those datasets over $3$ different seeds.
+As to the evaluation within each dataset, we performed a cross-validation: we split the sampled Pareto fronts $\altmathcal{P}$ in $5$ folds and compute all possible pairwise comparisons within each fold. 
+Specifically, we set the number of sampled Pareto fronts $|\altmathcal{P}|$ at $40$, so that we can create $5$ folds of $8$ elements, which translates into $\binom{8}{2} = 28$ pairwise comparisons.
+Concretely, at each cross-validation evaluation, we use the pairwise comparisons of the $4$ training folds to predict the global ranking of the $8$ Pareto fronts in the test fold, and compare it with the ranking of the Pareto fronts given by the quality indicator at hand.
+These rankings are compared in terms of a ranking loss function called Kendall's Tau correlation \cite{kendall-article48}.
+Roughly speaking, this measures how correlated two rankings are. A correlation score of -1 can be interpreted as an inverse correlation, a score of $0$ as no correlation and a score of $1$ as perfect correlation.
+
+\begin{definition}[Kendall's Tau \cite{kendall-article48}]
+    Given two rankings, each position is labeled as: \texttt{concordant} $C$ if the same object is present in both rankings; \texttt{tie} $T$  if the objects are different, yet similar wrt. a certain similarity function; \texttt{discordant} $D$  if the objects are different and not similar.
+    \begin{equation*}
+        \textit{Tau} = \frac{(C - D)}{(C + D + T) \cdot \sqrt{C + D + T}}
+    \end{equation*}
+\end{definition}
+
+To detect whether two objects -- Paretos in our case -- are similar, we employed the Fisher-Jenks algorithm \cite{fisher1958homogeneity, jenks1967data}
+The Fisher-Jenks algorithm addresses the problem of determining the best arrangement of ordered values into different buckets, also known as \textit{natural breaks optimization} because it effectively highlights significant transitions in the underlying distribution.
+We leverage this algorithm to identify similar Pareto fronts in the set of the Preliminary sampling, i.e., that should be ranked equally in a global ranking. The process starts by trying to divide the samples into two groups, evaluating all possible break points by the Jenks optimization function. This is the core of the algorithm because it drives towards the optimal buckets and consists of a trade-off between minimizing within-bucket variance and maximizing between-bucket variance.
+Once the optimal breakpoint is found, the data is divided into two groups based on this breakpoint.
+The process is then repeated recursively for each of these groups until a predetermined number of buckets is reached. By exploiting a simple elbow method, it is possible to determine the optimal number of buckets, i.e., choosing the ``knee of a curve'' as a cutoff point, where diminishing returns are no longer worth the additional cost.
+Given $n$ samples to split into $k$ buckets, the complexity of the algorithm would be $O(k \cdot n^2)$. Yet, nowadays, finding breaks for $15$ classes for a data array of $7$ million unique values now takes $20$ seconds on commodity hardware. In these experiments, we have only $40$ samples to arrange in -- approximately -- $30$ buckets, depending on the indicator.
+
+
+\paragraph{Result Discussion}
+\begin{table}[t]
+\centering
+    \resizebox{0.9\textwidth}{!}{
+    \Huge{
+	\begin{tabular}{l|c|c|c|c}
+	\toprule
+	PB$\backslash$IB & $HV\uparrow$ & $SP\downarrow$ & $MS\uparrow$ & $R2\downarrow$ \\ \midrule
+	$HV\uparrow$ & \cellcolor{red!1}{\begin{tabular}{ccc}  0.76  & \multirow{2}{*}{$\backslash$} & \textbf{0.77} \\ ($\pm$0.17) & & \textbf{($\pm$0.17) }\end{tabular}} & \cellcolor{blue!15}{\begin{tabular}{ccc} \textbf{ 0.76}  & \multirow{2}{*}{$\backslash$} & 0.52 \\ \textbf{($\pm$0.17)} & & ($\pm$0.24) \end{tabular}} & \cellcolor{blue!15}{\begin{tabular}{ccc} \textbf{ 0.76}  & \multirow{2}{*}{$\backslash$} & 0.52 \\ \textbf{($\pm$0.17)} & & ($\pm$0.21) \end{tabular}} & \cellcolor{red!1}{\begin{tabular}{ccc}  0.76  & \multirow{2}{*}{$\backslash$} & \textbf{0.77} \\ ($\pm$0.17) & & \textbf{($\pm$0.16) }\end{tabular}} \\ \midrule
+	$SP\downarrow$ & \cellcolor{blue!67}{\begin{tabular}{ccc} \textcolor{white}{\textbf{ 0.01}}  & \multirow{2}{*}{\textcolor{white}{$\backslash$}} & \textcolor{white}{0.03} \\ \textcolor{white}{\textbf{($\pm$0.01)}} & & \textcolor{white}{($\pm$0.02)} \end{tabular}} & \cellcolor{red!0}{\begin{tabular}{ccc}  \textbf{0.01}  & \multirow{2}{*}{$\backslash$} & \textbf{0.01} \\ \textbf{($\pm$0.01)} & & \textbf{($\pm$0.0) }\end{tabular}} & \cellcolor{blue!100}{\begin{tabular}{ccc} \textcolor{white}{\textbf{ 0.01}}  & \multirow{2}{*}{\textcolor{white}{$\backslash$}} & \textcolor{white}{0.04} \\ \textcolor{white}{\textbf{($\pm$0.01)}} & & \textcolor{white}{($\pm$0.03) }\end{tabular}} & \cellcolor{blue!100}{\begin{tabular}{ccc} \textcolor{white}{\textbf{ 0.01}}  & \multirow{2}{*}{\textcolor{white}{$\backslash$}} & \textcolor{white}{0.04} \\ \textcolor{white}{\textbf{($\pm$0.01)}} & & \textcolor{white}{($\pm$0.02)} \end{tabular}} \\ \midrule
+	$MS\uparrow$ & \cellcolor{blue!74}{\begin{tabular}{ccc} \textcolor{white}{\textbf{ 0.61}}  & \multirow{2}{*}{\textcolor{white}{$\backslash$}} & \textcolor{white}{0.19} \\ \textcolor{white}{\textbf{($\pm$0.09)}} & & \textcolor{white}{($\pm$0.08) }\end{tabular}} & \cellcolor{blue!74}{\begin{tabular}{ccc} \textcolor{white}{\textbf{ 0.61}}  & \multirow{2}{*}{\textcolor{white}{$\backslash$}} & \textcolor{white}{0.19} \\ \textcolor{white}{\textbf{($\pm$0.09)}} & & \textcolor{white}{($\pm$0.12) }\end{tabular}} & \cellcolor{red!6}{\begin{tabular}{ccc}  0.61  & \multirow{2}{*}{$\backslash$} & \textbf{0.65} \\ ($\pm$0.09) & & \textbf{($\pm$0.06) }\end{tabular}} & \cellcolor{blue!55}{\begin{tabular}{ccc} \textbf{ 0.61}  & \multirow{2}{*}{$\backslash$} & 0.23 \\ \textbf{($\pm$0.09)} & & ($\pm$0.11) \end{tabular}} \\ \midrule
+	$R2\downarrow$ & \cellcolor{red!4}{\begin{tabular}{ccc}  0.23  & \multirow{2}{*}{$\backslash$} & \textbf{0.22} \\ ($\pm$0.16) & & \textbf{($\pm$0.16) }\end{tabular}} & \cellcolor{blue!35}{\begin{tabular}{ccc} \textbf{ 0.23}  & \multirow{2}{*}{$\backslash$} & 0.47 \\ \textbf{($\pm$0.16)} & & ($\pm$0.23) \end{tabular}} & \cellcolor{blue!32}{\begin{tabular}{ccc} \textbf{ 0.23}  & \multirow{2}{*}{$\backslash$} & 0.45 \\ \textbf{($\pm$0.16)} & & ($\pm$0.21) \end{tabular}} & \cellcolor{red!9}{\begin{tabular}{ccc}  0.23  & \multirow{2}{*}{$\backslash$} & \textbf{0.21} \\ ($\pm$0.16) & & \textbf{($\pm$0.16) }\end{tabular}} \\ \midrule
+	\end{tabular}
+    }
+    }
+\caption{Comparison between indicator-based HPO (i.e., IB, columns) and preference-based HPO (i.e., PB, rows). The preference learning model is trained using 28 pairwise comparisons.}\label{moo-tbl:end_to_end_evaluation_28}\end{table}
+
+In \Cref{moo-fig:preference_evaluation} we plot the performance of our models in terms of the Kendall's Tau averaged across the folds with the error bars defined by the corresponding standard deviation. In particular, we show how this performance varies with the number of available pairwise comparisons, i.e. the size of the object ranking training data, highlighting that, depending on the quality indicator, we obtain a reliable ranking model for Pareto fronts with rather few training data.
+
+Generally, as to be expected, the correlation scores increase for each utility function as the number of comparisons increases independent of the quality indicator based on which they are learned. However, both the score at the lowest number of comparisons and the degree to which it increases with a growing number of examples varies substantially between the different utility functions. This indicates that it is easier for our object ranker to learn a behavior similar to HV or R2 than to SP or MS which also coincides with the fact that HV and R2 are external quality indicators whereas SP and MS are internal indicators.
+% (cf. Sec.~\ref{moo-ssec:moo}).
+A potential reason for these differences in modeling performance of our object ranker might be grounded in the feature representation of Pareto fronts we chose and in the linearity of the RankSVM used as an object ranker. In particular, both SP and MS require computations over pairs of models such that a quadratic kernel or feature transformation might be better suited for these indicators. Nevertheless, as we see in the next experiment, the ranking performance seems to be sufficient to guide the HPO process.
+
+\subsection{HPO Approach Performance}
+\label{moo-sssec:end_to_end}
+
+In the following, we leverage the remaining 32 datasets of LCBench to evaluate our complete approach from phases 1 to 3. We will demonstrate that our HPO approach performs much better than SMAC assuming a user that chooses the wrong indicator and that it performs comparable assuming an advanced user knowing which indicator to pick.
+
+\paragraph{Additional Experimental Setup}
+
+In order to quantify how well our approach works, we compare how well SMAC instantiated with each of the Pareto front indicators above as a loss function (IB) works compared to our approach with the user simulated as mentioned above (PB). In particular, for each Pareto front indicator, we run our approach with a simulated user that behaves according to that indicator and compare against the HPO tool instantiated with each of the indicators as a loss function. That way, we cannot only quantify how much better our approach works wrt. to each of the quality indicators, under the assumption that a user chooses a wrong quality indicator, but also that our approach does not perform substantially worse in cases where the user picks the correct indicator. We run both IB and PB for a budget of $30$ evaluations on each of the datasets for $3$ seeds and report the mean and standard deviation over the seeds and datasets.
+
+\paragraph{Result Discussion}
+\Cref{moo-tbl:end_to_end_evaluation_28} visualizes the comparison of SMAC initialized with different Pareto front quality indicators as a loss function (IB) and our approach based on the learned utility function as a Pareto front quality indicator (PB).
+The indicators in the rows represent the ones used for labeling the user preferences, and hence, to train the preference learning models.
+The indicators in the columns represent the quality indicators chosen for optimization in SMAC.
+As a consequence, in each cell, we find the performance (averaged over seeds and datasets) and the respective standard deviation of the preference-based SMAC (PB) and the indicator-based SMAC (IB).
+This is expressed in terms of the quality indicator leveraged to rank the Pareto front (i.e. the one given in the row), hence, providing us with an estimation of how compliant the final Pareto front is with the user preferences.
+The cells in the diagonal correspond to situations where our approach is compared to IB initialized with the "correct" quality indicator function, whereas the off-diagonal cells correspond to scenarios where a user chooses the "wrong" quality indicato for IB. For a better visual interpretability, we color cells with a blue tone depending on how much better our approach (PB) is relative to IB given in the respective column and red in cases where we are worse. Moreover, we highlight the better performance value for each cell in bold.
+If our learned utility function perfectly resembled the ground truth quality indicator, we would expect that the two values in each diagonal cell are identical and the coloring would be white as a consequence. Moreover, the better our approach is in one of the settings, the darker is the blue of the corresponding cell. At the same time, the worse our approach is in one of the settings, the darker will be the red in the corresponding cell. 
+
+As the table shows, our approach (PB) behaves comparable to IB in cases where a user picks the correct Pareto front quality indicator (diagonal) and almost always better in cases where a user picks the wrong Pareto front quality indicator. In particular, we perform better or equal in $11/16$ cases whereas IB performs slightly better only in $5/10$ cases. In cases where our approach performs better, the improvements are often substantial, whereas in cases of degradation our approach is often only slightly worse.
+
+Overall, our evaluation demonstrates that our approach successfully frees users from selecting the correct quality indicator aligned with their desiderata at the slight cost of visually comparing a low number of Paretos upfront.
+
+\section{Conclusion}
+\label{moo-sec:conclusion}
+In this paper, we propose a human-centric interactive HPO approach tailored towards MO ML leveraging preference learning to extract desiderata from users that guide the optimization. In particular, we learn a utility function for Parto fronts based on pairwise preferences given by the user which we use as a loss function in a subsequent standard HPO process. In an experimental study, we demonstrate that our end-to-end approach performs much better than off-the-shelf HPO with a user that chooses an indicator not aligned with their desiderata and that it performs comparable to off-the-shelf HPO operated by an advanced user knowing which indicator to pick. As such, our approach successfully frees users from selecting the correct Pareto front quality indicator aligned with their desiderata at the slight cost of visually comparing a low number of Pareto fronts upfront.
+
+As future works, we deem it interesting to design other feature representations with fewer assumptions and to generalize our approach to a larger number of loss functions as it is currently practically limited to two as users might have a hard time rating higher dimensional Pareto fronts in the interactive part.

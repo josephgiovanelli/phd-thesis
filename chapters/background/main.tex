@@ -2,8 +2,8 @@
 \label{chap:background}
 
 Alan Turing defines the field of AI in cognitive terms \cite{turing1980computing}, raising the question of whether machines can show intelligence, and along this line Arthur Samuel defines ML \cite{samuel2000some}, building upon the notion of intelligence as learning.
-A more formal definition is provided by Tom M. Mitchell \citep{mitchell1997machine}, who delineates the behavior of algorithms studied in machine learning and introduces the concepts of \textit{task} and \textit{experience}.
-\begin{definition}[Machine Learning \citep{mitchell1997machine}]
+A more formal definition is provided by Tom M. Mitchell \cite{mitchell1997machine}, who delineates the behavior of algorithms studied in machine learning and introduces the concepts of \textit{task} and \textit{experience}.
+\begin{definition}[Machine Learning \cite{mitchell1997machine}]
     A computer program is said to learn in some class of tasks, with respect to a performance measure, if its performance improves with experience.
 \end{definition}
 Notably, the formalization of experience is contingent upon the task to address, which is crucial because determines what the ML algorithm can observe and, in turn, how it operates.
@@ -386,12 +386,12 @@ MO-ML algorithms return the complete Pareto front of models instead of a single 
 Formally, the signature of an algorithm changes to $A: \mathbb{D} \times \vec{\Lambda} \rightarrow 2^{\altmathcal{H}}$. As a consequence, the evaluation of each hyperparameter configuration of such an MO-ML algorithm also involves quantifying the quality of a Pareto front of models instead of a single model returned by the algorithm, yielding a much more difficult problem.
 As such, the signature of our loss function also needs to change to $\altmathcal{L}: 2^{\altmathcal{H}} \times \mathbb{D} \rightarrow \mathbb{R}$ and thus can no longer be instantiated with simple loss functions such as accuracy.
 
-One way of assessing the quality of a Pareto front and thus instantiating the HPO loss function $\altmathcal{L}$ in this case, are so-called Pareto front quality indicators~\citep{audet-ejor21}.
+One way of assessing the quality of a Pareto front and thus instantiating the HPO loss function $\altmathcal{L}$ in this case, are so-called Pareto front quality indicators \cite{audet-ejor21}.
 These can be categorized into so-called external and internal indicators where external indicators measure the convergence of a Pareto front to the optimal one, i.e., the one that the user prefers.
 Yet, in real-case problems, computing the entire Pareto front space is unfeasible and there is no way to describe the desiderata beforehand.
 In contrast, internal indicators assess the Pareto front quality by measuring specific characteristics.
-A very common indicator is called hypervolume \citep{zitzler1999multiobjective} quantifying the volume occupied by the Pareto front w.r.t. a reference point.
-Other indicators evaluate factors such as uniformity of solution distribution (e.g., spacing indicator \citep{schott1995fault}), range of values covered by the Pareto front (e.g., maximum spread indicator \citep{zitzler2000comparison}), or proximity to specific threshold points (e.g., R2 indicator \citep{hansen1994evaluating}).
+A very common indicator is called hypervolume \cite{zitzler1999multiobjective} quantifying the volume occupied by the Pareto front w.r.t. a reference point.
+Other indicators evaluate factors such as uniformity of solution distribution (e.g., spacing indicator \cite{schott1995fault}), range of values covered by the Pareto front (e.g., maximum spread indicator \cite{zitzler2000comparison}), or proximity to specific threshold points (e.g., R2 indicator \cite{hansen1994evaluating}).
 
 Once a custom loss function tailored to Pareto front indicators is employed, the established single-objective optimization approaches remain applicable for optimizing MO-ML algorithms.
 

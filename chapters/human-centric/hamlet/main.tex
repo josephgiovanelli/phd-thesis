@@ -37,11 +37,11 @@ parse the LogicalKB into a human- and machine-readable medium called Problem Gra
 devise the AutoML search space from the Problem Graph;
 and leverage the Problem Graph to allow both the data scientist and an AutoML tool to revise the current knowledge.
 In this chapter, we commit to the following contributions.
-\begin{enumerate}[(i)]
+\begin{enumerate}
     \item We provide an innovative formalization of the AutoML problem, which considers ML pipelines of multiple lengths, Data Pre-processing steps and user-defined constraints.
     \item We design the formal foundation of HAMLET, supporting the injection of constraints to select ML pipelines as well as the resolution of possible arising inconsistencies.
     \item We implement a functioning prototype of HAMLET.
-    \item We provide a preliminary empirical evaluation, including the overhead introduced by the argumentation process and the comparison against state-of-the-art algorithms. 
+    \item We provide a preliminary empirical evaluation, including the overhead introduced by the argumentation process and the comparison against state-of-the-art algorithms.
 \end{enumerate}
 
 The remainder of the paper is structured as follows. In \Cref{hamlet-sec:related}, we introduce the related works; we provide the problem formulation in \Cref{hamlet-sec:problem} and its implementation in \Cref{hamlet-sec:implementation}; finally, we provide some preliminary evaluation in \Cref{hamlet-sec:test}, and we draw the conclusions and future research directions in \Cref{hamlet-sec:conclusion}.
@@ -171,7 +171,7 @@ Each algorithm $A$ exposes a set of $K$ hyperparameters, producing the Cartesian
     An algorithm for classification is decision tree  ($\altmathcal{D}t$) \cite{DBLP:books/wa/BreimanFOS84},
     examples of hyperparameters for $\altmathcal{D}t$ are its maximum $\textup{depth}$ $(\mathbb{N}^+)$ and the minimum $\textup{samples split}$ $(\mathbb{N}^+)$ required to split a node; hence $\Lambda_{\altmathcal{D}t} = \mathbb{N}^+ \times \mathbb{N}^+$.
     An example of algorithm instance is $\lambda_{\altmathcal{D}t}= \{ \textup{depth}=3,\textup{samples\_split}=10 \}$.
-    \end{example}
+\end{example}
 
 Finally, an ML pipeline $P$ is a sequence of pre-processing steps that shape a dataset $\altmathcal{D}$ and a subsequent final ML step in which we address the task---in our case, either classification or regression.
 We can write the search space as: $\Lambda_P = \Lambda_{S_1} \times \ldots \times \Lambda_{S_{|P|}} \times \lambda_p$, with $\lambda_p$ a new root-hyperparameter that selects the order of the pre-processing steps---i.e., among all possible partial permutations.

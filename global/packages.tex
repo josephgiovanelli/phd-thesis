@@ -145,7 +145,6 @@
 \usepackage{booktabs}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
-\usepackage{graphicx}
 \usepackage{caption}
 \usepackage{floatrow}
 \usepackage{multirow}
@@ -166,6 +165,10 @@
 \usepackage{relsize}
 \usepackage{siunitx}
 
+% \usepackage{microtype} % microtypography
+\usepackage{xspace}
+% \usepackage{paralist}
+
 
 
 \newtheorem{example}{Example}
@@ -175,6 +178,18 @@
 \newtheorem{lemma}{Lemma}
 
 % \newenvironment{proof}{{\bf Proof:}}{}
+
+\newcommand{\HPO}{HPO\xspace}
+\newcommand{\NLP}{NLP\xspace}
+\newcommand{\ML}{ML\xspace}
+\newcommand{\AutoML}{AutoML\xspace}
+\newcommand{\LM}{LM\xspace}
+\newcommand{\LMs}{LMs\xspace}
+\newcommand{\LLM}{LLM\xspace}
+\newcommand{\LLMs}{LLMs\xspace}
+\newcommand{\NAS}{NAS\xspace}
+\newcommand\todo[1]{{\color{red}[ToDo: #1]}}
+
 
 \newcommand{\cupdot}{\mathbin{\mathaccent\cdot\cup}}
 \newcommand{\cmark}{\ding{51}}
@@ -268,7 +283,6 @@
 % \usepackage{color}
 % \usepackage{blindtext}
 % \usepackage{makeidx}  % allows for indexgeneration
-% \usepackage{graphicx}
 \usepackage{natbib}
 \let\cite\citep
 \let\shortcite\citeyearpar
