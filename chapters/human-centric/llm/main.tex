@@ -77,13 +77,7 @@ The two ingredients required to make Reinforcement Learning (RL) work on a pre-t
     \item A policy that takes user queries or prompts as input to produce language tokens as outputs.
 \end{itemize}
 
-We note that, in principle, 
-% NOTE (HW). Left this out. Don't think that alignment fine-tuning works without instruction tuning
-%any form of fine-tuning is an optional step and that 
-one can also use a pre-trained model off-the-shelf. However, in practice, some instruction tuning and alignment fine-tuning is performed if the model is released to end-users. Moreover, some form of additional task-specific fine-tuning
-% NOTE (HW). Left this out for similar reasons
-%%%, be it task-specific or instruction tuning, is also 
-is often performed to increase the performance of the \LLM for its designated usage and to make it properly usable.
+We note that, in principle, one can also use a pre-trained model off-the-shelf. However, in practice, some instruction tuning and alignment fine-tuning is performed if the model is released to end-users. Moreover, some form of additional task-specific fine-tuning is often performed to increase the performance of the \LLM for its designated usage and to make it properly usable.
 
 Finally, during \textbf{inference}, the fine-tuned \LLM generates text for language-related tasks, such as question answering, based on the learned knowledge and contextual understanding.
 

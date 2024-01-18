@@ -154,11 +154,11 @@ More precisely, we aim to encode the Pareto front $P_{\altmathcal{D}_\mathit{val
          \vdots & \ddots & \vdots \\
          \altmathcal{L}_1(h_B,\altmathcal{D}_{\mathit{val}}) & \ldots & \altmathcal{L}_M(h_B,\altmathcal{D}_{\mathit{val}}) \\
     \end{array} \right) \, ,
-\end{equation} 
+\end{equation}
 where $B \geq \vert H \vert$ is the maximal number of models returned by $A$. If $A$ returns $B' < B$ values, we forward impute missing values for $B' + 1 \leq b \leq B' + (B - B')$ as 
 \begin{equation}\label{moo-eq:replace_dominated}
     \vec{L}_{m,b} \leftarrow \altmathcal{L}_m(h_{b-1},\altmathcal{D}_{\mathit{val}}) ~ \forall 1 \leq m \leq M \, . 
-\end{equation} 
+\end{equation}
 For each model $h_b$ we check if it is dominated by the previous model $h_{b-1}$ as defined in \Cref{moo-eq:pareto_def}. If it is dominated, its loss values in the matrix are replaced by the ones from the previous non-dominated model following \Cref{moo-eq:replace_dominated}.
 At the end of this process, this matrix only contains loss values of 
 models contained in the Pareto front.
@@ -303,7 +303,6 @@ The total computation time was $21984$ seconds (around $6$ hours), for an overal
 \end{figure}
 
 In the following, we evaluate our object ranker.
-% (cf. Sec.~\ref{moo-ssec:preference_learning_method}).
 
 \paragraph{Additional Experimental Setup}
 We tune the hyperparameters of our preference learning models, one for each quality indicator, on top of the first 3 datasets of LCBench: KDDCup09\_appetency, covertype, Amazon\_employee\_access.

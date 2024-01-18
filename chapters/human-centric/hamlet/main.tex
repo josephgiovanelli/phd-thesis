@@ -8,30 +8,25 @@
     \label{hamlet-fig:approach}
 \end{figure*}
 
-% \section{Introduction}\label{intro}
-% Data platforms, integrated sets of technologies that collectively meet end-to-end data needs, work towards the automation of data management and analysis \cite{DBLP:journals/fgcs/FranciaGGLRS21}.
-% Machine Learning (ML) plays a key role in such processes (e.g., to devise cost models for querying data over heterogeneous data sources \cite{multi-store} and manage data through lineage \cite{dataplat2}; many applications are well surveyed in \cite{zhou2017ml}).
-% Data platforms aim at supporting end-to-end data analysis; in this scope, the Cross-Industry Standard Process for Data Mining (CRISP-DM) \cite{wirth2000crisp} is the most acknowledged standard process model---and we will take it as a reference model hencefort.
 Given a Machine Learning task to solve, the data scientist collects raw data in arbitrary formats (e.g., from the data lake), builds up knowledge on both the problem and the data, translates such knowledge into \emph{constraints}, designs and trains a model, and finally deploys the solution as a new component integrated into the data platform.
-Such a solution consists of a \emph{ML pipeline}.
-% : a sequence of \emph{Data Pre-processing transformations} ending with an \emph{ML task}.
+Such a solution consists of a ML pipeline.
 The data scientist instantiates the pipeline among a large set of pre-processing transformations and algorithms, which, in turn, can potentially have many \emph{hyperparameters}.
 The accuracy of the deployed solution depends on finding both the best algorithms along with their hyperparameters within an exponential search space.
 
-% Automated Machine Learning (AutoML) tools assist the data scientist in finding such an ML pipeline.
-% They leverage state-of-the-art optimization approaches to smartly explore huge search spaces of solutions.
 AutoML has been demonstrated to provide accurate performance, even in a limited time/iteration budget.
 Yet, when setting up the search space, it is highly important for the data scientist to inject her knowledge about the problem into constraints that prevent the AutoML tool from retrieving invalid solutions (i.e., the result of those cannot be deemed correct).
 However, the support for constraint/knowledge injection is limited and the AutoML tools became that complex to make it difficult for the data scientist to understand their functioning, hence losing control over the process \cite{XinWLSP21automationml}.
 
-\paragraph{Motivation} The need for a Human-centric and explainable framework for AutoML is real \cite{gil2019towards, lee2020human, wang2019human} (or even mandatory in recent analytic scenarios where the user is interacting with mixed-reality and smart assistants \cite{DBLP:conf/dolap/FranciaGR19,DBLP:journals/is/FranciaGG22}).
+\paragraph{Motivation}
+The need for a Human-centric and explainable framework for AutoML is real \cite{gil2019towards, lee2020human, wang2019human} (or even mandatory in recent analytic scenarios where the user is interacting with mixed-reality and smart assistants \cite{DBLP:conf/dolap/FranciaGR19,DBLP:journals/is/FranciaGG22}).
 It is crucial for the data scientist to augment her knowledge by learning new insights (e.g., new constraints) from the retrieved solutions.
 Indeed, the data scientist requires understanding the AutoML process in order to trust the proposed solutions \cite{drozdal2020trust}.
 Some works \cite{gil2019towards, lee2020human, wang2019human} prescribe the usage of a human-centric framework for AutoML, yet they only suggest design requirements.
 Alternatively, the authors in \cite{ono2020pipelineprofiler} have proposed a tool that visualizes the best and the worst solutions retrieved by an AutoML tool.
 We claim that a human-centric framework should provide the mechanisms to: (i) help the data scientist to structure her knowledge about the problem in an effective search space; and (ii) augment the knowledge initially possessed by the data scientist with the one produced by the AutoML optimization process.
 
-\paragraph{Contributions} We introduce HAMLET (Human-centric AutoMl via Logic and argumEnTation; \Cref{hamlet-fig:approach}), a framework that enhances AutoML with Structured Argumentation to:
+\paragraph{Contributions}
+We introduce HAMLET (Human-centric AutoMl via Logic and argumEnTation; \Cref{hamlet-fig:approach}), a framework that enhances AutoML with Structured Argumentation to:
 structure the constraints and the AutoML solutions in a Logical Knowledge Base (LogicalKB);
 parse the LogicalKB into a human- and machine-readable medium called Problem Graph;
 devise the AutoML search space from the Problem Graph;
@@ -50,24 +45,6 @@ The remainder of the paper is structured as follows. In \Cref{hamlet-sec:related
 HAMLET intersects two research areas, \emph{human-centric Automated Machine Learning} and \emph{Argumentation}.
 In the following, we revise the corresponding related work along with the needed background.
 To the best of our knowledge, no contribution lies in this intersection to provide a human-centric approach with argumentation tools.
-
-% \subsection{Automated Machine Learning}
-% AutoML tools lighten the data scientist in the overwhelming practice of finding the best ML pipeline instance (AutoML contributions mainly refer to supervised tasks).
-% In the early days, only the optimization of the ML task was addressed (but no pre-preprocessing).
-% Auto-Weka \cite{kotthoff2019auto} formalized the problem as ``combined algorithm selection and hyperparameter optimization'': various ML algorithms and hyperparameters are tested over a dataset to find the most performing configuration. Such optimization was successfully implemented by leveraging Bayesian optimization \cite{frazier2018tutorial}, a sequential strategy for global optimization: until a limit (budget) of iterations or time is reached, an increasingly accurate model is built on top of the previously explored configurations.
-
-% Recently, AutoML is no longer limited to optimizing just the ML task, but it also includes Data Pre-processing \cite{Giovanelli2021DOLAP, Quemy19DOLAP}.
-% In doing so, Auto-sklearn \cite{feurer2019auto} fixes the arrangement of the transformations a priori, without considering that the most performing arrangement changes according to the problem and dataset at hand.
-% However, considering several arrangements translates into larger search spaces that are not easy to explore.
-
-% Several improvements have been made to let AutoML tools explore as many configurations as possible.
-% Multi-fidelity methods \cite{falkner2018bohb} (i.e., the use of several partial estimations to boost the time-consuming evaluation process) have been exploited. 
-% Meta-learning leverages the previous performance of pipeline instances on a wide range of different datasets to provide several recommendations for the dataset at hand, such as promising pipeline instances (possibly acting as an alternative to Bayesian optimization) and search spaces producing good performance.
-% Yet, meta-learning per se performs poorly, because it provides coarse-grained recommendations, while it is beneficial in warm-starting Bayesian optimization (i.e., the suggested pipeline instances are visited at the beginning to boost the convergence process).
-% With respect to HAMLET, meta-learning per se is not expressive enough to be considered as an alternative, but can be leveraged as a support in building the LogicalKB (i.e., learning constraints that resulted effective on many similar datasets).
-
-% We believe that the data scientist has the duty to revise and supervise the suggested solutions as well as the process producing them.
-% Yet, stacking (more and more) complex mechanisms on top of each other unavoidably led to a less understandable optimization that can be hardly controlled by the data scientist (especially if without a strong computer science background).
 
 \subsection{Human-centric AutoML Approaches}
 In current state-of-the-art tools, the data scientist role in AutoML is limited to choosing the dataset to analyze, the validation technique (e.g., cross validation, hold out), and the metric to optimize (e.g., accuracy, F1 score).
@@ -119,7 +96,6 @@ Once defined the right logical language for encoding the data scientist and Auto
 \section{Problem Formulation}\label{hamlet-sec:problem}
 
 \Cref{hamlet-fig:approach} illustrates the overview of HAMLET and its interactions during the CRISP-DM process.
-% When addressing end-to-end data analysis, a data scientist usually follows a process model such as CRISP-DM.
 The data scientist starts by collecting raw data in an arbitrary format.
 Then, domain understanding is conducted.
 The data scientist works in close cooperation with domain experts and enlists \emph{domain-related constraints} (i.e., intrinsic of the problem).
@@ -134,27 +110,6 @@ Finally, the process concludes with the deployment of the solution.
 
 HAMLET intersects CRISP-DM, allowing the data scientist to inject and augment her knowledge while automatizing the exploration towards the solution (i.e., instantiate the best ML pipeline).
 We now dig the foundation of HAMLET by incrementally introducing the concepts necessary to move from AutoML (\Cref{hamlet-ssec:automl-formalization}) to Logic and Argumentation(\Cref{hamlet-ssec:argumentation-formalization}).
-% To support the reader, we summarize the main notation in \Cref{hamlet-tbl:symbols}.
-
-% \begin{table}[t]
-%     \centering
-%     \footnotesize
-%     \caption{Main symbols used in the formalization.}
-%     \begin{tabular}{cl}
-%         \toprule
-%         \textbf{Symbol} & \textbf{Meaning} \\
-%         \midrule
-%         $A$ & Algorithm \\
-%         $h$ & Algorithm hyperparameter \\
-%         $S$ & Step \\
-%         $P$ & Pipeline \\
-%         $\lambda_*$ & Instance of * \\
-%         $\Lambda_*$ & Domain of * \\
-%         $\Lambda$ & Search space \\
-%         \bottomrule
-%     \end{tabular}
-%     \label{hamlet-tbl:symbols}
-% \end{table}
 
 \subsection{AutoML Formalization}
 \label{hamlet-ssec:automl-formalization}
@@ -582,7 +537,6 @@ The performance of HAMLET depends on (i) the rules encoded in the LogicalKB and 
 To test both the effectiveness and efficiency of our approach, we define three experimental settings.
 \begin{itemize}
     \item PKB (Preliminary Knowledge Base), HAMLET starts with a preliminary LogicalKB constraining the search space from the first iteration, and no rule mining is applied.
-    %, but the rules that are suggested throughout the iterations are not applied.
     The preliminary LogicalKB consists of the rules discovered in \cite{giovanelli2021data} and some well-known from the literature (e.g., suggested by scikit-learn\footnote{\url{https://scikit-learn.org/stable/auto_examples/preprocessing/plot_discretization.html}}).
     The complete knowledge base can be found in the Github repository.
     \item IKA (Iterative Knowledge Augmentation), HAMLET starts with an empty LogicalKB, and all the rules recommended after each run are applied to extend the LogicalKB.

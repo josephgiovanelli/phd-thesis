@@ -37,18 +37,13 @@ Today many companies commercialize affordable and reliable sensors to be install
 In this paper we propose:
 \begin{itemize}
 	\item \olab{}, an innovative \textit{3D numerical model} specifically devised to compute the soil water balance of an orchard. The 3D model keeps into account: non uniform distribution of the root system, growth and development of orchard plants with a full computation of the soil water budget, short term weather forecast.
-    
-    \item A \textit{Data Assimilation} technique to map coarse-grained 2D/3D-sensor grid to the fine-grained 3D state of \olab{}. 
-    
+    \item A \textit{Data Assimilation} technique to map coarse-grained 2D/3D-sensor grid to the fine-grained 3D state of \olab{}.
     \item A \textit{Parameter Tuning} technique to automatically calibrate the model parameters to a specific orchard through a Bayesian hyper-parameter tuning procedure.
-		
 	\item A detailed field experiment in a Kiwifruit field in an commercial farm.
 \end{itemize}
 
 \section{System Design and Techniques}
  \Cref{orchard-fig:scheme1} depicts the planting layout adopted in this paper. Trees are arranged in lines; soil can have a slope both in the $x$ and $y$ axes. The orchard is equipped with a watering system that can be of different type (e.g., single or double wing) and with different distances between drippers and lines. For each plant, we consider a \emph{soil volume} that includes the roots; typically the soil volume can be larger than the area affected by the watering system. A mound can be present to favor draining.
- 
- 
  \begin{figure}[t]
 	\centering
 	\includegraphics[scale=0.5]{chapters/physics-aware/orchard/img/OverallPlantingLayout3.png}
@@ -136,7 +131,7 @@ The numerical solution is based on the integrated finite difference (also called
  \item a fully coupled three-dimensional model of the soil water budget;
     \item a plant growth model for the orchard tree is included, including root's system and calibration of tree parameters described in \Cref{orchard-sec:evapotrans} and \Cref{orchard-sec:root};
     \item application of the three-dimensional computation specifically for an orchard with land slopes and drip irrigation system;
-    \item data assimilation from a sensor grid. 
+    \item data assimilation from a sensor grid.
 \end{itemize}
 
 
@@ -218,36 +213,33 @@ The potential evapotranspiration $ET_0$ is calculated by the Penman-Monteith equ
 Given the fraction of intercepted Photosynethetically Active Radiation $fPAR$, and the momentary Turbolence Coefficient $TC$, we can derive (under optimal conditions) the maximum potential transpiration $T_{pot}$ and evaporation $E_{pot}$:
 %
 \begin{equation}
-\label{maxET} 
+\label{maxET}
 T_{pot} = ET_0 \cdot fPAR \cdot TC
 \end{equation}
 \begin{equation}
-\label{minET} 
+\label{minET}
 E_{pot}= ET_0 \cdot (1-fPAR)
 \end{equation}
-% 
+%
 The partition of radiation $fPAR$ is defined in relation to the light excitation coefficient $KE$, which is the sum of scattering and absorption by particles and gases and it is a measure of the alteration of radiant energy as it passes through the atmosphere and the Leaf Area Index $LAI$ (i.e., the amount of one-sided green leaves per square inch of ground estimating the plant canopy growth).
 The selected value of $KE$ was 0.6 which is an average value for atmospheric conditions in the area.
 In turn, $LAI$ varies throughout the year according to the plant vigor; for this reason, $SSD$ (i.e., sum of day degrees accumulated by the plant during the growing season) is leveraged:
 %
 \begin{equation}
-\label{fPARi} 
+\label{fPARi}
 fPAR(SDD) = 1- e^ {-KE \cdot LAI(SDD)}
 \end{equation}
 \begin{equation}
-\label{LAI} 
+\label{LAI}
 LAI(SDD) = \frac{LAI_{max}-LAI_{min}}{1+e^{(a_{LAI}+b_{LAI}\cdot SDD)}}+ LAI_{min}
 \end{equation}
-%
 $LAI_{max}$ and $LAI_{min}$ are the maximum and minimun possible $LAI$ values respectively, while $a_{LAI}$ and $b_{LAI}$ are crop dependent parameters. Such $LAI$ parameters can be found in literature, and hence derive its value only from $SSD$.
 
 Finally, the turbolence coefficient $TC$ is dependent to the crop coefficient $Kc(SSD)$, a fraction of the water needed for the reference high-water-use grass crop.
 Specifically, $TC$ is the crop coefficient for the mid-season development stage of adequately watered crops \cite{driessen1992land}:
-%
 \begin{equation}
 \label{TC} TC(SSD) = 1 + (Kc_{Max}-1) \cdot fPAR(SSD)
 \end{equation}
-%
 $Kc_{Max}$ is the value of the crop coefficient when the plant has the maximum value of LAI \cite{allen-etal-1988}.
 Its value is either obtained from the literature of from calibration.
 
