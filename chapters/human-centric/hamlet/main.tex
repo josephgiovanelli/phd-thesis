@@ -4,7 +4,7 @@
 \begin{figure*}[t]
     \centering
     \includegraphics[scale=.25]{chapters/human-centric/hamlet/img/dymmymodel.png}
-    \caption{Integrating HAMLET with the CRISP-DM process model.}
+    \caption{Integrating HAMLET with the CRISP-DM process model.\todo{Adattare stile}\todo{Spostare più giù}}
     \label{hamlet-fig:approach}
 \end{figure*}
 
@@ -93,7 +93,7 @@ Then conflicts between arguments can arise from both inconsistencies in the Logi
 
 Once defined the right logical language for encoding the data scientist and AutoML knowledge, a Structured Argumentation model (e.g., an ASPIC\textsuperscript{+} instance \cite{arg2p-jlc}) can support HAMLET with the formal machinery to build an Argumentation framework upon the data, while Abstract Argumentation would dispense the evaluation tools.
 
-\section{Problem Formulation}\label{hamlet-sec:problem}
+\section{HAMLET}\label{hamlet-sec:implementation}
 
 \Cref{hamlet-fig:approach} illustrates the overview of HAMLET and its interactions during the CRISP-DM process.
 The data scientist starts by collecting raw data in an arbitrary format.
@@ -109,17 +109,19 @@ While seeking the best performing and valid solution, the data scientist should 
 Finally, the process concludes with the deployment of the solution.
 
 HAMLET intersects CRISP-DM, allowing the data scientist to inject and augment her knowledge while automatizing the exploration towards the solution (i.e., instantiate the best ML pipeline).
-We now dig the foundation of HAMLET by incrementally introducing the concepts necessary to move from AutoML (\Cref{hamlet-ssec:automl-formalization}) to Logic and Argumentation(\Cref{hamlet-ssec:argumentation-formalization}).
+We now dig the foundation of HAMLET by: (i) incrementally introducing the concepts necessary to move from AutoML to Structured Argumentation (\Cref{hamlet-ssec:argumentation-formalization}), and (ii) detailing the framework implementation  (\Cref{hamlet-ssec:implementation}).
 
-\subsection{AutoML Formalization}
+\subsection{Modeling AutoML via Structured Argumentation}
+\label{hamlet-ssec:argumentation-formalization}
+
+Let us start by recalling the AutoML formalization of interest.
+
+\paragraph{AutoML Formalization Review}
 \label{hamlet-ssec:automl-formalization}
-We recall the formalization of interest.
-
 We aim to find the best ML pipeline (i.e., with higher performance) for the dataset $\altmathcal{D}$ and the task considered.
 In the following, for the sake of simplicity and readability, we refer with \textit{algorithm} to a generic candidate implementation of each pipeline step---either pre-processing or ML.
 In particular, we are interested in formalizing the overall search space.
 Each algorithm $A$ exposes a set of $K$ hyperparameters, producing the Cartesian product $\Lambda_A = \Lambda_1 \times \dots \times \Lambda_K$, and a \textit{step} $S$ can be instantiated from several alternative algorithms, hence $\Lambda_S = \Lambda_{A_1} \cup \ldots \cup \Lambda_{A_{|S|}} \cup \lambda_s$, with $\lambda_s$ a new root-hyperparameter that selects the algorithm.
-
 
 \begin{example}[Algorithm and step]
     Examples of steps are Normalization ($\altmathcal{N}$), Discretization ($\altmathcal{D}$), and Classification ($\altmathcal{C}l$).
@@ -130,8 +132,9 @@ Each algorithm $A$ exposes a set of $K$ hyperparameters, producing the Cartesian
 
 Finally, an ML pipeline $P$ is a sequence of pre-processing steps that shape a dataset $\altmathcal{D}$ and a subsequent final ML step in which we address the task---in our case, either classification or regression.
 We can write the search space as: $\Lambda_P = \Lambda_{S_1} \times \ldots \times \Lambda_{S_{|P|}} \times \lambda_p$, with $\lambda_p$ a new root-hyperparameter that selects the order of the pre-processing steps---i.e., among all possible partial permutations.
+\todo{Da invertire lambda}\todo{Il resto da rivedere dopo che si è toccati il background}
 
-\begin{example}[Pipeline]
+\begin{example}[ML Pipelines]
     Given the pre-processing steps Normalization ($\altmathcal{N}$) and Discretization ($\altmathcal{D}$), the possible pipelines for the DecisionTree ($\altmathcal{D}t$) are:
     \begin{align*}
         P_1 &= \langle \altmathcal{D}t \rangle &
@@ -148,7 +151,7 @@ We can write the search space as: $\Lambda_P = \Lambda_{S_1} \times \ldots \time
     \end{align*}
     \Cref{hamlet-fig:space} depicts the pipeline domain $\Lambda_{P_4}$ and the pipeline instance $\lambda_{P_4}$.
     \label{ex:pipelineinstance}
-    \end{example}
+\end{example}
 
 AutoML optimizes the exploration of such space.
 However, it is not only about algorithms and hyperparameters but also about constraints.
@@ -165,7 +168,7 @@ Given a pipeline $\lambda_P \in \Lambda_P \subseteq \Lambda$
 \begin{figure}
     \centering
     \includegraphics[scale=.75]{chapters/human-centric/hamlet/img/toy_example_ss.pdf}
-    \caption{Examples of the pipeline domain $\Lambda_{P_4}$ and pipeline instance $\lambda_{P_4}$, for the sake of visualization we omit the third dimension representing the domain of the Decision Tree. Green (or red) circles represent valid (or invalid) sub-regions of the search space; Normalization is not allowed in the pipeline. The rectangle represents a zoom in the domain of the Binarizer algorithm.}
+    \caption{Examples of the pipeline domain $\Lambda_{P_4}$ and pipeline instance $\lambda_{P_4}$, for the sake of visualization we omit the third dimension representing the domain of the Decision Tree. Green (or red) circles represent valid (or invalid) sub-regions of the search space; according to the constraints, Normalization is not allowed in the pipeline. The rectangle represents a zoom in the domain of the Binarizer algorithm.\todo{Da invertire lambda}}
     \label{hamlet-fig:space}
 \end{figure}
 
@@ -183,8 +186,6 @@ Considering all the constraint combinations is overwhelming and, additionally, \
 Given a search space $\Lambda$ and a set of constraints $\altmathcal{C}$, finding the best pipeline instance $\hat{\lambda}_P$ is defined as $\hat{\lambda}_P = argmax_{\lambda_P \in \Lambda_P} metric(\lambda_P)$, where $metric(\lambda_P)$ is the function evaluating the goodness of $\lambda_P$ and the explored pipelines fulfill the constraints in $\altmathcal{C}$.
 \end{definition}
 
-\subsection{Argumentation Formalization}
-\label{hamlet-ssec:argumentation-formalization}
 
 AutoML is not explainable, hence it does not provide the data scientist with feedbacks that would help her to augment the knowledge about the problem.
 It is necessary to represent both (i) the data scientist knowledge about the problem and (ii) the outcome of the AutoML tool in a uniform human-readable medium.
@@ -374,35 +375,35 @@ The described process is compliant with and augments the CRISP-DM process.
 The inferred/learned knowledge is automatically handled throughout iterations, supporting the data scientist in the whole analysis in a continuous revision of the constraints.
 \vspace{2cm}
 
-\section{HAMLET}\label{hamlet-sec:implementation}
-
-\begin{figure*}[t]
-\begin{lstlisting}[mathescape=true]
-# given an algorithm, create a pipeline including only such algorithm
-hc0 : algorithm($\altmathcal{C}l$, A) $\Rightarrow$ pipeline($\langle~\rangle$, A).
-# given some steps and an algorithm, create a pipeline including such steps and algorithm
-hc1 : step($S_1$),$\ldots$,step($S_n$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ pipeline($\langle S_1, \ldots, S_n \rangle$, A).
-# given constraints on the Pre-processing steps required for Classification...
-# ... apply this constraints to all Classification algorithms
-hc2 : mandatory($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ mandatory($\langle S_1, \ldots, S_n \rangle$, A).
-hc3 : forbidden($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ forbidden($\langle S_1, \ldots, S_n \rangle$, A).
-hc4 : mandatory_order($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ mandatory_order($\langle S_1, \ldots, S_n \rangle$, A).
-\end{lstlisting}
-\caption{A subset of rules from the LogicalKB.}
-\label{rules-arg2p}
-\end{figure*}
+\subsection{Framework Implementation}\label{hamlet-ssec:implementation}
 
 HAMLET iterates over three phases (\Cref{hamlet-fig:approach}): (i) the generation of Problem Graph and search space out of the LogicalKB, (ii) the exploration of the search space in compliance with the specified constraints, and (iii) the augmentation of the LogicalKB through a rule recommendation.
 
-The framework is available at \url{https://github.com/QueueInc/HAMLET}, and it is composed of two sub-modules. 
-The first, written in Kotlin and running on the JVM, exposes a graphical interface on which the data scientists can compile and revise the LogicalKB. 
+The framework is available on GitHub\footnote{\url{https://github.com/QueueInc/HAMLET}}, and it is composed of two sub-modules.
+The first, written in Kotlin and running on the JVM, exposes a graphical interface on which the data scientists can compile and revise the LogicalKB.
 The module is also responsible for the generation and evaluation of the Problem Graph; it implements the Structured Argumentation functionalities as specified in \Cref{hamlet-sec:problem} using \argtup{} \cite{arg2p-jlc}, an ASPIC\textsuperscript{+}-based Kotlin library.
 The second module, written in Python, is responsible for performing the AutoML optimization and the extraction of the new constraints from the explored space.
 
-\subsection{Generation of Problem Graph and Search Space}
+\subsubsection{Generation of Problem Graph and Search Space}
 In \Cref{hamlet-sec:problem}, we defined the LogicalKB as the set of rules specified by the data scientist using her knowledge.
 The LogicalKB also includes a set of hard-encoded rules representing inferences necessary to characterize the AutoML problems.
 These rules are joined to the ones defined by the data scientist and used to build the Problem Graph (i.e., Argumentation framework).
+
+\begin{figure}[t]
+    \begin{lstlisting}[mathescape=true]
+    # given an algorithm, create a pipeline including only such algorithm
+    hc0 : algorithm($\altmathcal{C}l$, A) $\Rightarrow$ pipeline($\langle~\rangle$, A).
+    # given some steps and an algorithm, create a pipeline including such steps and algorithm
+    hc1 : step($S_1$),$\ldots$,step($S_n$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ pipeline($\langle S_1, \ldots, S_n \rangle$, A).
+    # given constraints on the Pre-processing steps required for Classification...
+    # ... apply this constraints to all Classification algorithms
+    hc2 : mandatory($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ mandatory($\langle S_1, \ldots, S_n \rangle$, A).
+    hc3 : forbidden($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ forbidden($\langle S_1, \ldots, S_n \rangle$, A).
+    hc4 : mandatory_order($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ mandatory_order($\langle S_1, \ldots, S_n \rangle$, A).
+    \end{lstlisting}
+    \caption{A subset of rules from the LogicalKB.\todo{Qua perché non è più verde il commento?}}
+    \label{rules-arg2p}
+    \end{figure}
 
 A subset of rules is shown in \Cref{rules-arg2p}.
 The first two ($hc0$ and $hc1$) define how to automatically derive a pipeline using algorithms and steps.
@@ -470,7 +471,7 @@ As a consequence, we need to produce the entire search space first.
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Exploration of a Constrained Search Space}\label{subsec:constrained_automl}
+\subsubsection{Exploration of a Constrained Search Space}\label{subsec:constrained_automl}
 
 The Problem Graph is not only used to build the entire search space but it is also evaluated to understand which pipelines are invalid and which constraints are valid.
 Hence -- through the Problem Graph -- we enhance AutoML exploration by combining the following techniques.
@@ -489,7 +490,7 @@ The pipeline instances keep being explored, updating the model, until a budget i
 With CFO, there is also an estimation of the evaluation time to consider the frugality of the suggested pipeline instances -- hence favoring the ones requiring a smaller amount of time.
 Throughout the exploration, different solutions are tested, which contribute to augmenting the global knowledge about the problem.
 
-\subsection{Knowledge Augmentation through Rule Recommendation}
+\subsubsection{Knowledge Augmentation through Rule Recommendation}
 
 New constraints are automatically mined out of the pipeline instances explored by AutoML and \emph{recommended} in our logical language as rules.
 Then, the data scientist decides which rules are accepted and added to the LogicalKB.
@@ -523,6 +524,7 @@ As to the support, 50\% ensures that the pattern recurs on many of the explored 
 With reference to the Problem Graph in \Cref{ex:hard_coded_rules},
 the AutoML results are filtered according to the chosen metric, the algorithm \cite{raschkas_2018_mlxtend} is applied, and let us assume that the rule \texttt{c3} is recommended:
 \begin{lstlisting}[mathescape=true]
+# mandatory Discretization in pipelines with Decision Tree
 c3 : $\Rightarrow$ mandatory($\langle\altmathcal{D}\rangle$, $\altmathcal{D}t$).
 \end{lstlisting}
 The constraints specifies ``mandatory $\altmathcal{D}$ in pipelines with $\altmathcal{D}t$''.
@@ -695,7 +697,7 @@ Additionally, the added value of HAMLET is \textit{explainability}.
 Hamlet is a human-in-the-loop AutoML framework tailored to the needs of data scientist that (i) enables the injection of their experience into the exploration process as well as (ii) the spreading and sharing of knowledge bases that encode what data scientists have understood by the optimization of their pipelines.
 
 
-\section{Conclusions and Future Work}\label{hamlet-sec:conclusion}
+\section{Conclusions and Future Works}\label{hamlet-sec:conclusion}
 
 Data platforms support Data Scientists in performing end-to-end data analysis; to this end, Machine Learning plays a primary role.
 However, the complexity and heterogeneity of (Automated) Machine Learning processes are leading Data Scientists to lose control over such processes.

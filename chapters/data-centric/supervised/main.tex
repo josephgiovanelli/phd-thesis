@@ -5,7 +5,7 @@
 \begin{figure*}[t]
     \centering
     \includegraphics[width=1.0\textwidth]{chapters/data-centric/supervised/img/data-analytics-pipeline.pdf}
-    \caption{Data analytics pipeline generation in a knowledge discovery process. \textcolor{orange}{TODO: da allineare.}}
+    \caption{Data analytics pipeline generation in a knowledge discovery process.}
     \label{effective-fig:data-analytics-pipeline}
 \end{figure*}
 
@@ -50,12 +50,13 @@ The main contributions can be summarized as follows.
     \item We suggest a meta-learning step (i.e., learning on top of learning) where the relationships between pre-processing transformations and dataset characteristics are learned in order to create rules that help with the initial instantiation of the prototypes.
 
 	We exemplify our meta-learning study generating simple but not obvious and effective rules for two kinds of pre-processing steps, namely, Feature Engineering and Rebalancing.
-
     \item We perform a comprehensive evaluation by comparing the performance of optimizing prototypes generated following our method, and find out that:
     \begin{enumerate}
         \item with 24 times less time budget, our proposed pipelines obtain results whose median is above 90\% of the ones generated via exhaustive search.
         \item on average, in 73\% of the cases, splitting evenly the time budget between pre-processing and modelling outperforms the results of solely optimizing the latter.
     \end{enumerate}
+	\item We deploy \textbf{AutoPrep}, a reproducibility framework for the automatic generation of effective pre-processing pipeline prototypes. Specifically, in \cite{}, we introduce: (i) a detailed reproducibility protocol, (ii) software, and (iii) datasets in a self-contained environment.
+	The experiments were run on several machines and confirmed all the inishts in this chapter.
 \end{itemize}
 
 The remaining of this chapter is organized as follows:
@@ -68,10 +69,11 @@ The remaining of this chapter is organized as follows:
 \label{effective-sec:related-work}
 At the beginning, the AutoML community followed the AI trend of contributing under a more algorithmic perspective, focusing on modelling---i.e., the resolution of the CASH problem.
 Recently however, the direction has shifted towards designing systems that additionally or specifically provide user assistance in the data pre-processing step---i.e., solving the DPSO problem.
-On the one hand, some works automate data pre-processing in isolation from modelling---i.e., addressing solely DPSO (\Cref{effective-ssec:dpso}).
-On the other hand, some consider data pre-processing in synergy with modelling---i.e., combining DPSO and CASH (\Cref{effective-ssec:dpso-cash}).
+We can categorize works according to the optimization policy \cite{quemy2019data} they adopt.
+On the one hand, some automate data pre-processing via split-like policies---i.e., addressing DPSO in isolation from CASH (\Cref{effective-ssec:dpso}).
+On the other hand, some consider optimizing DPSO along with CASH, adopting a joint policy---data pre-processing in synergy with modelling (\Cref{effective-ssec:dpso-cash}).
 
-\subsection{Stand-alone Automation of Data Pre-processing Pipelines}
+\subsection{Optimization with Split-like Policies}
 \label{effective-ssec:dpso}
 
 In \cite{Quemy20InfSystems}, authors demonstrate the impact of optimizing the pre-processing pipelines, but considering only a single fixed prototype and only a few datasets.
@@ -93,16 +95,16 @@ The physical plan is generated through a combination of Bayesian optimization, m
 For the logical plans, they rely on rules but without clear evidence on how they are generated.
 Moreover, it is not clear whether the logical plan is fixed as in \cite{Quemy20InfSystems} and if some further adjustment from the user is required.
 
-\subsection{Thorough Automation of Machine Learning Pipelines}
+\subsection{Optimization with a Joint Policy}
 \label{effective-ssec:dpso-cash}
-\textcolor{orange}{TODO: meta-learning non è ancora spiegato, da valutare: aggiungere al background o una frase veloce per introdurlo (forse meglio la seconda vsito che dopo si va deep in quello)}
 Auto-sklearn \cite{Feurer15AutoSklearn} is based on the popular Python library scikit-learn.
 The authors, inspired by Auto-Weka, address the problem with the Sequential Model-based Algorithm Configuration (SMAC).
-Furthermore, they improve the approach by adding a meta-learning phase at the beginning (to warm-start the Bayesian Optimization) and an ensemble technique at the end (to suggest multi-classifiers).
-Such a system considers pre-processing transformations to generate end-to-end analytic pipelines.
+Furthermore, they improve the approach by adding a meta-learning phase (i.e., learning on top of learning) at the beginning and an ensemble technique at the end.
+Meta-learning leverages previous ML experiments and learns promising configurations to warm-start (i.e., boost the convergence) the Bayesian Optimization.
+Ensemble techniques merge predictions from multiple ML models to statistically outperform the base models.
 Yet, they consider a small set of transformations and also consider a single fixed prototype.
 
-TPOT~\cite{Olson16Tpot} is a tree-based pipeline optimization tool using genetic programming while requiring little to no expertise from the user.
+TPOT \cite{Olson16Tpot} is a tree-based pipeline optimization tool using genetic programming while requiring little to no expertise from the user.
 In TPOT however, they only consider one transformation inside the optimization process (i.e., Feature Engineering).
 
 ML-Plan \cite{mohr2018ml} uses hierarchical planning, a particular form of AI planning, to propose a solution to both the pre-processing and the modeling phases.
@@ -132,18 +134,8 @@ Yet, such automation has shown to be computationally expensive, mainly due to th
 Therefore, the usability of these approaches in realistic scenarios is sometimes limited.
 Our approach of finding a set of effective prototypes can be seen as complementary to these solutions, since it helps in pruning the large space and guiding the search, hence reducing their cost.
 
-\section{Data Pre-processing Pipeline Generation}
+\section{Effective Data Pre-processing Pipeline Generation}
 \label{effective-sec:methodology}
-
-\textcolor{orange}{TODO: Chiamare il tool (e questa sezione) AutoPrep, che sarebbe il tool sviluppato con il reproducible paper, e aggiungerlo alle contribution.}
-
-\begin{figure*}[t]
-    \centering
-    \includegraphics[clip, trim=6.5cm 3.5cm 6.5cm 8cm,width=1.0\textwidth]{chapters/data-centric/supervised/img/bpmn.pdf}
-    \caption{A method for generating pre-processing pipelines. \textcolor{orange}{TODO: da allineare.}}
-    \label{effective-fig:methodology}
-\end{figure*}
-
 
 We aim to find the best data pipeline (i.e., with higher performance) for the dataset $\altmathcal{D}$ and the ML algorithm $A$ considered, hence solving DPSO.
 Let us refresh the formalization of interest.
@@ -156,6 +148,13 @@ Indeed, the complete search space for our optimization problem is defined as $\L
 To mitigate the problem's complexity, we distinguish between pipeline selection and its optimization.
 Specifically, following the notation from \cite{Quemy20InfSystems}:
 pipeline selection aims at finding promising \textit{prototypes}, i.e. fixed and ordered sequence of pre-processing steps, pipeline optimization instantiates the best \textit{executable pipeline}, i.e. assigning a transformation (along with the hyperparameters)to each pre-processing step.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=1.0\textwidth]{chapters/data-centric/supervised/img/bpmn.pdf}
+    \caption{A method for generating effective pre-processing pipelines}
+    \label{effective-fig:methodology}
+\end{figure*}
 
 \Cref{effective-fig:methodology} sketches the proposed methodology, some of the phases are generic and thus can be applied regardless of the context, and yet others are specific (i.e., ML framework or dataset characteristics).
 According to \cite{Quemy20InfSystems}, we break the combinatorial problem into two workflows: (i) studying pre-processing steps in pairs for generating effective prototypes and then (ii) feeding them to an optimizer (e.g., we use the SMBO \cite{HyperOptICML13} variant) for their actual instantiation.
@@ -170,10 +169,10 @@ the behavior of the transformations in each step.
 As a result, this generates a set of \textit{heuristic rules} (\Cref{effective-ssec:rules-heuristics}) that restrict the space of possible precedences.
 Afterward, for the pairs for which an order cannot be clearly devised, an additional empirical study is proposed.
 This study relies on a test bed of representative datasets.
-The output is a set of \textit{empirically learned rules} (\Cref{effective-ssec:rules-learned}) that determines yet other precedences, namely promising those orderings that would potentially positively impact the final result of the analysis.
+The output is a set of \textit{empirically-learned rules} (\Cref{effective-ssec:rules-learned}) that determines yet other precedences, namely promising orderings that would potentially positively impact the final result of the analysis.
 However, even after this phase, for some pairs of pre-processing steps, a precedence order may not be found.
 These are pairs for whom the order is relevant but cannot be decided in advance, thus all their permutations need to be present.
-Finally, a step of composition follows  (\Cref{effective-ssec:composition}), where given the overall set of devised rules (i.e., \textit{framework-related}, \textit{heuristic} and \textit{empirically learned}), the pre-processing steps are composed into a set of valid and potentially effective prototypes.
+Finally, a step of composition follows  (\Cref{effective-ssec:composition}), where given the overall set of devised rules (i.e., \textit{framework-related}, \textit{heuristic} and \textit{empirically-learned}), the pre-processing steps are composed into a set of valid and potentially effective prototypes.
 
 More formally, when combining two different pre-processing steps, it is important to check if, (i) the input and output types of the steps are compatible, (ii) the combination makes sense, and (iii) the combination provides good results for the analysis.
 As a result, when chaining a pair of steps, the following precedence relationships arise:
@@ -184,9 +183,9 @@ As a result, when chaining a pair of steps, the following precedence relationshi
 \end{enumerate}
 
 Attending to the relationships between its steps, a prototype can be described as either \textit{compatible}, \textit{well-formed}, or \textit{effective}.
-A prototype is defined to be \textit{compatible}, if all its precedence relationships are compatible.
-It is defined as \textit{well-formed}, if all its precedence relationships are both compatible and meaningful.
-Finally, it is defined as \textit{effective}, if all its precedence relationships are compatible, meaningful, and promising at the same time.
+A prototype is defined to be \textit{compatible} if all its precedence relationships are available in the ML framework at hand.
+It is defined as \textit{well-formed} if all its precedence relationships are both compatible and meaningful.
+Finally, it is defined as \textit{effective} if all its precedence relationships are compatible, meaningful, and promising at the same time.
 In fact, the goal of this flow is to find \textit{effective prototypes}.
 
 \paragraph{Warm-starting via Meta-learning} Once the prototype is constructed, the flow running in parallel is proposed to help with its instantiation.
@@ -198,7 +197,7 @@ They would be used, for example, to ease the cold start problem in the prototype
 We propose a generic methodology.
 However, to keep the reader from losing, we will illustrate our use case and corresponding findings along with the explanation of the methodology.
 
-\subsection{ML Framework Assessment}
+\subsection{Selection of Data Pre-Processing Steps and Transformations}
 \label{effective-ssec:select-framework}
 
 The first task in the process consists of selecting the data pre-processing steps and their available transformations according to the selected ML library.
@@ -310,20 +309,20 @@ Feat. Eng. ($F$) & CA/CO & CA/CO & PCA & n\_components:[1,2,3,4]\\ \cmidrule[.05
     $\boldsymbol{D}$ & \texttt{0} & \texttt{0} & \cellcolor{gray!25} & \texttt{0} & \texttt{0} & \texttt{1} \\	\cmidrule[.1em]{1-7}
     $\boldsymbol{I}$ & \texttt{0} & \texttt{0} & \texttt{0} & \cellcolor{gray!25} & \texttt{0} & \texttt{0} \\	\cmidrule[.1em]{1-7}
     $\boldsymbol{R}$ & \texttt{0} & \texttt{0} & \texttt{0} & \texttt{0} & \cellcolor{gray!25} & \texttt{0} \\	\cmidrule[.1em]{1-7}
-    $\boldsymbol{F}$ & \texttt{0} & \texttt{0} & \texttt{0} & \texttt{0} & \texttt{0} & \cellcolor{gray!25} 
+    $\boldsymbol{F}$ & \texttt{0} & \texttt{0} & \texttt{0} & \texttt{0} & \texttt{0} & \cellcolor{gray!25}
     \\	\bottomrule
     \end{tabular}}
     \end{center}
     \begin{tablenotes}
     \centering
     \scriptsize
-    \item$\boldsymbol{E}$ - Encoding; $\boldsymbol{N}$ - Normalization; $\boldsymbol{D}$ - Discretization; $\boldsymbol{I}$ - Imputation; $\boldsymbol{R}$ - Rebalancing; $\boldsymbol{F}$ - Feature Engineering. \item \texttt{1} - a precedence edge exists between the row and the column, \texttt{0} - a precedence edge does not exist between the row 
+    \item$\boldsymbol{E}$ - Encoding; $\boldsymbol{N}$ - Normalization; $\boldsymbol{D}$ - Discretization; $\boldsymbol{I}$ - Imputation; $\boldsymbol{R}$ - Rebalancing; $\boldsymbol{F}$ - Feature Engineering. \item \texttt{1} - a precedence edge exists between the row and the column, \texttt{0} - a precedence edge does not exist between the row
     \item and the column, \texttt{X} - the combination is meaningless.
     \end{tablenotes}
     \label{effective-tbl:rules}
     \end{table*}
 
-\subsection{Framework-related Rules Extraction}
+\subsection{Extraction of Compatible Precedences}
 \label{effective-ssec:rules-framework}
 
 Once the implementation framework is selected, one needs to study it and see if there exist constraints that limit the interaction between the pre-processing steps.
@@ -347,7 +346,7 @@ A similar constraint is imposed when considering Rebalancing and Feature Enginee
 For the rest of the pairs, there are no constraints imposed by the framework, thus any ordering is permitted, reflected by a \texttt{0} in \Cref{effective-tbl:rules}a.
 The graph obtained in this case exclusively corresponds to the limitations of Scikit-learn (as a matter of fact, if another framework were to be chosen, it may have looked differently).
 
-\subsection{Heuristic Rules Discovery}
+\subsection{Discovery of Well-formed Precedences}
 \label{effective-ssec:rules-heuristics}
 Once we have derived precedences based on the constraints of the framework, we can study the precedence independently and find \textit{meaningful pairs}.
 That is, for every given pair, we want to find the relative order based on generic domain-independent knowledge (i.e., literature) about pre-processing steps and their applicability.
@@ -365,7 +364,7 @@ In comparison with the results from \Cref{effective-tbl:rules}a, observe that th
 This time even when combining it with Normalization---note the difference with \Cref{effective-tbl:rules}a.
 The constraints of Encoding are however not present in \Cref{effective-tbl:rules}a, hence not considering the framework, Discretization combined with Encoding is a meaningful combination---when a mixed type dataset is considered, but incompatible from the point of view of Scikit-learn.
 
-\subsection{Empirical Rules Learning}
+\subsection{Empirical-learning of Promising Precedences}
 \label{effective-ssec:rules-learned}
 
 The two previously proposed phases (i.e., \textit{framework-related} and \textit{heuristic rules}), do not guarantee that each pair of steps will obtain a precedence order.
@@ -564,20 +563,20 @@ We conclude that, for both of the rules (i.e.,  $\langle F, N \rangle$ and $\lan
 \begin{figure*}[!t]
 	\centering
 	\includegraphics[width=0.9\textwidth]{chapters/data-centric/supervised/img/10_times_4_folds_cv.pdf}
-	\caption{The distribution of the p-values obtained after repeating the chi-square test for 10 times, for the 10 times 4-fold cross-validation. \textcolor{orange}{Cambiare tutti i $T_1$ e $T_2$ con $S_1$ e $S_2$ nelle figure}}
+	\caption{The distribution of the p-values obtained after repeating the chi-square test for 10 times, for the 10 times 4-fold cross-validation. \todo{Cambiare la rappresentazione delle pipeline in tutti i grafici}}
 	\label{effective-fig:10-times-4-cv}
 \end{figure*}
 
-\begin{table}[b]
+\begin{table}[!t]
 	\caption{
-		Union of rules from \Cref{effective-tbl:rules}. $\boldsymbol{E}$ - Encoding; $\boldsymbol{N}$ - Normalization; $\boldsymbol{D}$ - Discretization; $\boldsymbol{I}$ - Imputation; $\boldsymbol{R}$ - Rebalancing; $\boldsymbol{F}$ - Feature Engineering \texttt{1} - an edge exists, \texttt{0} - edge does not exist, \texttt{X} - the combination is meaningless.
+		Union of rules from \Cref{effective-tbl:rules}.
 	}
 	\renewcommand{\arraystretch}{0.3}
 	\footnotesize
 	\centering
 	\label{effective-tbl:rules-union}
 	\begin{threeparttable}
-		\begin{tabular}{@{}lcccccc}
+		\begin{tabular}{p{1cm}p{1cm}p{1cm}p{1cm}p{1cm}p{1cm}p{1cm}}
 			\toprule
 			& $\boldsymbol{E}$ & $\boldsymbol{N}$ & $\boldsymbol{D}$ & $\boldsymbol{I}$ & $\boldsymbol{R}$ & $\boldsymbol{F}$
 			\\	\cmidrule[.1em]{1-7}
@@ -588,6 +587,10 @@ We conclude that, for both of the rules (i.e.,  $\langle F, N \rangle$ and $\lan
 			$\boldsymbol{R}$ & \texttt{0} & \texttt{0} & \texttt{0} & \texttt{0} & \cellcolor{gray!25}  & \texttt{0} \\	\cmidrule[.1em]{1-7}
 			$\boldsymbol{F}$ & \texttt{0} & \texttt{0} & \texttt{0} & \texttt{0} & \texttt{0} & \cellcolor{gray!25} \\	\cmidrule[.1em]{1-7}
 		\end{tabular}
+		\begin{tablenotes}
+			\scriptsize
+			\item$\boldsymbol{E}$ - Encoding; $\boldsymbol{N}$ - Normalization; $\boldsymbol{D}$ - Discretization; $\boldsymbol{I}$ - Imputation; $\boldsymbol{R}$ - Rebalancing; $\boldsymbol{F}$ - Feature Engineering. \item \texttt{1} - a precedence edge exists between the row and the column, \texttt{0} - a precedence edge does not exist between the row and the column, \texttt{X} - the combination is meaningless.
+		\end{tablenotes}
 	\end{threeparttable}
 \end{table}
 
@@ -616,7 +619,7 @@ The result is the set of five prototypes shown in Table 3.7. This set consisting
 	\ffigbox{
 		\includegraphics[clip, trim=2.5cm 23cm 10.5cm 2cm,width=0.5\textwidth]{chapters/data-centric/supervised/img/graph.pdf}
 	}{
-		  \caption{Precedence graph generated from \Cref{effective-tbl:rules-union}. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering. }
+		  \caption{Precedence graph generated from \Cref{effective-tbl:rules-union}.}
 	}
 	\capbtabbox{
 	\begin{tabular}{@{}ll}
@@ -630,13 +633,13 @@ The result is the set of five prototypes shown in Table 3.7. This set consisting
 				\bottomrule
 			\end{tabular}
 	}{
-		  \caption{Effective pipeline prototypes generated from Figure~6. $E$ - Encoding; $N$ - Normalization; $D$ - Discretization; $I$ - Imputation; $R$ - Rebalancing; $F$ - Feature Engineering.
+		  \caption{Effective prototypes generated from Figure~3.6.
 		}
 	}
 	\end{floatrow}
 \end{figure}
 
-\subsection{Instantiation Rules (Meta-)Learning}
+\subsection{Meta-learning of Instantiation Rules}
 \label{effective-ssec:meta-learning}
 
 Once the pipeline prototypes are constructed (i.e., the order between the steps is defined), what follows is their instantiation with the actual transformations.
@@ -715,6 +718,14 @@ We report the p-value too so that it can be seen how strong the association is (
 We stick with the p-value threshold of $0.05$, and devise a rule from any branch of the tree that is within the threshold.
 In the following, we describe the rules obtained within the selected significance threshold.
 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[clip, trim=1.0cm 0.4cm 1cm 1cm,width=1\textwidth]{chapters/data-centric/supervised/img/tree-FE.pdf}
+	\caption{Conditional Inference Tree built for the \textit{Features Engineering} transformation.}
+	\label{effective-fig:features-meta-learning:feature-engineering}
+\end{figure}
+
 \textbf{Rules for Feature Engineering}. The available transformations in scikit-learn for Feature Engineering are: Principal Component Analysis (\texttt{PCA}), \texttt{Feature Selection} (Select K Best), \texttt{Both} (PCA + Select K Best), and \texttt{None}.
 The tree generated for the Feature Engineering transformation is shown in \Cref{effective-fig:features-meta-learning:feature-engineering}.
 The leaves show the selected transformation frequency.
@@ -730,6 +741,13 @@ Conversely, Node 5 shows that, when the Class Entropy is high, it is better to n
 As a matter of fact, a high value of Class Entropy involves a high number of classes and/or few instances per class, hence a really difficult problem.
 In such cases, reducing the dimensionality of the dataset does not lead to any improvement.
 Finally, when the Class Entropy is in between, there is no clear winner, and thus other non-obvious factors may affect the choice of the operator.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[clip, trim=5.8cm 0.4cm 5.05cm 3.5cm,width=0.65\textwidth]{chapters/data-centric/supervised/img/tree-RE.pdf}
+	\caption{Conditional Inference Tree built for the \textit{Rebalancing} transformation.}
+	\label{effective-fig:features-meta-learning:rebalancing}
+\end{figure}
 
 \textbf{Rules for Rebalancing}. As for Rebalancing, the transformations considered from the imblearn\footnote{\url{https://pypi.org/project/imbalanced-learn}} library are: \texttt{Near Miss}, \texttt{SMOTE}, and \texttt{None}.
 The first is an undersampling algorithm which randomly eliminates the samples from the larger class; the second is an oversampling technique that creates samples of the minority class, as a linear combination of them.
@@ -748,21 +766,6 @@ The prototypes from the top flow and the meta-lerning rules from the bottom flow
 \paragraph{Use case}
  In our final execution, we run SMBO to find a suitable instantiation for the suggested prototypes. The simple but not obvious meta-learning rules, even though not included in our final execution, because of the implementation considered (i.e., HyperOpt), can potentially be used to ease the cold-start problem.
 
-
-\begin{figure*}[!h]
-	\centering
-	\includegraphics[clip, trim=1.0cm 0.4cm 1cm 1cm,width=1\textwidth]{chapters/data-centric/supervised/img/tree-FE.pdf}
-	\caption{Conditional Inference Tree built for the \textit{Features Engineering} transformation.}
-	\label{effective-fig:features-meta-learning:feature-engineering}
-\end{figure*}
-
-\begin{figure*}[!h]
-	\centering
-	\includegraphics[clip, trim=5.8cm 0.4cm 5.05cm 3.5cm,width=0.65\textwidth]{chapters/data-centric/supervised/img/tree-RE.pdf}
-	\caption{Conditional Inference Tree built for the \textit{Rebalancing} transformation.}
-	\label{effective-fig:features-meta-learning:rebalancing}
-	\end{figure*}
-
 \section{Evaluation}
 \label{effective-sec:evaluation}
 
@@ -778,9 +781,29 @@ The experiments were performed on an Intel Core i7 machine with 12 cores, runnin
 We leveraged the SMBO optimization algorithm available in the Python library HyperOpt \cite{bergstra2015hyperopt}.
 The datasets used in the experiments are the ones from the OpenML CC-18 repository \cite{OpenML2013}.
 Finally, the classification algorithms considered are \textit{NB}, \textit{KNN}, and \textit{RF} from the Python library Scikit-learn \cite{scikit-learn}.
-All the experiments for a single algorithm, took approximately two weeks.
+All the experiments for a single algorithm took approximately two weeks.
+
+
+\paragraph{AutoPrep}
+With the recent shift towards data-centric approaches, rather than algorithmic, data pre-processing is receiving a lot of attention.
+Yet, its impact on the final analysis is not widely recognized, primarily due to the lack of publicly available experiments that quantify it.
+To bridge this gap, along with this work, we contribute to publishing a companion reproducibility paper \cite{Giovanelli2022IS} for the experiments and results reported in the following.
+AutoPrep introduces a set of reproducible experiments on the impact of data pre-processing by providing a detailed reproducibility protocol together with a software tool and a set of extensible datasets, which allow for all the experiments and results of this chapter reproduced.
+Our experiments have been performed among different machines with different resources.
+We achieved to deploy \textit{strongly reproducible experiments}, when based on a collection of intermediate results, and \textit{weakly reproducible experiments} when reproducing our end-to-end optimization from scratch.
+The reproducibility protocol is created in Docker and tested in Windows and Linux.
 The source code and the datasets for reproducing the experiments can be found on GitHub\footnote{
 \url{https://github.com/josephgiovanelli/autoprep}}.
+
+\begin{definition}[Strongly reproducible experiment  \cite{reproducible}]
+    \label{def:strong}
+    Given a set of previously reported experimental results and conclusions, a computational experiment is strongly reproducible if it allows to confirm both previously reported results and conclusions exactly.
+\end{definition}
+
+\begin{definition}[Weakly reproducible experiment  \cite{reproducible}]
+    \label{def:weak}
+    Given a set of previously reported experimental results and conclusions, a computational experiment is weakly reproducible if the Spearman rank correlation between the original and reproduced results is equal to 1, and their Pearson correlation value is high enough to allow the confirmation of all previously reported conclusions, even if the reproduced results do not reproduce all results exactly. Thus, weak reproducibility is a performance-rank-preserving notion.
+\end{definition}
 
 \subsection{Universal Pipeline Prototype}
 \label{effective-sec:eval-universal-pipeline}
@@ -840,6 +863,7 @@ In order to evaluate how close the \textit{effective prototypes} are to the \tex
     normalized\;distance = \frac{ACC_{\textup{eff}} - ACC_{\varnothing}}{ACC_{\textup{exh}} - ACC_{\varnothing}}
 \end{equation*}
 
+\todo{Non dire che l'acc è dell'algoritmo ma della pipeline (in background dire che una data pipeline si valuta con una loss)}
 $ACC_{\varnothing}$ is the baseline performance (i.e., accuracy of the algorithm $A$ with default hyperparameters over the original dataset $\altmathcal{D}$), formally $ACC_{\varnothing} = ACC(A(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 $ACC_{\textup{eff}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized instantiation of the effective set of prototypes (i.e., our approach), formally $ACC_{\textup{eff}} = ACC(\langle P^{\star}_{\textup{eff}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 Finally, $ACC_{\textup{exh}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized pipeline instantiation of the exhaustive set of prototypes, formally $ACC_{\textup{exh}} = ACC(\langle P^{\star}_{\textup{exh}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
@@ -868,7 +892,7 @@ The raw results (i.e., without the normalized distances) can be found on the afo
 \begin{figure*}[!t]
 	\centering
 	\includegraphics[width=1.0\textwidth]{chapters/data-centric/supervised/img/barplot-10.pdf}
-	\caption{The impact of dedicating a portion of the optimization budget to pre-processing compared to using the whole optimization budget for the hyperparameter optimization.}
+	\caption{The impact of dedicating a portion of the optimization budget to pre-processing compared to using the whole optimization budget for the hyperparameter optimization. \todo{Invertire i colori}}
 	\label{effective-fig:eval-pre-processing-hyperparameter}
 \end{figure*}
 

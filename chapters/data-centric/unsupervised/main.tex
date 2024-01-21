@@ -1,33 +1,33 @@
 
-\chapter{Exploring Clustering Pipelines via AutoML and Diversificationg}
+\chapter{Exploring Clustering Pipelines via AutoML and Diversification}
 \label{data-centric-chap:unsupervised}
 
 \begin{figure}[t]
     \begin{subfigure}[t]{0.23\columnwidth}
         \centering
         \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/cl.pdf}
-        \caption{Cl \cite{Tschechlov2021}\\ \scriptsize{AMI=0.41, sil=0.41}}
+        \caption{Cl\\$\quad$AMI=0.41, sil=0.41}
         \label{clustering-fig:ca3}
     \end{subfigure}
     ~
     \begin{subfigure}[t]{0.23\columnwidth}
         \centering
         \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/ft_cl.pdf}
-        \caption{FS + Cl\\ \scriptsize{AMI=0.41, sil=0.47}}
+        \caption{FS + Cl\\$\quad$AMI=0.41, sil=0.47}
         \label{clustering-fig:ca4}
     \end{subfigure}
     ~
     \begin{subfigure}[t]{0.2\columnwidth}
         \centering
         \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/ft_sc_cl.pdf}
-        \caption{FS + N + Cl\\ \scriptsize{AMI=0.9, sil=0.87}}
+        \caption{FS + N + Cl\\$\quad$AMI=0.9, sil=0.87}
         \label{clustering-fig:ca5}
     \end{subfigure}
     ~
     \begin{subfigure}[t]{0.28\columnwidth}
         \centering
         \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/ft_sc_ou_cl.pdf}
-        \caption{FS + N + OR + Cl\\ \scriptsize{AMI=1.0, sil=0.92}}
+        \caption{FS + N + OR + Cl\\$\quad$AMI=1.0, sil=0.92}
         \label{clustering-fig:ca6}
     \end{subfigure}
     \caption{Approach motivation. \\
@@ -49,8 +49,8 @@ Cluster analysis is exploratory by nature since, given that no ground truth is a
     \item \textit{providing} a customizable generator of synthetic datasets for benchmarking in (crisp) cluster analysis.
 \end{itemize}
 
-To let the reader appreciate the novelty of AutoClues, we rely on a synthetic 10-dimensional (10D) dataset that includes 6 natural clusters. \Cref{clustering-fig:ca3} shows the t-SNE \cite{van2008visualizing} visualization\footnote{Clusterings in more than two dimensions will be always visualized in 2D applying the t-SNE dimensionality reduction.}  of the clustering obtained applying AutoML4Clust \cite{Tschechlov2021}, an approach of the literature, that solely tunes the clustering step $Cl$. \Cref{clustering-fig:ca4,fig:ca5,fig:ca6} show the clusterings obtained by tuning an ML pipeline that incrementally includes feature selection ($FS$), normalization ($N$), and outlier removal ($OR$). In (b), $FS$ identifies the most relevant features; in (c), $N$ standardizes such features thus avoiding bias due to different domain ranges; in (d), $OR$ drops any data items that are not representative. 
-It is apparent how the tuning improves throughout the different steps, making it possible for $Cl$ to properly detect the 6 natural clusters. 
+To let the reader appreciate the novelty of AutoClues, we rely on a synthetic 10-dimensional (10D) dataset that includes 6 natural clusters. \Cref{clustering-fig:ca3} shows the t-SNE \cite{van2008visualizing} visualization\footnote{Clusterings in more than two dimensions will be always visualized in 2D applying the t-SNE dim.reduction.}  of the clustering obtained applying AutoML4Clust \cite{Tschechlov2021}, an approach of the literature, that solely tunes the clustering step $Cl$. \Cref{clustering-fig:ca4,clustering-fig:ca5,clustering-fig:ca6} show the clusterings obtained by tuning an ML pipeline that incrementally includes feature selection ($FS$), normalization ($N$), and outlier removal ($OR$). In (b), $FS$ identifies the most relevant features; in (c), $N$ standardizes such features thus avoiding bias due to different domain ranges; in (d), $OR$ drops any data items that are not representative.
+It is apparent how the tuning improves throughout the different steps, making it possible for $Cl$ to properly detect the 6 natural clusters.
 To quantitatively understand the improvements, we rely on the silhouette index $sil \in [-1, 1]$ (the higher the better), an estimation of the ``goodness'' of a clustering considering solely the data itself; namely, the \textit{separability} between the clusters and their \textit{cohesion} \cite{zhu2010clustering}.
 While in real-case unsupervised problems the ground truth is not available, for our synthetic example we can also measure how the returned clusters match the synthetic ones through the adjusted mutual information \cite{vinh2009information} $AMI \in [0, 1]$ (the higher the better).
 
@@ -109,7 +109,7 @@ Besides, such approaches retrieve just one solution.
 \begin{figure}[t]
     \centering
     \includegraphics[scale=.26]{chapters/data-centric/unsupervised/img/approach.pdf}
-    \caption{Overview of AutoClues.}
+    \caption{Overview of AutoClues.\todo{Adattare stile}}
     \label{clustering-fig:overview}
 \end{figure}
 
@@ -140,7 +140,7 @@ Given the search space $\Lambda_P$, a dataset $\altmathcal{D}$, the optimal pipe
 \label{eq:optimization}
     \lambda^* = argmin_{\lambda_P \in \Lambda_P} rel(P_{\lambda}(\altmathcal{D}))
 \end{equation}
-where $rel$ is a goodness metric for the clustering $C$ obtained by partitioning the dataset through the pipeline at hand $P_{\lambda}(\altmathcal{D})$.
+where $rel$ is a goodness metric for the clustering $C$ obtained by partitioning the dataset through the pipeline at hand $P_{\lambda}(\altmathcal{D})$.\todo{Cambierei in <P, A>}
 
 
 \begin{table}[!ht]
@@ -223,7 +223,7 @@ When applied to cluster analysis, AMI $\in [0, 1]$ considers the labels assigned
 Since we need a diversity metric, we adapt the formula as in:
 $$div(C_i, C_j) = 1- AMI(C_i, C_j)$$
 where $C_i, C_j$ clusterings come from different pipeline instances.
-\textcolor{orange}{TODO: Qua ci starebbe bene la definizione formale dell'AMI (e delle altre come sil, dbi, ch), tipo come con accuracy}
+\todo{Qua ci starebbe bene la definizione formale dell'AMI (e delle altre come sil, dbi, ch), tipo come con accuracy}
 
 Finally, considering that the diversification problem is NP-hard, we compute it by exploiting the MMR heuristic solution \cite{vieira2011query} that selects the best-performing clustering and iteratively adds the clusterings that most diversify the outcome.
 
@@ -271,7 +271,7 @@ Finally, in \Cref{clustering-ssec:comparison}, we rely on real datasets to provi
 
 \subsection{Benchmark Generation}
 \label{clustering-ssec:benchmark}
-The synthetic benchmarking generator is available via GitHub\footnote{\url{https:/github.com/anonymous-pakdd-24/clustering_benchmarking}}.
+The synthetic benchmarking generator is available via GitHub\footnote{\url{https:/github.com/anonymous-pakdd-24/clustering_benchmarking}\todo{metterlo su big e linkarlo}}.
 We create datasets of $|D|$ instances, defining $|C|$ natural iper-spherical clusters in a space of $|\altmathcal{F}|$ features.
 Then, we blur such clusters by posing common challenges faced by clustering algorithms.
 This includes noise on instances $\sigma(D)$, such as the presence of outliers, and noise on features $\sigma(F)$, such as irrelevant, correlated, or distorted features.
