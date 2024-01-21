@@ -54,25 +54,25 @@ It is apparent how the tuning improves throughout the different steps, making it
 To quantitatively understand the improvements, we rely on the silhouette index $sil \in [-1, 1]$ (the higher the better), an estimation of the ``goodness'' of a clustering considering solely the data itself; namely, the \textit{separability} between the clusters and their \textit{cohesion} \cite{zhu2010clustering}.
 While in real-case unsupervised problems the ground truth is not available, for our synthetic example we can also measure how the returned clusters match the synthetic ones through the adjusted mutual information \cite{vinh2009information} $AMI \in [0, 1]$ (the higher the better).
 
-\begin{figure}[t]  
+\begin{figure}[t]
     \begin{subfigure}[t]{0.31\columnwidth}
         \centering
         \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/ft_sc_ou_cl.pdf}
-        \caption{FS + N + OR + Cl\\ \scriptsize{AMI=1.0, sil=0.92}}
+        \caption{FS + N + OR + Cl\\$\quad$AMI=1.0, sil=0.92}
         \label{clustering-fig:d1}
     \end{subfigure}
     ~~
     \begin{subfigure}[t]{0.31\columnwidth}
         \centering
-        \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/dashboard_1_pred.pdf}      
-        \caption{FS + OR + Cl\\ \scriptsize{AMI=0.65, sil=0.86}}
+        \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/dashboard_1_pred.pdf}
+        \caption{FS + OR + Cl\\$\quad$AMI=0.65, sil=0.86}
         \label{clustering-fig:d3}
     \end{subfigure}
     ~
     \begin{subfigure}[t]{0.31\columnwidth}
         \centering
-        \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/dashboard_2_pred.pdf}  
-        \caption{FS + OR + Cl\\ \scriptsize{AMI=0.38, sil=0.74}}
+        \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/dashboard_2_pred.pdf}
+        \caption{FS + OR + Cl\\$\quad$AMI=0.38, sil=0.74}
         \label{clustering-fig:d2}
     \end{subfigure}
     \caption{Relevant and diverse clusterings returned by AutoClues.\\

@@ -53,7 +53,7 @@ To this end, they split up a so-called validation dataset $\altmathcal{D}_\mathi
 \subsection{Multi-Objective Machine Learning}
 \label{moo-ssec:moo}
 
-When it comes to learning a machine learning model with more than one (possibly conflicting) objective or loss function $\altmathcal{L}_1, \dots, \altmathcal{L}_M$ in mind, comparing the quality of models becomes difficult. For instance, in the context of Green AI, searching for a model with higher performance usually leads to one with higher power consumption, and vice versa. Thus, in multi-objective ML, learning algorithms leverage the concept of dominance formalizing that one model $h_1 \in \altmathcal{H}$ is better than another $h_2 \in \altmathcal{H}$, if $h_1$ performs better in at least one of the objectives while not performing worse than $h_2$ in the remaining ones. Yet, this leaves us with a set of non-dominated models, which are indistinguishable with respect to this dominance idea. These models form a so-called Pareto front $P_{\altmathcal{D}_{\mathit{val}}}(H)$ evaluated on dataset $\altmathcal{D}_{\mathit{val}}$ for a given set of models $H \subset \altmathcal{H}$. Formally, a Pareto front is defined as
+When it comes to learning a machine learning model with more than one (possibly conflicting) objective or loss function $\altmathcal{L}_1, \dots, \altmathcal{L}_M$ in mind, comparing the quality of models becomes difficult. For instance, in the context of Green AI, searching for a model with higher performance usually leads to one with higher power consumption, and vice versa. Thus, in multi-objective ML, learning algorithms leverage the concept of dominance formalizing that one model $H_1 \in \altmathcal{H}$ is better than another $H_2 \in \altmathcal{H}$, if $H_1$ performs better in at least one of the objectives while not performing worse than $H_2$ in the remaining ones. Yet, this leaves us with a set of non-dominated models, which are indistinguishable with respect to this dominance idea. These models form a so-called Pareto front $P_{\altmathcal{D}_{\mathit{val}}}(H)$ evaluated on dataset $\altmathcal{D}_{\mathit{val}}$ for a given set of models $H \subset \altmathcal{H}$. Formally, a Pareto front is defined as
 
 \begin{equation}
     \label{moo-eq:pareto_def}
@@ -147,19 +147,19 @@ Once the user has rated for each of such pairs $(P_1, P_2) \in \Omega$ whether h
 
 \subsubsection*{Feature Representation of Pareto Fronts}
 To learn a utility function based on the object ranking dataset defined in \Cref{moo-eq:object_ranking_dataset}, we additionally require a feature representation of a Pareto front such that the object ranking learning algorithm we employ can generalize over unseen Pareto fronts.
-More precisely, we aim to encode the Pareto front $P_{\altmathcal{D}_\mathit{val}(H)}$ returned by $A$ in a $d$-dimensional feature representation $\vec{f}_{P_{\altmathcal{D}_\mathit{val}(H)}} \in \mathbb{R}^d$ as depicted in \Cref{moo-fig:preference_preparation}. To this end, we assume to have access to all models returned by $A$, i.e. $H$ including all dominated models internally learned by $A$ and that there is some order imposed on the model space $\altmathcal{H}$ and hence on $H$. We evaluate all of these models $h_b \in H$ with each loss function $\altmathcal{L}_i$ on $\altmathcal{D}_\mathit{val}$ resulting in the following matrix
+More precisely, we aim to encode the Pareto front $P_{\altmathcal{D}_\mathit{val}(H)}$ returned by $A$ in a $d$-dimensional feature representation $\vec{f}_{P_{\altmathcal{D}_\mathit{val}(H)}} \in \mathbb{R}^d$ as depicted in \Cref{moo-fig:preference_preparation}. To this end, we assume to have access to all models returned by $A$, i.e. $H$ including all dominated models internally learned by $A$ and that there is some order imposed on the model space $\altmathcal{H}$ and hence on $H$. We evaluate all of these models $H_b \in \altmathcal{H}$ with each loss function $\altmathcal{L}_i$ on $\altmathcal{D}_\mathit{val}$ resulting in the following matrix
 \begin{equation}
     \vec{L} = \left( \begin{array}{ccc}
-         \altmathcal{L}_1(h_1,\altmathcal{D}_{\mathit{val}}) & \ldots & \altmathcal{L}_M(h_1,\altmathcal{D}_{\mathit{val}}) \\
+         \altmathcal{L}_1(H_1,\altmathcal{D}_{\mathit{val}}) & \ldots & \altmathcal{L}_M(H_1,\altmathcal{D}_{\mathit{val}}) \\
          \vdots & \ddots & \vdots \\
-         \altmathcal{L}_1(h_B,\altmathcal{D}_{\mathit{val}}) & \ldots & \altmathcal{L}_M(h_B,\altmathcal{D}_{\mathit{val}}) \\
+         \altmathcal{L}_1(H_B,\altmathcal{D}_{\mathit{val}}) & \ldots & \altmathcal{L}_M(H_B,\altmathcal{D}_{\mathit{val}}) \\
     \end{array} \right) \, ,
 \end{equation}
 where $B \geq \vert H \vert$ is the maximal number of models returned by $A$. If $A$ returns $B' < B$ values, we forward impute missing values for $B' + 1 \leq b \leq B' + (B - B')$ as 
 \begin{equation}\label{moo-eq:replace_dominated}
-    \vec{L}_{m,b} \leftarrow \altmathcal{L}_m(h_{b-1},\altmathcal{D}_{\mathit{val}}) ~ \forall 1 \leq m \leq M \, . 
+    \vec{L}_{m,b} \leftarrow \altmathcal{L}_m(H_{b-1},\altmathcal{D}_{\mathit{val}}) ~ \forall 1 \leq m \leq M \, . 
 \end{equation}
-For each model $h_b$ we check if it is dominated by the previous model $h_{b-1}$ as defined in \Cref{moo-eq:pareto_def}. If it is dominated, its loss values in the matrix are replaced by the ones from the previous non-dominated model following \Cref{moo-eq:replace_dominated}.
+For each model $H_b$ we check if it is dominated by the previous model $H_{b-1}$ as defined in \Cref{moo-eq:pareto_def}. If it is dominated, its loss values in the matrix are replaced by the ones from the previous non-dominated model following \Cref{moo-eq:replace_dominated}.
 At the end of this process, this matrix only contains loss values of 
 models contained in the Pareto front.
 Last, the matrix is flattened and standardized ($\altmathcal{N}(\cdot)$) across $\Omega$: 
@@ -261,27 +261,27 @@ As noted earlier, many users struggle to choose a Pareto front quality indicator
 As such, we simulate users by labeling pairwise comparisons according to hypervolume (HV), spacing (SP), maximum spread (MS) and R2 as Pareto front quality indicators.
 
 \begin{definition}[Hypervolume (HV)]
-    Hypervolume quantifies the volume of the front by merging the hypercubes determined by each of its solutions $h \in H$ and the reference point $r$ (i.e., the worst possible solution), formally:
-     $$HV(H) = \beta \left(\bigcup_{h \in H} \{ x \mid h \prec x \prec r \} \right)$$
+    Hypervolume quantifies the volume of the front by merging the hypercubes determined by each of its solutions $H \in \altmathcal{H}$ and the reference point $r$ (i.e., the worst possible solution), formally:
+     $$HV(\altmathcal{H}) = \beta \left(\bigcup_{H \in \altmathcal{H}} \{ x \mid h \prec x \prec r \} \right)$$
      where $\beta$ denotes the Lebesgue measure. This ranges from $0$ to $1$, the highest the better.
 \end{definition}
 
 \begin{definition}[Spacing (SP)]
     Spacing is the most popular uniformity indicator and it gauges the variation of the distance between solutions in a set;
-    $$SP(H) = \sqrt{\frac{1}{N-1} \sum_{h \in H} ( \bar{d} - d_1 ( h, H/h ) )^2}$$
-    where $\bar{d}$ is the mean of all the $d_1 ( h, H/h ) : h \in H$ and $d_1 ( h, H/h )$ means the $L^1$ norm distance (Manhattan distance) of $h$ to the set $H/h$. A SP value of zero indicates all members of the solution set are spaced equidistantly on the basis of Manhattan distance.
+    $$SP(\altmathcal{H}) = \sqrt{\frac{1}{N-1} \sum_{H \in \altmathcal{H}} ( \bar{d} - d_1 ( \altmathcal{H}, \altmathcal{H}/H ) )^2}$$
+    where $\bar{d}$ is the mean of all the $d_1 ( H, \altmathcal{H}/H ) : H \in \altmathcal{H}$ and $d_1 ( H, \altmathcal{H}/H )$ means the $L^1$ norm distance (Manhattan distance) of $H$ to the set $\altmathcal{H}/H$. A SP value of zero indicates all members of the solution set are spaced equidistantly on the basis of Manhattan distance.
 \end{definition}
 
 \begin{definition}[Maximum Spread (MS)]
     Maximum Spread is a widely used spread indicator, and it measures the range of a solution set by considering the maximum extent on each objective:
-    $$MS(H) = \sqrt{ \sum_{j = 1}^{m} \max_{h, h' \in H} (\altmathcal{L}_{j}(h) - \altmathcal{L}_{j}(h'))^2}$$
+    $$MS(\altmathcal{H}) = \sqrt{ \sum_{j = 1}^{m} \max_{H, H' \in \altmathcal{H}} (\altmathcal{L}_{j}(H) - \altmathcal{L}_{j}(H'))^2}$$
     where $m$ denotes the number of objectives. MS is to be maximized; the higher the value, the better the extensity to be claimed.
 \end{definition}
 
 \begin{definition}[R2]
     This indicator measures the proximity to a specific reference point $r$ via the Chebyshev norm:
-     $$R2(H) = \min_{h \in H} d_{\inf}(h, r)$$
-     Given $m$ objectives, $d_{\inf}(h, r)$ corresponds to $\max_{i=1}^{m}(\mid \altmathcal{L}_i(h) - \altmathcal{L}_i(r))$. Lower values translate into Pareto fronts closer to the reference point, taken as the ideal solution.
+     $$R2(\altmathcal{H}) = \min_{H \in \altmathcal{H}} d_{\inf}(H, r)$$
+     Given $m$ objectives, $d_{\inf}(H, r)$ corresponds to $\max_{i=1}^{m}(\mid \altmathcal{L}_i(H) - \altmathcal{L}_i(r))$. Lower values translate into Pareto fronts closer to the reference point, taken as the ideal solution.
 \end{definition}
 
 The order over the models returned by $A$, which we assume for the feature representation, is given by the energy consumption loss function, which means that models are ordered based on their energy consumption.

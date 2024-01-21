@@ -443,38 +443,8 @@ Finally, steps are concatenated with a specific order in data pre-processing pip
 \end{definition}
 
 Given a set of pre-processing steps, with corresponding transformations and hyperparameter spaces, the best data pipeline for the ML algorithm at hand is chosen from the disjoint union of all partial permutations of the pre-preprocessing steps.
-An ML pipeline is the concatenation of a specific data pipeline $P$ with an ML algorithm$A$---i.e., so that $A$ is fed with the output of $P$.
-
-\begin{example}[Data Pre-processing and ML Pipelines]
-    \label{background-ex:ml-pipeline}
-    Given the pre-processing steps Normalization ($\altmathcal{N}$) and Discretization ($\altmathcal{D}$), the possible data pipelines are:
-    \begin{align*}
-        P_1 &= \langle \varnothing \rangle &
-        P_2 &= \langle \altmathcal{D} \rangle &
-        P_4 &= \langle \altmathcal{D}, \altmathcal{N} \rangle \\
-        &&
-        P_3 &= \langle \altmathcal{N}\rangle & P_5 &= \langle \altmathcal{N}, \altmathcal{D} \rangle
-    \end{align*}
-
-    Considering the DecisionTree ($\altmathcal{D}t$) as an ML algorithm, we have that an ML pipeline is defined as $P_{ML} = \langle P_i, \altmathcal{D}t \rangle : i \in \{ 1, \dots, 5\}$.
-\end{example}
-
-Given a data pipeline, its instantiation consists of a configuration for each data pre-processing step (i.e., transformation with corresponding hyperparameters).
-% To better distinguish between pipeline selection and its optimization, we follow the notation from \cite{Quemy20InfSystems}: a \textit{prototype} is the fixed and ordered sequence of pre-processing steps, its optimized instantiation (i.e., transformations along with their hyperparameters) is known as \textit{executable pipeline}.
-
-\begin{example}[Data Pre-processing Pipeline Instances]
-    \label{background-ex:ml-pipeline-inst}
-    Given the data pipelines $P_1, \dots, P_5$ in \Cref{background-ex:ml-pipeline}, we provide examples of data pipeline instances for $P_2$ and $P_4$.
-    Given \textup{Binarizer} ($\altmathcal{B}$) and  \textup{KBinsDiscretizer} ($\altmathcal{K}b$) as transformations for Discretization ($\altmathcal{D}$), and \textup{MinMaxScaler} ($\altmathcal{M}m$) and \textup{StandardScaler} ($\altmathcal{S}s$) as transformations for Normalization ($\altmathcal{N}$), we define $P_{2_{\lambda}}$ and $P_{4_{\lambda}}$ as:
-    \begin{align*}
-        P_{2_{\lambda}} &= \langle {\altmathcal{B}}_{\lambda}\rangle, & P_{4_{\lambda}} &= \langle {\altmathcal{K}b}_{\lambda},~ {\altmathcal{M}m}_{\lambda} \rangle \\
-        {\altmathcal{B}}_{\lambda}&=\{ \textup{thr}=5.5 \}, &{\altmathcal{K}b}_{\lambda}&=\{ \textup{n\_bins}=3, \ldots \},\\
-        & & {\altmathcal{M}m}_{\lambda}&=\{ \varnothing \}
-    \end{align*}
-\end{example}
-
 Not only do we have to decide which steps to include and in which order (pipeline selection), but also which are the best transformations per step and the corresponding hyperparameters (pipeline optimization).
-We are hence provided with a data pipeline selection and optimization (DPSO) problem \cite{} and, as CASH, it can be reformulated as a single combined hierarchical hyperparameter optimization problem.
+We are hence provided with a data pipeline selection and optimization (DPSO) problem \cite{quemy2019data} and, as CASH, it can be reformulated as a single combined hierarchical hyperparameter optimization problem.
 
 \begin{definition}[Data Pipeline Selection and Optimization (DPSO)]
     Given a set of data pre-processing steps $\altmathcal{S} = \{S_1, \dots, S_K\}$, with associated hyperparameter spaces  $\pmb{\Lambda}_1, \dots, \pmb{\Lambda}_K$, we define the hierarchical space $\pmb{\Lambda} = \pmb{\Lambda_1} \cup \dots \cup \pmb{\Lambda_K} \cup \{\lambda_r\}$, where $\lambda_r$ is a new root-level hyperparameter that selects the order of the steps---hence, the data pipeline $P$ that should be instantiated. Then, the goal is to find the data pipeline and corresponding configuration $P^{\star}_{\pmb{\lambda}^{\star}} \in \pmb{\Lambda}$ that, when used with the algorithm at hand $A$, leads to the optimal loss function.
@@ -485,7 +455,7 @@ We are hence provided with a data pipeline selection and optimization (DPSO) pro
     Besides, we note again that we refer to $\altmathcal{D}_{train}$ and $\altmathcal{D}_{valid}$ as two different splits in supervised learning. If the task is unsupervised, these both correspond to the same original dataset $\altmathcal{D}$.
 \end{definition}
 
-Despite DPSO can be approached with the aforementioned optimization techniques for which CASH is addressed, different policies can be adopted to optimize the whole ML pipeline, i.e., the concatenation of a data pipeline with an ML algorithm.
+Despite DPSO can be approached with the aforementioned optimization techniques for which CASH is addressed, different policies can be adopted to optimize the whole ML pipeline---the concatenation of a data pipeline with an ML algorithm $\langle P, A \rangle$.
 
 \paragraph{Split policy}
 The budget is split between pre-pocessing and modelling, allocated respectively for the data pipeline configuration search and the algorithm hyperparameter tuning.

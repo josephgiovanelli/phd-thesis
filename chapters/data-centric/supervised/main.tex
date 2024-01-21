@@ -146,8 +146,8 @@ The problem exacerbates when steps are combined together into data pipelines.
 Indeed, the complete search space for our optimization problem is defined as $\Lambda_P = \Lambda_{S_1} \times \ldots \times \Lambda_{S_{|P|}} \times \lambda_p$, with $\lambda_p$ as yet another root-hyperparameter to select -- this time -- the order between the transformations (translating into the disjoint union of all partial permutations).
 
 To mitigate the problem's complexity, we distinguish between pipeline selection and its optimization.
-Specifically, following the notation from \cite{Quemy20InfSystems}:
-pipeline selection aims at finding promising \textit{prototypes}, i.e. fixed and ordered sequence of pre-processing steps, pipeline optimization instantiates the best \textit{executable pipeline}, i.e. assigning a transformation (along with the hyperparameters)to each pre-processing step.
+Specifically, following the notation from \cite{quemy2019data}:
+pipeline selection aims at finding promising \textit{prototypes}, i.e. fixed and ordered sequence of pre-processing steps, pipeline optimization instantiates the best \textit{executable pipeline}, i.e. assigning a transformation (along with the hyperparameters) to each pre-processing step.
 
 \begin{figure*}[t]
     \centering

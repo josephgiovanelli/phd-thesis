@@ -127,12 +127,11 @@ Each algorithm $A$ exposes a set of $K$ hyperparameters, producing the Cartesian
     Examples of steps are Normalization ($\altmathcal{N}$), Discretization ($\altmathcal{D}$), and Classification ($\altmathcal{C}l$).
     An algorithm for classification is decision tree  ($\altmathcal{D}t$) \cite{DBLP:books/wa/BreimanFOS84},
     examples of hyperparameters for $\altmathcal{D}t$ are its maximum $\textup{depth}$ $(\mathbb{N}^+)$ and the minimum $\textup{samples split}$ $(\mathbb{N}^+)$ required to split a node; hence $\Lambda_{\altmathcal{D}t} = \mathbb{N}^+ \times \mathbb{N}^+$.
-    An example of algorithm instance is $\lambda_{\altmathcal{D}t}= \{ \textup{depth}=3,\textup{samples\_split}=10 \}$.
+    An example of algorithm instance is ${\altmathcal{D}t}_{\lambda}= \{ \textup{depth}=3,\textup{samples\_split}=10 \}$.
 \end{example}
 
 Finally, an ML pipeline $P$ is a sequence of pre-processing steps that shape a dataset $\altmathcal{D}$ and a subsequent final ML step in which we address the task---in our case, either classification or regression.
 We can write the search space as: $\Lambda_P = \Lambda_{S_1} \times \ldots \times \Lambda_{S_{|P|}} \times \lambda_p$, with $\lambda_p$ a new root-hyperparameter that selects the order of the pre-processing steps---i.e., among all possible partial permutations.
-\todo{Da invertire lambda}\todo{Il resto da rivedere dopo che si è toccati il background}
 
 \begin{example}[ML Pipelines]
     Given the pre-processing steps Normalization ($\altmathcal{N}$) and Discretization ($\altmathcal{D}$), the possible pipelines for the DecisionTree ($\altmathcal{D}t$) are:
@@ -145,11 +144,11 @@ We can write the search space as: $\Lambda_P = \Lambda_{S_1} \times \ldots \time
     \end{align*}
     Given \textup{Binarizer} ($\altmathcal{B}$) and  \textup{KBinsDiscretizer} ($\altmathcal{K}b$) as algorithms of Discretization ($\altmathcal{D}$), and \textup{MinMaxScaler} ($\altmathcal{M}m$) and \textup{StandardScaler} ($\altmathcal{S}s$) and  as algorithms of Normalization ($\altmathcal{N}$), we provide examples of executable pipelines for $P_2$ and $P_4$:
     \begin{align*}
-        \lambda_{P_2} &= \langle \lambda_{\altmathcal{B}},~ \lambda_{\altmathcal{D}t} \rangle, &\lambda_{P_4} &= \langle \lambda_{\altmathcal{K}b},~ \lambda_{\altmathcal{M}m},~ \lambda_{\altmathcal{D}t} \rangle \\
-        \lambda_{\altmathcal{B}}&=\{ \textup{thr}=5.5 \}, &\lambda_{\altmathcal{K}b}&=\{ \textup{n\_bins}=3, \ldots \}\\
-        \lambda_{\altmathcal{M}m}&=\{ \varnothing \}, &\lambda_{\altmathcal{D}t}&= \{ \textup{depth}=3,\ldots\}
+        P_{2_{\lambda}} &= \langle {\altmathcal{B}}_{\lambda},~  {\altmathcal{D}t}_{\lambda}\rangle, & P_{4_{\lambda}} &= \langle {\altmathcal{K}b}_{\lambda},~ {\altmathcal{M}m}_{\lambda},~ {\altmathcal{D}t}_{\lambda} \rangle \\
+        {\altmathcal{B}}_{\lambda} &=\{ \textup{thr}=5.5 \}, &{\altmathcal{K}b}_{\lambda} &=\{ \textup{n\_bins}=3, \ldots \}\\
+        {\altmathcal{M}m}_{\lambda} &=\{ \varnothing \}, &{\altmathcal{D}t}_{\lambda}&= \{ \textup{depth}=3,\ldots\}
     \end{align*}
-    \Cref{hamlet-fig:space} depicts the pipeline domain $\Lambda_{P_4}$ and the pipeline instance $\lambda_{P_4}$.
+    \Cref{hamlet-fig:space} depicts the pipeline domain $\Lambda_{P_4}$ and the pipeline instance $P_{4_{\lambda}}$.
     \label{ex:pipelineinstance}
 \end{example}
 
@@ -158,17 +157,17 @@ However, it is not only about algorithms and hyperparameters but also about cons
 
 \begin{definition}[Constraint]\label{constraints}
 A \emph{constraint} $C \subseteq \Lambda$ is a region of search space that is either \emph{mandatory} or \emph{forbidden}.
-Given a pipeline $\lambda_P \in \Lambda_P \subseteq \Lambda$
+Given a pipeline $P_{\lambda}$
 \begin{itemize}
-    \item a mandatory constraint $C$ is fulfilled if  $\lambda_P \in C$;
-    \item a forbidden constraint $C$ is fulfilled if  $\lambda_P \notin C$.
+    \item a mandatory constraint $C$ is fulfilled if  $P_{\lambda} \in C$;
+    \item a forbidden constraint $C$ is fulfilled if  $P_{\lambda} \notin C$.
 \end{itemize}
 \end{definition}
 
 \begin{figure}
     \centering
     \includegraphics[scale=.75]{chapters/human-centric/hamlet/img/toy_example_ss.pdf}
-    \caption{Examples of the pipeline domain $\Lambda_{P_4}$ and pipeline instance $\lambda_{P_4}$, for the sake of visualization we omit the third dimension representing the domain of the Decision Tree. Green (or red) circles represent valid (or invalid) sub-regions of the search space; according to the constraints, Normalization is not allowed in the pipeline. The rectangle represents a zoom in the domain of the Binarizer algorithm.\todo{Da invertire lambda}}
+    \caption{Examples of the pipeline domain $\Lambda_{P_4}$ and pipeline instance $P_{4_{\lambda}}$, for the sake of visualization we omit the third dimension representing the domain of the Decision Tree. Green (or red) circles represent valid (or invalid) sub-regions of the search space; according to the constraints, Normalization is not allowed in the pipeline. The rectangle represents a zoom in the domain of the Binarizer algorithm.}
     \label{hamlet-fig:space}
 \end{figure}
 
@@ -183,7 +182,7 @@ This discards all the pipelines containing both Normalization and Decision Tree.
 Considering all the constraint combinations is overwhelming and, additionally, \emph{conflicts} might occur; for instance in the case of ethical \cite{boston-house} and legal fields that easily inject conflicting constraints into the search space.
 
 \begin{definition}[Constrained pipelines optimization]
-Given a search space $\Lambda$ and a set of constraints $\altmathcal{C}$, finding the best pipeline instance $\hat{\lambda}_P$ is defined as $\hat{\lambda}_P = argmax_{\lambda_P \in \Lambda_P} metric(\lambda_P)$, where $metric(\lambda_P)$ is the function evaluating the goodness of $\lambda_P$ and the explored pipelines fulfill the constraints in $\altmathcal{C}$.
+Given a search space $\Lambda$ and a set of constraints $\altmathcal{C}$, finding the best pipeline instance $P^{\star}_{\lambda^{\star}}$ is defined as $P^{\star}_{\lambda^{\star}} = argmax_{\lambda \in \Lambda_P} metric(P_{\lambda})$, where $metric(P_{\lambda})$ is the function evaluating the goodness of $P_{\lambda}$ and the explored pipelines fulfill the constraints in $\altmathcal{C}$.
 \end{definition}
 
 
