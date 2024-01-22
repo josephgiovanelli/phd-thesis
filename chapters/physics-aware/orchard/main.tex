@@ -1,46 +1,79 @@
-\chapter{An Auto-Tuning Three-Dimensional Numerical Model Coupled with Data Assimilation from a Sensor Grid}
+\chapter{An Auto-Tuning 3D Process-Based Model Coupled with Data Assimilation}
 \label{physics-aware-chap:orchard}
 
-The possibility to accurately and precisely forecast  agricultural systems 
-can provide significant improvement in a variety of agricultural issues such as irrigation demand, drought, climate change, nutrient depletion and soil degradation \cite{vitali2021crop}. In \cite{silva-giller-2020} the authors presented a series of relevant questions regarding the ability of crop models to address these issues. They pointed out
-that during the Second International Crop Modelling Symposium (iCropM2020), a keyword search in the book of abstracts showed that the term ‘simulation’ outweighed by far the terms ‘experiments’, ‘trials’ and ‘data acquisition’, and few contributions dealt with model improvement. The authors stressed the importance of coupling experimental data and models for an effective application of crop models at the operational level. The uncertainty associated with crop modelling computation can be reduced by coupling crop models with real time acquisition of relevant soil and crop variables. Today, with digitalization and remote acquisition of real time data it is possible to effectively incorporate experimental data and modelling in a real time framework. 
+The possibility to accurately and precisely forecast agricultural systems can provide significant improvement in a variety of agricultural issues such as irrigation demand, drought, climate change, nutrient depletion, and soil degradation \cite{vitali2021crop}.
+Agronomists leverage well-accepted and solid process-based models, specifically crop models such as CRITERIA \cite{Bittelli2011253} and HYDRUS \cite{hydrus2008587}.
 
-Moreover, many crops are still under-represented in crop models, including tropical perennials and fruit trees. Among fruit trees, the kiwifruit (\emph{Actinidia deliciosa}) has been only partially studied and in particular for a correct quantification of its water demands. 
-The kiwifruit, often shortened to kiwi (used hereafter), is an edible fruit, originated in China, and widely diffused in many countries. Italy is the third largest producer of kiwi worldwide, with an yearly production of 524,490 MTons \cite{fao-2020}. Since it originated in areas with large availability of water (central and eastern China), this plant has high water demand and it is necessary to correctly asses its soil water budget in several pedo-climatological conditions, for an effective use of water resources. 
-For instance in the Emilia-Romagna region (Italy), the kiwi irrigation season in generally starts in May and ends in October \cite{villani-etal-2011}, therefore with high water demands in a period where droughts and water scarcity are becoming more frequent due to climate change. While these effects of climate change also applies to other European regions \cite{olesen-etal-2011}, Europe's temperature increases and precipitation decreases are more pronounced in southern Europe \cite{ec-2013}, having adverse impacts on agriculture \cite{bindi-olensen-2011}.
-In a study on irrigation demand projections in kiwi, \cite{villani-etal-2011}
-reported that for the 2021-2050 period, with respect to the 1961-1990 period, a general
-increase of more than 10\% is expected.
+\begin{definition}[Process-based model \cite{Buck-Sorlin2013}]
+    A process-based model is the mathematical (and normally computer-based) representation of one or several processes characterizing the functioning of well-delimited biological systems of fundamental or economic interest.
+    Such models consist of a set of ordinary or partial differential equations that define the essence of each process, as well as their inputs and outputs.
+\end{definition}
 
-Authors reported average daily evapotranspiration for kiwi ranging from 62 to 80 m$^3$ day$^{-1}$ in New Zealand, while \cite{judd-etal-86} showed a water consumption ranging from 80 and 103 m$^3$ day$^{-1}$ in the central zone of South America \cite{valenzuela-88}. According to \cite{judd-etal-86} the high
-water demand is due to the large leaf-surface area and low stomata control. \cite{xiloyannis-etal-90} recommended to keep the soil water
-content at levels higher than 50 \% of the degree of saturation
-for optimal yield. Due to these high water consumptions kiwi is commonly an irrigated crop in most of the areas where it is cultivated such as New Zealand \cite{hall-etal-2001}, Chile \cite{holzapfel-etal-2000} and Italy \cite{xiloyannis-etal-90}. 
+% Such a modeling paradigm was heavily employed in the case of crop modeling, for instance, processes in these cases might implement hydraulic fluxes, evapotranspiration
 
-Few research papers have been published on measuring and modelling kiwi water demand. Indeed, in a review on fruit tree crop models, \cite{grisafi-etal-2021} showed that only one research was published on modelling kiwi and with emphasis on carbon budget, but not on the soil water budget. Little has also been done in terms of modelling the plant's water use and transpiration. \cite{rallo-etal-2020} presented a review about FAO56 crop coefficients of fruit trees and vines, performed over the past twenty years, to update information and extend tabulated single and basal standard crop coefficients. Also in this review it appears that kiwi is highly under-represented with only one listed research by \cite{silva-etal-2008}, where kiwi's transpiration was measured with a sap flow method. 
+\begin{definition}[Crop model \cite{Buck-Sorlin2013}]
+    A crop model describes the growth and development (phenology from germination to harvest) of a crop, at the level of the field, the canopy, and the plant (Goudriaan and van Laar 1994).
+    In doing so, a limited number of primary physiological and physical processes (e.g., surface runoff, deep percolation, soil evaporation and plant transpiration) are estimated using differential equations, climate data and crop-specific input parameters.
+\end{definition}
 
-The high water consumption of kiwi has raised concerns about  groundwater depletion and it has fostered interest in developing increasingly efficient irrigation systems and scheduling to optimize water use. For instance, if excess irrigation-water is applied, water resources are mismanaged with additional costs including energy to activate water pumps, leaching of mobile fertilizers (nitrates) into the groundwater and potential for soil erosion; on the other hand if the soil is water depleted from lack of adequate irrigation, plant production may be reduced with financial costs for the farmers.
 
-A correct irrigation forecasting must rely on a robust water budget model able to compute the soil water content (SWC) and soil water potential (SWP) in the root zone, and provide an estimated soil water requirement to keep the cultivated plant in optimal conditions. 
-A water budget model implies the measurement and/or the computation of a variety of processes including surface runoff, deep percolation into the groundwater, capillary rise from the groundwater, subsurface lateral flow, soil evaporation and plant transpiration \cite{marshall-etal-1996}. Measurement of all these variables is usually not feasible for operational conditions in real-world farms, therefore simulation models play a fundamental role along with measurements of weather data and a few, key soil variables. Weather data can be easily provided with low cost portable weather stations, or by downloading data from weather data networks. Weather forecast is provided by local public agencies or by private companies. It is not difficult today to obtain a relatively low cost service for weather forecasting. Soil properties such as SWC and SWP are easily measured by installing low cost sensors in the soil profile 
-\cite{bittelli-2010,nagahage-etal-2019}.
+Outputs of one process can serve as input to other processes, and so on and so forth, computing a series of time steps until the output of the final analysis is returned.
+The overall computation is called \textit{simulation}, and such a paradigm was heavily employed in crop modeling.
+For instance, in our case of soil moisture forecasting in kiwifruit, a crop model simulates soil moisture dynamics across the whole irrigation season, in each soil unit, until the desired horizon is reached.
+
+\paragraph{Challenges} \cite{silva-giller-2020} presented a series of relevant questions regarding the ability of such crop models to address several issues.
+First, the authors stressed the importance of coupling models with in-situ data for an effective application at the operational level---i.e., \textit{data assimilation}.
+% The uncertainty associated with crop modeling computation can be reduced by coupling these models with real-time measurements relevant to the soil and crop.
+Today, with digitalization and remote acquisition of real-time data, it is possible to effectively incorporate experimental data and modeling in a real-time framework.
+Second, crop models imply the measurement of a variety parameters---such as soil texture, leaf are index (LAI), water table  \cite{marshall-etal-1996}.
+Measurement of all these variables is usually not feasible for operational conditions in real-world farms, therefore tiuning such simulation parameters play a fundamental role.
+Finally, many crops are still under-represented in crop models, including tropical perennials and fruit trees.
+Among fruit trees, the kiwifruit (\emph{Actinidia deliciosa}) has been only partially studied, not enough to precisely quantify its water demands.
+% The kiwifruit -- often shortened to kiwi (used hereafter) -- is an edible fruit that originated in China and got widely diffused in many countries.
+% Italy is the third largest producer of kiwi worldwide, with a yearly production of 524,490 MTons \cite{fao-2020}.
+% Since it originated in areas with large availability of water (central and eastern China), this plant has high water demand.
+% In the Emilia-Romagna region (Italy), the kiwi irrigation season generally starts in May and ends in October \cite{villani-etal-2011}, with high water demands in a period where droughts and water scarcity are becoming more frequent due to climate change.
+% While these effects of climate change also apply to other countries \cite{olesen-etal-2011}, worldwide temperature increases and precipitations decrease \cite{ec-2013}, having adverse impacts on agriculture \cite{bindi-olensen-2011}.
+% In a study on irrigation demand projections in kiwi, \cite{villani-etal-2011}
+% reported that for the 2021-2050 period, wrt. the 1961-1990 period, a general
+% increase of more than 10\% is expected.
+
+% Authors reported average daily evapotranspiration for kiwi ranging from 62 to 80 m$^3$ day$^{-1}$ in New Zealand, while \cite{judd-etal-86} showed a water consumption ranging from 80 and 103 m$^3$ day$^{-1}$ in the central zone of South America \cite{valenzuela-88}. According to \cite{judd-etal-86} the high
+% water demand is due to the large leaf-surface area and low stomata control. \cite{xiloyannis-etal-90} recommended to keep the soil water
+% content at levels higher than 50 \% of the degree of saturation
+% for optimal yield. Due to these high water consumptions kiwi is commonly an irrigated crop in most of the areas where it is cultivated such as New Zealand \cite{hall-etal-2001}, Chile \cite{holzapfel-etal-2000} and Italy \cite{xiloyannis-etal-90}.
+
+% Few research papers have been published on measuring and modeling kiwi water demand. Indeed, in a review on fruit tree crop models, \cite{grisafi-etal-2021} showed that only one research was published on modelling kiwi and with emphasis on carbon budget, but not on the soil water budget. Little has also been done in terms of modelling the plant's water use and transpiration. \cite{rallo-etal-2020} presented a review about FAO56 crop coefficients of fruit trees and vines, performed over the past twenty years, to update information and extend tabulated single and basal standard crop coefficients. Also in this review it appears that kiwi is highly under-represented with only one listed research by \cite{silva-etal-2008}, where kiwi's transpiration was measured with a sap flow method.
+
+% The high water consumption of kiwi has raised concerns about groundwater depletion and it has fostered interest in developing increasingly efficient irrigation systems and scheduling to optimize water use. For instance, if excess irrigation water is applied, water resources are mismanaged with additional costs including energy to activate water pumps, leaching of mobile fertilizers (nitrates) into the groundwater and potential for soil erosion; on the other hand, if the soil is water depleted from lack of adequate irrigation, plant production may be reduced with financial costs for the farmers.
+
+
+To mitigate water wasting, soil moisture forecasting is used to correctly plan irrigations.
+Predictions must rely on a robust crop model able to compute the water budget---i.e., estimate soil water requirement, in the root zone, to keep the cultivated plant in optimal conditions.
+% This implies the measurement and/or the computation of a variety of processes including surface runoff, deep percolation into the groundwater, capillary rise from the groundwater, subsurface lateral flow, soil evaporation and plant transpiration \cite{marshall-etal-1996}.
+% Measurement of all these variables is usually not feasible for operational conditions in real-world farms, therefore  play a fundamental role along with measurements of weather data and a few, key soil variables.
+% Weather data can be easily provided with low cost portable weather stations, or by downloading data from weather data networks.
+% Weather forecast is provided by local public agencies or by private companies. It is not difficult today to obtain a relatively low cost service for weather forecasting. Soil properties such as SWC and SWP are easily measured by installing low cost sensors in the soil profile \cite{bittelli-2010,nagahage-etal-2019}.
 
 
 %DATA ASSIMILATION
-The challenging aspect for a correct simulation of the water budget is the parameterization and corroboration of the simulation model. Parameterization can be obtained from experimental determination of soil and plant properties. For instance, the soil hydraulic properties (the soil water retention and hydraulic conductivity curves) can be measured in the laboratory. However, these measurements are expensive and time consuming. It is rarely a feasible solution for farmers, to measure the soil hydraulic properties. 
-An alternative solution is to install soil sensors measuring SWC or SWP and calibrate the model through a process of data assimilation, providing weather and basic soil properties data as input. Key soil variables such as SWC and SWP can be successfully used to asses the water budget computation and plant water requirements.  
+% The challenging aspect for a correct simulation of the water budget is the parameterization and corroboration of the simulation model. Parameterization can be obtained from experimental determination of soil and plant properties. For instance, the soil hydraulic properties (the soil water retention and hydraulic conductivity curves) can be measured in the laboratory.
+% However, these measurements are expensive and time-consuming.It is rarely a feasible solution for farmers, to measure the soil hydraulic properties.
+% An alternative solution is to install soil sensors measuring SWC or SWP and calibrate the model through a process of data assimilation, providing weather and basic soil properties data as input. Key soil variables such as SWC and SWP can be successfully used to asses the water budget computation and plant water requirements.  
 
-Data assimilation is a very powerful technique even during the forecasting process, since it allows to initialize each simulation with the real soil state, thus to a low error state. In real-case problems, there are no error-free estimations and many slight errors gradually lead the model to progressively deviate especially for domains in which a wide range of different phenomena interacts. In particular, soil moisture forecasts are affected by weather forecasts (influenced in turn by plenty of variables), water tables, soil slopes, hysteresis, and so on. 
+% Data assimilation is a very powerful technique even during the forecasting process, since it allows to initialize each simulation with the real soil state, thus to a low error state. In real-case problems, there are no error-free estimations and many slight errors gradually lead the model to progressively deviate especially for domains in which a wide range of different phenomena interacts. In particular, soil moisture forecasts are affected by weather forecasts (influenced in turn by plenty of variables), water tables, soil slopes, hysteresis, and so on. 
 
-Today many companies commercialize affordable and reliable sensors to be installed in orchards. In our approach we exploit a grid of sensors rather than a single one. This makes it possible to create a precise map of the water content that, in turn, increases data assimilation accuracy.
+% Today many companies commercialize affordable and reliable sensors to be installed in orchards. In our approach we exploit a grid of sensors rather than a single one. This makes it possible to create a precise map of the water content that, in turn, increases data assimilation accuracy.
 
-In this paper we propose:
+\paragraph{Contributions} In this chapter, we propose:
 \begin{itemize}
-	\item \olab{}, an innovative \textit{3D numerical model} specifically devised to compute the soil water balance of an orchard. The 3D model keeps into account: non uniform distribution of the root system, growth and development of orchard plants with a full computation of the soil water budget, short term weather forecast.
+	\item \olab{}, an innovative \textit{3D crop model} designed specifically to compute the soil water balance of an orchard.
+    The 3D model keeps into account: non uniform distribution of the root system, growth and development of orchard plants with a full computation of the soil water budget, short-term weather forecast.
     \item A \textit{Data Assimilation} technique to map coarse-grained 2D/3D-sensor grid to the fine-grained 3D state of \olab{}.
     \item A \textit{Parameter Tuning} technique to automatically calibrate the model parameters to a specific orchard through a Bayesian hyper-parameter tuning procedure.
 	\item A detailed field experiment in a Kiwifruit field in an commercial farm.
 \end{itemize}
+\todo{Mancano diverse cose: 1. tecniche automl utilizzate per parameter tuning, 2. come si collega a physics-aware/couples AI (devo richiamarlo somehow)}
 
 \section{System Design and Techniques}
  \Cref{orchard-fig:scheme1} depicts the planting layout adopted in this paper. Trees are arranged in lines; soil can have a slope both in the $x$ and $y$ axes. The orchard is equipped with a watering system that can be of different type (e.g., single or double wing) and with different distances between drippers and lines. For each plant, we consider a \emph{soil volume} that includes the roots; typically the soil volume can be larger than the area affected by the watering system. A mound can be present to favor draining.

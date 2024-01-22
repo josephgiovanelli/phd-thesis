@@ -150,10 +150,10 @@ By highlighting conceivable synergies, but also risks, we aim to foster further 
 As application areas go, there are domains in which ML models are not yet widespread.
 Usually related to earth observations, the deployed applications tend to be particularly high-impact, trying to mitigate challenges such as climate change by delivering (more) eco-friendly systems.
 Examples include weather forecasts and crop life-cycle management.
-Domain experts leverage their knowledge to tune numerical simulators -- which encode well-known physical laws -- and deliver forecasts and analyses.
+Domain experts leverage their knowledge to tune process-based models -- i.e., mathematical models that encode well-known physical laws -- and deliver forecasts and analyses.
 However, this process faces several challenges.
 The non-existence of universal well-defined practices translates to several trials and errors, with domain experts manually configuring the simulator parameters until an acceptable solution is found.
-Yet, as variables involved in physics phenomena are subject to constant change, such numerical solution must undergo periodic (re-)calibration.
+Yet, as variables involved in physics phenomena are subject to constant change, such process-based solution must undergo periodic (re-)calibration.
 Besides, with the torrent of remotely sensed data available today, opportunities to integrate real-time observations in predictive models have emerged that traditional methods are not equipped to handle.
 This is where advances in AI can push forward to enhance our understanding, provide support and, if necessary, steer the course of resolving global concerns to a more favorable future.
 For instance, ML models exhibit singular performance in adapting themselves to handle scenarios different from the one they were trained on (e.g., fine-tuning of network parameters) and AutoML can significantly impact in automating several stages (e.g., tuning simulators and ML models).
@@ -175,12 +175,13 @@ This makes our approach concretely applicable in real-world settings.
 \subsection*{Multi-Sensor Profiling for Precision Soil-Moisture Monitoring}
 
 
-\paragraph{Challenge} Controlling soil moisture is crucial in optimizing watering and crop performance.
-Traditional monitoring systems rely on a single sensor or on a column of sensors that do not allow farmers to properly capture soil moisture dynamics in the soil volume occupied by roots.
+\paragraph{Challenge} Optimization watering and crop performance is a complex real-case problem, and several solutions have been proposed. While soil moisture forecasting is just one side of the coin, soil moisture monitoring has demonstrated itself particularly effective.
+Yet, traditional monitoring systems rely on a single sensor or on a column of sensors that do not allow farmers to properly capture soil moisture dynamics in the soil volume occupied by roots.
 
 
 \paragraph{Contribution} In \Cref{physics-aware-chap:pluto}, we propose PLUTO, an original approach that builds fine-grained 2D and 3D soil moisture profiles by relying on a grid of sensors.
-Profiles are computed using both interpolation-based and machine learning approaches. Besides the technical description of the approach, the paper reports a set of original visualizations and a large set of tests computed, over two years, on real Kiwi orchards.
+Profiles are computed using both interpolation-based and machine learning approaches.
+Besides the technical description of the approach, the paper reports a set of original visualizations and a large set of tests computed, over two years, on real Kiwi orchards.
 PLUTO proved to largely overcome the accuracy of profiles obtained with traditional sensor layouts.
 Considering that the cost of sensors is progressively decreasing, PLUTO provides a cost-effective, operative, and precise solution to moisture monitoring.
 

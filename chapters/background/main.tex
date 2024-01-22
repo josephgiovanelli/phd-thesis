@@ -405,9 +405,9 @@ In this case, the nature of such a task is not the ultimate goal of the analysis
    A \emph{transformation} $T$ is a particular case of an ML algorithm, in which the corresponding model -- after training -- maps an input dataset $\altmathcal{D} \in \mathbb{D}$ into a new one $\altmathcal{D}' \in \mathbb{D}'$.
     As an ML algorithm, its output is affected by hyperparameters $\lambda_1, \dots, \lambda_M$, with corresponding hyperparameter spaces $\Lambda_1, \dots, \Lambda_M$.
     Configurations are samples from the cartesian product $\pmb{\Lambda} = \Lambda_1 \times \ldots \times \Lambda_M$.
-    % \begin{equation*}
-    %     T: \mathbb{D} \times \Lambda \rightarrow \mathbb{H}
-    % \end{equation*}
+    \begin{equation*}
+        T: \mathbb{D} \times \Lambda \rightarrow \mathbb{H}
+    \end{equation*}
     For brevity, we refer to $T(\altmathcal{D}, \lambda)$ as $T_{\lambda}$.
 \end{definition}
 
@@ -470,7 +470,7 @@ The concatenation of a data pipeline with an ML algorithm is known as \textit{ML
 All in all, given a set of pre-processing steps, with corresponding transformations and hyperparameter spaces, the best data pipeline for the ML algorithm at hand is chosen from the disjoint union of all partial permutations of the pre-preprocessing steps---i.e., prototypes.
 Not only do we have to decide which steps to include and in which order (pipeline selection), but also which are the best transformations per step and the corresponding hyperparameters (pipeline optimization).
 We are hence provided with a data pipeline selection and optimization (DPSO) problem \cite{quemy2019data} and, as CASH, it can be reformulated as a single combined hierarchical hyperparameter optimization problem.
-According to the task at hand, the goodness of an ML pipeline -- and thus the data pipeline within -- can be evaluated via the aforementioned loss functions $\altmathcal{L}$\footnote---e.g., misclassification error for supervised classification tasks, silhouette index for unsupervised clustering tasks.
+According to the task at hand, the goodness of an ML pipeline -- and thus the data pipeline within -- can be evaluated via the aforementioned loss functions $\altmathcal{L}$---e.g., misclassification error for supervised classification tasks, silhouette index for unsupervised clustering tasks.
 
 
 \begin{definition}[Data Pipeline Selection and Optimization (DPSO)]
