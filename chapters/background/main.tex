@@ -230,11 +230,11 @@ Besides, we are provided with a loss function $\altmathcal{L} = \mathbb{H} \time
 There has been considerable past work separately addressing algorithm selection \cite{as_algos} and hyperparameter optimization \cite{hpo_algos}.
 One could similarly tackle the combined space of learning algorithms and their hyperparameters (CASH), yet this has not achieved good results.
 The corresponding loss function becomes noisy when the space is high-dimensional, involves both categorical and continuous choices, and contains hierarchical dependencies (e.g., the hyperparameters of a learning algorithm are only meaningful if that algorithm is chosen).
-For such reasons CASH has been reformulated as a single combined hierarchical hyperparameter optimization with space $\pmb{\Lambda} = \pmb{\Lambda_1} \cup \dots \cup \pmb{\Lambda_K} \cup \{\lambda_r\}$, where $\lambda_r$ is a new root-level hyperparameter that selects between algorithms $A_1, \dots, A_K$.
+For such reasons CASH has been reformulated as a single combined hierarchical hyperparameter optimization with space $\pmb{\Lambda} = \pmb{\Lambda_{A_1}} \cup \dots \cup \pmb{\Lambda_{A_K}} \cup \{\lambda_r\}$, where $\lambda_r$ is a new root-level hyperparameter that selects between algorithms $A_1, \dots, A_K$.
 The root-level parameters of each subspace $\pmb{\Lambda_i}$ are made conditional on $\lambda_r$ being instantiated to $A_i$.
 
 \begin{definition}[Combined Algorithm Selection and Optimization (CASH)]
-    Given a set of learning algorithms $\altmathcal{A} = \{A_1, \dots, A_K\}$, with assocciated hyperparameter spaces  $\pmb{\Lambda}_1, \dots, \pmb{\Lambda}_K$, we define the hierarchical space $\pmb{\Lambda} = \pmb{\Lambda_1} \cup \dots \cup \pmb{\Lambda_K} \cup \{\lambda_r\}$. Then, the goal is to find the algorithm and corresponding configuration $A^{\star}_{\pmb{\lambda}^{\star}} \in \pmb{\Lambda}$ with optimal loss function.
+    Given a set of learning algorithms $\altmathcal{A} = \{A_1, \dots, A_K\}$, with assocciated hyperparameter spaces  $\pmb{\Lambda_{A_1}} \cup \dots \cup \pmb{\Lambda_{A_K}}$, we define the hierarchical space $\pmb{\Lambda} = \pmb{\Lambda_{A_1}} \cup \dots \cup \pmb{\Lambda_{A_K}} \cup \{\lambda_r\}$. Then, the goal is to find the algorithm and corresponding configuration $A^{\star}_{\pmb{\lambda}^{\star}} \in \pmb{\Lambda}$ with optimal loss function.
     \begin{equation*}
         A^{\star}_{\pmb{\lambda}^{\star}} \in \argmin_{A_{\pmb{\lambda}} \in \pmb{\Lambda}} \altmathcal{L}(A_{\pmb{\lambda}}(\altmathcal{D}_{train}), \altmathcal{D}_{valid})
     \end{equation*}
@@ -402,13 +402,17 @@ In practice, transformations are proper ML algorithms that (i) take a dataset in
 In this case, the nature of such a task is not the ultimate goal of the analysis (e.g., classification) but, rather, altering the original dataset (e.g., feature engineering) for a better result.
 
 \begin{definition}[Data Pre-processing Transformation]
-    A \emph{transformation} $T$ is a particular case of an ML algorithm, in which the corresponding model -- after training -- maps an input dataset $\altmathcal{D} \in \mathbb{D}$ into a new one $\altmathcal{D}' \in \mathbb{D}'$.
+   A \emph{transformation} $T$ is a particular case of an ML algorithm, in which the corresponding model -- after training -- maps an input dataset $\altmathcal{D} \in \mathbb{D}$ into a new one $\altmathcal{D}' \in \mathbb{D}'$.
     As an ML algorithm, its output is affected by hyperparameters $\lambda_1, \dots, \lambda_M$, with corresponding hyperparameter spaces $\Lambda_1, \dots, \Lambda_M$.
-    A configuration is sampled from the cartesian product $\pmb{\Lambda} = \Lambda_1 \times \ldots \times \Lambda_M$.
+    Configurations are samples from the cartesian product $\pmb{\Lambda} = \Lambda_1 \times \ldots \times \Lambda_M$.
+    % \begin{equation*}
+    %     T: \mathbb{D} \times \Lambda \rightarrow \mathbb{H}
+    % \end{equation*}
+    For brevity, we refer to $T(\altmathcal{D}, \lambda)$ as $T_{\lambda}$.
 \end{definition}
 
 As with ML algorithms, there exists a plethora of different alternatives for implementing transformations with a certain pre-processing task.
-Besides, given the need to alter the dataset w.r.t. different pre-processing tasks, transformations are subsequentially applied in steps.
+Besides, given the need to alter the dataset wrt. different pre-processing tasks, transformations are subsequentially applied in steps.
 
 \begin{definition}[Data Pre-processing Step]
     A data pre-processing step $S$ is a set of alternative transformations with the same pre-processing task.
@@ -424,10 +428,10 @@ In the literature, there are data pre-processing steps that can be applied to bo
     \item \textit{Feature Engineering} defines the most relevant features for the case at hand.
 \end{itemize}
 
-Besides, there are pre-processing steps that are aligned solely with respect to the analysis at hand.
+Besides, there are pre-processing steps that are aligned to specific tasks.
 \begin{itemize}
-    \item \textit{Rebalancing}, in supervised learning, adjusts the class distribution of a dataset (i.e., so that each class is equally represented among the instances).
-    \item \textit{Outlier Removal}, in unsupervised learning, drops any instances that can be considered noise because deviating (to a certain degree) from the overall distribution.
+    \item \textit{Rebalancing}, in supervised classification tasks, adjusts the class distribution of a dataset (i.e., so that each class is equally represented among the instances).
+    \item \textit{Outlier Removal}, in unsupervised tasks, drops any instances that can be considered noise because deviating (to a certain degree) from the overall distribution.
 \end{itemize}
 
 \begin{example}[Feature Engineering Step and Transformations in Supervised Learning]
@@ -438,22 +442,49 @@ Besides, there are pre-processing steps that are aligned solely with respect to 
 Finally, steps are concatenated with a specific order in data pre-processing pipelines---or data pipelines in short.
 
 \begin{definition}[Data Pre-processing Pipeline]
-    Given a set of pre-processing steps $\altmathcal{S} = \{S_1,\dots, S_{K}\}$, a data pre-processing pipeline $P$ is a concatenation of the steps in $\altmathcal{S}$, with a specific order.
-    Hence, the instantiation of the pipeline is a sample from the cartesian product of the steps search spaces: given $S_1, \dots, S_K$ with corresponding hyperparameter spaces $\pmb{\Lambda}_{S_1}, \dots, \pmb{\Lambda}_{S_K}$, the pipeline search space is defined as  $\pmb{\Lambda}_P  = \pmb{\Lambda}_{S_1} \times \dots \times \pmb{\Lambda}_{S_K}$.
+    \label{background-def:data_pipeline}
+    Given a set of pre-processing steps $\altmathcal{S} = \{S_1,\dots, S_{K}\}$, with corresponding search spaces $\pmb{\Lambda}_{S_1}, \dots, \pmb{\Lambda}_{S_K}$, a data pre-processing pipeline $P$ is a concatenation of the steps in $\altmathcal{S}$ with a specific order.
+    The instantiation is performed by sampling a configuration $\lambda$ from the cartesian product $\pmb{\Lambda}_P  = \pmb{\Lambda}_{S_1} \times \dots \times \pmb{\Lambda}_{S_K}$.
+    \begin{equation*}
+        P: \mathbb{D} \times \pmb{\Lambda}_P \rightarrow \langle \mathbb{H}_{S_1}, \dots,  \mathbb{H}_{S_K} \rangle
+    \end{equation*}
+   We refer to the pipeline $P(\altmathcal{D}, \lambda)$ with $P_{\lambda}(\altmathcal{D})$.
 \end{definition}
 
-Given a set of pre-processing steps, with corresponding transformations and hyperparameter spaces, the best data pipeline for the ML algorithm at hand is chosen from the disjoint union of all partial permutations of the pre-preprocessing steps.
+Given a data pipeline $P$, we leverage the notation $\langle S_1, \dots, S_K \rangle$ for detailing the pre-processing step sequence of which it is made up---also known as \textit{pipeline prototype} \cite{quemy2019data}.
+The corresponding instantiation $P_{\lambda}$ would be the hyperparametrization of each pre-processing step: $\langle S_{1_{\lambda}}, \dots, S_{K_{\lambda}} \rangle$---also known as \textit{pipeline instance} \cite{quemy2019data}.
+After having fitted the training parameters, this corresponds to the sequence of models in \Cref{background-def:data_pipeline}.
+
+As mentioned, data pipelines are leveraged to shape the data and feed an ML algorithm so that the latter can perform at its best.
+The concatenation of a data pipeline with an ML algorithm is known as \textit{ML pipeline}.
+
+\begin{definition}[Machine Learning Pipeline]
+    Given a data pipeline $P = \langle S_1,\dots, S_{K} \rangle$ and a ML algorithm $A$, with corresponding search spaces $\pmb{\Lambda}_{P}$ and $\pmb{\Lambda}_{A}$, an ML pipeline $P_{ML}$ is the concatenation of the steps in $\altmathcal{S}$ with a specific order and the algorithm $A$.
+    The instantiation is performed by sampling a configuration $\lambda$ from the cartesian product  $\pmb{\Lambda}_{P_{ML}}  = \pmb{\Lambda}_{P} \times {\Lambda}_{A}$.
+    \begin{equation*}
+        P_{ML}: \mathbb{D} \times \pmb{\Lambda}_{P_{ML}} \rightarrow \langle \mathbb{H}_{S_1}, \dots,  \mathbb{H}_{S_K}, \mathbb{H}_{A} \rangle
+    \end{equation*}
+   We refer to the pipeline $P_{ML}(\altmathcal{D}, \lambda)$ with $P_{ML_{\lambda}}(\altmathcal{D})$.
+\end{definition}
+
+All in all, given a set of pre-processing steps, with corresponding transformations and hyperparameter spaces, the best data pipeline for the ML algorithm at hand is chosen from the disjoint union of all partial permutations of the pre-preprocessing steps---i.e., prototypes.
 Not only do we have to decide which steps to include and in which order (pipeline selection), but also which are the best transformations per step and the corresponding hyperparameters (pipeline optimization).
 We are hence provided with a data pipeline selection and optimization (DPSO) problem \cite{quemy2019data} and, as CASH, it can be reformulated as a single combined hierarchical hyperparameter optimization problem.
+According to the task at hand, the goodness of an ML pipeline -- and thus the data pipeline within -- can be evaluated via the aforementioned loss functions $\altmathcal{L}$\footnote---e.g., misclassification error for supervised classification tasks, silhouette index for unsupervised clustering tasks.
+
 
 \begin{definition}[Data Pipeline Selection and Optimization (DPSO)]
-    Given a set of data pre-processing steps $\altmathcal{S} = \{S_1, \dots, S_K\}$, with associated hyperparameter spaces  $\pmb{\Lambda}_1, \dots, \pmb{\Lambda}_K$, we define the hierarchical space $\pmb{\Lambda} = \pmb{\Lambda_1} \cup \dots \cup \pmb{\Lambda_K} \cup \{\lambda_r\}$, where $\lambda_r$ is a new root-level hyperparameter that selects the order of the steps---hence, the data pipeline $P$ that should be instantiated. Then, the goal is to find the data pipeline and corresponding configuration $P^{\star}_{\pmb{\lambda}^{\star}} \in \pmb{\Lambda}$ that, when used with the algorithm at hand $A$, leads to the optimal loss function.
+    Given a set of data pre-processing steps $\altmathcal{S} = \{S_1, \dots, S_K\}$, with associated hyperparameter spaces  $\pmb{\Lambda}_{S_1}, \dots, \pmb{\Lambda}_{S_K}$, we define the hierarchical space $\pmb{\Lambda} = \pmb{\Lambda_{S_1}} \cup \dots \cup \pmb{\Lambda_{S_K}} \cup \{\lambda_r\}$, where $\lambda_r$ is a new root-level hyperparameter that selects the order of the steps---hence, the data pipeline $P$ that should be instantiated.
+    Then, the goal is to find the best data pipeline and corresponding configuration $P^{\star}_{\pmb{\lambda}^{\star}} \in \pmb{\Lambda}$ that, when used with the algorithm at hand $A$, leads to the optimal loss function.
     \begin{equation*}
         P^{\star}_{\pmb{\lambda}^{\star}} \in \argmin_{\pmb{\lambda} \in \pmb{\Lambda}} \altmathcal{L}(\langle P_{\pmb{\lambda}}, A \rangle (\altmathcal{D}_{train}), \altmathcal{D}_{valid})
     \end{equation*}
     with $\langle P_{\pmb{\lambda}}, A \rangle (\altmathcal{D}_{train})$ the ML pipeline with default configuration for $A$.
     Besides, we note again that we refer to $\altmathcal{D}_{train}$ and $\altmathcal{D}_{valid}$ as two different splits in supervised learning. If the task is unsupervised, these both correspond to the same original dataset $\altmathcal{D}$.
 \end{definition}
+
+With reference to \Cref{def:loss}, a loss function $\altmathcal{L}$ evaluates a single model $H_{\lambda}$, while an ML pipeline $P_{ML}$ returns a model for each step $\langle S_1, \dots, S_K \rangle$ and the ML algorithm $A$; we note that the pre-processing steps are applied subsequently to transform the dataset, and the ML algorithm is applied afterward to fulfill the ultimate goal of the task at hand.
+Hence, for the sake of the evaluation, we are interested in measuring the performance of the ML algorithm $A$ and the data pipeline configuration $P_{\lambda}$ is considered implicitly---since the dataset is shaped accordingly.
 
 Despite DPSO can be approached with the aforementioned optimization techniques for which CASH is addressed, different policies can be adopted to optimize the whole ML pipeline---the concatenation of a data pipeline with an ML algorithm $\langle P, A \rangle$.
 
