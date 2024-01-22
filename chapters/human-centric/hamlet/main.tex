@@ -182,7 +182,7 @@ This discards all the pipelines containing both Normalization and Decision Tree.
 Considering all the constraint combinations is overwhelming and, additionally, \emph{conflicts} might occur; for instance in the case of ethical \cite{boston-house} and legal fields that easily inject conflicting constraints into the search space.
 
 \begin{definition}[Constrained pipelines optimization]
-Given a search space $\Lambda$ and a set of constraints $\altmathcal{C}$, finding the best pipeline instance $P^{\star}_{\lambda^{\star}}$ is defined as $P^{\star}_{\lambda^{\star}} = argmax_{\lambda \in \Lambda_P} metric(P_{\lambda})$, where $metric(P_{\lambda})$ is the function evaluating the goodness of $P_{\lambda}$ and the explored pipelines fulfill the constraints in $\altmathcal{C}$.
+Given a dataset $\altmathcal{D}$, a search space $\Lambda$, and a set of constraints $\altmathcal{C}$, finding the best pipeline instance $P^{\star}_{\lambda^{\star}}$ is defined as $P^{\star}_{\lambda^{\star}} = argmax_{\lambda \in \Lambda_P} metric(P_{\lambda}(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$, where $metric$ is the function evaluating the goodness of $P_{\lambda}$ and the explored pipelines fulfilling the constraints in $\altmathcal{C}$.
 \end{definition}
 
 

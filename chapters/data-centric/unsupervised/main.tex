@@ -138,9 +138,9 @@ A \textit{(crisp) Clustering} is a partition of the dataset into a set of (non-o
 Given the search space $\Lambda_P$, a dataset $\altmathcal{D}$, the optimal pipeline instance is
 \begin{equation}
 \label{eq:optimization}
-    \lambda^* = argmin_{\lambda_P \in \Lambda_P} rel(P_{\lambda}(\altmathcal{D}))
+    P_{\lambda^*} = argmin_{\lambda \in \Lambda_P} rel(P_{\lambda}(\altmathcal{D}))
 \end{equation}
-where $rel$ is a goodness metric for the clustering $C$ obtained by partitioning the dataset through the pipeline at hand $P_{\lambda}(\altmathcal{D})$.\todo{Cambierei in <P, A>}
+where $rel$ is a goodness metric\footnote{With reference to \Cref{def:loss}, a goodness metric has the opposite semantics wrt. the loss function, hence the higher the better} for the clustering $C$ obtained by partitioning the dataset through the pipeline at hand $P_{\lambda}(\altmathcal{D})$---e.g., Silhouette index \cite{sil}.\todo{Cambierei in <P, A>}
 
 
 \begin{table}[!ht]
