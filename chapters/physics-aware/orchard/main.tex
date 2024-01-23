@@ -1,22 +1,10 @@
-\chapter{An Auto-Tuning 3D Process-Based Model Coupled with Data Assimilation}
+\chapter{Enhancing Process-Based Models with Data Assimilation and Auto-Tuning}
 \label{physics-aware-chap:orchard}
 
 The possibility to accurately and precisely forecast agricultural systems can provide significant improvement in a variety of agricultural issues such as irrigation demand, drought, climate change, nutrient depletion, and soil degradation \cite{vitali2021crop}.
 Agronomists leverage well-accepted and solid process-based models, specifically crop models such as CRITERIA \cite{Bittelli2011253} and HYDRUS \cite{hydrus2008587}.
-
-\begin{definition}[Process-based model \cite{Buck-Sorlin2013}]
-    A process-based model is the mathematical (and normally computer-based) representation of one or several processes characterizing the functioning of well-delimited biological systems of fundamental or economic interest.
-    Such models consist of a set of ordinary or partial differential equations that define the essence of each process, as well as their inputs and outputs.
-\end{definition}
-
-% Such a modeling paradigm was heavily employed in the case of crop modeling, for instance, processes in these cases might implement hydraulic fluxes, evapotranspiration
-
-\begin{definition}[Crop model \cite{Buck-Sorlin2013}]
-    A crop model describes the growth and development (phenology from germination to harvest) of a crop, at the level of the field, the canopy, and the plant (Goudriaan and van Laar 1994).
-    In doing so, a limited number of primary physiological and physical processes (e.g., surface runoff, deep percolation, soil evaporation and plant transpiration) are estimated using differential equations, climate data and crop-specific input parameters.
-\end{definition}
-
-
+A crop model describes the growth and development (phenology from germination to harvest) of a crop, at the level of the field, the canopy, and the plant (Goudriaan and van Laar 1994).
+In doing so, a limited number of primary physiological and physical processes (e.g., surface runoff, deep percolation, soil evaporation and plant transpiration) are estimated using differential equations, climate data and crop-specific input parameters.
 Outputs of one process can serve as input to other processes, and so on and so forth, computing a series of time steps until the output of the final analysis is returned.
 The overall computation is called \textit{simulation}, and such a paradigm was heavily employed in crop modeling.
 For instance, in our case of soil moisture forecasting in kiwifruit, a crop model simulates soil moisture dynamics across the whole irrigation season, in each soil unit, until the desired horizon is reached.
@@ -76,7 +64,8 @@ Predictions must rely on a robust crop model able to compute the water budget---
 \todo{Mancano diverse cose: 1. tecniche automl utilizzate per parameter tuning, 2. come si collega a physics-aware/couples AI (devo richiamarlo somehow)}
 
 \section{System Design and Techniques}
- \Cref{orchard-fig:scheme1} depicts the planting layout adopted in this paper. Trees are arranged in lines; soil can have a slope both in the $x$ and $y$ axes. The orchard is equipped with a watering system that can be of different type (e.g., single or double wing) and with different distances between drippers and lines. For each plant, we consider a \emph{soil volume} that includes the roots; typically the soil volume can be larger than the area affected by the watering system. A mound can be present to favor draining.
+ \Cref{orchard-fig:scheme1} depicts the planting layout adopted.
+ Trees are arranged in lines; soil can have a slope both in the $x$ and $y$ axes. The orchard is equipped with a watering system that can be of different type (e.g., single or double wing) and with different distances between drippers and lines. For each plant, we consider a \emph{soil volume} that includes the roots; typically the soil volume can be larger than the area affected by the watering system. A mound can be present to favor draining.
  \begin{figure}[t]
 	\centering
 	\includegraphics[scale=0.5]{chapters/physics-aware/orchard/img/OverallPlantingLayout3.png}

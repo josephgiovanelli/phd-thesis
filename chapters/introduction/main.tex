@@ -68,27 +68,27 @@ Specifically, we focus on the following challenges and contributions.
 
 \subsection*{Effective Data-preprocessing Pipelines in Supervised Learning}
 
-\paragraph{Challenge} Data pre-processing
+\paragraph{Challenges} Data pre-processing
 encompasses a broad range of transformations that span from correcting errors to selecting the most relevant features for the modelling phase.
 In supervised learning, during modelling, the ML algorithm is provided with ground truth to drive the learning toward a user-specified objective function.
 There is no clear evidence, or rules defined, on how these transformations impact the final results of the process.
 Besides, the problem is exacerbated when transformations can be combined into pipelines.
 Data scientists cannot easily foresee the overall impact, requiring a method to discriminate between them and hence find the most relevant ones for their study at hand.
 
-\paragraph{Contribution} In \Cref{data-centric-chap:supervised}, we study the impact of transformations in general, and the impact of transformations when combined together into pipelines.
+\paragraph{Contributions} In \Cref{data-centric-chap:supervised}, we study the impact of transformations in general, and the impact of transformations when combined together into pipelines.
 We make use of rules that enable the construction of prototypes (i.e., ordered series of transformations) and, once found, these prototypes can be tuned -- similarly to algorithm hyperparameters -- using AutoML.
 The optimization of our effective prototypes provides results that compared to an exhaustive search, get 90\% of the predictive accuracy in the median, but with a time cost that is 24 times smaller.
 
 \subsection*{Exploring Clustering Pipelines via AutoML and Diversification}
 
 
-\paragraph{Challenge}
+\paragraph{Challenges}
 AutoML has witnessed effective applications in the field of supervised learning -- mainly in classification tasks --  where the goal is to find the best ML pipeline when a ground truth is available.
 This is not the case for unsupervised tasks that are by nature exploratory and they are performed to unveil hidden insights.
 Since there is no right result, analyzing different configurations is more important than returning the best-performing one.
 When it comes to exploratory unsupervised tasks -- such as cluster analysis --  different facets of the datasets could be interesting for the data scientist; for instance, data items can be effectively grouped together in different subspaces of features.
 
-\paragraph{Contribution}
+\paragraph{Contributions}
 In \Cref{data-centric-chap:unsupervised}, we design a framework that explores and returns a dashboard of both relevant and diverse clusterings via AutoML and diversification.
 AutoML ensures that the explored pipelines for cluster analysis (including pre-processing steps) compute good clusterings.
 Then, diversification selects, out of the explored clusterings, the ones conveying different clues to the data scientists.
@@ -106,10 +106,10 @@ In \Cref{part:human-centric}, we focus on the following challenges and contribut
 
 \subsection*{Human-centric AutoML via Structured Argumentation}
 
-\paragraph{Challenge} In the last decade, we have witnessed exponential growth in both the complexity and the number of ML techniques; leveraging such techniques to solve real-case problems has become difficult for Data Scientists.
+\paragraph{Challenges} In the last decade, we have witnessed exponential growth in both the complexity and the number of ML techniques; leveraging such techniques to solve real-case problems has become difficult for Data Scientists.
 Automated Machine Learning (AutoML) tools have been devised to alleviate this task, but easily became as complex as the ML techniques themselves---with Data Scientists losing control over the process.
 
-\paragraph{Contribution} In \Cref{human-centric-chap:hamlet}, we design HAMLET (Human-centric AutoMl via Logic and argumEnTation), a framework that helps data scientists to redeem their centrality.
+\paragraph{Contributions} In \Cref{human-centric-chap:hamlet}, we design HAMLET (Human-centric AutoMl via Logic and argumEnTation), a framework that helps data scientists to redeem their centrality.
 HAMLET enables data scientists to express ML constraints in a uniform human- and machine-readable medium.
 User-defined constraints are interpreted to drive the exploration of ML pipelines (i.e., data pre-processing transformations shape the data so that the ML task can be performed at its best).
 AutoML retrieves the most performing pipeline instance, and finally, new constraints are learned and integrated through Logic and Argumentation.
@@ -119,14 +119,14 @@ By doing so, HAMLET not only allows easy exploitation of the knowledge acquired 
 \subsection*{Interactive Hyperparameter Optimization in Multi-Objective Problems via Preference Learning}
 
 
-\paragraph{Challenge} Hyperparameter optimization (HPO) is important to leverage the full potential of machine learning (ML).
+\paragraph{Challenges} Hyperparameter optimization (HPO) is important to leverage the full potential of machine learning (ML).
 In practice, users are often interested in multi-objective (MO) problems, i.e., optimizing potentially conflicting objectives, like accuracy and energy consumption.
 To tackle this, the vast majority of MO-ML algorithms return a Pareto front of non-dominated machine learning models to the user.
 Optimizing the hyperparameters of such algorithms is non-trivial as evaluating a hyperparameter configuration entails evaluating the quality of the resulting Pareto front.
 In literature, there are known indicators that assess the quality of a Pareto front (e.g., hypervolume, R2) by quantifying different properties (e.g., volume, proximity to a reference point).
 However, choosing the indicator that leads to the desired Pareto front might be a hard task for a user.
 
-\paragraph{Contribution} In \Cref{human-centric-chap:moo}, we propose a human-centric interactive HPO approach tailored towards multi-objective ML leveraging preference learning to extract desiderata from users that guide the optimization.
+\paragraph{Contributions} In \Cref{human-centric-chap:moo}, we propose a human-centric interactive HPO approach tailored towards multi-objective ML leveraging preference learning to extract desiderata from users that guide the optimization.
 Instead of relying on the user guessing the most suitable indicator for their needs, our approach automatically learns an appropriate indicator.
 Concretely, we leverage pairwise comparisons of distinct Pareto fronts to learn such an appropriate quality indicator.
 Then, we optimize the hyperparameters of the underlying MO-ML algorithm towards this learned indicator using a state-of-the-art HPO approach.
@@ -160,36 +160,45 @@ For instance, ML models exhibit singular performance in adapting themselves to h
 
 In \Cref{part:physics-aware}, we focus on precision farming, which plays a pivotal role in addressing water wastage and improving crop efficiency. Specifically, we commit to the following challenges and contributions.
 
-\subsection*{An Auto-Tuning Three-Dimensional Numerical Model Coupled with Data Assimilation from a Sensor Grid}
 
-\paragraph{Challenge} In a contest of climate change and increasing world population, the optimization of agricultural inputs such as water and fertilizer is of utmost importance to assure food security and quality.
-For this reason, the need for robust methods of agricultural modeling and forecasting has never been clearer.
-Yet, the accuracy and precision of our modeling remain limited by current tools and methods.
+\subsection*{Multi-Sensor Profiling for Precision Soil-Moisture Monitoring}
 
-\paragraph{Contribution} In \Cref{physics-aware-chap:orchard}, to overcome the limitations of process-based models, we are proposing an integrated system coupling a three-dimensional numerical model with an assimilation procedure that exploits a bi-dimensional sensor grid.
+
+\paragraph{Challenges}
+In a contest of climate change and increasing world population, the optimization of watering and crop performance is of utmost importance to assure food security and quality.
+For this reason, the need for robust methods of soil moisture monitoring has never been clearer.
+% Controlling soil moisture is crucial in optimizing watering and crop performance.
+Yet, traditional monitoring systems rely on a single sensor or on a column of sensors that do not allow farmers to properly capture soil moisture dynamics in the soil volume occupied by roots.
+
+
+\paragraph{Contributions} In \Cref{physics-aware-chap:pluto}, we propose PLUTO, an original approach that builds fine-grained 2D and 3D soil moisture profiles by relying on a grid of sensors.
+Profiles are computed using both process-based and machine-learning approaches.
+Besides the technical description of the approach, this chapter reports a set of original visualizations and a large set of tests computed, over two years, on real Kiwi orchards.
+PLUTO proved to largely overcome the accuracy of profiles obtained with traditional sensor layouts.
+Considering that the cost of sensors is progressively decreasing, PLUTO provides a cost-effective, operative, and precise solution to moisture monitoring.
+
+
+\subsection*{An Auto-Tuning 3D Process-Based Model Coupled with Data Assimilation}
+
+\paragraph{Challenges}
+% In a contest of climate change and increasing world population, the optimization of agricultural inputs such as water and fertilizer is of utmost importance to assure food security and quality.
+Optimization watering and crop performance is a complex real-case problem, and several solutions have been proposed.
+% While soil moisture monitoring is just one side of the coin, soil moisture forecasting has demonstrated itself particularly effective.
+Even machine learning models leverage process-based models to generate synthetic data and deploy forecast systems.
+% the need for robust methods of agricultural modeling and forecasting has never been clearer.
+Yet, the accuracy and precision of agricultural modeling and forecasting remain limited by current tools and methods.
+
+\paragraph{Contributions} In \Cref{physics-aware-chap:orchard}, to overcome the limitations of process-based models, we are proposing an integrated system coupling a three-dimensional numerical model with an assimilation procedure that exploits a bi-dimensional sensor grid.
 The system is capable of auto-tuning its parameters on a specific soil and of providing a very precise forecast that can support precision watering policies on a weekly horizon.
 A large set of tests has been carried out on an experimental farm in Northern Italy where Kiwifruit is cultivated.
 Besides accuracy, tests proved the robustness of the system even in the presence of a limited set of examples for parameter auto-tuning.
 This makes our approach concretely applicable in real-world settings.
 
-\subsection*{Multi-Sensor Profiling for Precision Soil-Moisture Monitoring}
-
-
-\paragraph{Challenge} Optimization watering and crop performance is a complex real-case problem, and several solutions have been proposed. While soil moisture forecasting is just one side of the coin, soil moisture monitoring has demonstrated itself particularly effective.
-Yet, traditional monitoring systems rely on a single sensor or on a column of sensors that do not allow farmers to properly capture soil moisture dynamics in the soil volume occupied by roots.
-
-
-\paragraph{Contribution} In \Cref{physics-aware-chap:pluto}, we propose PLUTO, an original approach that builds fine-grained 2D and 3D soil moisture profiles by relying on a grid of sensors.
-Profiles are computed using both interpolation-based and machine learning approaches.
-Besides the technical description of the approach, the paper reports a set of original visualizations and a large set of tests computed, over two years, on real Kiwi orchards.
-PLUTO proved to largely overcome the accuracy of profiles obtained with traditional sensor layouts.
-Considering that the cost of sensors is progressively decreasing, PLUTO provides a cost-effective, operative, and precise solution to moisture monitoring.
-
 
 % \subsection*{Adaptive Soil Moisture Forecasting for Long-Term Irrigation Planning}
 
 
-% \paragraph{Challenge} $\dots$
+% \paragraph{Challenges} $\dots$
 
 
-% \paragraph{Contribution} In \Cref{physics-aware-chap:forecasting}, $\dots$
+% \paragraph{Contributions} In \Cref{physics-aware-chap:forecasting}, $\dots$
