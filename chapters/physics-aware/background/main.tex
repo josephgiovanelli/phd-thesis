@@ -1,0 +1,145 @@
+\chapter{Background and Related Works}
+\label{pluto-sec:background}
+In various application domains, the pervasive use of ML models is not yet fully realized.
+This is particularly evident in fields related to earth observations, where deployed applications focus on high-impact solutions aimed at addressing significant challenges like climate change. The primary goal is to develop eco-friendly systems that contribute to mitigating environmental issues. Examples of such applications include the management of weather forecasts and crop life cycles.
+
+In these domains, domain experts play a crucial role by leveraging their extensive knowledge to fine-tune process-based models. These models are essentially mathematical representations encoding well-established physical laws. The insights provided by domain experts are essential for delivering accurate forecasts and insightful analyses. However, the process of developing and refining these models faces several challenges.
+
+% One notable challenge is the absence of universal, well-defined practices. As a result, the development process involves numerous trials and errors, with domain experts manually configuring simulator parameters until an acceptable solution is achieved. Furthermore, the variables involved in physical phenomena are subject to constant changes, necessitating periodic recalibration of these process-based models.
+
+% The emergence of vast amounts of remotely sensed data presents both opportunities and challenges. Traditional methods struggle to integrate real-time observations into predictive models effectively. This is where the integration of Artificial Intelligence (AI) can play a transformative role in advancing our capabilities.
+
+This is where the integration of AI can play a transformative role in advancing our capabilities.
+% AI offers unique advantages in adapting to diverse scenarios and handling unforeseen challenges.
+ML models, for example, demonstrate exceptional performance in learning patterns and dynamics of complex physical scenarios.
+% as the ones in precision agriculture.
+% different from their initial training data.
+% Techniques such as fine-tuning network parameters enable these models to evolve and enhance their predictive accuracy.
+Additionally, AutoML introduces significant automation into various stages of the modeling process, such as tuning simulators and ML models.
+
+% In essence, the integration of AI technologies provides an avenue for overcoming the limitations of traditional methods in earth observation applications. These advancements not only enhance our understanding of complex environmental processes but also offer valuable support in addressing global concerns such as climate change. Through the application of ML models and automation techniques, we have the potential to steer the course towards a more favorable and sustainable future.
+
+We focus on precision farming, which plays a pivotal role in addressing water
+wastage and improving crop efficiency.
+Specifically, controlling soil moisture -- i.e., monitoring and forecasting its values -- and understanding the dynamics have been proven particularly beneficial.
+We emphasize that works in this part are outcomes of the Agro.Big.Data.Science project \cite{ABDS}--- funded by Regione Emilia Romagna, aims to study and implement digital solutions for supporting smart and precision farming.
+% For instance, \cite{Bordoni2018333} estimate the soil moisture on a test slope of Oltrepò Pavese (northern Italy) for the assessment of shallow landslides triggering.
+% Besides, agriculture has witnessed different analyses based on the adopted watering techniques.
+% Among them, the investigation of the water demand of a mature citrus orchard to optimize the water budget during rainy and dry seasons in southern China \cite{Tu2021}.
+% In the field of flood irrigation, \cite{hamilton2020deepnew} collect soil moisture measurements and compare three contrasting soil management treatments, discovering how to improve efficiency.
+
+In this chapter, we review the background and related works, categorizing them in \Cref{pluto-tbl:related}.
+% The monitoring of soil moisture has been proven beneficial in many various applications.
+% In the following, we consider only papers related to precision farming, where it is important to have measurements as fine-grained as possible.
+% Specifically, we categorize them in \Cref{pluto-tbl:related} according different dimensions.
+First, \Cref{orchard-ssec:sensors} analyzes the employed technology for data acquisition (i.e., Sensor Types and their Layouts); then, \Cref{orchard-ssec:models} overviews the techniques leveraged to process the data for the ultimate goal (i.e., Model Types and Tasks).
+
+\begin{table}[t]
+    \centering
+    \footnotesize
+    \caption{Classification and comparison of related works in the field of precision farming.}
+    \begin{tabular}{llllll}
+    \toprule
+    Reference & Sensor Type & Layout & Model Type & Task \\ \midrule
+    \cite{Pan2021}             & Volumetric      & multi (1D)    & Pb      & Studying  \\
+    \cite{Li20152382}          & Volumetric      & multi (1D)    & Pb      & Studying  \\
+    \cite{Egea2016197}         & Volumetric      & multi (2D)    & Pb      & Studying  \\
+    \cite{Cordeiro2016139}     & Volumetric      & multi (2D)    & Pb      & Studying  \\
+    \cite{Zapata-Sierra2021}   & Volumetric      & multi (3D)    & Pb      & Studying  \\
+    \cite{chen2014spatial}     & Volumetric      & multi (1D)    & Pb      & Forecasting \\
+    \cite{shein2019validation} & Potential       & multi (1D)    & Pb      & Forecasting \\
+    \cite{arif2013estimation}  & Volumetric      & single (0D)   & ML       & Studying  \\
+    \cite{Babaeian2021}        & UAS, Volumetric & multi (1D)    & ML       & Studying  \\
+    \cite{Goldstein2018421}    & Volumetric      & multi (1D)    & ML       & Forecasting \\
+    \cite{Jimenez20201327}     & Potential       & multi (1D)    & ML       & Forecasting \\
+    \cite{Liang2021}           & Volumetric      & multi (3D)    & ML       & Forecasting \\
+    \cite{Hinnell2010535}      & -               & -             & Pb, ML  & Profiling   \\
+    % PLUTO                      & Potential       & multi (2D/3D) & Pb, ML  & Profiling   \\
+    \bottomrule
+    \end{tabular}
+    \begin{tablenotes}
+    \scriptsize
+    \item Unmanned Aerial Systems (UAS), Process-based (Pb), Machine Learning (ML).
+    \end{tablenotes}
+    \label{pluto-tbl:related}
+\end{table}
+
+\section{Sensor Types and Layouts}
+\label{orchard-ssec:sensors}
+
+The most common practice is to observe the change in soil moisture with the aid of sensors.
+According to the displacement, sensors can be categorized as \textit{proximal} or \textit{remote}.
+Proximal sensors are typically installed below the ground to monitor soil moisture in the plant root zone, offering precise measurements.
+Conversely, remote sensors (e.g., Unmanned Aerial Systems) have been used for the discovery of global soil moisture patterns, due to their coarse spatial resolutions.
+\cite{Babaeian2021} integrate both technologies to conduct analyses on global soil moisture patterns as well as near the plant.
+Yet, commercial precision farming installations encompass only the use of proximal sensors, as including both sensor types is not worth the cost.
+Furthermore, depending on the operating principle, proximal sensors measure either the \textit{volumetric water content} (i.e., the volume of liquid water per volume of soil) or the \textit{soil water potential} (i.e., the energy required by tree roots to extract water from soil particles).
+
+
+Proximal sensors installations can be categorized into \textit{single-sensor} and \textit{multi-sensor} installations.
+As the name suggests, the single sensor installation (0D) provides a punctual measurement of soil moisture.
+Although this installation \cite{arif2013estimation} is cheap, it cannot monitor the soil moisture at different depths.
+To do so, multi-sensor installations are devised (e.g., ground-based proximal sensors are organized so that a grid is formed).
+According to the layout, we distinguish: mono-dimensional (1D), bi-dimensional (2D), and three-dimensional (3D) grids.
+The most popular configuration is the mono-dimensional grid \cite{Karandish2016892, Goldstein2018421, Jimenez20201327, Pan2021, Li20152382}, where the sensors are vertically aligned at different depths.
+Bi-dimensional \cite{Egea2016197, Cordeiro2016139} and three-dimensional \cite{Zapata-Sierra2021, Liang2021} grids are quite less used due to the higher required number of sensors.
+Yet, they allow monitoring soil moisture changes not only at different depths but also along the other axes.
+Bi-dimensional grids involve installations of multiple sensors per soil layer, forming thus a matrix that enables the understanding of patterns in an entire slice of soil.
+While, three-dimensional grids can be seen as more bi-dimensional grids side by side, allowing the examination of more than one slice.
+An exhaustive dissertation about sensors and data collection can be found in \cite{vitali2021crop}.
+
+\section{Model Types and Tasks}
+\label{orchard-ssec:models}
+
+Raw sensory data are only the starting point for extracting richer representations of soil moisture.
+We review the literature of approaches that
+%, based on different techniques and with different goals,
+have been proposed to create such representations.
+
+First, we distinguish the approaches based on the employed modeling paradigm.
+\begin{itemize}
+    \item \emph{Machine Learning models} leverage artificial intelligence techniques to \textit{learn} hydrological dynamics from a large set of examples.
+    \item \emph{Process-based models} (e.g., HYDRUS \cite{hydrus2008587}, CRITERIA \cite{Bittelli2011253}) are analytical models that \textit{encode} the physical laws determining the hydrological dynamics.
+\end{itemize}
+While we have a deep understanding of ML models, we provide a formal definition of a process-based model.
+
+\begin{definition}[Process-based model \cite{Buck-Sorlin2013}]
+    A process-based model is the mathematical (and normally computer-based) representation of one or several processes characterizing the functioning of well-delimited biological systems of fundamental or economic interest.
+    Such models consist of a set of ordinary or partial differential equations that define the essence of each process, as well as their inputs and outputs.
+\end{definition}
+
+
+Outputs of one process can serve as input to other processes, and so on and so forth, computing a series of time steps until the output of the final analysis is returned.
+This modeling paradigm has been heavily employed in the case of crop and soil modeling; for instance, processes might implement hydraulic fluxes or evapotranspiration.
+The overall computation is called \textit{simulation} and, iteration after iteration, soil moisture dynamics across the whole irrigation season are updated, in each soil unit, until the desired horizon is computed, and the outcome returned.
+
+Besides, we distinguish the following Tasks.
+\begin{itemize}
+    \item \emph{Studying}, it estimates the soil dynamics over time with the aim of understanding the soil behavior under specific circumstances. A study is not bound to actual weather and soil moisture values, but rather tests different scenarios to understand the overall soil behavior.
+    \item \emph{Forecasting}, starting from the current moisture values in a specific field, estimates its future values in order to let the user take appropriate decisions (e.g., watering).
+    \item \emph{Profiling}, it estimates a fine-grained soil representation combining a coarse description of the moisture in the soil with statistical assumptions and the knowledge of soil characteristics.
+\end{itemize}
+Although the boundaries between these three goals are blurred, we can easily differentiate them considering that, while forecasting and study produce estimations of -- respectively -- \emph{future} and \emph{hypotethical} moisture values, profiling produces a more detailed estimate of \emph{present} values.
+
+Process-based models have been for a long time the only choice to study hydrological dynamics, and thus are considered well-accepted and solid tools.
+In this regard, several recent works exploit them with studying purposes: \cite{Pan2021} investigate the differences between two hole watering methods;  \cite{Li20152382} scrutinize the effects of soil water and salt dynamics on root water uptake; \cite{Egea2016197} analyze the suitability of the irrigation management of a hedgerow olive orchard in different soil types; \cite{Cordeiro2016139} determine the water table contribution in a cornfield; \cite{Zapata-Sierra2021} monitor the evolution of soil moisture in a pepper crop field.
+As to works that focus on forecasting: \cite{chen2014spatial} predict the soil wetness status in several sites close to catchments of significant size (soil type and leaf area index were the key parameters affecting the model performance); \cite{shein2019validation} validate the efficiency of HYDRUS-1D for predicting soil moisture and temperature dynamics with hysteresis in clay loam soils.
+
+ML models in the field of precision agriculture are relatively new in comparison to process-based models.
+%Yet, they are pervasively leveraged and tested in each and every scientific area.
+\cite{Karandish2016892} evaluate and compare the goodness of such models with process-based ones in several soil moisture simulations.
+Results assess the efficacy of the former, which additionally benefits of some advantages, above all low resources consumption: no on-line heavy computation is required and the result is rapidly available.
+As a matter of fact, several approaches apply ML with the aim of conducting studies: \cite{arif2013estimation} build a model to monitor soil moisture in paddy field with limited meteorological data; \cite{Babaeian2021} develop a ML model that analyzes surface, near-surface, and root zone soil moisture by exploiting the fusion of remote and proximal sensors.
+As to forecasting: \cite{Liang2021} quantify the water droplet infiltration in a sprinkler irrigation system to improve and facilitate the watering management, \cite{Jimenez20201327} and \cite{Goldstein2018421} directly predict the watering volumes recommended by the agronomist.
+
+Finally, there are approaches that leverage process-based models in synergy with ML.
+For instance, \cite{Hinnell2010535} exploit HYDRUS as a process-based model to provide fine-grained samples and Artificial Neural Networks as a ML model to extract subsurface wetting patterns.
+% With respect to PLUTO, \cite{Hinnell2010535} (i) produce a statistical representation of the patterns that is based on a \textit{single} dripper and assume a \textit{uniform} characterization of the soil, (ii) derive the wetting patterns from generic soil parameters and not from actual sensor values.
+% However, they do not utilized any real soil moisture measurements to calibrate the numerical model.
+
+% Indeed, it is well-known that realistic simulations with process-based models require real soil moisture measurements to correctly model all the soil phenomena (e.g., water tables, hysteresis).
+
+% \Cref{pluto-tbl:related} summarizes the related works described so far and compares their features against PLUTO.
+% To the best of our knowledge, PLUTO is the only one that builds a fine-grained 2D/3D moisture profile based on a coarser sensors grid, through linear and non-linear techniques.
+
+

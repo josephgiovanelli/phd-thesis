@@ -1,4 +1,4 @@
-\chapter{Enhancing Process-Based Models with Data Assimilation and Auto-Tuning}
+\chapter{Enhancing Process-Based Models for Precision Soil Moisture Forecasting}
 \label{physics-aware-chap:orchard}
 
 The possibility to accurately and precisely forecast agricultural systems can provide significant improvement in a variety of agricultural issues such as irrigation demand, drought, climate change, nutrient depletion, and soil degradation \cite{vitali2021crop}.
@@ -6,8 +6,14 @@ Agronomists leverage well-accepted and solid process-based models, specifically 
 A crop model describes the growth and development (phenology from germination to harvest) of a crop, at the level of the field, the canopy, and the plant (Goudriaan and van Laar 1994).
 In doing so, a limited number of primary physiological and physical processes (e.g., surface runoff, deep percolation, soil evaporation and plant transpiration) are estimated using differential equations, climate data and crop-specific input parameters.
 Outputs of one process can serve as input to other processes, and so on and so forth, computing a series of time steps until the output of the final analysis is returned.
-The overall computation is called \textit{simulation}, and such a paradigm was heavily employed in crop modeling.
-For instance, in our case of soil moisture forecasting in kiwifruit, a crop model simulates soil moisture dynamics across the whole irrigation season, in each soil unit, until the desired horizon is reached.
+The overall computation is called \textit{simulation}; for instance, in our case of soil moisture forecasting in kiwifruit, our proposed crop model simulates soil moisture dynamics across the whole irrigation season, in each soil unit, until the desired horizon is reached.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=0.5]{chapters/physics-aware/orchard/img/OverallPlantingLayout3.png}
+	\caption{Schematic depicting the planting layout (inter- and intra-row distances).}
+	\label{orchard-fig:scheme1}
+\end{figure}
 
 \paragraph{Challenges} \cite{silva-giller-2020} presented a series of relevant questions regarding the ability of such crop models to address several issues.
 First, the authors stressed the importance of coupling models with in-situ data for an effective application at the operational level---i.e., \textit{data assimilation}.
@@ -46,8 +52,8 @@ Predictions must rely on a robust crop model able to compute the water budget---
 
 %DATA ASSIMILATION
 % The challenging aspect for a correct simulation of the water budget is the parameterization and corroboration of the simulation model. Parameterization can be obtained from experimental determination of soil and plant properties. For instance, the soil hydraulic properties (the soil water retention and hydraulic conductivity curves) can be measured in the laboratory.
-% However, these measurements are expensive and time-consuming.It is rarely a feasible solution for farmers, to measure the soil hydraulic properties.
-% An alternative solution is to install soil sensors measuring SWC or SWP and calibrate the model through a process of data assimilation, providing weather and basic soil properties data as input. Key soil variables such as SWC and SWP can be successfully used to asses the water budget computation and plant water requirements.  
+% However, these measurements are expensive and time-consuming. It is rarely a feasible solution for farmers, to measure the soil hydraulic properties.
+% An alternative solution is to install soil sensors measuring SWC or SWP and calibrate the model through a process of data assimilation, providing weather and basic soil properties data as input. Key soil variables such as SWC and SWP can be successfully used to asses the water budget computation and plant water requirements.
 
 % Data assimilation is a very powerful technique even during the forecasting process, since it allows to initialize each simulation with the real soil state, thus to a low error state. In real-case problems, there are no error-free estimations and many slight errors gradually lead the model to progressively deviate especially for domains in which a wide range of different phenomena interacts. In particular, soil moisture forecasts are affected by weather forecasts (influenced in turn by plenty of variables), water tables, soil slopes, hysteresis, and so on. 
 
@@ -63,19 +69,14 @@ Predictions must rely on a robust crop model able to compute the water budget---
 \end{itemize}
 \todo{Mancano diverse cose: 1. tecniche automl utilizzate per parameter tuning, 2. come si collega a physics-aware/couples AI (devo richiamarlo somehow)}
 
-\section{System Design and Techniques}
- \Cref{orchard-fig:scheme1} depicts the planting layout adopted.
- Trees are arranged in lines; soil can have a slope both in the $x$ and $y$ axes. The orchard is equipped with a watering system that can be of different type (e.g., single or double wing) and with different distances between drippers and lines. For each plant, we consider a \emph{soil volume} that includes the roots; typically the soil volume can be larger than the area affected by the watering system. A mound can be present to favor draining.
- \begin{figure}[t]
-	\centering
-	\includegraphics[scale=0.5]{chapters/physics-aware/orchard/img/OverallPlantingLayout3.png}
-	\caption{Schematic depicting the planting layout (inter- and intra-row distances).}
-	\label{orchard-fig:scheme1}
-\end{figure} 
 
+\section{Orchard3D-Lab}
+
+\Cref{orchard-fig:scheme1} depicts the planting layout adopted.
+ Trees are arranged in lines; soil can have a slope both in the $x$ and $y$ axes. The orchard is equipped with a watering system that can be of different type (e.g., single or double wing) and with different distances between drippers and lines. For each plant, we consider a \emph{soil volume} that includes the roots; typically the soil volume can be larger than the area affected by the watering system. A mound can be present to favor draining.
 
 The simulation approach and the required functional modules are depicted in \Cref{orchard-fig:overview}. The offline phase is aimed at determining the optimal numerical model parameters. The \emph{Parameter Tuner} searches for the best parameters by comparing data simulated by the numerical model named \olab{} with the \emph{Historical Data} from real sensors.
-Historical data must cover the time period of the simulation scenario, including watering and weather conditions (typically obtained from in-situ weather stations or from public open data) together with their effect on soil water content (i.e., the values sampled by soil sensors). 
+Historical data must cover the time period of the simulation scenario, including watering and weather conditions (typically obtained from in-situ weather stations or from public open data) together with their effect on soil water content (i.e., the values sampled by soil sensors).
 
 The online phase requires the grid of sensors to be in place. During this phase the \olab{}, properly set with the optimal parameters, forecasts the system behavior and exploit the \emph{Data assimilation} module to initialize the simulation model to the real field status.
 
@@ -140,7 +141,7 @@ The online phase requires the grid of sensors to be in place. During this phase 
 
 The following subsections describes in more details each of the components reported in \Cref{orchard-fig:overview}.
 
-\subsection{\olab{}: the Orchard Simulation Model}
+\subsection{The Crop Model}
 
 \newcommand{\Wt}{$\overrightarrow{W}$}
 \newcommand{\It}{$\overrightarrow{I}$}
@@ -345,7 +346,7 @@ with the first node in a position outside the computational domain.
 The assimilation process maps in-situ sensor data to a state of \olab{}.
 This is used as the initial state of \olab{}, in this way the forecast begins from an actual soil condition (\Cref{orchard-fig:moisture-cont}).
 Of course, the more sensors (e.g., gypsum-blocks; \Cref{orchard-fig:moisture-sens}), the better the granularity of the sampling and the accuracy of the initial state.
-Such accuracy also depends on the sensor layout: the higher the dimensionality of the layout, the fewer the assumptions to be made:
+As in \Cref{physics-aware-chap:pluto}, such accuracy also depends on the sensor layout: the higher the dimensionality of the layout, the fewer the assumptions to be made:
 \begin{itemize}
     \item most of the approaches in the literature rely on a single sensor and assume the soil moisture to be constant over the whole soil volume;
     \item a one-dimensional (1D) grid relies on a column/row of sensors and assumes the soil moisture to be constant over horizontal/vertical planes;
@@ -354,39 +355,43 @@ Such accuracy also depends on the sensor layout: the higher the dimensionality o
 \end{itemize}
 
 Due to the size, energy requirement, and cost of sensors, it is not feasible to adopt sensor grids as fine-grained as the ones simulated by the \olab{}; in other words the number of simulated cells ($|SM|$) is sensibly greater than the number of in-situ sensors.
-In \cite{DBLP:journals/cea/FranciaGG22}, we introduced several \textit{profiling functions} that approximate the soil moisture sampled by a coarse-grained 2D/3D sensor grid to a \textit{refined grid} with finer granularity (\Cref{orchard-fig:moisture-profile}).
-For the sake of conciseness, we describe the linear profiling function in a 2D scenario.
-Given a 2D sensor grid, the profiling function carries out a bi-linear interpolation of soil moisture.
-The approach consists of two phases (\Cref{orchard-fig:statistical-profiling-function-explanation}).
-For each point to be calculated: (i) we find the four sensors that determine the minimum bounding rectangle enclosing it (\Cref{orchard-fig:statistical-profiling-function}); then (ii) we interpolate along the first axis obtaining the moisture values on intermediate points and we determine the desired value by interpolating the intermediate values along the second axis (\Cref{orchard-fig:bilinear-interpolation}).
+In
+% \cite{DBLP:journals/cea/FranciaGG22}
+\Cref{physics-aware-chap:pluto}, we provide several \textit{profiling functions} that approximate the soil moisture sampled by a coarse-grained 2D/3D sensor grid to a \textit{refined grid} with finer granularity (\Cref{orchard-fig:moisture-profile}).
+Orchard3D-Lab is pluggable and supports both feature-aware and feature-unaware profile functions.
 
-\begin{figure}[t]
-\centering
-\begin{subfigure}[t]{.45\textwidth}
-\centering
-\includegraphics[scale=.4]{chapters/physics-aware/orchard/img/statistical_profiling_function.png}
-\caption{Bounding rectangle: in green the point to be approximated, in red the sensors enclosing it.}
-\label{orchard-fig:statistical-profiling-function}
-\end{subfigure}
-~
-\begin{subfigure}[t]{.45\textwidth}
-\centering
-\includegraphics[scale=.4]{chapters/physics-aware/orchard/img/bilinear_interpolation.png}
-\caption{Bilinear interpolation: blue values $r$s are interpolated first, then $p$.}
-\label{orchard-fig:bilinear-interpolation}
-\end{subfigure}
-\caption{A 2D example of the profiling function.}
-\label{orchard-fig:statistical-profiling-function-explanation}
-\end{figure}
+% For the sake of conciseness, we describe the linear profiling function in a 2D scenario.
+% Given a 2D sensor grid, the profiling function carries out a bi-linear interpolation of soil moisture.
+% The approach consists of two phases (\Cref{orchard-fig:statistical-profiling-function-explanation}).
+% For each point to be calculated: (i) we find the four sensors that determine the minimum bounding rectangle enclosing it (\Cref{orchard-fig:statistical-profiling-function}); then (ii) we interpolate along the first axis obtaining the moisture values on intermediate points and we determine the desired value by interpolating the intermediate values along the second axis (\Cref{orchard-fig:bilinear-interpolation}).
+
+% \begin{figure}[t]
+% \centering
+% \begin{subfigure}[t]{.45\textwidth}
+% \centering
+% \includegraphics[scale=.4]{chapters/physics-aware/orchard/img/statistical_profiling_function.png}
+% \caption{Bounding rectangle: in green the point to be approximated, in red the sensors enclosing it.}
+% \label{orchard-fig:statistical-profiling-function}
+% \end{subfigure}
+% ~
+% \begin{subfigure}[t]{.45\textwidth}
+% \centering
+% \includegraphics[scale=.4]{chapters/physics-aware/orchard/img/bilinear_interpolation.png}
+% \caption{Bilinear interpolation: blue values $r$s are interpolated first, then $p$.}
+% \label{orchard-fig:bilinear-interpolation}
+% \end{subfigure}
+% \caption{A 2D example of the profiling function.}
+% \label{orchard-fig:statistical-profiling-function-explanation}
+% \end{figure}
 
 To ensure a precise sensing we consider 2D and 3D sensor grids since they rely on fewer symmetry assumptions.
 Symmetry assumptions also depends on the dripper layout.
 In this work, we refer to single-line dripper watering system (\Cref{orchard-fig:simmetries})
 where the sensor grid is orthogonal to the dripper line (\Cref{orchard-fig:moisture-sens}). 
 % The profiling function is applied to sensor data to obtain a refined grid (\Cref{orchard-fig:moisture-profile}), the $DataAssimilation$ function is implemented as follows.
-The $DataAssimilation$ function relies on the profiling function to obtain a refined grid from a sensor grid (\Cref{orchard-fig:moisture-profile}), then it applies the necessary geometric transformations to complete the whole soil volume (i.e., the simulator state):  
+The $DataAssimilation$ function relies on the profiling function to obtain a refined grid from a sensor grid (\Cref{orchard-fig:moisture-profile}), then it applies the necessary geometric transformations to complete the whole soil volume (i.e., the simulator state):
 \begin{itemize}
-    \item given a 2D refined grid, $SM$ is obtained by translating the refined grid along $y$ axis and by reflection on the $x$ axis (\Cref{orchard-fig:simmetries}); 
+    \item given a 2D refined grid, $SM$ is obtained by translating the refined grid along $y$ axis and by reflection on the $x$ axis (\Cref{orchard-fig:simmetries});
     \item given a 3D refined grid, $SM$ is obtained by reflection one the $x$ and $y$ axes.
 \end{itemize}
 
@@ -395,7 +400,7 @@ The $DataAssimilation$ function relies on the profiling function to obtain a ref
 	\includegraphics[scale=0.7]{chapters/physics-aware/orchard/img/Simmetries.png}
 	\caption{Transforming a 2D sensor grid (left) into a state of \olab{} (right) through translation and reflection geometric transformations.}
 	\label{orchard-fig:simmetries}
-\end{figure} 
+\end{figure}
 
 
 \subsection{Parameter Tuner}
@@ -454,11 +459,14 @@ Finally, when the budget is exhausted, the best configuration is returned (Line 
 To the best of our knowledge, \olab{} is the only numerical model that leverages this innovative family of optimization methods.
 Other tools (e.g., HYDRUS) employed either local (e.g., the Marquardt-Levenberg algorithm) or model-free (e.g., genetic algorithms) optimization methods. 
 
-\section{Material and Methods}
+\section{Empirical Evaluation}
 The system has been tested on a kiwi orchard in the hills of central-northern Italy, part of a commercial farm that was selected to represent the real conditions for kiwi production in the area.
-We verify how accurately the system, properly tuned, can simulate the real soil behavior.
 The tests refer to the period June-August 2022 for which weather, irrigation, and real soil moisture (our ground truth) time series were collected.
-The implementation can be found at \url{https://github.com/big-unibo/orchard3d-lab} and a demo of the \olab{} visualization system is available at \url{https://big.csr.unibo.it/projects/orchard3d-lab}.
+We verify how accurately the system, properly tuned, can simulate the real soil behavior.
+Specifically, \Cref{orchard-ssec:settings} introduces the general experimental settings, \Cref{orchard-ssec:eval_end_to_end} evaluates the efficieny and effectiveness of our end-to-end approach, and finally \Cref{orchard-ssec:eval_tuner} provides the performance of the parameter tuner.
+
+The implementation can be found on GitHub \footnote{\url{https://github.com/big-unibo/orchard3d-lab}} and a demo of our \olab{} visualization system is available on our website \footnote{\url{https://big.csr.unibo.it/projects/orchard3d-lab}}.
+
 \begin{table}[H]
 	\centering
 	\scriptsize
@@ -509,8 +517,17 @@ The implementation can be found at \url{https://github.com/big-unibo/orchard3d-l
 	\label{tab:parameter_instances}%
 \end{table}%
 
-\subsection{System Parameters}
+\subsection{General Experimental Settings}
+\label{orchard-ssec:settings}
+
 The total length of the field is $170~m$, the inter-row distance (plant to plant) is $4.5~m$, while the intra-row distance is $2~m$.
+The implant is located in Errano (Faenza, Emilia-Romagna, Italy), having a latitude of 44.28, a longitude of 11.92, and an altitude of $62~m$.
+The slopes were set based on field measurements performed with a total station, specifically: -1 $m \cdot m^{-1}$ horizontally and 2.5 $m \cdot m^{-1}$ vertically.
+From the center of the intra-row, a $1~m$ long mound with 20 $m \cdot m^{-1}$ of slope extends in both directions.
+No water table was observed.
+
+\subsubsection{System Parameters}
+
 \Cref{tab:parameter_instances} reports the system parameters for the simulated portion.
 
 \begin{figure}[t]
@@ -520,22 +537,17 @@ The total length of the field is $170~m$, the inter-row distance (plant to plant
     \label{orchard-fig:meteo}
 \end{figure}
 
-The implant is located in Errano (Faenza, Emilia-Romagna, Italy), having a latitude of 44.28, a longitude of 11.92, and an altitude of $62~m$.
-The slopes were set based on field measurements performed with a total station, specifically: -1 $m \cdot m^{-1}$ horizontally and 2.5 $m \cdot m^{-1}$ vertically.
-From the center of the intra-row, a $1~m$ long mound with 20 $m \cdot m^{-1}$ of slope extends in both directions.
-No water table was observed.
-
-Basic soil properties were measured at the site, a single layer of $0.9~m$ with a loamy texture (30 \% sand, 30 \% silt, and 40 \% clay) based on the International Soil Science Society (ISSS) classification system. 
+Basic soil properties were measured at the site, a single layer of $0.9~m$ with a loamy texture (30 \% sand, 30 \% silt, and 40 \% clay) based on the International Soil Science Society (ISSS) classification system.
 Soil water retention parameters were obtained from the parameter tuning procedure (a saturation threshold of $0.5~L^3 \cdot L^{-3}$, a residual of $0.03~L^3 \cdot L^{-3}$, and the related Van Genuchten parameters).
 
-According to the implant layout, for the simulated plant we considered three drippers in a single line ($0.66~m$ apart from each other). 
+According to the implant layout, for the simulated plant we considered three drippers in a single line ($0.66~m$ apart from each other).
 The root system has been estimated to have a radius of $1.6~m$ and a depth of $0.8~m$. According to \Cref{orchard-sec:root} roots are taproot shaped; the $root_x$ and $root_z$ determine the shape shown in \Cref{orchard-fig:root}. The volume of the simulated parallelepiped is $2~m\cdot2~m\cdot0.8~m$ (the product of length, width, and depth).
 This allows to properly simulate the whole root system.
 The domain is discretized with a dynamic cell size: both length and width are set to $0.125~m$, the depth ranges from $0.01~m$ to $0.04~m$.
 Specifically, a geometrical progression was chosen in the first $0.2~m$ of soil.
 
 
-\subsection{Weather, Watering, and Soil Moisture Time Series}
+\subsubsection{Weather, Watering, and Soil Moisture Time Series}
 \label{orchard-sec:time_series}
 
 \begin{figure}[t]
@@ -570,26 +582,22 @@ Therefore, the plant never experienced water stress, as can be seen from the fac
     \label{orchard-fig:ground_potential}
 \end{figure}
 
-As to the soil moisture, we employed a 2D sensor grid of 12 GB-1 Gypsum Sensor Blocks (Delmhorst Inc.). As shown in \Cref{orchard-fig:ground_potential}, sensors were organized on three different depths ($0.2~m, 0.4~m, 0.6~m$ on the $z$ axis), with four elements per level on the $x$ axis ($\approx 0.25~m$ to each other). The grid was hortogonal to the $y$ axis (i.e. the intra-row line), with $0.2~m$ of translation from the plant, with the top left corner under the dripper. 
+As to the soil moisture, we employed a 2D sensor grid of 12 GB-1 Gypsum Sensor Blocks (Delmhorst Inc.). As shown in \Cref{orchard-fig:ground_potential}, sensors were organized on three different depths ($0.2~m, 0.4~m, 0.6~m$ on the $z$ axis), with four elements per level on the $x$ axis ($\approx 0.25~m$ to each other). The grid was hortogonal to the $y$ axis (i.e. the intra-row line), with $0.2~m$ of translation from the plant, with the top left corner under the dripper.
 
-\section{Performance Evaluation}
 
-The main test is aimed at verifying the simulation accuracy.
-%
+\subsection{End-to-end Approach Performance}
+\label{orchard-ssec:eval_end_to_end}
+
+In this section we provide a set of tests aimed at verifying the simulation effectiveness.
 The system parameters tuning procedure is run over a two-weeks period (June 21th - July 5th), while the remaining samples (July 6th - August 31th) were exploited for testing.
 
 We tested Orchard3D-Lab with three different forecasting horizons: 1, 3, and 7 days ahead.
-%
 For every timestamp $t$ in the testing period, we run the assimilation procedure (see \Cref{orchard-ssec:ass}) to compute the initial state $SM_{Ass}$ and then we fed Orchard3D-Lab providing with \Wt and \It  according to the forecasting horizon.
-%
 For instance, given an horizon of 3 days, Orchard3D-Lab: (i) assimilates the soil moisture of the first sample, (ii) iterates the simulation for the duration of 72 samples, (iii) calculates the error between observed and final simulated samplings.
 
-In terms of computation time, forecasting the soil moisture in a future state depends on the current water content of the soil and the amount of irrigation/precipitation of each hour (the more the watering, the more expensive the calculation).
-%
+\paragraph{Efficiency Tests} In terms of computation time, forecasting the soil moisture in a future state depends on the current water content of the soil and the amount of irrigation/precipitation of each hour (the more the watering, the more expensive the calculation).
 Tests are run on an Intel Core i7 machine running at 3.20 GHz with 64 GB of main memory.
-%
 Throughout the whole period, we observed an average of 2 seconds in forecasting the soil moisture of the next hour.
-%
 Hence, a computation time of: 48 seconds for a 1-day horizon, 144 seconds ($\approx$ 2 minutes) for a 3-day horizon, and 336 seconds ($\approx$ 5 minutes) for a 7-day horizon.
 
 \begin{figure}[t]
@@ -599,15 +607,11 @@ Hence, a computation time of: 48 seconds for a 1-day horizon, 144 seconds ($\app
     \label{orchard-fig:forecasting_avg}
 \end{figure}
 
-\Cref{orchard-fig:forecasting_avg} reports the \textit{error} metric in \Cref{orchard-eq:error} for the three different forecasting horizons.
+\paragraph{Effectiveness Tests} \Cref{orchard-fig:forecasting_avg} reports the \textit{error} metric in \Cref{orchard-eq:error} for the three different forecasting horizons.
 \olab{} was able to achieve good performance in forecasting soil moisture during the whole season, with an exception occurred around mid-August.
-%
 Given the very dry season and the heavy rainfall in those days, the soil presented unexpected macropores and cracks is the sub-surface layers.
-%
 This resulted in a non-uniform distribution and unexpected changes in the soil moisture dynamics, which the model was unable to fully capture due to its limitation in accounting for preferential flows.
-%
 Yet, it is worth to notice how the assimilation mechanism allows \olab{} to recognize such events, reset to the actual state, and hence quickly reduce the error.
-%
 Forecasts with shorter horizons assimilate earlier and response faster to the change.
 
 \begin{figure}[t]
@@ -617,12 +621,11 @@ Forecasts with shorter horizons assimilate earlier and response faster to the ch
     \label{orchard-fig:forecasting_std}
 \end{figure}
 
-Overall, the average of the error is kept at: 0.27 for the 1-day horizon, 0.43 for the 3-days horizon, and 0.55 for the 7-days horizon. %; which translates into a forecast that varies -- respectively -- 30\%, 50\%, and 70\% of observed ground potential. 
-%
+Overall, the average of the error is kept at: 0.27 for the 1-day horizon, 0.43 for the 3-days horizon, and 0.55 for the 7-days horizon.
+%; which translates into a forecast that varies -- respectively -- 30\%, 50\%, and 70\% of observed ground potential.
 Reasoning only on errors makes it difficult to understand if forecasts are accurate enough to support precision watering policies. For this reason in \Cref{orchard-fig:forecasting_std} we report the actual gap between observed and forecasted soil moisture.
-%
 More in details, the average soil moisture measured is reported as soil water potential (cbar) and the gap as range interval of forecasted values.
-% 
+
 It is apparent, that forecasted water potential is closed enough to support watering policies formulation. Note that, as water potential is not linear, the ranges of values are smaller when the water potential is closer to the field capacity (i.e., the soil is more saturated). In other words, the same error in absolute terms has different impacts at different levels of soil saturation. \olab{} ensures the same relative error at different saturation levels, and this results in wider ranges of values when the soil is less saturated.
 
 \begin{figure}[t]
@@ -681,7 +684,7 @@ It is apparent, that forecasted water potential is closed enough to support wate
     \label{orchard-fig:profiles}
 \end{figure}
 
-\Cref{orchard-fig:stacked} and \Cref{orchard-fig:profiles}  shows a graphical representation of the measured soil moisture profile and compare it with the forecasting results. Colors emphasize water potential values according to five crop-specific soil moisture ranges (suggested by agronomist during the Agro.Big.Data.Science project \cite{ABDS}): 
+\paragraph{Result Discussion} \Cref{orchard-fig:stacked} and \Cref{orchard-fig:profiles} shows a graphical representation of the measured soil moisture profile and compare it with the forecasting results. Colors emphasize water potential values according to five crop-specific soil moisture ranges (suggested by agronomist during the Agro.Big.Data.Science project \cite{ABDS}):
 dark blue (in $[0, -30)$ cbar) and light blue (in $[-30, -100)$ cbar) show heavily/slightly portions of over-watered soil, salmon pink (in $[-100, -300)$ cbar) represents the ideal case \cite{miller1998effects}, while light red (in $[-300, -1500)$ cbar) and dark red (in the range of $[-1500, -10000)$ cbar) show slightly/heavily portions of under-watered soil.
 
 While \Cref{orchard-fig:stacked} shows the soil moisture trend along the overall testing period, \Cref{orchard-fig:profiles} spatially details the profile on 10am July 26$^{th}$. The fine-grained spatial grid clearly shows how moisture changes depending on the dripper distance and according to the effect of the root system.
@@ -702,13 +705,13 @@ The more the forecasted values are close to the observed one, the less the regre
 %
 \olab{} tends to estimate the soil slightly over moistured in particular for high values of water content, while, for low values, \olab{} is extremely accurate.
 
+\subsection{Parameter Tuning Performance}
+\label{orchard-ssec:eval_tuner}
 
-\subsection{Parameter Tuning}
-
-The Parameter Tuner is the data-driven process that automatically determines the right parameters for the current use case. 
+The Parameter Tuner is the data-driven process that automatically determines the right parameters for the current use case.
 %
-In this section, we verify the robustness of the procedure 
-%according to these two variables. 
+In this section, we verify the robustness of the procedure
+%according to these two variables.
 by considering 25\%, 50\%, and 75\% of the whole tuning period (June 21th - July 5th).
 %
 We evaluate the performance of the given sets of parameters as before: via the error metric (\Cref{orchard-eq:error}) when forecasting 1, 3, and 7 days ahead in the testing period (July 6th - August 31th).
@@ -730,16 +733,13 @@ Percentage of & \multicolumn{3}{c}{Forecasting horizon} \\
 \end{table}
 
 \Cref{orchard-tbl:tuning_budget} shows the results. As a general trend, errors slightly decrease when more tuning data are available for every forecasting horizons. More data translates into more hydraulic dynamic examples, which are useful to better estimate the parameters, and hence make the forecasts more reliable.
-%
 Although the general trend, \olab{} is able to achieve good performance even with 25\% and 50\% of the considered period.
-%
 Above all, the case of 50\% does not consider the rain in the beginning of June (which brings some fluctuations in the calculus) and achieves excellent performance.
-%
 The standard deviation remains steady along the forecasting horizon.
-%
 Overall, the insights suggest that the tuning phase of \olab{} is robust in suggesting soil and plant parameters for the use-case at hand.
 
-\section{Conclusions}
-In this paper we proposed an integrated system coupling a three dimensional numerical model with a assimilation procedure that exploit a bi-dimensional sensor grid. Forecasted soil moisture data up to a 7 day horizon has proven to be precise enough to support precision watering. Testing has been carried out on a real kiwi-fruit orchard. The real-data sensor are also used to carry out the auto-tuning of the soil parameter in order to achieve a field specific forecast. Robustness tests emphasized that few days of hourly samples are enough to properly set the field parameters. This make our approach practically applicable. 
+
+\section{Conclusions and Future Works}
+In this chapter, we proposed an integrated system coupling a three dimensional numerical model with a assimilation procedure that exploit a bi-dimensional sensor grid. Forecasted soil moisture data up to a 7 day horizon has proven to be precise enough to support precision watering. Testing has been carried out on a real kiwi-fruit orchard. The real-data sensor are also used to carry out the auto-tuning of the soil parameter in order to achieve a field specific forecast. Robustness tests emphasized that few days of hourly samples are enough to properly set the field parameters. This make our approach practically applicable. 
 
 We are now working towards closing the loop and creating a prescriptive system delivering a watering advice. \olab{} will be exploited to forecast the combined effects of weather conditions and watering policies to return the watering advice that fits at best an optimal soil moisture profile.  Working on a 7 days period, we can handle complex cases were constraints (e.g. water availability) do not allow daily irrigation.
