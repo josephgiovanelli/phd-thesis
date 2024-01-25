@@ -212,7 +212,7 @@ The RankSVM idea leverages the robustness and effectiveness of support vector ma
 \label{moo-ssec:utility_automl}
 
 As we learned the utility function $u: \altmathcal{P} \rightarrow \mathbb{R}$ from the user preferences, we want to leverage it as a Pareto front quality indicator to optimize with a standard HPO tool. To this end, we leverage the well-known HPO tool SMAC \cite{hutter-lion11a,lindauer-jmlr22a} instantiated with the learned utility function $u$ as a cost function. 
-\section{Evaluation}
+\section{Empirical Evaluation}
 \label{moo-sec:evaluation}
 
 We evaluate our approach in a case-study related to decreasing the energy consumption of ML models and in particular consider an MO-ML algorithm optimizing for both accuracy and energy consumption showing how our approach can be used in the context of Green AutoML \cite{tornede-jair23a}. In the following, we first detail the general experimental setup and then present two experiments performed.
@@ -373,7 +373,7 @@ As the table shows, our approach (PB) behaves comparable to IB in cases where a 
 
 Overall, our evaluation demonstrates that our approach successfully frees users from selecting the correct quality indicator aligned with their desiderata at the slight cost of visually comparing a low number of Paretos upfront.
 
-\section{Conclusions}
+\section{Conclusions and Fututre Works}
 \label{moo-sec:conclusion}
 In this paper, we propose a human-centric interactive HPO approach tailored towards MO ML leveraging preference learning to extract desiderata from users that guide the optimization. In particular, we learn a utility function for Parto fronts based on pairwise preferences given by the user which we use as a loss function in a subsequent standard HPO process. In an experimental study, we demonstrate that our end-to-end approach performs much better than off-the-shelf HPO with a user that chooses an indicator not aligned with their desiderata and that it performs comparable to off-the-shelf HPO operated by an advanced user knowing which indicator to pick. As such, our approach successfully frees users from selecting the correct Pareto front quality indicator aligned with their desiderata at the slight cost of visually comparing a low number of Pareto fronts upfront.
 

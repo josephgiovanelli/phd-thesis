@@ -31,8 +31,6 @@ We structure this chapter as follows. \Cref{automl-background-sec:ml} introduces
 \Cref{automl-background-sec:automl} formalizes the problems tackled by AutoML, up to the combined algorithm selection and hyperparameter optimization.
 Finally, \Cref{automl-background-sec:pipelines} details the challenges in optimizing thorough ML pipelines.
 
-As to reinforcement learning, and its automation (AutoRL), we redirect the reader to a 
-
 \section{Machine Learning}\label{automl-background-sec:ml}
 
 At the core of each and every task lies the data, serving as the essential fuel for the learning process because providing the means to observe the real world.
@@ -291,6 +289,7 @@ High-fidelity evaluation provides precise results from the entire dataset, while
 The core concept relies on leveraging multiple low-fidelity evaluations to reduce the overall evaluation cost.
 Although low-fidelity optimization may lead to a cheaper evaluation cost, it might compromise optimization performance.
 Nevertheless, the achieved speedup is often more substantial than the introduced approximation error.
+Successive Halving \cite{} and HyperBand \cite{} are the most popular techniques.
 
 \subsubsection{Model-based Optimization}
 
@@ -337,14 +336,17 @@ TPE has demonstrated excellent performance in hyperparameter optimization tasks 
 
 \paragraph{Sequential model-based algorithm configuration (SMAC)} Random forest \cite{20} is leveraged as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
 The algorithm starts by training different regression trees, each built using randomly selected data points.
-For each tree, we are provided with an estimation cost, which translates into the posterior distribution in the bayesian framework.
+For each tree, we are provided with an estimation cost, which translates into the posterior distribution in the Bayesian framework.
+In SMAC \cite{smac}, Bayesian Optimization is leveraged in combination with an aggressive racing mechanism to efficiently decide which of two configurations performs better.
+In \cite{falkner2018bohb}, they propose Bayesian Optimization and HyperBand (BOHB), which enhances the global exploration capabilities with the efficient resource utilization of multi-fidelity functions.
+Iteration after iteration, the surrogate model suggests configurations, while hyperband allocates multi-fidelity and low-fidelity evaluations.
 
-\paragraph{BOHB}
-\textcolor{orange}{TODO}
 
+\paragraph{BlendSearch from FLAML}
+\todo{To fix}
+BlendSearch is an innovative hyperparameter optimization (HPO) strategy that blends the frugality of CFO with the space exploration capabilities of global search methods like Bayesian optimization. It combines both local and global search approaches to efficiently explore the hyperparameter space. Similar to CFO, BlendSearch starts with a low-cost initial point and utilizes local search methods to iteratively improve performance. However, unlike CFO, BlendSearch doesn't wait for local search to fully converge before exploring new start points. Instead, it incorporates suggestions from the global search method, filtering them based on their distance to existing points in cost-related dimensions. BlendSearch gradually increases the trial cost while prioritizing between global and local search threads based on optimism in the face of uncertainty. This strategy enables BlendSearch to effectively balance exploration and exploitation, leading to economical yet effective hyperparameter optimization.
 
-\paragraph{FLAML}
-\textcolor{orange}{TODO}
+\todo{Aggiungere i package che utiliziamo}
 
 \subsection{Multi-objective Optimization}
 

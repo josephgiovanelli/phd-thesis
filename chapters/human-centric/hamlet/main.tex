@@ -380,12 +380,12 @@ HAMLET iterates over three phases (\Cref{hamlet-fig:approach}): (i) the generati
 
 The framework is available on GitHub\footnote{\url{https://github.com/QueueInc/HAMLET}}, and it is composed of two sub-modules.
 The first, written in Kotlin and running on the JVM, exposes a graphical interface on which the data scientists can compile and revise the LogicalKB.
-The module is also responsible for the generation and evaluation of the Problem Graph; it implements the Structured Argumentation functionalities as specified in \Cref{hamlet-sec:problem} using \argtup{} \cite{arg2p-jlc}, an ASPIC\textsuperscript{+}-based Kotlin library.
+The module is also responsible for the generation and evaluation of the Problem Graph; it implements the Structured Argumentation functionalities using \argtup{} \cite{arg2p-jlc}, an ASPIC\textsuperscript{+}-based Kotlin library.
 The second module, written in Python, is responsible for performing the AutoML optimization and the extraction of the new constraints from the explored space.
 
 \subsubsection{Generation of Problem Graph and Search Space}
-In \Cref{hamlet-sec:problem}, we defined the LogicalKB as the set of rules specified by the data scientist using her knowledge.
-The LogicalKB also includes a set of hard-encoded rules representing inferences necessary to characterize the AutoML problems.
+We defined the LogicalKB as the set of rules specified by the data scientist using her knowledge.
+Yet, this is partially true: the LogicalKB also includes a set of hard-encoded rules representing inferences necessary to characterize the AutoML problems.
 These rules are joined to the ones defined by the data scientist and used to build the Problem Graph (i.e., Argumentation framework).
 
 \begin{figure}[t]
@@ -532,7 +532,7 @@ As a matter of fact, it is well known that Discretization improves the performan
 \end{example}
 
 
-\section{Experimental Evaluation}\label{hamlet-sec:test}
+\section{Empirical Evaluation}\label{hamlet-sec:test}
 
 The performance of HAMLET depends on (i) the rules encoded in the LogicalKB and (ii) the rules recommended after each run.
 To test both the effectiveness and efficiency of our approach, we define three experimental settings.
