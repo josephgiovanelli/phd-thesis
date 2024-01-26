@@ -563,7 +563,7 @@ We conclude that, for both of the rules (i.e.,  $\langle F, N \rangle$ and $\lan
 \begin{figure*}[!t]
 	\centering
 	\includegraphics[width=0.9\textwidth]{chapters/data-centric/supervised/img/10_times_4_folds_cv.pdf}
-	\caption{The distribution of the p-values obtained after repeating the chi-square test for 10 times, for the 10 times 4-fold cross-validation. \todo{Cambiare la rappresentazione delle pipeline in tutti i grafici}}
+	\caption{The distribution of the p-values obtained after repeating the chi-square test for 10 times, for the 10 times 4-fold cross-validation.}
 	\label{effective-fig:10-times-4-cv}
 \end{figure*}
 
@@ -864,7 +864,7 @@ In order to evaluate how close the \textit{effective prototypes} are to the \tex
 \end{equation*}
 
 \todo{Non dire che l'acc è dell'algoritmo ma della pipeline}
-$ACC_{\varnothing}$ is the baseline performance (i.e., accuracy of the algorithm $A$ with default hyperparameters over the original dataset $\altmathcal{D}$), formally $ACC_{\varnothing} = ACC(A(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
+$ACC_{\varnothing}$ is the baseline performance (i.e., accuracy of the algorithm $A$ with default hyperparameters and no data pipeline, hence computed over the original dataset $\altmathcal{D}$), formally $ACC_{\varnothing} = ACC(A(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 $ACC_{\textup{eff}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized instantiation of the effective set of prototypes (i.e., our approach), formally $ACC_{\textup{eff}} = ACC(\langle P^{\star}_{\textup{eff}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 Finally, $ACC_{\textup{exh}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized pipeline instantiation of the exhaustive set of prototypes, formally $ACC_{\textup{exh}} = ACC(\langle P^{\star}_{\textup{exh}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
 The subtraction by $ACC_{\varnothing}$ is done with the aim of weighting the difficulty of a dataset, hence allowing for comparisons in terms of the gain in accuracy.
@@ -881,8 +881,8 @@ The raw results (i.e., without the normalized distances) can be found on the afo
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=0.7\textwidth]{chapters/data-centric/supervised/img/evaluation2.pdf}
-    \caption{Normalized distances between the scores obtained by optimizing our effective prototypes and the ones obtained optimizing the exhaustive set.}
+    \includegraphics[width=1.0\textwidth]{chapters/data-centric/supervised/img/evaluation2.pdf}
+    \caption{Normalized distances between the scores obtained by optimizing our effective prototypes and the ones obtained by optimizing the exhaustive set.}
     \label{effective-fig:eval-exhaustive-vs-effective}
 \end{figure}
 
@@ -892,7 +892,7 @@ The raw results (i.e., without the normalized distances) can be found on the afo
 \begin{figure*}[!t]
 	\centering
 	\includegraphics[width=1.0\textwidth]{chapters/data-centric/supervised/img/barplot-10.pdf}
-	\caption{The impact of dedicating a portion of the optimization budget to pre-processing compared to using the whole optimization budget for the hyperparameter optimization. \todo{Invertire i colori}}
+	\caption{The impact of dedicating a portion of the optimization budget to pre-processing compared to using the whole optimization budget for the hyperparameter optimization.\todo{Migliorare}}
 	\label{effective-fig:eval-pre-processing-hyperparameter}
 \end{figure*}
 

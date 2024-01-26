@@ -382,15 +382,46 @@ On the other hand, there are others that leverage specific MO implementations of
 
 \subsubsection{Optimizing standard-ML algorithms}
 
-\textcolor{orange}{TODO}
+Classical approaches typically involve transforming the MO problem into a single-objective problem, which can then be solved using traditional scalar optimization techniques.
+% These methods often rely on a priori information from the decision-maker, such as preferences or target values for each objective.
+
+\paragraph{Weighted Aggregation}
+This approach involves combining multiple objectives into a single scalar function by assigning weights to each objective.
+The weighted sum is then minimized or maximized to find the optimal solution. This method allows decision-makers to express their preferences by adjusting the weights.
+However, determining the weights can be challenging, especially when there is uncertainty or conflicting opinions about the relative importance of objectives. Dynamic weighted aggregation \cite{} addresses this issue by iteratively adjusting the weights to explore different trade-offs.
+Nonetheless, weighted aggregation methods may fail to capture the entire Pareto front and are sensitive to the choice of weights.
+
+\paragraph{Goal Programming}
+In this, we aim to minimize deviations from pre-defined target values for each objective.
+It offers a systematic approach to balancing multiple objectives by penalizing deviations from desired outcomes.
+However, goal programming requires accurate specification of target values, which may not always be feasible or practical. Moreover, the method may converge to solutions that prioritize one objective over others, neglecting the trade-offs inherent in the problem.
+
+\paragraph{$\epsilon$-Constraint Method}
+This approach involves optimizing one objective while treating the remaining objectives as constraints bounded by $\epsilon$-values.
+By varying $\epsilon$, a set of Pareto-optimal solutions can be obtained. However, this method requires solving multiple optimization problems, each with different constraint sets, making it computationally intensive.
+Additionally, the solutions obtained may not cover the entire Pareto front, and determining suitable $\epsilon$-values can be challenging.
+\\
+\\
+\noindent In contrast to classical approaches, there are heuristic techniques that directly aim to generate the Pareto front by simultaneously optimizing multiple objectives. These methods leverage computational advances and population-based metaheuristic algorithms to explore diverse regions of the search space efficiently.
+
+\paragraph{Evolutionary Computing} Evolutionary approaches are again leveraged to mimic the process of natural selection to evolve a population of candidate solutions over successive generations.
+These algorithms use operators like selection, crossover, and mutation to explore the search space and improve the quality of solutions. Despite their effectiveness in handling complex optimization problems, evolutionary computing techniques require careful parameter tuning and may suffer from premature convergence if not appropriately configured.
+
+\paragraph{Vector Evaluated Genetic Algorithm (VEGA)} VEGA selects individuals based on their fitness for each objective separately, aiming to maintain diversity in the population. However, this approach may lead to the evolution of specialized solutions that excel in one objective while neglecting others, thus failing to adequately explore the Pareto front.
+
+\paragraph{Multi-Objective Genetic Algorithm (MOGA)} This assigns fitness values to individuals based on their dominance relationships with other solutions in the population. This approach encourages the evolution of diverse, non-dominated solutions by favoring individuals that dominate others. Niching techniques, such as sharing, help maintain diversity and prevent premature convergence.
+
+\paragraph{Non-dominated Sorting Genetic Algorithm (NSGA)}: NSGA employs a non-dominated sorting mechanism to rank individuals based on their dominance relationships. It uses a layered classification technique to assign fitness values, ensuring that non-dominated solutions receive higher ranks. NSGA efficiently explores the Pareto front and maintains population diversity through techniques like crowding distance.
+
+\paragraph{Multi-Objective Particle Swarm Optimization (MOPSO)} MOPSO uses a swarm-based optimization approach, where particles represent potential solutions moving through the search space. By emphasizing regions of low density in the Pareto front, MOPSO encourages exploration of diverse solutions while preventing premature convergence. Dynamic mechanisms, such as adaptive inertia weights and neighborhood topologies, help balance exploration and exploitation during optimization.
 
 \subsubsection{Optimizing MO-ML algorithms}
 
 MO-ML algorithms return the complete Pareto front of models instead of a single model.
-Formally, the signature of an algorithm changes to $A: \mathbb{D} \times \vec{\Lambda} \rightarrow 2^{\altmathcal{H}}$. As a consequence, the evaluation of each hyperparameter configuration of such an MO-ML algorithm also involves quantifying the quality of a Pareto front of models instead of a single model returned by the algorithm, yielding a much more difficult problem.
+Formally, the signature of an algorithm changes to $A: \mathbb{D} \times \vec{\Lambda} \rightarrow 2^{\altmathcal{H}}$. As a consequence, the evaluation of each hyperparameter configuration of such a MO-ML algorithm also involves quantifying the quality of a Pareto front of models instead of a single model returned by the algorithm, yielding a much more difficult problem.
 As such, the signature of our loss function also needs to change to $\altmathcal{L}: 2^{\altmathcal{H}} \times \mathbb{D} \rightarrow \mathbb{R}$ and thus can no longer be instantiated with simple loss functions such as accuracy.
 
-One way of assessing the quality of a Pareto front and thus instantiating the HPO loss function $\altmathcal{L}$ in this case, are so-called Pareto front quality indicators \cite{audet-ejor21}.
+One way of assessing the quality of a Pareto front, and thus instantiating the HPO loss function $\altmathcal{L}$ in this case, is with the so-called Pareto front quality indicators \cite{audet-ejor21}.
 These can be categorized into so-called external and internal indicators where external indicators measure the convergence of a Pareto front to the optimal one, i.e., the one that the user prefers.
 Yet, in real-case problems, computing the entire Pareto front space is unfeasible and there is no way to describe the desiderata beforehand.
 In contrast, internal indicators assess the Pareto front quality by measuring specific characteristics.
