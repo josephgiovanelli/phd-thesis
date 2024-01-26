@@ -246,9 +246,12 @@ In the following, we showcase the challenges of both.
 
 \subsection{Single-objective Optimization}
 
-We provide the most common approaches for tackling single-objective optimization, in particular: the baselines \textit{exhaustive}, \textit{grid}, and \textit{random search};  the \textit{model-free} ones such as \textit{simulated annealing}, and the approaches based on \textit{evolutionary} and \textit{multi-fidelity}; and finally the \textit{model-based} framework of \textit{bayesian optimization} (BO).
+Historically, optimization approaches are typically categorized under either local or global search.
+Local search focuses on solutions within a confined region, while global search is interested in exploring the entire solution space.
+The former will not always find the optimal solution, it sacrifices completeness for greater efficiency; as to the latter, the optimal solution is eventually discovered.
+We provide the most common global search approaches for tackling single-objective optimization, in particular: the baselines \textit{exhaustive}, \textit{grid}, and \textit{random search};  the \textit{model-free} ones such as \textit{simulated annealing}, and the approaches based on \textit{evolutionary} and \textit{multi-fidelity}; and finally the \textit{model-based} framework of \textit{bayesian optimization} (BO).
 Unlike model-free approaches, the model-based framework leverages a surrogate model that drives the optimization toward the objective function and BO is the current leader of black-box optimization techniques.
-Having gained significant attention for tuning huge search spaces across various tasks, including classification and regression \cite{113, 112}, we will use it throughout the whole thesis.
+Having gained significant attention for tuning huge search spaces across various tasks, including classification and regression \cite{113, 112}, we will use BO throughout the whole thesis.
 
 \subsubsection{Baselines}
 The baseline techniques share the common characteristic of exploring the hyperparameter space without any intelligent strategies, relying instead on systematic or random exploration of the hyperparameter space.
@@ -333,20 +336,22 @@ Based on past observations, a percentile for each hyperparameter is built to dis
 The hyperparameter values are split into two sets, and their respective distributions are determined using density estimation through \textit{parzen windows}\footnote{Statistical technique to estimate a density distribution by generalization from a histogram.}.
 The ratio between the two density functions reflects the improvement in the acquisition function and is used to recommend new configurations.
 TPE has demonstrated excellent performance in hyperparameter optimization tasks \cite{13, 12, 35, 37, 115}.
+In this thesis, we leverage an efficient implementation provided by the Python package HyperOpt \cite{hyperopt}.
 
-\paragraph{Sequential model-based algorithm configuration (SMAC)} Random forest \cite{20} is leveraged as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
+\paragraph{Sequential model-based algorithm configuration (SMAC)} \cite{smac} introduce SMAC, leveraging Random forest \cite{20} as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
 The algorithm starts by training different regression trees, each built using randomly selected data points.
 For each tree, we are provided with an estimation cost, which translates into the posterior distribution in the Bayesian framework.
-In SMAC \cite{smac}, Bayesian Optimization is leveraged in combination with an aggressive racing mechanism to efficiently decide which of two configurations performs better.
-In \cite{falkner2018bohb}, they propose Bayesian Optimization and HyperBand (BOHB), which enhances the global exploration capabilities with the efficient resource utilization of multi-fidelity functions.
-Iteration after iteration, the surrogate model suggests configurations, while hyperband allocates multi-fidelity and low-fidelity evaluations.
+This is leveraged in combination with an aggressive racing mechanism to efficiently decide which of two configurations performs better.
+In this thesis we leverage SMAC as part of the homonymous Python library.
+Authors privde also other state-of-the-art BO implementations; for instance, in \cite{falkner2018bohb}, they propose Bayesian Optimization and HyperBand (BOHB), which enhances the global exploration capabilities of BO with the efficient resource utilization of multi-fidelity functions.
+Iteration after iteration, the surrogate model suggests configurations, while hyperband allocates high-fidelity and low-fidelity evaluations.
 
 
-\paragraph{BlendSearch from FLAML}
-\todo{To fix}
-BlendSearch is an innovative hyperparameter optimization (HPO) strategy that blends the frugality of CFO with the space exploration capabilities of global search methods like Bayesian optimization. It combines both local and global search approaches to efficiently explore the hyperparameter space. Similar to CFO, BlendSearch starts with a low-cost initial point and utilizes local search methods to iteratively improve performance. However, unlike CFO, BlendSearch doesn't wait for local search to fully converge before exploring new start points. Instead, it incorporates suggestions from the global search method, filtering them based on their distance to existing points in cost-related dimensions. BlendSearch gradually increases the trial cost while prioritizing between global and local search threads based on optimism in the face of uncertainty. This strategy enables BlendSearch to effectively balance exploration and exploitation, leading to economical yet effective hyperparameter optimization.
+\paragraph{BlendSearch}
+BlendSearch is an innovative strategy that blends the frugality of Cost-related Frugal Optimization (CFO) -- a local search technique -- with the space exploration capabilities of global search methods like Bayesian optimization.
+BlendSearch starts with a low-cost initial point and utilizes several local searches to iteratively improve performance. However, BlendSearch doesn't wait for local search to fully converge before exploring new start points. Instead, it incorporates suggestions from the BO, filtering them based on their distance to existing points in cost-related dimensions. BlendSearch gradually increases the trial cost while prioritizing between global and local search threads based on optimism in the face of uncertainty. This strategy enables BlendSearch to effectively balance exploration and exploitation, leading to economical yet effective hyperparameter optimization.
+In this thesis, we leverage the implementation provided by the authors in the Python library FLAML \cite{FLAML}.
 
-\todo{Aggiungere i package che utiliziamo}
 
 \subsection{Multi-objective Optimization}
 
