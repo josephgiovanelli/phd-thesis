@@ -863,10 +863,9 @@ In order to evaluate how close the \textit{effective prototypes} are to the \tex
     normalized\;distance = \frac{ACC_{\textup{eff}} - ACC_{\varnothing}}{ACC_{\textup{exh}} - ACC_{\varnothing}}
 \end{equation*}
 
-\todo{Non dire che l'acc è dell'algoritmo ma della pipeline}
-$ACC_{\varnothing}$ is the baseline performance (i.e., accuracy of the algorithm $A$ with default hyperparameters and no data pipeline, hence computed over the original dataset $\altmathcal{D}$), formally $ACC_{\varnothing} = ACC(A(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
-$ACC_{\textup{eff}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized instantiation of the effective set of prototypes (i.e., our approach), formally $ACC_{\textup{eff}} = ACC(\langle P^{\star}_{\textup{eff}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
-Finally, $ACC_{\textup{exh}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized pipeline instantiation of the exhaustive set of prototypes, formally $ACC_{\textup{exh}} = ACC(\langle P^{\star}_{\textup{exh}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
+$ACC_{\varnothing}$ is the baseline performance (i.e., accuracy of the algorithm $A$ with default hyperparameters and no data pipeline, hence computed over the original dataset $\altmathcal{D}$), formally $ACC_{\varnothing} = ACC( \langle \varnothing, A  \rangle (\altmathcal{D}_{train}), \altmathcal{D}_{valid})$.
+$ACC_{\textup{eff}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized instantiation of the effective set of prototypes (i.e., our approach), formally $ACC_{\textup{eff}} = ACC(\langle P^{\star}_{\textup{eff}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), \altmathcal{D}_{valid})$.
+Finally, $ACC_{\textup{exh}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ over the dataset transformed using the optimized pipeline instantiation of the exhaustive set of prototypes, formally $ACC_{\textup{exh}} = ACC(\langle P^{\star}_{\textup{exh}_{{\lambda}^{\star}}}, A_{\lambda^\star} \rangle (\altmathcal{D}_{train}), \altmathcal{D}_{valid})$.
 The subtraction by $ACC_{\varnothing}$ is done with the aim of weighting the difficulty of a dataset, hence allowing for comparisons in terms of the gain in accuracy.
 To this end, the bigger the potential gain (denominator) is, the bigger the obtained gain (numerator) must be, for the latter to be relevant.
 
@@ -886,19 +885,19 @@ The raw results (i.e., without the normalized distances) can be found on the afo
     \label{effective-fig:eval-exhaustive-vs-effective}
 \end{figure}
 
-\subsection{Complementing Hyperparameter Optimization with Pre-processing}
+\subsection{Complementing HPO of ML algorithm with Pre-processing}
 \label{effective-sec:eval-dpso-vs-cash}
 
 \begin{figure*}[!t]
 	\centering
 	\includegraphics[width=1.0\textwidth]{chapters/data-centric/supervised/img/barplot-10.pdf}
-	\caption{The impact of dedicating a portion of the optimization budget to pre-processing compared to using the whole optimization budget for the hyperparameter optimization.\todo{Migliorare}}
+	\caption{The impact of dedicating a portion of the optimization budget to pre-processing compared to using the whole optimization budget for the ML algorithm HPO.}
 	\label{effective-fig:eval-pre-processing-hyperparameter}
 \end{figure*}
 
 We have just shown that our effective prototypes have similar impact as the exhaustive ones.
 Now we want to compare the impact of the effective prototypes against optimizing only the hyperparameters of the ML algorithm.
-That is, we want to examine whether dedicating a part of the optimization budget to the pre-processing impacts more (positively) the results of the analysis, than using the whole budget for the hyperparameter optimization\footnote{To enable the application of the ML algorithms on all the datasets, whenever required, we apply the necessary transformation (e.g, imputation or encoding).}.
+That is, we want to examine whether dedicating a part of the optimization budget to the pre-processing impacts more (positively) the results of the analysis, than using the whole budget for solely the hyperparameter optimization of the ML algorithm\footnote{To enable the application of the ML algorithms on all the datasets, whenever required, we apply the necessary transformation (e.g, imputation or encoding).}---i.e., modelling.
 
 To this end, for the latter we now dedicate the total optimization budget (i.e., 400 seconds), and for the former, inspired by \cite{Quemy20InfSystems}, we split the budget 50-50 between the pre-processing pipeline optimization and the hyperparameter optimization (i.e., 200 seconds for the pre-processing, and 200 seconds for the hyperparameter optimization).
 The time for the pre-processing is further split among the five different pipeline prototypes (i.e., 40 seconds each).
@@ -915,7 +914,7 @@ To compare the results, we calculate the impact using the formulas below, which 
 
 $ACC_{\varnothing}$ is yet again the baseline performance (i.e., accuracy of the algorithm $A$ with default hyperparameters over the original dataset $\altmathcal{D}$).
 $ACC_{\textup{eff}}$ is still the accuracy of our approach, i.e., the optimized algorithm $A_{{\lambda}^{\star}}$ with half of the whole budget over the dataset transformed using the optimized instantiation of the effective set of prototypes (with half of the whole budget).
-Finally, $ACC_{\textup{hpo}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ (i.e, using the entire budget) over the original dataset, formally $ACC_{\textup{hpo}} = ACC(A_{{\lambda}^{\star}}(\altmathcal{D}_{train}), (\altmathcal{D}_{valid}))$.
+Finally, $ACC_{\textup{hpo}}$ is the accuracy of the optimized algorithm $A_{{\lambda}^{\star}}$ (i.e, using the entire budget) over the original dataset, formally $ACC_{\textup{hpo}} = ACC( \langle A_{{\lambda}^{\star}} \rangle (\altmathcal{D}_{train}), \altmathcal{D}_{valid})$.
 
 To obtain relative values that sum to 1, we normalize the impacts dividing them by their sum.
 For instance, for the pre-processing score we calculate the following:

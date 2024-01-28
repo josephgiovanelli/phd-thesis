@@ -2,35 +2,36 @@
 \chapter{Exploring Clustering Pipelines via AutoML and Diversification}
 \label{data-centric-chap:unsupervised}
 
-\begin{figure}[t]
-    \begin{subfigure}[t]{0.23\columnwidth}
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.23\columnwidth}
         \centering
         \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/cl.pdf}
         \caption{Cl\\$\quad$AMI=0.41, sil=0.41}
         \label{clustering-fig:ca3}
     \end{subfigure}
-    ~
-    \begin{subfigure}[t]{0.23\columnwidth}
+    \hfill
+    \begin{subfigure}[b]{0.23\columnwidth}
         \centering
         \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/ft_cl.pdf}
         \caption{FS + Cl\\$\quad$AMI=0.41, sil=0.47}
         \label{clustering-fig:ca4}
     \end{subfigure}
-    ~
-    \begin{subfigure}[t]{0.2\columnwidth}
+    \hfill
+    \begin{subfigure}[b]{0.2\columnwidth}
         \centering
         \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/ft_sc_cl.pdf}
         \caption{FS + N + Cl\\$\quad$AMI=0.9, sil=0.87}
         \label{clustering-fig:ca5}
     \end{subfigure}
-    ~
-    \begin{subfigure}[t]{0.28\columnwidth}
+    \hfill
+    \begin{subfigure}[b]{0.28\columnwidth}
         \centering
         \includegraphics[scale=.15]{chapters/data-centric/unsupervised/img/ft_sc_ou_cl.pdf}
         \caption{FS + N + OR + Cl\\$\quad$AMI=1.0, sil=0.92}
         \label{clustering-fig:ca6}
     \end{subfigure}
-    \caption{Approach motivation. \\
+    \caption{Approach motivation.
     \small{Feature Selection (FS) - Normalization (N) - Outlier Removal (OR) - Clustering (Cl)}}
     \label{clustering-fig:clusterings}
 \end{figure}
@@ -108,8 +109,8 @@ Besides, such approaches retrieve just one solution.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=.26]{chapters/data-centric/unsupervised/img/approach.pdf}
-    \caption{Overview of AutoClues.\todo{Adattare stile}}
+    \includegraphics[scale=.33]{chapters/data-centric/unsupervised/img/approach.pdf}
+    \caption{Overview of AutoClues.}
     \label{clustering-fig:overview}
 \end{figure}
 
@@ -125,7 +126,7 @@ At each step, including the final ML steps, an implementation can be picked amon
 In the following, for the sake of simplicity and readability, we refer to \textit{algorithm} to a generic candidate implementation for the step at---either pre-processing or ML.
 
 More formally, a \textit{dataset} $D$ is a collection of $|D|$ data items that is characterized by a set of features $\altmathcal{F}$ (i.e., columns).
-An \textit{Algorithm} $A$ trains a model that satisfy a certain task, which nature can be either the one of pre-processing -- transforming a dataset $\altmathcal{D}$ into a new dataset $\altmathcal{D}'$ -- or the one of ML---learn from $\altmathcal{D}$ a way to cluster/partition data items.
+An \textit{Algorithm} $A$ trains a model that satisfy a certain task, which nature can be either the one of pre-processing -- transforming a dataset $\altmathcal{D}$ into a new dataset $\altmathcal{D}'$ -- or the one of ML---learning how to from cluster/partition the dataset $\altmathcal{D}$.
 Algorithms have a set of (possibly empty) \textit{hyperparameters} that regulates its behavior.
 Each hyperparameter has a domain, and the possible algorithm configurations are represented as the Cartesian product of all the hyperparameter domains, here denoted with $\pmb{\Lambda}_A$.
 
@@ -140,7 +141,7 @@ Given the search space $\Lambda_P$, a dataset $\altmathcal{D}$, the optimal pipe
 \label{eq:optimization}
     P_{\lambda^*} = argmin_{\lambda \in \Lambda_P} rel(P_{\lambda}(\altmathcal{D}))
 \end{equation}
-where $rel$ is a goodness metric\footnote{With reference to \Cref{def:loss}, a goodness metric has the opposite semantics wrt. the loss function, hence the higher the better} for the clustering $C$ obtained by partitioning the dataset through the pipeline at hand $P_{\lambda}(\altmathcal{D})$---e.g., Silhouette index \cite{sil}.\todo{Cambierei in <P, A>}
+where $rel$ is a goodness metric\footnote{With reference to \Cref{def:loss}, a goodness metric has the opposite semantics wrt. the loss function, hence the higher the better} for the clustering $C$ obtained by partitioning the dataset through the pipeline at hand $P_{\lambda}(\altmathcal{D})$---e.g., Silhouette index \cite{sil}.
 
 
 \begin{table}[!ht]
@@ -223,7 +224,6 @@ When applied to cluster analysis, AMI $\in [0, 1]$ considers the labels assigned
 Since we need a diversity metric, we adapt the formula as in:
 $$div(C_i, C_j) = 1- AMI(C_i, C_j)$$
 where $C_i, C_j$ clusterings come from different pipeline instances.
-\todo{Qua ci starebbe bene la definizione formale dell'AMI (e delle altre come sil, dbi, ch), tipo come con accuracy}
 
 Finally, considering that the diversification problem is NP-hard, we compute it by exploiting the MMR heuristic solution \cite{vieira2011query} that selects the best-performing clustering and iteratively adds the clusterings that most diversify the outcome.
 
