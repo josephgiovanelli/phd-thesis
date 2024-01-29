@@ -72,8 +72,8 @@ Specifically, we commit to the following contributions.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[scale=.5]{chapters/physics-aware/orchard/img/overview3.png}
-	\caption{Approach overview and main system components.\todo{Invce che \olab{} ci devo mettere Crop Model}}
+	\includegraphics[width=0.75\textwidth]{chapters/physics-aware/orchard/img/overview.pdf}
+	\caption{Approach overview and main system components.}
 	\label{orchard-fig:overview}
 \end{figure}
 
@@ -90,6 +90,8 @@ The online phase requires the grid of sensors to be in place. During this phase 
 
 
 \Cref{tab:parameter} shows the simulation parameters: in bold those automatically inferable by the tuning phase, while the remaining ones must be provided by the user. Note that, if no historical values are available tuning cannot be run. In this case the on-line phase will be based on default values possibly taken from the literature. Similarly, if some of the tunable parameters are known, tuning can be limited to the remaining ones.
+
+The following subsections describe in more details each of the components reported in \Cref{orchard-fig:overview}.
 
 \begin{table}[H]
 	\centering
@@ -140,8 +142,6 @@ The online phase requires the grid of sensors to be in place. During this phase 
 	\caption{System parameters.}
 	\label{tab:parameter}%
 \end{table}%
-
-The following subsections describes in more details each of the components reported in \Cref{orchard-fig:overview}.
 
 \subsection{The Crop Model}
 

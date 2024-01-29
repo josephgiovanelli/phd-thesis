@@ -38,12 +38,12 @@ Specifically in ML, we refer to a dataset $\altmathcal{D}$ as a sample of data f
 
 \begin{definition}[Dataset]\label{def:dataset}
     A \textit{dataset} $\altmathcal{D}$ is a collection of data points $X$, with corresponding space $\altmathcal{X}$.
-    According to the task $T$, the dataset may include the ground truth $Y$ within its corresponding space $\altmathcal{Y}$ (supervised) or not (unsupervised).
+    According to the task $\altmathcal{T}$, the dataset may include the ground truth $Y$ within its corresponding space $\altmathcal{Y}$ (supervised) or not (unsupervised).
     \begin{equation*}\label{eq:dataset}
         \altmathcal{D} = \left\lbrace\,
         (d_i)_{i=1}^N  \quad \begin{array}{|@{}l@{}l@{\quad}l@{}}
-            \quad d_i = (\pmb{x}_i, y_i) & \in \mathbb{D} \subset \altmathcal{X} \times \altmathcal{Y} & \text{{if }} T = \text{{supervised}} \\
-            \quad d_i = \pmb{x}_i & \in \mathbb{D} \subset \altmathcal{X} & \text{{if }} T = \text{{unsupervised}}
+            \quad d_i = (\pmb{x}_i, y_i) & \in \mathbb{D} \subset \altmathcal{X} \times \altmathcal{Y} & \text{{if }}~~\altmathcal{T} = \text{{supervised}} \\
+            \quad d_i = \pmb{x}_i & \in \mathbb{D} \subset \altmathcal{X} & \text{{if }}~~\altmathcal{T} = \text{{unsupervised}}
         \end{array}
         \right\rbrace
     \end{equation*}

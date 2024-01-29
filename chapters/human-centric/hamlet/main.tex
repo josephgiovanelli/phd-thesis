@@ -1,12 +1,6 @@
 \chapter{Human-centric AutoML via Structured Argumentation}
 \label{human-centric-chap:hamlet}
 
-\begin{figure*}[t]
-    \centering
-    \includegraphics[scale=.25]{chapters/human-centric/hamlet/img/dymmymodel.png}
-    \caption{Integrating HAMLET with the CRISP-DM process model.\todo{Adattare stile}\todo{Spostare più giù}}
-    \label{hamlet-fig:approach}
-\end{figure*}
 
 Given a Machine Learning task to solve, the data scientist collects raw data in arbitrary formats (e.g., from the data lake), builds up knowledge on both the problem and the data, translates such knowledge into \emph{constraints}, designs and trains a model, and finally deploys the solution as a new component integrated into the data platform.
 Such a solution consists of a ML pipeline.
@@ -26,7 +20,7 @@ Alternatively, the authors in \cite{ono2020pipelineprofiler} have proposed a too
 We claim that a human-centric framework should provide the mechanisms to: (i) help the data scientist to structure her knowledge about the problem in an effective search space; and (ii) augment the knowledge initially possessed by the data scientist with the one produced by the AutoML optimization process.
 
 \paragraph{Contributions}
-We introduce HAMLET (Human-centric AutoMl via Logic and argumEnTation; \Cref{hamlet-fig:approach}), a framework that enhances AutoML with Structured Argumentation to:
+We introduce HAMLET (Human-centric AutoMl via Logic and argumEnTation), a framework that enhances AutoML with Structured Argumentation to:
 structure the constraints and the AutoML solutions in a Logical Knowledge Base (LogicalKB);
 parse the LogicalKB into a human- and machine-readable medium called Problem Graph;
 devise the AutoML search space from the Problem Graph;
@@ -93,6 +87,13 @@ Then conflicts between arguments can arise from both inconsistencies in the Logi
 
 Once defined the right logical language for encoding the data scientist and AutoML knowledge, a Structured Argumentation model (e.g., an ASPIC\textsuperscript{+} instance \cite{arg2p-jlc}) can support HAMLET with the formal machinery to build an Argumentation framework upon the data, while Abstract Argumentation would dispense the evaluation tools.
 
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=1\columnwidth]{chapters/human-centric/hamlet/img/dymmymodel.pdf}
+    \caption{Integrating HAMLET with the CRISP-DM process model.}
+    \label{hamlet-fig:approach}
+\end{figure*}
 \section{HAMLET}\label{hamlet-sec:implementation}
 
 \Cref{hamlet-fig:approach} illustrates the overview of HAMLET and its interactions during the CRISP-DM process.
@@ -253,9 +254,9 @@ c1 : $\Rightarrow$ forbidden($\langle\altmathcal{N}\rangle$, $\altmathcal{D}t$).
     \centering
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{chapters/data-centric/unsupervised/img/cl.pdf}
-        % {chapters/human-centric/hamlet/img/toy_example1.png}
-        \caption{Cl\\$\quad$AMI=0.41, sil=0.41}
+        \includegraphics[width=\textwidth]
+        {chapters/human-centric/hamlet/img/toy_example1.png}
+        \caption{}
         \label{hamlet-fig:running_a}
     \end{subfigure}
     \hfill
@@ -361,7 +362,7 @@ The arguments in the extension give us all the information that we should use du
 \end{example}
 
 The use of Argumentation relieves the data scientist of the burden of manually considering all the effects of the possible constraints.
-It is important to notice that, although the increased degree of automation, the Problem Graph allows the data scientist and domain experts to correct, revise, and supervise the process.
+It is important to notice that, despite the increased degree of automation, the Problem Graph allows the data scientist and domain experts to correct, revise, and supervise the process.
 Accordingly, possible inconsistencies -- due to diverging constraints -- can be verified by the data scientist using her knowledge.
 
 Any change in the LogicalKB translates into a change in the Problem Graph, allowing the data scientist and domain experts to visualize it and argue about it.
@@ -390,20 +391,19 @@ Yet, this is partially true: the LogicalKB also includes a set of hard-encoded r
 These rules are joined to the ones defined by the data scientist and used to build the Problem Graph (i.e., Argumentation framework).
 
 \begin{figure}[t]
-    \begin{lstlisting}[mathescape=true]
-    # given an algorithm, create a pipeline including only such algorithm
-    hc0 : algorithm($\altmathcal{C}l$, A) $\Rightarrow$ pipeline($\langle~\rangle$, A).
-    # given some steps and an algorithm, create a pipeline including such steps and algorithm
-    hc1 : step($S_1$),$\ldots$,step($S_n$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ pipeline($\langle S_1, \ldots, S_n \rangle$, A).
-    # given constraints on the Pre-processing steps required for Classification...
-    # ... apply this constraints to all Classification algorithms
-    hc2 : mandatory($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ mandatory($\langle S_1, \ldots, S_n \rangle$, A).
-    hc3 : forbidden($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ forbidden($\langle S_1, \ldots, S_n \rangle$, A).
-    hc4 : mandatory_order($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ mandatory_order($\langle S_1, \ldots, S_n \rangle$, A).
-    \end{lstlisting}
-    \caption{A subset of rules from the LogicalKB.\todo{Qua perché non è più verde il commento?}}
-    \label{rules-arg2p}
-    \end{figure}
+\begin{lstlisting}[mathescape=true, basicstyle=\footnotesize]
+# given an algorithm, create a pipeline
+hc0 : algorithm($\altmathcal{C}l$, A) $\Rightarrow$ pipeline($\langle~\rangle$, A).
+# given some steps and an algorithm, create a pipeline
+hc1 : step($S_1$),$\ldots$,step($S_n$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ pipeline($\langle S_1, \ldots, S_n \rangle$, A).
+# given the constraints on the pre-processing steps required for Class., 
+# apply this constraints to all Classification algorithms
+hc2 : mandatory($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ mandatory($\langle S_1, \ldots, S_n \rangle$, A).
+hc3 : forbidden($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ forbidden($\langle S_1, \ldots, S_n \rangle$, A).
+hc4 : mandatory_order($\langle S_1, \ldots, S_n \rangle$, $\altmathcal{C}l$), algorithm($\altmathcal{C}l$, A) $\Rightarrow$ mandatory_order($\langle S_1, \ldots, S_n \rangle$, A).
+\end{lstlisting}
+\label{rules-arg2p}\caption{A subset of rules from the LogicalKB}
+\end{figure}
 
 A subset of rules is shown in \Cref{rules-arg2p}.
 The first two ($hc0$ and $hc1$) define how to automatically derive a pipeline using algorithms and steps.

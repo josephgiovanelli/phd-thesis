@@ -166,7 +166,7 @@ where $rel$ is a goodness metric\footnote{With reference to \Cref{def:loss}, a g
 \end{table}
 
 
-\paragraph{Implementation} \Cref{clustering-tbl:processing} reports the pipeline with steps, algorithms, and hyperparameters; AutoClues implementation can be found at \url{https://github.com/anonymous-pakdd-24/autoclues}.
+\paragraph{Implementation} \Cref{clustering-tbl:processing} reports the pipeline with steps, algorithms, and hyperparameters.
 The first step is \textit{Feature selection}.
 Since cluster analysis is particularly sensitive to irrelevant features, this step aids in identifying the most informative ones.
 We leverage algorithms from the spectral family (SPEC and WKMeans), techniques that demonstrated to be effective in unsupervised tasks \cite{alelyani2018feature}, and based on the Pearson correlation.
@@ -269,9 +269,11 @@ This translates into approaches relying upon datasets from supervised tasks, wit
 In \Cref{clustering-ssec:benchmark}, we introduce a benchmarking generator and a suite of synthetic datasets. In \Cref{clustering-ssec:effectiveness}, we leverage such a suite to assess the effectiveness and efficiency of AutoClues.
 Finally, in \Cref{clustering-ssec:comparison}, we rely on real datasets to provide a comparison against other approaches in the literature.
 
+AutoClues implementation is available on the correspoding GitHub repository\footnote{\url{https://github.com/big-unibo/autoclues}}.
+
 \subsection{Benchmark Generation}
 \label{clustering-ssec:benchmark}
-The synthetic benchmarking generator is available via GitHub\footnote{\url{https:/github.com/anonymous-pakdd-24/clustering_benchmarking}\todo{metterlo su big e linkarlo}}.
+The synthetic benchmarking generator is available via GitHub\footnote{\url{https:/github.com/big-unibo/clustering_benchmarking}}.
 We create datasets of $|D|$ instances, defining $|C|$ natural iper-spherical clusters in a space of $|\altmathcal{F}|$ features.
 Then, we blur such clusters by posing common challenges faced by clustering algorithms.
 This includes noise on instances $\sigma(D)$, such as the presence of outliers, and noise on features $\sigma(F)$, such as irrelevant, correlated, or distorted features.
