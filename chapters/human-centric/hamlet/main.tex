@@ -508,9 +508,9 @@ For instance, given two frequent patterns, $\{a, b, c\}$ and $\{a, b\}$, the for
 itemsets.
 The recommendation depends on the constraint.
 \begin{itemize}
-    \item $mandatory$: we consider only the patterns with good performance (i.e., $0.7 \leq metric \leq 1.0$); 
+    \item $mandatory$: we consider only the patterns with good performance (i.e., $0.7 \leq metric \leq 1.0$);
     \item $forbidden$: we consider only the patterns with bad performance (i.e., $0.0 \leq metric \leq 0.3$);
-    \item $mandatory\_order$: the same considerations of the mandatory constraints stand, except that we look for (sub)sequences \cite{srikant1996mining} of length 2 to discover ordering dependencies in pairs of steps as in \cite{giovanelli2021data}.   
+    \item $mandatory\_order$: the same considerations of the mandatory constraints stand, except that we look for (sub)sequences \cite{srikant1996mining} of length 2 to discover ordering dependencies in pairs of steps as in \Cref{data-centric-chap:supervised}.
 \end{itemize}
 We leveraged well-known implementations \cite{raschkas_2018_mlxtend} and \cite{seq2pat2022} for itemsets and sequences mining, respectively.
 Finally, we return to the data scientist only the top-10 rules sorted by descending support; we allow the data scientist to explore all the rules on-demand.
@@ -539,7 +539,7 @@ The performance of HAMLET depends on (i) the rules encoded in the LogicalKB and 
 To test both the effectiveness and efficiency of our approach, we define three experimental settings.
 \begin{itemize}
     \item PKB (Preliminary Knowledge Base), HAMLET starts with a preliminary LogicalKB constraining the search space from the first iteration, and no rule mining is applied.
-    The preliminary LogicalKB consists of the rules discovered in \cite{giovanelli2021data} and some well-known from the literature (e.g., suggested by scikit-learn\footnote{\url{https://scikit-learn.org/stable/auto_examples/preprocessing/plot_discretization.html}}).
+    The preliminary LogicalKB consists of the rules discovered in \Cref{data-centric-chap:supervised} and some well-known from the literature (e.g., suggested by scikit-learn\footnote{\url{https://scikit-learn.org/stable/auto_examples/preprocessing/plot_discretization.html}}).
     The complete knowledge base can be found in the Github repository.
     \item IKA (Iterative Knowledge Augmentation), HAMLET starts with an empty LogicalKB, and all the rules recommended after each run are applied to extend the LogicalKB.
     \item PKB+IKA, HAMLET starts with a preliminary LogicalKB, and the rules recommended after each run are applied to extend the LogicalKB.
@@ -594,7 +594,7 @@ Among these, we do not report the results for the dataset mnist\_784 since the n
     \centering
         \begin{tabular}{ll|ll|ll|ll}
             \toprule
-             \textbf{OpenMLID} \tnote{a} & \textbf{Dataset} & \multicolumn{2}{c}{\textbf{Instances}} & \multicolumn{2}{c}{\textbf{Features}} & \multicolumn{2}{c}{\textbf{Classes}}  \\ \midrule
+             \textbf{OpenMLID} & \textbf{Dataset} & \multicolumn{2}{c}{\textbf{Instances}} & \multicolumn{2}{c}{\textbf{Features}} & \multicolumn{2}{c}{\textbf{Classes}}  \\ \midrule
              40983 & wilt & 4839 & \footnotesize{\texttt{L}} & 6 & \footnotesize{\texttt{L}} & 2 & \footnotesize{\texttt{L}}\\
              40499 & texture & 5500& \footnotesize{\texttt{L}} & 41& \footnotesize{\texttt{L}} & 11& \footnotesize{\texttt{H}}\\
              1485 & madelon & 2600 & \footnotesize{\texttt{L}} & 501 & \footnotesize{\texttt{H}} & 2 & \footnotesize{\texttt{L}}\\
@@ -607,10 +607,9 @@ Among these, we do not report the results for the dataset mnist\_784 since the n
         \end{tabular}
         \label{hamlet-tbl:datasets}
         \begin{tablenotes}
-            \item[--] {\scriptsize Not Applicable}
-            \item[\texttt{H}] {\scriptsize The value $v$ is high for the meta-feature $F$ if $ v \geq \frac{1}{|F|}\sum_{f \in F} f$}
-            \item[\texttt{L}] {\scriptsize The value $v$ is low for the meta-feature $F$ if $v < \frac{1}{|F|}\sum_{f \in F} f$}
-            \item[a] {\scriptsize Datasets are available at \url{https://www.openml.org/d/<OpenMLID>}}
+            \item[--] {\footnotesize Not Applicable}
+            \item[\texttt{H}] {\footnotesize The value $v$ is high for the meta-feature $F$ if $ v \geq \frac{1}{|F|}\sum_{f \in F} f$}
+            \item[\texttt{L}] {\footnotesize The value $v$ is low for the meta-feature $F$ if $v < \frac{1}{|F|}\sum_{f \in F} f$}
         \end{tablenotes}
     \end{threeparttable}
 \end{table}
