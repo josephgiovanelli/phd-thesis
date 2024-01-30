@@ -25,7 +25,7 @@ The algorithm learns by making decisions and receiving feedback based on its act
 
 This thesis focuses on supervised and unsupervised learning, specifically on the challenges arising in the automation of such tasks (AutoML).
 As to reinforcement learning (RL), given the underlying different nature of the task, the corresponding automation has also been addressed with techniques different from the classical ones, coining the research field of automated reinforcement learning (AutoRL).
-For an extensive survey of this research field, we redirect the reader to \cite{autorl}
+For an extensive survey of this research field, we redirect the reader to \cite{mohan-automlconf23a}
 
 We structure this chapter as follows. \Cref{automl-background-sec:ml} introduces the building blocks such as dataset, algorithm, and hyperparameter.
 \Cref{automl-background-sec:automl} formalizes the problems tackled by AutoML, up to the combined algorithm selection and hyperparameter optimization.
@@ -53,7 +53,7 @@ Intuitively, a dataset resembles a structured table where each row represents a 
 The features, denoted by the columns, describe the diverse factors or characteristics influencing a particular outcome $Y$ in its domain $\altmathcal{Y}$.
 While in supervised learning the ground truth is provided with the aim of understanding the hidden relationships between features and corresponding outcomes, in supervised tasks, the most appropriate outcome has to be found by discovering patterns within the data.
 
-\begin{example}[Iris dataset \cite{iris}]\label{ex:dataset}
+\begin{example}[Iris dataset \cite{Unwin2021TheID}]\label{ex:dataset}
     The iris dataset contains $150$ instances of flowers ($X$) under four features in cm ($\altmathcal{X} \subset \mathbb{R}^4$): sepal length, sepal width, petal length, and petal width.
     The data have been collected to quantify the morphologic variation within the Iris species ($Y$), which can assume the following $3$ classes ($\altmathcal{Y}$): Iris setosa, Iris virginica and Iris versicolor.
     \begin{table}[!h]
@@ -175,9 +175,9 @@ According to the desired outcome, unsupervised learning provides a categorizatio
 \end{itemize}
 % The core of unsupervised learning lies in training not to explicitly perform the task on future instances but, rather, to extract patterns and insights from the training data itself.
 However, in unsupervised scenarios, the knowledge acquired through model fitting does not have the goal of predicting future instances but, rather, of understanding the inherent patterns and structure within the training data itself.
-Popular examples of algorithms are: k-means \cite{k_means}, isolation forest \cite{random_forest}
+Popular examples of algorithms are: k-means \cite{arthur2006k}, isolation forest \cite{random_forest}
 
-\begin{example}[K-Means \cite{k_means}]
+\begin{example}[K-Means \cite{arthur2006k}]
     The k-means algorithm aims to partition the instances into a predetermined number of clusters based on their feature similarity.
     The algorithm iteratively assigns instances to clusters and updates the cluster centroids until its convergence criteria i.e., instances in the same cluster are more similar than instances in a different cluster.
     Hyperparameters such as the number of clusters and the similarity measure affect the returned partitioning.
@@ -188,7 +188,7 @@ Being provided without any ground truth, loss functions and quality metrics esti
 For instance, in cluster analysis, the aim is to find a well-separated partitioning (also known as clustering).
 The Silhouette index (\Cref{ex:sil}) is a quality metric that estimates: (i) cohesion of the provided clusters as the mean distance between a sample and all other points in the same cluster, and (i) separability as the mean distance between a sample and all other points in the next nearest cluster.
 
-\begin{example}[Silhouette Index \cite{sil}]\label{ex:sil}
+\begin{example}[Silhouette Index \cite{zhu2010clustering}]\label{ex:sil}
     Given the dataset set $\altmathcal{D}$ and the model $H_{\pmb{\lambda}}$ resulted from the training $A_{\pmb{\lambda}}(\altmathcal{D})$, then the quality metric $SIL$ summarizes cohesion $COH$ and separability $SEP$ of the clustering made by $H_{\pmb{\lambda}}$
     \begin{equation*}
         COH(H, \pmb{x_i}) = \frac{1}{|C_{i}| - 1} \sum_{\pmb{x} \in C_{i}, \pmb{x} \neq x_i} d(\pmb{x}, \pmb{x_i}) \quad
@@ -210,7 +210,7 @@ Let us consider a dataset $\altmathcal{D} = \{d_1, \dots, d_n\} \in \mathbb{D}$.
 If the task $T$ is supervised, we refer with $\altmathcal{D}_{train}$ and $\altmathcal{D}_{valid}$ to two different data splits for training and validation respectively; otherwise, if $T$ is unsupervised, they correspond to the same original dataset $\altmathcal{D}$.
 Besides, we are provided with a loss function $\altmathcal{L} = \mathbb{H} \times \mathbb{D} \rightarrow \mathbb{R}$.
 
-\begin{definition}[Algorithm Selection (AS)]
+\begin{definition}[Algorithm Selection (AS) \cite{kerschke-ec19a}]
     Given a set of learning algorithms $\altmathcal{A} = \{A_1, \dots, A_K\}$, the goal of algorithm selection is to determine the algorithm $A^{\star} \in \altmathcal{A}$ with optimal loss function
     \begin{equation*}
         A^{\star} \in \argmin_{A_i \in \altmathcal{A}} \altmathcal{L}(A_i(\altmathcal{D}_{train}), \altmathcal{D}_{valid})
@@ -218,14 +218,14 @@ Besides, we are provided with a loss function $\altmathcal{L} = \mathbb{H} \time
     where $A_i$ is trained with its default hyperparameter setting.
 \end{definition}
 
-\begin{definition}[Hyperparameter Optimization (HPO)]
+\begin{definition}[Hyperparameter Optimization (HPO) \cite{levesque-ieee17a}]
     Given an algorithm $A$ and hyperparameters $\lambda_1, \dots, \lambda_M$, with the corresponding cross product space of $\pmb{\Lambda} = \Lambda_1 \times \dots \times \Lambda_M$, the goal of hyperparameter optimization is to determine the configuration $\pmb{\lambda}^{\star} \in \pmb{\Lambda}$ with optimal loss function.
     \begin{equation*}
         \pmb{\lambda}^{\star} \in \argmin_{\pmb{\lambda} \in \pmb{\Lambda}} \altmathcal{L}(A_{\pmb{\lambda}}(\altmathcal{D}_{train}), \altmathcal{D}_{valid})
     \end{equation*}
 \end{definition}
 
-There has been considerable past work separately addressing algorithm selection \cite{as_algos} and hyperparameter optimization \cite{hpo_algos}.
+There has been considerable past work separately addressing algorithm selection and hyperparameter optimization.
 One could similarly tackle the combined space of learning algorithms and their hyperparameters (CASH), yet this has not achieved good results.
 The corresponding loss function becomes noisy when the space is high-dimensional, involves both categorical and continuous choices, and contains hierarchical dependencies (e.g., the hyperparameters of a learning algorithm are only meaningful if that algorithm is chosen).
 For such reasons CASH has been reformulated as a single combined hierarchical hyperparameter optimization with space $\pmb{\Lambda} = \pmb{\Lambda_{A_1}} \cup \dots \cup \pmb{\Lambda_{A_K}} \cup \{\lambda_r\}$, where $\lambda_r$ is a new root-level hyperparameter that selects between algorithms $A_1, \dots, A_K$.
@@ -239,8 +239,8 @@ The root-level parameters of each subspace $\pmb{\Lambda_i}$ are made conditiona
 \end{definition}
 
 The loss function serves as the objective i.e., it represents the goal of the optimization process.
-Specifically, our objective is considered a black box, namely a costly function in which no assumptions on the distribution can be made \cite{69, 134, 88, 55}.
-Several approaches have been based on and borrowed ideas from the domains of statistical and traditional optimization \cite{opt_algos}.
+Specifically, our objective is considered a black box, namely a costly function in which no assumptions on the distribution can be made \cite{kushner1964new, zhilinskas1975single, mockus1998application, jones1998efficient}.
+Several approaches have been based on and borrowed ideas from the domains of statistical and traditional optimization \cite{levesque-ieee17a}.
 Besides, depending on the number of objectives in which the user is interested, we categorized them as either single- or multi-objective.
 In the following, we showcase the challenges of both.
 
@@ -251,14 +251,14 @@ Local search focuses on solutions within a confined region, while global search 
 The former will not always find the optimal solution, it sacrifices completeness for greater efficiency; as to the latter, the optimal solution is eventually discovered.
 We provide the most common global search approaches for tackling single-objective optimization, in particular: the baselines \textit{exhaustive}, \textit{grid}, and \textit{random search};  the \textit{model-free} ones such as \textit{simulated annealing}, and the approaches based on \textit{evolutionary} and \textit{multi-fidelity}; and finally the \textit{model-based} framework of \textit{bayesian optimization} (BO).
 Unlike model-free approaches, the model-based framework leverages a surrogate model that drives the optimization toward the objective function and BO is the current leader of black-box optimization techniques.
-Having gained significant attention for tuning huge search spaces across various tasks, including classification and regression \cite{113, 112}, we will use BO throughout the whole thesis.
+Having gained significant attention for tuning huge search spaces across various tasks, including classification and regression \cite{snoek2012practical, snoek2015scalable}, we will use BO throughout the whole thesis.
 
 \subsubsection{Baselines}
 The baseline techniques share the common characteristic of exploring the hyperparameter space without any intelligent strategies, relying instead on systematic or random exploration of the hyperparameter space.
 
 \paragraph{Exhaustive search}
 Being the most naive solution, exhaustive search considers all combinations of hyperparameters.
-Obviously, this is computationally expensive and suffers from the curse of dimensionality as the number of trials grows exponentially with the number of hyperparameters \cite{7}, resulting in unfeasible.
+Obviously, this is computationally expensive and suffers from the curse of dimensionality as the number of trials grows exponentially with the number of hyperparameters \cite{bittner1962r}, resulting in unfeasible.
 
 \paragraph{Grid Search}
 Another basic solution consists of choosing a predefined set of values for each hyperparameter and computing all combinations in the corresponding cross product.
@@ -266,21 +266,21 @@ This method allows for a good exploration, yet it assumes the loss function bein
 Besides, even in this case, the number of trials grows exponentially with the number of hyperparameters.
 
 \paragraph{Random Search}
-Given a budget $B$, in terms of either time or number of trials, this method samples configurations at random until $B$ is exhausted \cite{10}.
-Random search is often considered a baseline since it tends to find better solutions than grid search \cite{90} and it is -- surprisingly -- competitive with most state-of-the-art approaches.
+Given a budget $B$, in terms of either time or number of trials, this method samples configurations at random until $B$ is exhausted \cite{bergstra2012random}.
+Random search is often considered a baseline since it tends to find better solutions than grid search \cite{montgomery-book13a} and it is -- surprisingly -- competitive with most state-of-the-art approaches.
 One of the main advantages of random search, and grid search, is that they can be easily parallelized over a number of workers, which is essential when dealing with big data.
 
 \subsubsection{Model-free Optimization}
 Model-free approaches share a commonality in their reliance on heuristic techniques and exploration strategies that do not explicitly model the objective function or employ gradient information.
 
 \paragraph{Simulated Annealing}
-This optimization technique draws inspiration from metallurgical processes involving controlled heating and cooling \cite{61}.
+This optimization technique draws inspiration from metallurgical processes involving controlled heating and cooling \cite{kirkpatrick1983optimization}.
 Initially, a single configuration is randomly chosen and evaluated, this consists of the initial state.
 Next, one of the hyperparameters is randomly updated by selecting a value from its immediate neighborhood, to obtain a neighboring state, and the performance is assessed.
 The obtained performances from the current and neighboring states are then compared and, finally, the user decides to accept or reject the neighboring state as the current state.
 
 \paragraph{Evolutionary Approaches}
-Evolutionary (or genetic) approaches draw inspiration from the process of natural gene selection \cite{49}.
+Evolutionary (or genetic) approaches draw inspiration from the process of natural gene selection \cite{holland1992adaptation}.
 The fundamental concept behind genetic-based optimization techniques is the application of multiple genetic operations to a population of configurations.
 For instance, the crossover operation involves taking two parent chromosomes (configurations) and combining their genetic information to generate new offspring.
 Specifically, the two parent configurations are cut at the same crossover point, and the sub-parts to the right of that point are swapped between the two parent chromosomes, resulting in two new offspring (child configurations).
@@ -292,7 +292,7 @@ High-fidelity evaluation provides precise results from the entire dataset, while
 The core concept relies on leveraging multiple low-fidelity evaluations to reduce the overall evaluation cost.
 Although low-fidelity optimization may lead to a cheaper evaluation cost, it might compromise optimization performance.
 Nevertheless, the achieved speedup is often more substantial than the introduced approximation error.
-Successive Halving \cite{} and HyperBand \cite{} are the most popular techniques.
+Successive Halving \cite{pietruszka2021successive} and HyperBand \cite{li2018hyperband} are the most popular techniques.
 
 \subsubsection{Model-based Optimization}
 
@@ -323,22 +323,22 @@ The algorithm of sequential model-based optimization (SMBO) is described in \Cre
 It then iterates through the following steps: using $S$ to determine a promising candidate configuration of hyperparameters $\pmb{\lambda}$ to evaluate next (line 3); evaluating the loss $c$ of $\pmb{\lambda}$ (line 4); and updating the model $S$ with the new data point $(\pmb{\lambda}, c)$ obtained (lines 5–6).
 To select its next hyperparameter configuration $\pmb{\lambda}$ using the model $S$, SMBO employs a so-called acquisition function $a_{S} : \pmb{\Lambda} \rightarrow \mathbb{R}$, which uses the predictive distribution of $S$ at arbitrary hyperparameter configurations $\pmb{\lambda} \in \pmb{\Lambda}$ to quantify (in closed form) how useful knowledge about $\pmb{\lambda}$ would be.
 SMBO then maximizes this function over $\pmb{\Lambda}$ to select the most promising configuration $\pmb{\lambda}$ to evaluate next.
-Several prominent acquisition functions exist [17, 23, 26], all aiming to automatically trade off exploitation (locally optimizing hyperparameters in regions known to perform well) versus exploration (trying hyperparameters in a relatively unexplored region of the space) to avoid premature convergence.
+Several prominent acquisition functions exist \cite{bohannon2005cost, chen2018autostacker, de2018automated}, all aiming to automatically trade off exploitation (locally optimizing hyperparameters in regions known to perform well) versus exploration (trying hyperparameters in a relatively unexplored region of the space) to avoid premature convergence.
 An example of a promising acquisition function is the probability of improvement $PI = P(c(\pmb{\lambda}) \ge c(\hat{\pmb{\lambda}}))$, where $\hat{\pmb{\lambda}}$ corresponds to the best hyperparameter configuration encountered so far during the optimization.
 
 However, bayesian optimization achievements are due to ever-efficient implementations of surrogate models.
 Follows the more important ones.
 
-\paragraph{Gaussian processes (GP)} Commonly considered the pioneers among the surrogates \cite{112, 80}, yet suffering from cubic complexity with the number of data points, limiting parallelization capability.
+\paragraph{Gaussian processes (GP)} Commonly considered the pioneers among the surrogates \cite{snoek2012practical, martinez2014bayesopt}, yet suffering from cubic complexity with the number of data points, limiting parallelization capability.
 
-\paragraph{Tree-structured parzen estimator (TPE)} \cite{13}, in contrast, does not define a predictive distribution over the objective function but creates two density functions for all the hyperparameters in the problem.
+\paragraph{Tree-structured parzen estimator (TPE)} In contrast, TPE does not define a predictive distribution over the objective function but creates two density functions for all the hyperparameters in the problem.
 Based on past observations, a percentile for each hyperparameter is built to distinguish good and bad observations.
 The hyperparameter values are split into two sets, and their respective distributions are determined using density estimation through \textit{parzen windows}\footnote{Statistical technique to estimate a density distribution by generalization from a histogram.}.
 The ratio between the two density functions reflects the improvement in the acquisition function and is used to recommend new configurations.
-TPE has demonstrated excellent performance in hyperparameter optimization tasks \cite{13, 12, 35, 37, 115}.
-In this thesis, we leverage an efficient implementation provided by the Python package HyperOpt \cite{hyperopt}.
+TPE has demonstrated excellent performance in hyperparameter optimization tasks \cite{bergstra2011algorithms, bergstra2013making, eggensperger2013towards, falkner2018bohb, sparks2015automating}.
+In this thesis, we leverage an efficient implementation provided by the Python package HyperOpt \cite{bergstra2015hyperopt}.
 
-\paragraph{Sequential model-based algorithm configuration (SMAC)} \cite{smac} introduce SMAC, leveraging Random forest \cite{20} as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
+\paragraph{Sequential model-based algorithm configuration (SMAC)} \cite{lindauer-jmlr22a} introduce SMAC, leveraging Random forest \cite{random_forest} as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
 The algorithm starts by training different regression trees, each built using randomly selected data points.
 For each tree, we are provided with an estimation cost, which translates into the posterior distribution in the Bayesian framework.
 This is leveraged in combination with an aggressive racing mechanism to efficiently decide which of two configurations performs better.
@@ -350,7 +350,7 @@ Iteration after iteration, the surrogate model suggests configurations, while hy
 \paragraph{BlendSearch}
 BlendSearch is an innovative strategy that blends the frugality of Cost-related Frugal Optimization (CFO) -- a local search technique -- with the space exploration capabilities of global search methods like Bayesian optimization.
 BlendSearch starts with a low-cost initial point and utilizes several local searches to iteratively improve performance. However, BlendSearch doesn't wait for local search to fully converge before exploring new start points. Instead, it incorporates suggestions from the BO, filtering them based on their distance to existing points in cost-related dimensions. BlendSearch gradually increases the trial cost while prioritizing between global and local search threads based on optimism in the face of uncertainty. This strategy enables BlendSearch to effectively balance exploration and exploitation, leading to economical yet effective hyperparameter optimization.
-In this thesis, we leverage the implementation provided by the authors in the Python library FLAML \cite{FLAML}.
+In this thesis, we leverage the implementation provided by the authors in the Python library FLAML \cite{wang2021flaml}.
 
 
 \subsection{Multi-objective Optimization}
@@ -388,7 +388,7 @@ Classical approaches typically involve transforming the MO problem into a single
 \paragraph{Weighted Aggregation}
 This approach involves combining multiple objectives into a single scalar function by assigning weights to each objective.
 The weighted sum is then minimized or maximized to find the optimal solution. This method allows decision-makers to express their preferences by adjusting the weights.
-However, determining the weights can be challenging, especially when there is uncertainty or conflicting opinions about the relative importance of objectives. Dynamic weighted aggregation \cite{} addresses this issue by iteratively adjusting the weights to explore different trade-offs.
+However, determining the weights can be challenging, especially when there is uncertainty or conflicting opinions about the relative importance of objectives. Dynamic weighted aggregation \cite{jin2001dynamic} addresses this issue by iteratively adjusting the weights to explore different trade-offs.
 Nonetheless, weighted aggregation methods may fail to capture the entire Pareto front and are sensitive to the choice of weights.
 
 \paragraph{Goal Programming}
@@ -412,7 +412,7 @@ These algorithms use operators like selection, crossover, and mutation to explor
 
 \paragraph{Multi-Objective Genetic Algorithm (MOGA)} This assigns fitness values to individuals based on their dominance relationships with other solutions in the population. This approach encourages the evolution of diverse, non-dominated solutions by favoring individuals that dominate others. Niching techniques, such as sharing, help maintain diversity and prevent premature convergence.
 
-\paragraph{Non-dominated Sorting Genetic Algorithm (NSGA)}: NSGA employs a non-dominated sorting mechanism to rank individuals based on their dominance relationships. It uses a layered classification technique to assign fitness values, ensuring that non-dominated solutions receive higher ranks. NSGA efficiently explores the Pareto front and maintains population diversity through techniques like crowding distance.
+\paragraph{Non-dominated Sorting Genetic Algorithm (NSGA)} NSGA employs a non-dominated sorting mechanism to rank individuals based on their dominance relationships. It uses a layered classification technique to assign fitness values, ensuring that non-dominated solutions receive higher ranks. NSGA efficiently explores the Pareto front and maintains population diversity through techniques like crowding distance.
 
 \paragraph{Multi-Objective Particle Swarm Optimization (MOPSO)} MOPSO uses a swarm-based optimization approach, where particles represent potential solutions moving through the search space. By emphasizing regions of low density in the Pareto front, MOPSO encourages exploration of diverse solutions while preventing premature convergence. Dynamic mechanisms, such as adaptive inertia weights and neighborhood topologies, help balance exploration and exploitation during optimization.
 
@@ -470,12 +470,12 @@ In the literature, there are data pre-processing steps that can be applied to bo
 Besides, there are pre-processing steps that are aligned to specific tasks.
 \begin{itemize}
     \item \textit{Rebalancing}, in supervised classification tasks, adjusts the class distribution of a dataset (i.e., so that each class is equally represented among the instances).
-    \item \textit{Outlier Removal}, in unsupervised tasks, drops any instances that can be considered noise because deviating (to a certain degree) from the overall distribution.
+    \item \textit{Outlier Removal}, in unsupervised tasks, drops any instances that can be considered noise because of deviating (to a certain degree) from the overall distribution.
 \end{itemize}
 
 \begin{example}[Feature Engineering Step and Transformations in Supervised Learning]
     A feature engineering step reduces the dimensionality of the input dataset, mapping instances represented in $\altmathcal{X}$ features into a new set of features  $\altmathcal{X}'$ s.t.  $|\altmathcal{X}'| < |\altmathcal{X}|$.
-    According to the specific implementation, transformations in this step either select the most relevant features (i.e., $\altmathcal{X}' \subset \altmathcal{X}$; e.g., ANOVA f-value test \cite{}) or create a new latent cartesian space (i.e., $X'_{i} \subset \altmathcal{X}' = \sum_{j}^{|\altmathcal{X}|} w_j \cdot X_j$ where $w_j \in \pmb{w}$ is a weight vector; e.g., PCA \cite{}).
+    According to the specific implementation, transformations in this step either select the most relevant features (i.e., $\altmathcal{X}' \subset \altmathcal{X}$; e.g., ANOVA f-value test \cite{miller1997beyond}) or create a new latent cartesian space (i.e., $X'_{i} \subset \altmathcal{X}' = \sum_{j}^{|\altmathcal{X}|} w_j \cdot X_j$ where $w_j \in \pmb{w}$ is a weight vector; e.g., PCA \cite{kurita2019principal}).
 \end{example}
 
 Finally, steps are concatenated with a specific order in data pre-processing pipelines---or data pipelines in short.

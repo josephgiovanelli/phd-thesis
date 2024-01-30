@@ -2,7 +2,7 @@
 \label{chap:intro}
 
 Artificial intelligence (AI) is currently the buzzword on everybody's lips.
-Riding the wave of recent groundbreaking achievements, from self-driving cars \cite{} to intelligent chatbots \cite{}, AI is transforming industries and reshaping our daily lives.
+Riding the wave of recent groundbreaking achievements, from self-driving cars \cite{badue2021self} to intelligent chatbots \cite{adamopoulou2020chatbots}, AI is transforming industries and reshaping our daily lives.
 Several interpretations and definitions have been provided over the years, yet the seminal perspective given by the Turing test \cite{turing1980computing} is still one worth mentioning.
 \begin{definition}[Artificial Intelligence \cite{turing1980computing}]
 A machine that shows intelligence indistinguishable from that of human beings is qualified to be labeled as artificial intelligence.
@@ -14,7 +14,7 @@ A machine with the ability to learn without being explicitly programmed.
 Building upon the notion of intelligence as learning, i.e. Machine Learning (ML), emerged as the pinnacle of AI due to its disruptive advancements.
 At its core, ML aims at addressing problems for which the development of algorithms by humans is not feasible, because the algorithm itself is either not known or cost-prohibitive.
 Examples include face recognition, fraud detection, sale forecasting, and object ranking.
-The problems are solved instead by letting the algorithms (e.g., neural networks \cite{nn}) \textit{discover their own solutions}: they perform a training process atop a sample of historical data, borrowing techniques from disciplines such as numerical analysis, statistics, and information theory.
+The problems are solved instead by letting the algorithms (e.g., neural networks \cite{bishop1994neural}) \textit{discover their own solutions}: they perform a training process atop a sample of historical data, borrowing techniques from disciplines such as numerical analysis, statistics, and information theory.
 The training process consists of fitting internal parameters (e.g., weights and bias) and providing practitioners with a model.
 In this context, we can hence define an \textit{AI system} as the (software) solution that deploys an ML model specific for the problem at hand i.e., ready to ingest new data and tackle it.
 
@@ -22,7 +22,7 @@ There exists a plethora of different algorithms solving the same problem with di
 Besides, algorithms often expose some hyperparameters controlling the learning behavior (e.g., learning rate).
 To unleash the full potential of ML, practitioners have to carefully tune such hyperparameters but get easily overwhelmed by the showcased problem of combined algorithm selection and hyperparameter (CASH) optimization.
 
-Automated machine learning (AutoML) demonstrates to play a crucial role in this landscape by tackling the CASH problem and, going beyond, by handling ever-larger search spaces in surprisingly small time budgets \cite{small_time_budgets}.
+Automated machine learning (AutoML) demonstrates to play a crucial role in this landscape by tackling the CASH problem and, going beyond, by handling ever-larger search spaces in surprisingly small time budgets \cite{thornton2013auto, olson2016tpot, auto_sklearn}.
 Remarkable milestones include bayesian optimization (BO) to explore promising configurations based on prior evaluations,
 meta-learning (i.e., learning atop learning) to warm-start BO (i.e., to boost the convergence process) by suggesting configurations that worked well in previous similar cases, and multi-fidelity methods to partially evaluate time-consuming configurations.
 By lowering the barrier of access, AutoML emerged as promising for the democratization of AI, i.e. making it accessible to both experts and non-experts alike.
@@ -31,14 +31,14 @@ delivering AI systems is riddled with challenges.
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.35]{chapters/introduction/img/contribution_overview.pdf}
-    \caption{Contirbution Overview.}
+    \includegraphics[width=1\textwidth]{chapters/introduction/img/contribution_overview.pdf}
+    \caption{Contirbution overview.}
     \label{fig:contribution}
 \end{figure}
 
 Let us quickly overview the end-to-end process.
 The main character is usually the data scientist, a specialist in machine learning and data analysis, which leverages a process model to translate the \textit{knowledge} about the problem into \textit{ML constraints} and deploy the system.
-The cross-industry standard process for data mining \cite{wirth2000crisp} (CRISP-DM) is considered the open standard and we will take it as a reference in the whole thesis.
+The cross-industry standard process for data mining (CRISP-DM) \cite{wirth2000crisp} is considered the open standard and we will take it as a reference in the whole thesis.
 Given the numerous skills expected by data scientists,
 their numbers fall short of the needs,
 leading domain experts to carry out such a process.
@@ -68,27 +68,27 @@ Specifically, we focus on the following challenges and contributions.
 
 \subsection*{Effective Data-preprocessing Pipelines in Supervised Learning}
 
-\paragraph{Challenges} Data pre-processing
+\paragraph{Challenge} Data pre-processing
 encompasses a broad range of transformations that span from correcting errors to selecting the most relevant features for the modelling phase.
 In supervised learning, during modelling, the ML algorithm is provided with ground truth to drive the learning toward a user-specified objective function.
 There is no clear evidence, or rules defined, on how these transformations impact the final results of the process.
 Besides, the problem is exacerbated when transformations can be combined into pipelines.
 Data scientists cannot easily foresee the overall impact, requiring a method to discriminate between them and hence find the most relevant ones for their study at hand.
 
-\paragraph{Contributions} In \Cref{data-centric-chap:supervised}, we study the impact of transformations in general, and the impact of transformations when combined together into pipelines.
+\paragraph{Contribution} In \Cref{data-centric-chap:supervised}, we study the impact of transformations in general, and the impact of transformations when combined together into pipelines.
 We make use of rules that enable the construction of prototypes (i.e., ordered series of transformations) and, once found, these prototypes can be tuned -- similarly to algorithm hyperparameters -- using AutoML.
 The optimization of our effective prototypes provides results that compared to an exhaustive search, get 90\% of the predictive accuracy in the median, but with a time cost that is 24 times smaller.
 
 \subsection*{Exploring Clustering Pipelines via AutoML and Diversification}
 
 
-\paragraph{Challenges}
+\paragraph{Challenge}
 AutoML has witnessed effective applications in the field of supervised learning -- mainly in classification tasks --  where the goal is to find the best ML pipeline when a ground truth is available.
 This is not the case for unsupervised tasks that are by nature exploratory and they are performed to unveil hidden insights.
 Since there is no right result, analyzing different configurations is more important than returning the best-performing one.
 When it comes to exploratory unsupervised tasks -- such as cluster analysis --  different facets of the datasets could be interesting for the data scientist; for instance, data items can be effectively grouped together in different subspaces of features.
 
-\paragraph{Contributions}
+\paragraph{Contribution}
 In \Cref{data-centric-chap:unsupervised}, we design a framework that explores and returns a dashboard of both relevant and diverse clusterings via AutoML and diversification.
 AutoML ensures that the explored pipelines for cluster analysis (including pre-processing steps) compute good clusterings.
 Then, diversification selects, out of the explored clusterings, the ones conveying different clues to the data scientists.
@@ -106,10 +106,10 @@ In \Cref{part:human-centric}, we focus on the following challenges and contribut
 
 \subsection*{Human-centric AutoML via Structured Argumentation}
 
-\paragraph{Challenges} In the last decade, we have witnessed exponential growth in both the complexity and the number of ML techniques; leveraging such techniques to solve real-case problems has become difficult for Data Scientists.
+\paragraph{Challenge} In the last decade, we have witnessed exponential growth in both the complexity and the number of ML techniques; leveraging such techniques to solve real-case problems has become difficult for Data Scientists.
 Automated Machine Learning (AutoML) tools have been devised to alleviate this task, but easily became as complex as the ML techniques themselves---with Data Scientists losing control over the process.
 
-\paragraph{Contributions} In \Cref{human-centric-chap:hamlet}, we design HAMLET (Human-centric AutoMl via Logic and argumEnTation), a framework that helps data scientists to redeem their centrality.
+\paragraph{Contribution} In \Cref{human-centric-chap:hamlet}, we design HAMLET (Human-centric AutoMl via Logic and argumEnTation), a framework that helps data scientists to redeem their centrality.
 HAMLET enables data scientists to express ML constraints in a uniform human- and machine-readable medium.
 User-defined constraints are interpreted to drive the exploration of ML pipelines (i.e., data pre-processing transformations shape the data so that the ML task can be performed at its best).
 AutoML retrieves the most performing pipeline instance, and finally, new constraints are learned and integrated through Logic and Argumentation.
@@ -119,14 +119,14 @@ By doing so, HAMLET not only allows easy exploitation of the knowledge acquired 
 \subsection*{Interactive Hyperparameter Optimization in Multi-Objective Problems via Preference Learning}
 
 
-\paragraph{Challenges} Hyperparameter optimization (HPO) is important to leverage the full potential of machine learning (ML).
+\paragraph{Challenge} Hyperparameter optimization (HPO) is important to leverage the full potential of machine learning (ML).
 In practice, users are often interested in multi-objective (MO) problems, i.e., optimizing potentially conflicting objectives, like accuracy and energy consumption.
 To tackle this, the vast majority of MO-ML algorithms return a Pareto front of non-dominated machine learning models to the user.
 Optimizing the hyperparameters of such algorithms is non-trivial as evaluating a hyperparameter configuration entails evaluating the quality of the resulting Pareto front.
 In literature, there are known indicators that assess the quality of a Pareto front (e.g., hypervolume, R2) by quantifying different properties (e.g., volume, proximity to a reference point).
 However, choosing the indicator that leads to the desired Pareto front might be a hard task for a user.
 
-\paragraph{Contributions} In \Cref{human-centric-chap:moo}, we propose a human-centric interactive HPO approach tailored towards multi-objective ML leveraging preference learning to extract desiderata from users that guide the optimization.
+\paragraph{Contribution} In \Cref{human-centric-chap:moo}, we propose a human-centric interactive HPO approach tailored towards multi-objective ML leveraging preference learning to extract desiderata from users that guide the optimization.
 Instead of relying on the user guessing the most suitable indicator for their needs, our approach automatically learns an appropriate indicator.
 Concretely, we leverage pairwise comparisons of distinct Pareto fronts to learn such an appropriate quality indicator.
 Then, we optimize the hyperparameters of the underlying MO-ML algorithm towards this learned indicator using a state-of-the-art HPO approach.
@@ -135,17 +135,17 @@ In an experimental study targeting the environmental impact of ML, we demonstrat
 
 \subsection*{AutoML in the Age of Large Language Models: Current Challenges, Future Opportunities and Risks}
 
-The fields of both Natural Language Processing (NLP) and Automated Machine Learning (AutoML) have achieved remarkable results over the past years.
+\paragraph{Motivation} The fields of both Natural Language Processing (NLP) and Automated Machine Learning (AutoML) have achieved remarkable results over the past years.
 In NLP, especially Large Language Models (LLMs) have experienced a rapid series of breakthroughs very recently.
 We envision that the two fields can radically push the boundaries of each other through tight integration.
 
-To showcase this vision, in \Cref{human-centric-chap:llm} we explore the potential of a symbiotic relationship between AutoML and LLMs, shedding light on how they can benefit each other.
+\paragraph{Contribution} To showcase this vision, in \Cref{human-centric-chap:llm} we explore the potential of a symbiotic relationship between AutoML and LLMs, shedding light on how they can benefit each other.
 In particular, we investigate both the opportunities to enhance AutoML approaches with LLMs from different perspectives and the challenges of leveraging AutoML to further improve LLMs.
 To this end, we survey existing work, and we critically assess risks.
 We strongly believe that the integration of the two fields has the potential to disrupt both fields, NLP and AutoML.
 By highlighting conceivable synergies, but also risks, we aim to foster further exploration at the intersection of AutoML and LLMs.
 
-\section*{Part III: Physics-aware AI}
+\section*{Part III: Physics-coupled AI}
 
 As application areas go, there are domains in which ML models are not yet widespread.
 Usually related to earth observations, the deployed applications tend to be particularly high-impact, trying to mitigate challenges such as climate change by delivering (more) eco-friendly systems.
@@ -165,14 +165,14 @@ Specifically, we provide the necessary background and related works in \Cref{phy
 \subsection*{Multi-Sensor Profiling for Precision Soil Moisture Monitoring}
 
 
-\paragraph{Challenges}
+\paragraph{Challenge}
 In a contest of climate change and increasing world population, the optimization of watering and crop performance is of utmost importance to assure food security and quality.
 For this reason, the need for robust methods of soil moisture monitoring has never been clearer.
 % Controlling soil moisture is crucial in optimizing watering and crop performance.
 Yet, traditional monitoring systems rely on a single sensor or on a column of sensors that do not allow farmers to properly capture soil moisture dynamics in the soil volume occupied by roots.
 
 
-\paragraph{Contributions} In \Cref{physics-aware-chap:pluto}, we propose PLUTO, an original approach that builds fine-grained 2D and 3D soil moisture profiles by relying on a grid of sensors.
+\paragraph{Contribution} In \Cref{physics-aware-chap:pluto}, we propose PLUTO, an original approach that builds fine-grained 2D and 3D soil moisture profiles by relying on a grid of sensors.
 Profiles are computed using both process-based and machine-learning approaches.
 Besides the technical description of the approach, this chapter reports a set of original visualizations and a large set of tests computed, over two years, on real Kiwi orchards.
 PLUTO proved to largely overcome the accuracy of profiles obtained with traditional sensor layouts.
@@ -181,7 +181,7 @@ Considering that the cost of sensors is progressively decreasing, PLUTO provides
 
 \subsection*{Enhancing Process-Based Models for Precision Soil Moisture Forecasting}
 
-\paragraph{Challenges}
+\paragraph{Challenge}
 % In a contest of climate change and increasing world population, the optimization of agricultural inputs such as water and fertilizer is of utmost importance to assure food security and quality.
 Optimization watering and crop performance is a complex real-case problem, and several solutions have been proposed.
 % While soil moisture monitoring is just one side of the coin, soil moisture forecasting has demonstrated itself particularly effective.
@@ -189,7 +189,7 @@ Even machine learning models leverage process-based models to generate synthetic
 % the need for robust methods of agricultural modeling and forecasting has never been clearer.
 Yet, the accuracy and precision of agricultural modeling and forecasting remain limited by current tools and methods.
 
-\paragraph{Contributions} In \Cref{physics-aware-chap:orchard}, to overcome the limitations of process-based models, we are proposing an integrated system coupling a three-dimensional numerical model with an assimilation procedure that exploits a bi-dimensional sensor grid.
+\paragraph{Contribution} In \Cref{physics-aware-chap:orchard}, to overcome the limitations of process-based models, we are proposing an integrated system coupling a three-dimensional numerical model with an assimilation procedure that exploits a bi-dimensional sensor grid.
 The system is capable of auto-tuning its parameters on a specific soil and of providing a very precise forecast that can support precision watering policies on a weekly horizon.
 A large set of tests has been carried out on an experimental farm in Northern Italy where Kiwifruit is cultivated.
 Besides accuracy, tests proved the robustness of the system even in the presence of a limited set of examples for parameter auto-tuning.
@@ -199,7 +199,7 @@ This makes our approach concretely applicable in real-world settings.
 % \subsection*{Adaptive Soil Moisture Forecasting for Long-Term Irrigation Planning}
 
 
-% \paragraph{Challenges} $\dots$
+% \paragraph{Challenge} $\dots$
 
 
-% \paragraph{Contributions} In \Cref{physics-aware-chap:forecasting}, $\dots$
+% \paragraph{Contribution} In \Cref{physics-aware-chap:forecasting}, $\dots$

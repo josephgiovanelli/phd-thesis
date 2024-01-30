@@ -55,7 +55,7 @@ The main contributions can be summarized as follows.
         \item with 24 times less time budget, our proposed pipelines obtain results whose median is above 90\% of the ones generated via exhaustive search.
         \item on average, in 73\% of the cases, splitting evenly the time budget between pre-processing and modelling outperforms the results of solely optimizing the latter.
     \end{enumerate}
-	\item We deploy \textbf{AutoPrep}, a reproducibility framework for the automatic generation of effective pre-processing pipeline prototypes. Specifically, in \cite{}, we introduce: (i) a detailed reproducibility protocol, (ii) software, and (iii) datasets in a self-contained environment.
+	\item We deploy \textbf{AutoPrep}, a reproducibility framework for the automatic generation of effective pre-processing pipeline prototypes. Specifically, in \cite{giovanelli2023reproducible}, we introduce: (i) a detailed reproducibility protocol, (ii) software, and (iii) datasets in a self-contained environment.
 	The experiments were run on several machines and confirmed all the inishts in this chapter.
 \end{itemize}
 
@@ -79,7 +79,7 @@ On the other hand, some consider optimizing DPSO along with CASH, adopting a joi
 In \cite{Quemy20InfSystems}, authors demonstrate the impact of optimizing the pre-processing pipelines, but considering only a single fixed prototype and only a few datasets.
 However, as we have already seen (\Cref{effective-sec:eval-universal-pipeline}), a single fixed prototype cannot perform best for every dataset.
 
-In PRESISTANT~\cite{presistant18CSI,presistant18CAISE,presistant19DKE}, authors tackled the problem of recommending pre-processing transformations to non-expert users.
+In PRESISTANT \cite{presistant18CSI,presistant18CAISE,presistant19DKE}, authors tackled the problem of recommending pre-processing transformations to non-expert users.
 They identify the pre-processing transformations and rank them in advance, based on their potential impact to the final analysis.
 However, they do not consider pre-processing pipelines, but only single transformations, expecting that the analyst applies the process iteratively.
 
@@ -87,10 +87,10 @@ In ActiveClean \cite{ActiveClean16PVLDB}, authors define a method that aims at p
 Hence, instead of recommending the transformations to be applied, the system recommends the subset of data that needs to be cleaned at a given point.
 The type of pre-processing to be applied is left to the user, assuming that the user is an expert.
 
-In Learn2Clean~\cite{Berti19WWW}, based on a reinforcement learning technique, for a given dataset and an ML model, an optimal sequence of pre-processing transformations is generated so that the quality of the ML model is maximized.
-Yet, similarly to~\cite{Quemy20InfSystems}, the pipeline prototype is fixed in advance.
+In Learn2Clean \cite{Berti19WWW}, based on a reinforcement learning technique, for a given dataset and an ML model, an optimal sequence of pre-processing transformations is generated so that the quality of the ML model is maximized.
+Yet, similarly to \cite{Quemy20InfSystems}, the pipeline prototype is fixed in advance.
 
-In Alpine Meadow~\cite{Shang19SIGMOD}, authors follow a similar approach to ours in that they define two steps for the pre-processing phase. One, the so-called \textit{logical pipeline plan}, which is roughly equivalent to the \textit{prototype} defined in this work, and the second the \textit{physical pipeline plan} which translates to \textit{executable pipelines} used in this work.
+In Alpine Meadow \cite{Shang19SIGMOD}, authors follow a similar approach to ours in that they define two steps for the pre-processing phase. One, the so-called \textit{logical pipeline plan}, which is roughly equivalent to the \textit{prototype} defined in this work, and the second the \textit{physical pipeline plan} which translates to \textit{executable pipelines} used in this work.
 The physical plan is generated through a combination of Bayesian optimization, meta-learning, and multi-armed bandits.
 For the logical plans, they rely on rules but without clear evidence on how they are generated.
 Moreover, it is not clear whether the logical plan is fixed as in \cite{Quemy20InfSystems} and if some further adjustment from the user is required.
