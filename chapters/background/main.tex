@@ -186,7 +186,7 @@ Popular examples of algorithms are: k-means \cite{arthur2006k}, isolation forest
 Consistently, the model evaluation is performed atop the training dataset and does not need any particular protocol.
 Being provided without any ground truth, loss functions and quality metrics estimate the model performance based on patterns and relationships discovered within the feature values themselves.
 For instance, in cluster analysis, the aim is to find a well-separated partitioning (also known as clustering).
-The Silhouette index (\Cref{ex:sil}) is a quality metric that estimates: (i) cohesion of the provided clusters as the mean distance between a sample and all other points in the same cluster, and (i) separability as the mean distance between a sample and all other points in the next nearest cluster.
+The silhouette index (\Cref{ex:sil}) is a quality metric that estimates: (i) cohesion of the provided clusters as the mean distance between a sample and all other points in the same cluster, and (i) separability as the mean distance between a sample and all other points in the next nearest cluster.
 
 \begin{example}[Silhouette Index \cite{zhu2010clustering}]\label{ex:sil}
     Given the dataset set $\altmathcal{D}$ and the model $H_{\pmb{\lambda}}$ resulted from the training $A_{\pmb{\lambda}}(\altmathcal{D})$, then the quality metric $SIL$ summarizes cohesion $COH$ and separability $SEP$ of the clustering made by $H_{\pmb{\lambda}}$
@@ -336,9 +336,9 @@ Based on past observations, a percentile for each hyperparameter is built to dis
 The hyperparameter values are split into two sets, and their respective distributions are determined using density estimation through \textit{parzen windows}\footnote{Statistical technique to estimate a density distribution by generalization from a histogram.}.
 The ratio between the two density functions reflects the improvement in the acquisition function and is used to recommend new configurations.
 TPE has demonstrated excellent performance in hyperparameter optimization tasks \cite{bergstra2011algorithms, bergstra2013making, eggensperger2013towards, falkner2018bohb, sparks2015automating}.
-In this thesis, we leverage an efficient implementation provided by the python package HyperOpt \cite{bergstra2015hyperopt}.
+In this thesis, we leverage an efficient implementation provided by the python package hyperopt \cite{bergstra2015hyperopt}.
 
-\paragraph{Sequential Model-based Algorithm Configuration (SMAC)} \cite{lindauer-jmlr22a} introduce SMAC, leveraging Random forest \cite{random_forest} as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
+\paragraph{Sequential Model-based Algorithm Configuration (SMAC)} \cite{lindauer-jmlr22a} introduce SMAC, leveraging  forest \cite{random_forest} as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
 The algorithm starts by training different regression trees, each built using randomly selected data points.
 For each tree, we are provided with an estimation cost, which translates into the posterior distribution in the bayesian framework.
 This is leveraged in combination with an aggressive racing mechanism to efficiently decide which of two configurations performs better.

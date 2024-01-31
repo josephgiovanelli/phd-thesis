@@ -5,7 +5,7 @@
 \begin{figure*}[t]
     \centering
     \includegraphics[width=1.0\textwidth]{chapters/data-centric/supervised/img/data-analytics-pipeline.pdf}
-    \caption{Data analytics pipeline generation in a knowledge discovery process.}
+    \caption{Data pre-processing and modeling challenges and corresponding problems in the literature.}
     \label{effective-fig:data-analytics-pipeline}
 \end{figure*}
 
@@ -24,9 +24,9 @@ Inspired from \cite{Munoz09DOLAP}, we contend that there is need for more data-c
 Assistance is required in every phase \cite{Bilalli16IOTBD}.
 By considering pre-processing as an integral component of the learning process, and carefully selecting and optimizing data pipelines, it is easy to obtain results that go beyond the ones obtained by only optimizing ML algorithms.
 
-To briefly illustrate this, we perform an experiment on the well known \texttt{bank-marketing}\footnote{\url{https://archive.ics.uci.edu/ml/datasets/Bank+Marketing}} dataset, using HyperOpt \cite{HyperOptICML13} as an AutoML approach to optimize the parameters of three different ML algorithms, namely Naive Bayes (NB), K-Nearest Neighbor (KNN), and Random Forest (RF).
+To briefly illustrate this, we perform an experiment on the well known \texttt{bank-marketing}\footnote{\url{https://archive.ics.uci.edu/ml/datasets/Bank+Marketing}} dataset, using hyperopt \cite{HyperOptICML13} as an AutoML approach to optimize the parameters of three different ML algorithms, namely naive bayes (NB), k-nearest neighbor (KNN), and random forest (RF).
 We provide an initial budget of 50 iterations for optimizing the hyperparameters of the algorithms, and after the 50th iteration, we fix the algorithm configuration to the best one achieved so far and start optimizing the pre-processing pipeline\footnote{This order is used only for the sake of illustration.}.
-In \Cref{effective-fig:pre-processing-impact}, the ratio of the change in terms of accuracy (i.e., obtained after the i-th iteration to the baseline/default accuracy) is plotted against the number of different configurations visited by HyperOpt (i.e., iterations).
+In \Cref{effective-fig:pre-processing-impact}, the ratio of the change in terms of accuracy (i.e., obtained after the i-th iteration to the baseline/default accuracy) is plotted against the number of different configurations visited by hyperopt (i.e., iterations).
 Observe that after the 11th iteration for NB and KNN, and after the 26th iteration for RF, the lines remain flat.
 That is, from there on, no improvement is achieved by optimizing the hyperparameters of the algorithms until the 50th iteration is reached. At this point, a sudden jump is observed and the results start to improve again, going clearly beyond the ones obtained before, thanks to the optimizations performed now over the pre-processing pipeline.
 
@@ -45,22 +45,22 @@ To better distinguish between pipeline selection and its optimization, we follow
 To keep discussions and experiments simpler, we stick to supervised learning tasks.
 The main contributions can be summarized as follows.
 \begin{itemize}
-    \item We empirically evaluate the impact of optimizing the exhaustive set of potential prototypes and find out that	there is no universal solution---i.e., prototype that works best for each dataset and algorithm considered.
+    \item We empirically evaluate the impact of optimizing the exhaustive set of potential prototypes and find out that	there is no universal solution---i.e., a prototype that works best for each dataset and algorithm considered.
     \item We define a method that given an ML algorithm and a set of pre-processing steps, is capable of generating the right order, obtaining effective pre-processing prototypes that are then instantiated via bayesian optimization.
     \item We suggest a meta-learning step (i.e., learning on top of learning) where the relationships between pre-processing transformations and dataset characteristics are learned in order to create rules that help with the initial instantiation of the prototypes.
 
-	We exemplify our meta-learning study generating simple but not obvious and effective rules for two kinds of pre-processing steps, namely, Feature Engineering and Rebalancing.
+	We exemplify our meta-learning study by generating simple but not obvious and effective rules for two kinds of pre-processing steps, namely, Feature Engineering and Rebalancing.
     \item We perform a comprehensive evaluation by comparing the performance of optimizing prototypes generated following our method, and find out that:
     \begin{itemize}
         \item with 24 times less time budget, our proposed pipelines obtain results whose median is above 90\% of the ones generated via exhaustive search.
         \item on average, in 73\% of the cases, splitting evenly the time budget between pre-processing and modeling outperforms the results of solely optimizing the latter.
     \end{itemize}
 	\item We deploy \textbf{AutoPrep}, a reproducibility framework for the automatic generation of effective pre-processing pipeline prototypes. Specifically, in \cite{giovanelli2023reproducible}, we introduce: (i) a detailed reproducibility protocol, (ii) software, and (iii) datasets in a self-contained environment.
-	The experiments were run on several machines and confirmed all the inishts in this chapter.
+	The experiments were run on several machines and confirmed all the insights in this chapter.
 \end{itemize}
 
 The remaining of this chapter is organized as follows:
-\Cref{effective-sec:related-work} discusses the related work,
+\Cref{effective-sec:related-work} discusses the related works,
 \Cref{effective-sec:methodology} presents our method of generating effective pipelines,
 \Cref{effective-sec:evaluation} provides an extensive evaluation of the pipelines created using our proposed method and, finally, \Cref{effective-sec:conclusions} provides the conclusions and future work.
 
@@ -98,7 +98,7 @@ Moreover, it is not clear whether the logical plan is fixed as in \cite{Quemy20I
 \subsection{Optimization with a Joint Policy}
 \label{effective-ssec:dpso-cash}
 Auto-sklearn \cite{Feurer15AutoSklearn} is based on the popular python library scikit-learn.
-The authors, inspired by Auto-Weka, address the problem with the Sequential Model-based Algorithm Configuration (SMAC).
+The authors, inspired by AutoWeka, address the problem with the SMAC \cite{lindauer-jmlr22a}.
 Furthermore, they improve the approach by adding a meta-learning phase (i.e., learning on top of learning) at the beginning and an ensemble technique at the end.
 Meta-learning leverages previous ML experiments and learns promising configurations to warm-start (i.e., boost the convergence) the bayesian optimization.
 Ensemble techniques merge predictions from multiple ML models to statistically outperform the base models.
@@ -332,19 +332,19 @@ Each cell $a_{ij}$ denotes a precedence relationship between the row $i$ and col
 Hence, \texttt{1} means that an edge exists between the transformation in the row and the transformation in the column, whereas \texttt{0} means that such an edge does not exist, hence a precedence order is not established for that pair.
 
 \paragraph{Use case}
-We studied the pre-processing steps implemented in Scikit-learn, the discovered rules are shown through the adjacency matrix in \Cref{effective-tbl:rules}a.
-For example, most Scikit-learn steps cannot be applied in the presence of missing values.
-This is why in every pair of them where Imputation is involved, except the one with Normalization\footnote{Normalization transformations are the only ones that Scikit-learn can apply on datasets with missing values.}, Imputation goes first.
-Furthermore, Scikit-learn steos are applied only to all compatible features of a given dataset.
+We studied the pre-processing steps implemented in scikit-learn, the discovered rules are shown through the adjacency matrix in \Cref{effective-tbl:rules}a.
+For example, most scikit-learn steps cannot be applied in the presence of missing values.
+This is why in every pair of them where Imputation is involved, except the one with Normalization\footnote{Normalization transformations are the only ones that scikit-learn can apply on datasets with missing values.}, Imputation goes first.
+Furthermore, scikit-learn steos are applied only to all compatible features of a given dataset.
 Generally, categorical features are physically represented as strings and continuous features as numbers.
-However, a transformation that is meant to be applied, say to continuous features, cannot be applied over a dataset that contains both continuous and categorical features (i.e., a dataset containing both numbers and strings); Scikit-learn cannot deal with arrays of mixed types.
+However, a transformation that is meant to be applied, say to continuous features, cannot be applied over a dataset that contains both continuous and categorical features (i.e., a dataset containing both numbers and strings); scikit-learn cannot deal with arrays of mixed types.
 In that case, all the categorical features need to be encoded into numeric representations, even if they represent a categorical value.
 That is, a value can be a number but represent a category.
 This is what happens when Normalization and Discretization are meant to be applied to a dataset containing mixed types of features.
 In order for them to be applied to datasets of mixed types, an Encoding transformation needs to be applied first.
 A similar constraint is imposed when considering Rebalancing and Feature Engineering, since these steps do not accept inputs containing strings (i.e., representing a categorical type).
 For the rest of the pairs, there are no constraints imposed by the framework, thus any ordering is permitted, reflected by a \texttt{0} in \Cref{effective-tbl:rules}a.
-The graph obtained in this case exclusively corresponds to the limitations of Scikit-learn (as a matter of fact, if another framework were to be chosen, it may have looked differently).
+The graph obtained in this case exclusively corresponds to the limitations of scikit-learn (as a matter of fact, if another framework were to be chosen, it may have looked differently).
 
 \subsection{Discovery of Well-formed Precedences}
 \label{effective-ssec:rules-heuristics}
@@ -362,7 +362,7 @@ In this case, Normalization should be applied first, since otherwise Rebalancing
 \Cref{effective-tbl:rules}b shows the heuristic rules obtained considering domain-independent knowledge about the steps \cite{BookExploratoryDM03Dasu}.
 In comparison with the results from \Cref{effective-tbl:rules}a, observe that the constraints on the Imputation still hold: when combining it ith another step, Imputation should go first.
 This time even when combining it with Normalization---note the difference with \Cref{effective-tbl:rules}a.
-The constraints of Encoding are however not present in \Cref{effective-tbl:rules}a, hence not considering the framework, Discretization combined with Encoding is a meaningful combination---when a mixed type dataset is considered, but incompatible from the point of view of Scikit-learn.
+The constraints of Encoding are however not present in \Cref{effective-tbl:rules}a, hence not considering the framework, Discretization combined with Encoding is a meaningful combination---when a mixed type dataset is considered, but incompatible from the point of view of scikit-learn.
 
 \subsection{Empirical-learning of Promising Precedences}
 \label{effective-ssec:rules-learned}
@@ -764,7 +764,7 @@ However, when the majority class has less than 56\%, it may imply that: (i) ther
 The prototypes from the top flow and the meta-lerning rules from the bottom flow (if the optimization framework permits) are finally fed to the final phase which deals with the instantiation and optimization of the prototypes. In this, we run SMBO until an optimized pipeline is found.
 
 \paragraph{Use case}
- In our final execution, we run SMBO to find a suitable instantiation for the suggested prototypes. The simple but not obvious meta-learning rules, even though not included in our final execution, because of the implementation considered (i.e., HyperOpt), can potentially be used to ease the cold-start problem.
+ In our final execution, we run SMBO to find a suitable instantiation for the suggested prototypes. The simple but not obvious meta-learning rules, even though not included in our final execution, because of the implementation considered (i.e., hyperopt), can potentially be used to ease the cold-start problem.
 
 \section{Empirical Evaluation}
 \label{effective-sec:evaluation}
@@ -778,9 +778,9 @@ The aim of our experimental study is three-fold:
 \end{enumerate}
 
 The experiments were performed on an Intel Core i7 machine with 12 cores, running at 3.20 GHz with 64 GB of main memory.
-We leveraged the SMBO optimization algorithm available in the python library HyperOpt \cite{bergstra2015hyperopt}.
+We leveraged the SMBO optimization algorithm available in the python library hyperopt \cite{bergstra2015hyperopt}.
 The datasets used in the experiments are the ones from the OpenML CC-18 repository \cite{OpenML2013}.
-Finally, the classification algorithms considered are \textit{NB}, \textit{KNN}, and \textit{RF} from the python library Scikit-learn \cite{scikit-learn}.
+Finally, the classification algorithms considered are \textit{NB}, \textit{KNN}, and \textit{RF} from the python library scikit-learn \cite{scikit-learn}.
 All the experiments for a single algorithm took approximately two weeks.
 
 
@@ -938,7 +938,7 @@ As a result, we defined a method that allows to generate effective pre-processin
 That is, pipelines that consist of, (i) compatible pairs of steps concerning the framework used,  (ii) meaningful pairs of steps in terms of general knowledge (best practices), and (iii) promising pairs of steps that once applied are expected to provide higher overall impact (domain knowledge).
 In addition, via the meta-learning phase proposed, we aim to guide the pipeline instantiation in order to facilitate finding better transformations.
 
-An extensive evaluation on 80 datasets with heterogeneous characteristics, from sample size to feature types, and a set of classification algorithms (i.e., Naive Bayes, Random Forest, K-Nearest Neighbours), showed that our devised prototypes give promising results.
+An extensive evaluation on 80 datasets with heterogeneous characteristics, from sample size to feature types, and a set of classification algorithms (i.e., naive bayes, random forest, k-nearest neighbours), showed that our devised prototypes give promising results.
 More specifically, we were able to observe that:
 \begin{itemize}
     \item The overall impact of optimizing pre-processing is not negligible and it may boost the performance of the overall analytics (e.g., accuracy).
@@ -951,4 +951,4 @@ More specifically, we were able to observe that:
 The results indicate that pre-processing can boost the performance of the ML algorithm.
 Hence, it must be considered as an integral part of the data analytics optimization process.
 
-Finally, previous works have shown the effectiveness of meta-learning for solving the cold start problem \cite{Feurer15AAAI}, hence as immediate future work, we intend to extend an optimization framework (i.e., HyperOpt) with a complementary meta-learning module that can ease the cold-start problem, facilitating the search for optimal instantiations.
+Finally, previous works have shown the effectiveness of meta-learning for solving the cold start problem \cite{Feurer15AAAI}, hence as immediate future work, we intend to extend an optimization framework (i.e., hyperopt) with a complementary meta-learning module that can ease the cold-start problem, facilitating the search for optimal instantiations.

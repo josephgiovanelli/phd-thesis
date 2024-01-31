@@ -64,9 +64,9 @@ Specifically, we commit to the following contributions.
 \begin{itemize}
 	\item An innovative \textit{3D crop model} designed specifically to compute the soil water balance of an orchard.
     The 3D model keeps into account: non uniform distribution of the root system, growth and development of orchard plants with a full computation of the soil water budget, short-term weather forecast.
-    \item A \textit{Data Assimilation} technique to map coarse-grained 2D/3D-sensor grid to the fine-grained 3D moisture profile, leveraged as a checkpoint state for the crop model.
-    \item A \textit{Parameter Tuning} to automatically calibrate the model parameters to a specific orchard borrowing AutoML techniques---i.e., Bayesian (hyper)parameter optimization.
-	\item A detailed field experiment in a Kiwifruit field in a commercial farm.
+    \item A \textit{data assimilation} technique to map coarse-grained 2D/3D-sensor grid to the fine-grained 3D moisture profile, leveraged as a checkpoint state for the crop model.
+    \item A \textit{parameter tuning} to automatically calibrate the model parameters to a specific orchard borrowing AutoML techniques---i.e., Bayesian (hyper)parameter optimization.
+	\item A detailed field experiment in a kiwifruit field in a commercial farm.
 \end{itemize}
 
 
@@ -83,10 +83,10 @@ Specifically, we commit to the following contributions.
 \Cref{orchard-fig:scheme1} depicts the planting layout adopted.
  Trees are arranged in lines; soil can have a slope both in the $x$ and $y$ axes. The orchard is equipped with a watering system that can be of different type (e.g., single or double wing) and with different distances between drippers and lines. For each plant, we consider a \emph{soil volume} that includes the roots; typically the soil volume can be larger than the area affected by the watering system. A mound can be present to favor draining.
 
-The simulation approach and the required functional modules are depicted in \Cref{orchard-fig:overview}. The offline phase is aimed at determining the optimal crop model parameters. The \emph{Parameter Tuner} searches for the best parameters by comparing data simulated by the crop model with the \emph{Historical Data} from real sensors.
+The simulation approach and the required functional modules are depicted in \Cref{orchard-fig:overview}. The offline phase is aimed at determining the optimal crop model parameters. The \emph{parameter tuner} searches for the best parameters by comparing data simulated by the crop model with the \emph{Historical Data} from real sensors.
 Historical data must cover the time period of the simulation scenario, including watering and weather conditions (typically obtained from in-situ weather stations or from public open data) together with their effect on soil water content (i.e., the values sampled by soil sensors).
 
-The online phase requires the grid of sensors to be in place. During this phase the crop model, properly set with the optimal parameters, forecasts the system behavior and exploit the \emph{Data assimilation} module to initialize the simulation model to the real field status.
+The online phase requires the grid of sensors to be in place. During this phase the crop model, properly set with the optimal parameters, forecasts the system behavior and exploit the \emph{data assimilation} module to initialize the simulation model to the real field status.
 
 
 \Cref{tab:parameter} shows the simulation parameters: in bold those automatically inferable by the tuning phase, while the remaining ones must be provided by the user. Note that, if no historical values are available tuning cannot be run. In this case the on-line phase will be based on default values possibly taken from the literature. Similarly, if some of the tunable parameters are known, tuning can be limited to the remaining ones.
@@ -289,7 +289,7 @@ This is customizable according to the following conditions:
     \item along the $z$ axis, the root density is non-linear, a parameter (i.e., $root_z$) allows to set higher density either in the upper or lower layers.
 \end{itemize}
 
-The values of $root_x$ and $root_z$ can be deduced by the Parameter Tuner.
+The values of $root_x$ and $root_z$ can be deduced by the parameter tuner.
 
 \Cref{orchard-fig:root} shows the root density projections on the $xy$ and $xz$  planes.
 The parameter values shaping the figure routes are those set in the orchard adopted in our experimentation.
@@ -438,7 +438,7 @@ The chosen approach is based on the Blended-search \cite{wang2021flaml}, from th
 \end{algorithm}
 
 
-The Parameter Tuner is detailed in \Cref{alg:bayesian-optimization} and takes as inputs: weather and irrigation time series, the soil moisture time series sampled by sensors (our ground truth), a maximum iteration budget, and the subsets of (manually) fixed and automatically-tunable parameters 
+The parameter tuner is detailed in \Cref{alg:bayesian-optimization} and takes as inputs: weather and irrigation time series, the soil moisture time series sampled by sensors (our ground truth), a maximum iteration budget, and the subsets of (manually) fixed and automatically-tunable parameters 
 ($X_{fix} \cup X_{tun} = X$ and, $X_{fix} \cap X_{tun} = \varnothing$, with $X$ being the parameters from \Cref{tab:parameter}).
 The algorithm returns as output the configuration of parameters that allow \olab{} to produce the best approximation of real sensor values (i.e., of our ground truth).
 Given the simulation states \SMt{} and the sampled soil moisture $\overrightarrow{S}$, the error of approximating $\overrightarrow{S}$ with \SMt{} is computed as follows
@@ -710,7 +710,7 @@ The more the forecasted values are close to the observed one, the less the regre
 \subsection{Parameter Tuning Performance}
 \label{orchard-ssec:eval_tuner}
 
-The Parameter Tuner is the data-driven process that automatically determines the right parameters for the current use case.
+The parameter tuner is the data-driven process that automatically determines the right parameters for the current use case.
 %
 In this section, we verify the robustness of the procedure
 %according to these two variables.

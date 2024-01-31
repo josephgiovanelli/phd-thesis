@@ -141,7 +141,7 @@ Given the search space $\Lambda_P$, a dataset $\altmathcal{D}$, the optimal pipe
 \label{eq:optimization}
     P_{\lambda^*} = argmin_{\lambda \in \Lambda_P} rel(P_{\lambda}(\altmathcal{D}))
 \end{equation}
-where $rel$ is a goodness metric\footnote{With reference to \Cref{def:loss}, a goodness metric has the opposite semantics wrt. the loss function, hence the higher the better} for the clustering $C$ obtained by partitioning the dataset through the pipeline at hand $P_{\lambda}(\altmathcal{D})$---e.g., Silhouette index \cite{zhu2010clustering}.
+where $rel$ is a goodness metric\footnote{With reference to \Cref{def:loss}, a goodness metric has the opposite semantics wrt. the loss function, hence the higher the better} for the clustering $C$ obtained by partitioning the dataset through the pipeline at hand $P_{\lambda}(\altmathcal{D})$---e.g., silhouette index \cite{zhu2010clustering}.
 
 
 \begin{table}[!ht]
@@ -179,10 +179,10 @@ Since we focus on \textit{crisp spherical} clustering algorithms, we consider KM
 The former separates the data items into groups so that each of them has an equal variance, minimizing a criterion known as the inertia or within-cluster sum-of-squares.
 The latter builds a hierarchy of clusters by merging smaller clusters into larger ones.
 As to the order of steps, in \Cref{data-centric-chap:supervised}, we reduce the combinations of the former steps; we further constrained the order of the steps by computing several experiments and observing the impact of different alternatives.
-Our implementation imports the algorithms from the Scikit-learn python library \cite{scikit-learn}.
+Our implementation imports the algorithms from the scikit-learn python library \cite{scikit-learn}.
 While the algorithms can require the assignment of additional hyperparameters (e.g., the maximum number of iterations in KMeans), we reduce the pipeline domain by considering only the most influential.
 
-To explore promising pipelines, we leverage the SMBO implementation from the python library HyperOpt \cite{HyperOptICML13}.
+To explore promising pipelines, we leverage the SMBO implementation from the python library hyperopt \cite{HyperOptICML13}.
 Selecting the optimal pipeline requires the relevance metric (i.e., $rel(C)$) to evaluate the goodness of the corresponding retrieved clustering.
 In AutoClues, such a metric is customizable.
 Well-known metrics leveraged for spherical clustering are: the silhouette index (SIL) \cite{zhu2010clustering}, contrasting the average distance to elements in the same cluster with the average distance to elements in other clusters, and the Davies-Bouldin Index (DBI) \cite{dbi}, computing the average similarity between clusters by comparing it with the size of the clusters themselves.
@@ -232,6 +232,7 @@ Finally, considering that the diversification problem is NP-hard, we compute it 
 
 \begin{table}[t]
     \centering
+    \resizebox{0.9\textwidth}{!}{
     \begin{tabular}{l|ccccccc|cccc}
     \hline
         \multirow{2}{*}{Dataset}& \multicolumn{7}{c|}{Characteristics} & \multicolumn{4}{c}{AutoClues Performance} \\
@@ -257,6 +258,7 @@ Finally, considering that the diversification problem is NP-hard, we compute it 
         \texttt{syn19} & 2905 & 2  & 3 & 0.15  & 0.50  & 0.72 & 0.53 & 0.86 & 0.87 & 4.79 & \num{1.28e03} \\ 
         \texttt{syn20} & 264 & 5 & 3 & 0.25 & 0.20 & 0.64 & 0.44 & 0.7 & 0.88 & 3.74 & \num{2.13e02} \\ \hline
     \end{tabular}
+    }
     \caption{Dataset characteristics and performance achieved by AutoClues.}
     \label{clustering-tbl:synthetic}
 \end{table}
