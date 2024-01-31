@@ -59,8 +59,9 @@ Yet, to correctly model all the soil phenomena (e.g., water tables, hysteresis),
 % For these reasons, such approaches typically carry out \textit{spot} researches to study soil moisture dynamics.
 % Conversely, our goal is to provide a cost-effective, operative solution that monitors soil moisture and whose reference application is \textit{long-term} watering optimization.
 
-The remainder of this chapter is organized as follows. \Cref{pluto-sec:background} introduces the basics of soil moisture monitoring and surveys the previous related works in such an area.
-\Cref{pluto-sec:MaterialsAndMethods} describes PLUTO in detail. Finally, \Cref{pluto-sec:ResultsAndDiscussion} reports the tests carried out on real data collected over two years, and \Cref{pluto-sec:conclusions} draws the conclusions.
+The remainder of this chapter is organized as follows.
+% \Cref{pluto-sec:background} introduces the basics of soil moisture monitoring and surveys the previous related works in such an area.
+\Cref{pluto-sec:MaterialsAndMethods} describes PLUTO in detail, \Cref{pluto-sec:ResultsAndDiscussion} reports the tests carried out on real data collected over two years, and \Cref{pluto-sec:conclusions} draws the conclusions.
 
 % We emphasize that our work is one of the outcomes of the Agro.Big.Data.Science project \cite{ABDS}.
 % The project, funded by Regione Emilia Romagna, aims to study and implement digital solutions to support smart and precision farming.
@@ -93,11 +94,11 @@ The remainder of this chapter is organized as follows. \Cref{pluto-sec:backgroun
 \end{figure}
 
 Our goal is to create a moisture profile that represents the whole soil volume.
-\begin{definition}[Soil volume]
+\begin{definition}[Soil Volume]
 Given a tree, its \emph{soil volume} is a parallelepiped of soil that contains most of the tree roots. The soil volume is centered in the tree position.
 \end{definition}
 
-\begin{definition}[Sensor grid]
+\begin{definition}[Sensor Grid]
 A \emph{sensor grid} $S = \{s^1, ..., s^{|S|}\}$ is an $n$-dimensional layout of $|S|$ sensors installed in a soil volume.
 Each \emph{sensor} $s^i$ is defined by a three-dimensional displacement $(s^i.x_1, s^i.x_2,s^i.x_3)$ with respect to the center of the soil volume, and by a soil moisture value $s^i.v$.
 \end{definition}
@@ -125,7 +126,7 @@ Furthermore, in most real-world applications, the number of sensors is by far le
 For instance, companies involved in Agro.Big.Data.Science \cite{ABDS} relied on 1 to 3 sensors disposed at different depths (i.e., a 0D or a 1D grid).
 The moisture profile, based on raw sensor measurements, estimates soil moisture of the whole soil volume at a fine-grained resolution.
 
-\begin{definition}[Moisture profile]
+\begin{definition}[Moisture Profile]
 Given an $n$-dimensional sensor grid $S$, the \emph{moisture profile} is an $n$-dimensional grid $P = \{p^1, ..., p^{|P|}\}$ that approximates, in each $p^i$, the soil moisture measured by $S$. $P$ is \emph{fine-grained} with respect to $S$ since $|P| > |S|$. 
 \end{definition}
 
@@ -144,7 +145,7 @@ However, given a fixed amount of sensors, not exploiting the assumption of symme
 
 We emphasize that all the soil moisture estimation approaches based on sensors implicitly make symmetry assumptions: if a single sensor (0D installation \cite{arif2013estimation}) is used, the measured moisture is assumed as the reference value for the whole soil volume (i.e., it is assumed to be constant all over the soil volume); if a column of sensors (1D installation \cite{Karandish2016892, Goldstein2018421, Jimenez20201327, Pan2021, Li20152382}) is used the moisture is considered constant at a given depth. From this point of view, PLUTO's 2D and 3D grids progressively lighten such assumptions leading to a more accurate result. Obviously, some assumptions of symmetry remain, but they seem reasonable especially in the agricultural context: orchard rows are (or can be) built to be symmetrical. For example, the kiwi orchards involved in the Agro.Big.Data.Science project (i) were north-south oriented to have the same sun exposure on both the sides of the row; (ii) exploit a T-Bar training system; (iii) have a symmetric raised bed (i.e., with the same slope on both sides of the row).
 More in general, to handle the variability within a single installation, it is always possible to design a grid layout that involves both sides of the row and, to handle variation within different parts of the field, two replicas can be installed.
-In the following, \Cref{pluto-sec:FromSensorsToMoistureProfile} details the implementation of how switch from sensors to moisture profiles (i.e., via profiling functions), \Cref{pluto-sec} illustrates the visual components of PLUTO.
+In the following, \Cref{pluto-sec:FromSensorsToMoistureProfile} details the implementation of how switch from sensors to moisture profiles (i.e., via profiling functions), \Cref{pluto-sec:visualization} illustrates the visual components of PLUTO.
 
 \begin{figure}[t]
 \centering
@@ -155,14 +156,14 @@ In the following, \Cref{pluto-sec:FromSensorsToMoistureProfile} details the impl
 
 \subsection{From Sensors to Moisture Profile}
 \label{pluto-sec:FromSensorsToMoistureProfile}
-The transformation of raw sensor measurements into a moisture profile is achieved through a profiling function. 
+The transformation of raw sensor measurements into a moisture profile is achieved through a profiling function.
 \begin{figure}[t]
 \centering
 \includegraphics[width=1\textwidth]{chapters/physics-aware/pluto/img/process.pdf}
 \caption{Feature-aware and feature-unaware processes for building a moisture profile.}
 \label{pluto-fig:process}
 \end{figure}
-\begin{definition}[Profiling function]
+\begin{definition}[Profiling Function]
 Given an $n$-dimensional sensor grid $S$ and a moisture profile $P$, a \emph{profiling function} $f : S \rightarrow P$ approximates the values of the moisture profile $P$ starting from the sensor grid $S$.
 \end{definition}
 
@@ -245,7 +246,7 @@ ANNs have been chosen for the feature aware profiling function due to the follow
 
 \begin{table}[t]
 \centering
-\caption{The ANN hyperparameter configuration retrieved by hyperopt.}
+\caption{The ANN hyperparameter configuration retrieved by HyperOpt.}
 % \scriptsize{
 \begin{tabular}{lc}
 \hline
@@ -280,7 +281,7 @@ Besides, a Z-score normalization (i.e., transforming data into a Gaussian distri
     \item To address ANN-specific training issues. Normalizing the inputs reduces the chances of getting stuck in local optima (e.g., balance the rate at which the ANN learns) and makes training faster (e.g., avoid the saturation of non-linear activation function).
 \end{itemize}
 
-All the hyperparameters (i.e., ANN structure and learning rates) have been set through a hyperparameter tuning process implemented with hyperopt \citep{bergstra2015hyperopt}. HyperOpt exploits state-of-the-art optimization techniques to heuristically explore the huge search space of hyperparameters. The adoption of a training set including several different weather conditions and watering sessions avoids overfitting (i.e., a learning process that returns a network that works well just for the specific cases it was trained for).
+All the hyperparameters (i.e., ANN structure and learning rates) have been set through a hyperparameter tuning process implemented with HyperOpt \citep{bergstra2015hyperopt}. HyperOpt exploits state-of-the-art optimization techniques to heuristically explore the huge search space of hyperparameters. The adoption of a training set including several different weather conditions and watering sessions avoids overfitting (i.e., a learning process that returns a network that works well just for the specific cases it was trained for).
 
 
 \begin{figure}[t]
@@ -467,7 +468,7 @@ This effect can only be pointed out using 2D or 3D profiles.
 
 \subsection{Sensor Layout Analysis}
 \label{pluto-sec:sensors_disposal_evaluation}
-As shown in \Cref{pluto-fig:2Dperformance,fig:3Dperformance}, accuracy varies with the number of sensors. 
+As shown in \Cref{pluto-fig:2Dperformance} and \Cref{pluto-fig:3Dperformance}, accuracy varies with the number of sensors. 
 Given a regular grid with $n$ sensors, several layouts are possible when $m<n$ sensors are used.  
 In particular, while the bilinear feature-unaware function implies some geometric constraints, in the ANN-based feature-aware one all the layouts are feasible.
 

@@ -102,7 +102,7 @@ Motivated from a similar stance that the user should be put back into the loop o
     \item Moreover, the Pareto front quality indicator learned by us is not constrained to be a scalarization of existing loss functions or quality indicators. Instead, we can, in principle, leverage any object ranking approach that allows for the extraction of a utility function.
 \end{enumerate}
 
-Lastly, our approach is not to be confused with multi-objective HPO \cite{moraleshernandez-arxiv21a,karl-arxiv22a}, where HPO problem itself features multiple loss functions to be optimized, but the ML algorithm itself only returns a single solution.
+Lastly, our approach is not to be confused with multi-objective HPO \cite{moraleshernandez-arxiv21a}, where HPO problem itself features multiple loss functions to be optimized, but the ML algorithm itself only returns a single solution.
 
 \begin{figure*}[!ht]
 \centering
@@ -293,7 +293,7 @@ As such, we simulate users by labeling pairwise comparisons according to hypervo
 The order over the models returned by $A$, which we assume for the feature representation, is given by the energy consumption loss function, which means that models are ordered based on their energy consumption.
 
 All code and documentation required to reproduce any of the results can be found on GitHub\footnote{\url{https://github.com/automl/interactive-mo-ml}}.
-There is no need for the user to locally build the project, we deployed a Docker Image that instantiates a pre-built container with all the needed python dependencies and runs the experiments.
+There is no need for the user to locally build the project, we deployed a Docker Image that instantiates a pre-built container with all the needed Python dependencies and runs the experiments.
 In particular, we leverage: the package cs-rank \cite{csrank2018, csrank2019} as a basis for our preference learning models and the package pymoo\cite{pymoo} for the quality indicator implementations.
 Finally, we exploit the well-known HPO tool SMAC \cite{hutter-lion11a,lindauer-jmlr22a} to apply Bayesian optimization.
 The experiments were tested varying three different seeds on an AMD Ryzen $5$ $3600$ $6$-Core Processor with $64$ GB.

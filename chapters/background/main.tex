@@ -336,21 +336,21 @@ Based on past observations, a percentile for each hyperparameter is built to dis
 The hyperparameter values are split into two sets, and their respective distributions are determined using density estimation through \textit{parzen windows}\footnote{Statistical technique to estimate a density distribution by generalization from a histogram.}.
 The ratio between the two density functions reflects the improvement in the acquisition function and is used to recommend new configurations.
 TPE has demonstrated excellent performance in hyperparameter optimization tasks \cite{bergstra2011algorithms, bergstra2013making, eggensperger2013towards, falkner2018bohb, sparks2015automating}.
-In this thesis, we leverage an efficient implementation provided by the python package hyperopt \cite{bergstra2015hyperopt}.
+In this thesis, we leverage an efficient implementation provided by the Python package HyperOpt \cite{bergstra2015hyperopt}.
 
-\paragraph{Sequential Model-based Algorithm Configuration (SMAC)} \cite{lindauer-jmlr22a} introduce SMAC, leveraging  forest \cite{random_forest} as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
+\paragraph{Sequential Model-based Algorithm Configuration (SMAC)} \cite{lindauer-jmlr22a} introduce SMAC, leveraging random forest \cite{random_forest} as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
 The algorithm starts by training different regression trees, each built using randomly selected data points.
 For each tree, we are provided with an estimation cost, which translates into the posterior distribution in the bayesian framework.
 This is leveraged in combination with an aggressive racing mechanism to efficiently decide which of two configurations performs better.
-In this thesis we leverage SMAC as part of the homonymous python library.
-Authors privde also other state-of-the-art BO implementations; for instance, in \cite{falkner2018bohb}, they propose bayesian optimization and hyper band (BOHB), which enhances the global exploration capabilities of BO with the efficient resource utilization of multi-fidelity functions.
+In this thesis we leverage SMAC as part of the homonymous Python library.
+Authors provide also other state-of-the-art BO implementations; for instance, in \cite{falkner2018bohb}, they propose bayesian optimization and hyper band (BOHB), which enhances the global exploration capabilities of BO with the efficient resource utilization of multi-fidelity functions.
 Iteration after iteration, the surrogate model suggests configurations, while hyperband allocates high-fidelity and low-fidelity evaluations.
 
 
 \paragraph{BlendSearch}
 BlendSearch is an innovative strategy that blends the frugality of cost-related frugal optimization (CFO) -- a local search technique -- with the space exploration capabilities of global search methods like bayesian optimization.
 BlendSearch starts with a low-cost initial point and utilizes several local searches to iteratively improve performance. However, BlendSearch doesn't wait for local search to fully converge before exploring new start points. Instead, it incorporates suggestions from the BO, filtering them based on their distance to existing points in cost-related dimensions. BlendSearch gradually increases the trial cost while prioritizing between global and local search threads based on optimism in the face of uncertainty. This strategy enables BlendSearch to effectively balance exploration and exploitation, leading to economical yet effective hyperparameter optimization.
-In this thesis, we leverage the implementation provided by the authors in the python library FLAML \cite{wang2021flaml}.
+In this thesis, we leverage the implementation provided by the authors in the Python library FLAML \cite{wang2021flaml}.
 
 
 \subsection{Multi-objective Optimization}

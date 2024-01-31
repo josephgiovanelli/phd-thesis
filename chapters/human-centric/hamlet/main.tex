@@ -183,7 +183,7 @@ This discards all the pipelines containing both Normalization and Decision Tree.
 
 Considering all the constraint combinations is overwhelming and, additionally, \emph{conflicts} might occur; for instance in the case of ethical \cite{boston-house} and legal fields that easily inject conflicting constraints into the search space.
 
-\begin{definition}[Constrained pipelines optimization]
+\begin{definition}[Constrained Pipeline Optimization]
 Given a dataset $\altmathcal{D}$, a search space $\Lambda$, and a set of constraints $\altmathcal{C}$, finding the best pipeline instance $P^{\star}_{\lambda^{\star}}$ is defined as $P^{\star}_{\lambda^{\star}} = argmax_{\lambda \in \Lambda_P} metric(P_{\lambda}(\altmathcal{D}_{train}), \altmathcal{D}_{valid})$, where $metric$ is the function evaluating the goodness of $P_{\lambda}$ and the explored pipelines fulfilling the constraints in $\altmathcal{C}$.
 \end{definition}
 
@@ -209,7 +209,7 @@ An argumentation theory is a tuple AS=$\langle L, R \rangle$ with:
 The set of rules $R$ in the theory is used to define how elements from the language are combined together.
 In the following two definitions, we specialize $L$ into the language $L_{ML}$ expressing all the basic elements of an AutoML problem and $R$ into a LogicalKB written in the language $L_{ML}$.
 
-\begin{definition}[AutoML language]
+\begin{definition}[AutoML Language]
 Given an argumentation language $L$, we define the \emph{AutoML language} $L_{ML}$ as $L \cup W$, with $W$ the following set of predicates\footnote{For the sake of conciseness, when writing statements of the AutoML language, the letters $S$ (and $A$) refer to the name of the step (and algorithm)}:
 \begin{itemize}
     \item step($S$) with $S \in L$, representing a step $S$ in the pipeline;
@@ -384,7 +384,7 @@ HAMLET iterates over three phases (\Cref{hamlet-fig:approach}): (i) the generati
 The framework is available on GitHub\footnote{\url{https://github.com/QueueInc/HAMLET}}, and it is composed of two sub-modules.
 The first, written in Kotlin and running on the JVM, exposes a graphical interface on which the data scientists can compile and revise the LogicalKB.
 The module is also responsible for the generation and evaluation of the problem graph; it implements the structured argumentation functionalities using \argtup{} \cite{arg2p-jlc}, an ASPIC\textsuperscript{+}-based Kotlin library.
-The second module, written in python, is responsible for performing the AutoML optimization and the extraction of the new constraints from the explored space.
+The second module, written in Python, is responsible for performing the AutoML optimization and the extraction of the new constraints from the explored space.
 
 \subsubsection{Generation of Problem Graph and Search Space}
 We defined the LogicalKB as the set of rules specified by the data scientist using her knowledge.
@@ -540,7 +540,7 @@ The performance of HAMLET depends on (i) the rules encoded in the LogicalKB and 
 To test both the effectiveness and efficiency of our approach, we define three experimental settings.
 \begin{itemize}
     \item PKB (Preliminary Knowledge Base), HAMLET starts with a preliminary LogicalKB constraining the search space from the first iteration, and no rule mining is applied.
-    The preliminary LogicalKB consists of the rules discovered in \Cref{data-centric-chap:supervised} and some well-known from the literature (e.g., suggested by scikit-learn\footnote{\url{https://scikit-learn.org/stable/auto_examples/preprocessing/plot_discretization.html}}).
+    The preliminary LogicalKB consists of the rules discovered in \Cref{data-centric-chap:supervised} and some well-known from the literature (e.g., suggested by Scikit-learn\footnote{\url{https://scikit-learn.org/stable/auto_examples/preprocessing/plot_discretization.html}}).
     The complete knowledge base can be found in the Github repository.
     \item IKA (Iterative Knowledge Augmentation), HAMLET starts with an empty LogicalKB, and all the rules recommended after each run are applied to extend the LogicalKB.
     \item PKB+IKA, HAMLET starts with a preliminary LogicalKB, and the rules recommended after each run are applied to extend the LogicalKB.
@@ -550,12 +550,12 @@ We also test against a baseline: we let AutoML explore 500 pipeline instances ($
 
 For such an evaluation, we derive a search space out of 6 steps, 5 data pre-processing steps (Imputation, Normalization, Discretization, Feature Engineering, and Rebalancing) followed by the final Classification task.
 Since the tests are run on datasets from OpenML \cite{OpenML2013} -- a well-known repository for data acquisition and benchmarking -- and it provides already-encoded datasets, we do not consider the encoding step. 
-Except for that, we included all the data pre-processing steps and algorithms available in the scikit-learn \cite{scikit-learn} python library (plus imbalance-learn \cite{JMLR:v18:16-365} for Rebalancing transformations).
+Except for that, we included all the data pre-processing steps and algorithms available in the Scikit-learn \cite{scikit-learn} Python library (plus imbalance-learn \cite{JMLR:v18:16-365} for Rebalancing transformations).
 The leveraged steps, algorithms per step, and hyperparameters per algorithm are reported in \Cref{hamlet-tbl:search_space}.
 
 \begin{table}[t]
     \footnotesize
-    \caption{Algorithms and number of hyperparameters for each of the steps in HAMLET. Algorithm names and hyperparameters are imported from the scikit-learn python library.}
+    \caption{Algorithms and number of hyperparameters for each of the steps in HAMLET. Algorithm names and hyperparameters are imported from the Scikit-learn Python library.}
     \centering
     \begin{tabular}{llc}
         \toprule
