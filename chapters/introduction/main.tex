@@ -45,20 +45,20 @@ leading domain experts to carry out such a process.
 For the sake of simplicity, we keep these two roles separated.
 \textbf{Domain} and \textbf{data understanding} entail domain experts and the data scientist working in close cooperation to explore constraints and study available data, respectively.
 These stages might be repeated many times until the data scientists are satisfied with the acquired knowledge.
-Follows the iterative investigation of different solutions throughout \textbf{data pre-processing}, \textbf{modelling}, and \textbf{evaluation}.
-Data pre-processing and modelling are conducted to build a data pipeline and train an ML algorithm, respectively.
+Follows the iterative investigation of different solutions throughout \textbf{data pre-processing}, \textbf{modeling}, and \textbf{evaluation}.
+Data pre-processing and modeling are conducted to build a data pipeline and train an ML algorithm, respectively.
 More in detail, a series of pre-processing transformations shape the data so that the ML algorithm can output the best model.
 Then, evaluation offers a way to measure the performance and the process can conclude with the \textbf{deployment} of the AI system, including the implementation of the running environment.
 
 \Cref{fig:contribution} shows the CRISP-DM process model and the research areas we focus on.
-Specifically, according to challenges that are addressed: data-centric, human-centric, and physics-aware AI.
+Specifically, according to challenges that are addressed: data-centric, human-centric, and physics-coupled AI.
 While \Cref{chap:background} provides the necessary background, the remaining of the thesis evolves in the corresponding three parts.
 
 \section*{Part I: Data-centric AI}
 \addcontentsline{toc}{section}{Part I: Data-centric AI}
 
 During the past few decades, most of the efforts in AI were focused on improving ML algorithms, leading to numerous groundbreaking achievements.
-In many applications, modelling is considered the solved part of the puzzle and the vast majority of the time is spent on improving the data.
+In many applications, modeling is considered the solved part of the puzzle and the vast majority of the time is spent on improving the data.
 Data-centric AI is the discipline of systematically engineering data used to build an AI system, yet the challenge of configuring data pipelines is rather simple.
 A combinatorial space has to be explored, entailing ad-hoc pre-processing for the algorithm at hand, and constraints within data, transformations, and algorithms exacerbate the problem at hand.
 While AutoML traditionally neglected data quality and pre-processing, there is an untapped potential to contribute to this research area.
@@ -70,8 +70,8 @@ Specifically, we focus on the following challenges and contributions.
 \subsection*{Effective Data-preprocessing Pipelines in Supervised Learning}
 
 \paragraph{Challenge} Data pre-processing
-encompasses a broad range of transformations that span from correcting errors to selecting the most relevant features for the modelling phase.
-In supervised learning, during modelling, the ML algorithm is provided with ground truth to drive the learning toward a user-specified objective function.
+encompasses a broad range of transformations that span from correcting errors to selecting the most relevant features for the modeling phase.
+In supervised learning, during modeling, the ML algorithm is provided with ground truth to drive the learning toward a user-specified objective function.
 There is no clear evidence, or rules defined, on how these transformations impact the final results of the process.
 Besides, the problem is exacerbated when transformations can be combined into pipelines.
 Data scientists cannot easily foresee the overall impact, requiring a method to discriminate between them and hence find the most relevant ones for their study at hand.
@@ -108,14 +108,14 @@ In \Cref{part:human-centric}, we focus on the following challenges and contribut
 
 \subsection*{Human-centric AutoML via Structured Argumentation}
 
-\paragraph{Challenge} In the last decade, we have witnessed exponential growth in both the complexity and the number of ML techniques; leveraging such techniques to solve real-case problems has become difficult for Data Scientists.
-Automated Machine Learning (AutoML) tools have been devised to alleviate this task, but easily became as complex as the ML techniques themselves---with Data Scientists losing control over the process.
+\paragraph{Challenge} In the last decade, we have witnessed exponential growth in both the complexity and the number of ML techniques; leveraging such techniques to solve real-case problems has become difficult for data scientists.
+AutoML tools have been devised to alleviate this task, but easily became as complex as the ML techniques themselves---with data scientists losing control over the process.
 
-\paragraph{Contribution} In \Cref{human-centric-chap:hamlet}, we design HAMLET (Human-centric AutoMl via Logic and argumEnTation), a framework that helps data scientists to redeem their centrality.
+\paragraph{Contribution} In \Cref{human-centric-chap:hamlet}, we design HAMLET (Human-centric AutoMl via logic and argumEnTation), a framework that helps data scientists to redeem their centrality.
 HAMLET enables data scientists to express ML constraints in a uniform human- and machine-readable medium.
 User-defined constraints are interpreted to drive the exploration of ML pipelines (i.e., data pre-processing transformations shape the data so that the ML task can be performed at its best).
-AutoML retrieves the most performing pipeline instance, and finally, new constraints are learned and integrated through Logic and Argumentation.
-By doing so, HAMLET not only allows easy exploitation of the knowledge acquired at each iteration but also enables its continuous revision via the AutoML tool and the collaboration of both Data Scientists and domain experts.
+AutoML retrieves the most performing pipeline instance, and finally, new constraints are learned and integrated through logic and argumentation.
+By doing so, HAMLET not only allows easy exploitation of the knowledge acquired at each iteration but also enables its continuous revision via the AutoML tool and the collaboration of both data scientists and domain experts.
 
 
 \subsection*{Interactive Hyperparameter Optimization in Multi-Objective Problems via Preference Learning}
@@ -137,8 +137,8 @@ In an experimental study targeting the environmental impact of ML, we demonstrat
 
 \subsection*{AutoML in the Age of Large Language Models: Current Challenges, Future Opportunities and Risks}
 
-\paragraph{Motivation} The fields of both Natural Language Processing (NLP) and Automated Machine Learning (AutoML) have achieved remarkable results over the past years.
-In NLP, especially Large Language Models (LLMs) have experienced a rapid series of breakthroughs very recently.
+\paragraph{Motivation} The fields of both natural language processing (NLP) and automated machine learning (AutoML) have achieved remarkable results over the past years.
+In NLP, especially large language models (LLMs) have experienced a rapid series of breakthroughs very recently.
 We envision that the two fields can radically push the boundaries of each other through tight integration.
 
 \paragraph{Contribution} To showcase this vision, in \Cref{human-centric-chap:llm} we explore the potential of a symbiotic relationship between AutoML and LLMs, shedding light on how they can benefit each other.

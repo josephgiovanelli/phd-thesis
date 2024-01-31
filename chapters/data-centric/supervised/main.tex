@@ -13,13 +13,13 @@ To unleash the full potential of ML, data-centric AI focuses on shaping data acc
 With reference to the CRISP-DM process model,  \Cref{effective-fig:data-analytics-pipeline} summarizes the stages involved and the corresponding problems in the literature.
 Firstly, data are extracted in a raw format from different sources and sifted out so that only a relevant subset is selected.
 Next, during the pre-processing stage, the data pipeline selection and optimization (DPSO) \cite{Quemy19DOLAP} problem is tackled.
-Once the data is transformed into the proper form, the modelling stage focuses on the combined algorithm selection and hyperparameter (CASH) optimization problem.
+Once the data is transformed into the proper form, the modeling stage focuses on the combined algorithm selection and hyperparameter (CASH) optimization problem.
 Finally, pipelines and algorithms
 are evaluated over the dataset until an acceptable result is obtained.
 
 It is well-known that the whole process requires expertise and is particularly challenging.
 Particularly, data scientists spend most of their time on the heavily laborious work of pre-processing (i.e., around 50-80\% of the total \cite{Munson09Pre}).
-Some AutoML frameworks \cite{auto_sklearn, mohr2018ml}, mix-in pre-processing during modelling optimization, but typically include very few transformations or do not consider all the necessary steps (e.g., imputation, rebalancing), thus in a way overlooking it.
+Some AutoML frameworks \cite{auto_sklearn, mohr2018ml}, mix-in pre-processing during modeling optimization, but typically include very few transformations or do not consider all the necessary steps (e.g., imputation, rebalancing), thus in a way overlooking it.
 Inspired from \cite{Munoz09DOLAP}, we contend that there is need for more data-centric techniques, encompassing all the steps of data pre-processing \cite{Vaisman14Book}.
 Assistance is required in every phase \cite{Bilalli16IOTBD}.
 By considering pre-processing as an integral component of the learning process, and carefully selecting and optimizing data pipelines, it is easy to obtain results that go beyond the ones obtained by only optimizing ML algorithms.
@@ -51,10 +51,10 @@ The main contributions can be summarized as follows.
 
 	We exemplify our meta-learning study generating simple but not obvious and effective rules for two kinds of pre-processing steps, namely, Feature Engineering and Rebalancing.
     \item We perform a comprehensive evaluation by comparing the performance of optimizing prototypes generated following our method, and find out that:
-    \begin{enumerate}
+    \begin{itemize}
         \item with 24 times less time budget, our proposed pipelines obtain results whose median is above 90\% of the ones generated via exhaustive search.
-        \item on average, in 73\% of the cases, splitting evenly the time budget between pre-processing and modelling outperforms the results of solely optimizing the latter.
-    \end{enumerate}
+        \item on average, in 73\% of the cases, splitting evenly the time budget between pre-processing and modeling outperforms the results of solely optimizing the latter.
+    \end{itemize}
 	\item We deploy \textbf{AutoPrep}, a reproducibility framework for the automatic generation of effective pre-processing pipeline prototypes. Specifically, in \cite{giovanelli2023reproducible}, we introduce: (i) a detailed reproducibility protocol, (ii) software, and (iii) datasets in a self-contained environment.
 	The experiments were run on several machines and confirmed all the inishts in this chapter.
 \end{itemize}
@@ -67,11 +67,11 @@ The remaining of this chapter is organized as follows:
 
 \section{Related Works}
 \label{effective-sec:related-work}
-At the beginning, the AutoML community followed the AI trend of contributing under a more algorithmic perspective, focusing on modelling---i.e., the resolution of the CASH problem.
+At the beginning, the AutoML community followed the AI trend of contributing under a more algorithmic perspective, focusing on modeling---i.e., the resolution of the CASH problem.
 Recently however, the direction has shifted towards designing systems that additionally or specifically provide user assistance in the data pre-processing step---i.e., solving the DPSO problem.
 We can categorize works according to the optimization policy \cite{quemy2019data} they adopt.
 On the one hand, some automate data pre-processing via split-like policies---i.e., addressing DPSO in isolation from CASH (\Cref{effective-ssec:dpso}).
-On the other hand, some consider optimizing DPSO along with CASH, adopting a joint policy---data pre-processing in synergy with modelling (\Cref{effective-ssec:dpso-cash}).
+On the other hand, some consider optimizing DPSO along with CASH, adopting a joint policy---data pre-processing in synergy with modeling (\Cref{effective-ssec:dpso-cash}).
 
 \subsection{Optimization with Split-like Policies}
 \label{effective-ssec:dpso}
@@ -97,10 +97,10 @@ Moreover, it is not clear whether the logical plan is fixed as in \cite{Quemy20I
 
 \subsection{Optimization with a Joint Policy}
 \label{effective-ssec:dpso-cash}
-Auto-sklearn \cite{Feurer15AutoSklearn} is based on the popular Python library scikit-learn.
+Auto-sklearn \cite{Feurer15AutoSklearn} is based on the popular python library scikit-learn.
 The authors, inspired by Auto-Weka, address the problem with the Sequential Model-based Algorithm Configuration (SMAC).
 Furthermore, they improve the approach by adding a meta-learning phase (i.e., learning on top of learning) at the beginning and an ensemble technique at the end.
-Meta-learning leverages previous ML experiments and learns promising configurations to warm-start (i.e., boost the convergence) the Bayesian Optimization.
+Meta-learning leverages previous ML experiments and learns promising configurations to warm-start (i.e., boost the convergence) the bayesian optimization.
 Ensemble techniques merge predictions from multiple ML models to statistically outperform the base models.
 Yet, they consider a small set of transformations and also consider a single fixed prototype.
 
@@ -112,7 +112,7 @@ As in context-free grammars, there are complex tasks (non-terminal symbols) that
 Typically, standard graph search algorithms (e.g., depth-first search, best-first search, etc.) are employed to solve such problems.
 ML-Plan successively creates solutions in a global search instead of changing given solutions in a local search. However, due to the problem constraints, they adopt a randomized best-first search, randomly choosing the solution path.
 
-AutoBazaar \cite{AutoBazaar} is a Python open-source tool.
+AutoBazaar \cite{AutoBazaar} is a python open-source tool.
 Like in ML-Plan \cite{mohr2018ml}, both pre-processing and modeling phases are covered.
 Here the last step of a prototype is the machine learning algorithm.
 The approach involves two different steps.
@@ -195,7 +195,7 @@ This practice is called warm-starting,
 They would be used, for example, to ease the cold start problem in the prototype instantiation phase  (\Cref{effective-ssec:prototype-insta}).
 
 We propose a generic methodology.
-However, to keep the reader from losing, we will illustrate our use case and corresponding findings along with the explanation of the methodology (highlighted with the \texbf{Use Case} environment).
+However, to keep the reader from losing, we will illustrate our use case and corresponding findings along with the explanation of the methodology (highlighted with the \textbf{Use Case} environment).
 
 \subsection{Selection of Data Pre-Processing Steps and Transformations}
 \label{effective-ssec:select-framework}
@@ -411,7 +411,7 @@ This is because when optimizing a pre-processing pipeline, SMBO may not instanti
 Hence, given a pair of pre-processing steps, where one or both of them may not be instantiated, SMBO may generate 16 possible scenarios.
 They are listed in \Cref{effective-tbl:validation-rules}, and make up the validation rules for \Cref{effective-alg:learned-rules}.
 
-\begin{table*}[t]
+\begin{table*}[!h]
 	\footnotesize
 	\centering
 	\begin{threeparttable}
@@ -515,7 +515,7 @@ Using these results, we create the \textit{Promising precedence} adjacency matri
 
 
 
-\begin{table}[t]
+\begin{table}[!h]
 	\centering
 	\footnotesize
 	\begin{threeparttable}
@@ -778,9 +778,9 @@ The aim of our experimental study is three-fold:
 \end{enumerate}
 
 The experiments were performed on an Intel Core i7 machine with 12 cores, running at 3.20 GHz with 64 GB of main memory.
-We leveraged the SMBO optimization algorithm available in the Python library HyperOpt \cite{bergstra2015hyperopt}.
+We leveraged the SMBO optimization algorithm available in the python library HyperOpt \cite{bergstra2015hyperopt}.
 The datasets used in the experiments are the ones from the OpenML CC-18 repository \cite{OpenML2013}.
-Finally, the classification algorithms considered are \textit{NB}, \textit{KNN}, and \textit{RF} from the Python library Scikit-learn \cite{scikit-learn}.
+Finally, the classification algorithms considered are \textit{NB}, \textit{KNN}, and \textit{RF} from the python library Scikit-learn \cite{scikit-learn}.
 All the experiments for a single algorithm took approximately two weeks.
 
 
@@ -897,7 +897,7 @@ The raw results (i.e., without the normalized distances) can be found on the afo
 
 We have just shown that our effective prototypes have similar impact as the exhaustive ones.
 Now we want to compare the impact of the effective prototypes against optimizing only the hyperparameters of the ML algorithm.
-That is, we want to examine whether dedicating a part of the optimization budget to the pre-processing impacts more (positively) the results of the analysis, than using the whole budget for solely the hyperparameter optimization of the ML algorithm\footnote{To enable the application of the ML algorithms on all the datasets, whenever required, we apply the necessary transformation (e.g, imputation or encoding).}---i.e., modelling.
+That is, we want to examine whether dedicating a part of the optimization budget to the pre-processing impacts more (positively) the results of the analysis, than using the whole budget for solely the hyperparameter optimization of the ML algorithm\footnote{To enable the application of the ML algorithms on all the datasets, whenever required, we apply the necessary transformation (e.g, imputation or encoding).}---i.e., modeling.
 
 To this end, for the latter we now dedicate the total optimization budget (i.e., 400 seconds), and for the former, inspired by \cite{Quemy20InfSystems}, we split the budget 50-50 between the pre-processing pipeline optimization and the hyperparameter optimization (i.e., 200 seconds for the pre-processing, and 200 seconds for the hyperparameter optimization).
 The time for the pre-processing is further split among the five different pipeline prototypes (i.e., 40 seconds each).
@@ -941,10 +941,10 @@ In addition, via the meta-learning phase proposed, we aim to guide the pipeline 
 An extensive evaluation on 80 datasets with heterogeneous characteristics, from sample size to feature types, and a set of classification algorithms (i.e., Naive Bayes, Random Forest, K-Nearest Neighbours), showed that our devised prototypes give promising results.
 More specifically, we were able to observe that:
 \begin{itemize}
-    \item [--] The overall impact of optimizing pre-processing is not negligible and it may boost the performance of the overall analytics (e.g., accuracy).
-    \item [--] There is no universal pre-processing prototype that works best for every dataset and algorithm.
-    \item [--] With 24 times less time budget, our proposed prototypes were able to obtain results that were as good as 90\% in the median of the optimal ones found through an exhaustive search.
-    \item [--] Dedicating a portion of the time to the pre-processing optimization, instead of dedicating it entirely to hyperparameter optimization may boost the final result of the analysis.
+    \item The overall impact of optimizing pre-processing is not negligible and it may boost the performance of the overall analytics (e.g., accuracy).
+    \item There is no universal pre-processing prototype that works best for every dataset and algorithm.
+    \item With 24 times less time budget, our proposed prototypes were able to obtain results that were as good as 90\% in the median of the optimal ones found through an exhaustive search.
+    \item Dedicating a portion of the time to the pre-processing optimization, instead of dedicating it entirely to hyperparameter optimization may boost the final result of the analysis.
 	On average, in 73\% of the cases including pre-processing in the optimization, outperformed the results of only optimizing hyperparameters.
 \end{itemize}
 

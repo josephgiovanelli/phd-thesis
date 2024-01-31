@@ -231,7 +231,7 @@ The corresponding loss function becomes noisy when the space is high-dimensional
 For such reasons CASH has been reformulated as a single combined hierarchical hyperparameter optimization with space $\pmb{\Lambda} = \pmb{\Lambda_{A_1}} \cup \dots \cup \pmb{\Lambda_{A_K}} \cup \{\lambda_r\}$, where $\lambda_r$ is a new root-level hyperparameter that selects between algorithms $A_1, \dots, A_K$.
 The root-level parameters of each subspace $\pmb{\Lambda_i}$ are made conditional on $\lambda_r$ being instantiated to $A_i$.
 
-\begin{definition}[Combined Algorithm Selection and Optimization (CASH)]
+\begin{definition}[Combined Algorithm Selection and Optimization (CASH) \cite{Thornton13AutoWeka}]
     Given a set of learning algorithms $\altmathcal{A} = \{A_1, \dots, A_K\}$, with assocciated hyperparameter spaces  $\pmb{\Lambda_{A_1}} \cup \dots \cup \pmb{\Lambda_{A_K}}$, we define the hierarchical space $\pmb{\Lambda} = \pmb{\Lambda_{A_1}} \cup \dots \cup \pmb{\Lambda_{A_K}} \cup \{\lambda_r\}$. Then, the goal is to find the algorithm and corresponding configuration $A^{\star}_{\pmb{\lambda}^{\star}} \in \pmb{\Lambda}$ with optimal loss function.
     \begin{equation*}
         A^{\star}_{\pmb{\lambda}^{\star}} \in \argmin_{A_{\pmb{\lambda}} \in \pmb{\Lambda}} \altmathcal{L}(A_{\pmb{\lambda}}(\altmathcal{D}_{train}), \altmathcal{D}_{valid})
@@ -256,7 +256,7 @@ Having gained significant attention for tuning huge search spaces across various
 \subsubsection{Baselines}
 The baseline techniques share the common characteristic of exploring the hyperparameter space without any intelligent strategies, relying instead on systematic or random exploration of the hyperparameter space.
 
-\paragraph{Exhaustive search}
+\paragraph{Exhaustive Search}
 Being the most naive solution, exhaustive search considers all combinations of hyperparameters.
 Obviously, this is computationally expensive and suffers from the curse of dimensionality as the number of trials grows exponentially with the number of hyperparameters \cite{bittner1962r}, resulting in unfeasible.
 
@@ -286,7 +286,7 @@ For instance, the crossover operation involves taking two parent chromosomes (co
 Specifically, the two parent configurations are cut at the same crossover point, and the sub-parts to the right of that point are swapped between the two parent chromosomes, resulting in two new offspring (child configurations).
 Mutation randomly selects a chromosome and mutates one or more of its parameters, leading to a completely new chromosome.
 
-\paragraph{Multi-fidelity approaches}
+\paragraph{Multi-fidelity Approaches}
 Here, samples can be evaluated at different levels, specifically: high-fidelity evaluation and low-fidelity evaluation.
 High-fidelity evaluation provides precise results from the entire dataset, while low-fidelity evaluation offers a more economical assessment from a subset of the dataset (e.g., folds in a k-fold cross-validation).
 The core concept relies on leveraging multiple low-fidelity evaluations to reduce the overall evaluation cost.
@@ -319,9 +319,9 @@ The algorithm of sequential model-based optimization (SMBO) is described in \Cre
     \end{algorithmic}
 \end{algorithm}
 
-\noindent This begins by building a model $S$ that captures the dependence of the loss function $L$ on hyperparameter settings $\pmb{\lambda}$ (line 1).
-It then iterates through the following steps: using $S$ to determine a promising candidate configuration of hyperparameters $\pmb{\lambda}$ to evaluate next (line 3); evaluating the loss $c$ of $\pmb{\lambda}$ (line 4); and updating the model $S$ with the new data point $(\pmb{\lambda}, c)$ obtained (lines 5–6).
-To select its next hyperparameter configuration $\pmb{\lambda}$ using the model $S$, SMBO employs a so-called acquisition function $a_{S} : \pmb{\Lambda} \rightarrow \mathbb{R}$, which uses the predictive distribution of $S$ at arbitrary hyperparameter configurations $\pmb{\lambda} \in \pmb{\Lambda}$ to quantify (in closed form) how useful knowledge about $\pmb{\lambda}$ would be.
+\noindent This begins by building a surrogate model $S$ that captures the dependence of the loss function $L$ on hyperparameter settings $\pmb{\lambda}$ (line 1).
+It then iterates through the following steps: using $S$ to determine a promising candidate configuration of hyperparameters $\pmb{\lambda}$ to evaluate next (line 3); evaluating the loss $c$ of $\pmb{\lambda}$ (line 4); and updating the surrogate model $S$ with the new data point $(\pmb{\lambda}, c)$ obtained (lines 5–6).
+To select its next hyperparameter configuration $\pmb{\lambda}$ using the surrogate model $S$, SMBO employs a so-called acquisition function $a_{S} : \pmb{\Lambda} \rightarrow \mathbb{R}$, which uses the predictive distribution of $S$ at arbitrary hyperparameter configurations $\pmb{\lambda} \in \pmb{\Lambda}$ to quantify (in closed form) how useful knowledge about $\pmb{\lambda}$ would be.
 SMBO then maximizes this function over $\pmb{\Lambda}$ to select the most promising configuration $\pmb{\lambda}$ to evaluate next.
 Several prominent acquisition functions exist \cite{bohannon2005cost, chen2018autostacker, de2018automated}, all aiming to automatically trade off exploitation (locally optimizing hyperparameters in regions known to perform well) versus exploration (trying hyperparameters in a relatively unexplored region of the space) to avoid premature convergence.
 An example of a promising acquisition function is the probability of improvement $PI = P(c(\pmb{\lambda}) \ge c(\hat{\pmb{\lambda}}))$, where $\hat{\pmb{\lambda}}$ corresponds to the best hyperparameter configuration encountered so far during the optimization.
@@ -329,28 +329,28 @@ An example of a promising acquisition function is the probability of improvement
 However, bayesian optimization achievements are due to ever-efficient implementations of surrogate models.
 Follows the more important ones.
 
-\paragraph{Gaussian processes (GP)} Commonly considered the pioneers among the surrogates \cite{snoek2012practical, martinez2014bayesopt}, yet suffering from cubic complexity with the number of data points, limiting parallelization capability.
+\paragraph{Gaussian Processes (GP)} Commonly considered the pioneers among the surrogates \cite{snoek2012practical, martinez2014bayesopt}, yet suffering from cubic complexity with the number of data points, limiting parallelization capability.
 
-\paragraph{Tree-structured parzen estimator (TPE)} In contrast, TPE does not define a predictive distribution over the objective function but creates two density functions for all the hyperparameters in the problem.
+\paragraph{Tree-structured Parzen Estimator (TPE)} In contrast, TPE does not define a predictive distribution over the objective function but creates two density functions for all the hyperparameters in the problem.
 Based on past observations, a percentile for each hyperparameter is built to distinguish good and bad observations.
 The hyperparameter values are split into two sets, and their respective distributions are determined using density estimation through \textit{parzen windows}\footnote{Statistical technique to estimate a density distribution by generalization from a histogram.}.
 The ratio between the two density functions reflects the improvement in the acquisition function and is used to recommend new configurations.
 TPE has demonstrated excellent performance in hyperparameter optimization tasks \cite{bergstra2011algorithms, bergstra2013making, eggensperger2013towards, falkner2018bohb, sparks2015automating}.
-In this thesis, we leverage an efficient implementation provided by the Python package HyperOpt \cite{bergstra2015hyperopt}.
+In this thesis, we leverage an efficient implementation provided by the python package HyperOpt \cite{bergstra2015hyperopt}.
 
-\paragraph{Sequential model-based algorithm configuration (SMAC)} \cite{lindauer-jmlr22a} introduce SMAC, leveraging Random forest \cite{random_forest} as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
+\paragraph{Sequential Model-based Algorithm Configuration (SMAC)} \cite{lindauer-jmlr22a} introduce SMAC, leveraging Random forest \cite{random_forest} as a regressor to model the posterior distribution of the surrogate i.e., the well-known ML model is used to estimate the cost as in a usual regression task.
 The algorithm starts by training different regression trees, each built using randomly selected data points.
-For each tree, we are provided with an estimation cost, which translates into the posterior distribution in the Bayesian framework.
+For each tree, we are provided with an estimation cost, which translates into the posterior distribution in the bayesian framework.
 This is leveraged in combination with an aggressive racing mechanism to efficiently decide which of two configurations performs better.
-In this thesis we leverage SMAC as part of the homonymous Python library.
-Authors privde also other state-of-the-art BO implementations; for instance, in \cite{falkner2018bohb}, they propose Bayesian Optimization and HyperBand (BOHB), which enhances the global exploration capabilities of BO with the efficient resource utilization of multi-fidelity functions.
+In this thesis we leverage SMAC as part of the homonymous python library.
+Authors privde also other state-of-the-art BO implementations; for instance, in \cite{falkner2018bohb}, they propose bayesian optimization and hyper band (BOHB), which enhances the global exploration capabilities of BO with the efficient resource utilization of multi-fidelity functions.
 Iteration after iteration, the surrogate model suggests configurations, while hyperband allocates high-fidelity and low-fidelity evaluations.
 
 
 \paragraph{BlendSearch}
-BlendSearch is an innovative strategy that blends the frugality of Cost-related Frugal Optimization (CFO) -- a local search technique -- with the space exploration capabilities of global search methods like Bayesian optimization.
+BlendSearch is an innovative strategy that blends the frugality of cost-related frugal optimization (CFO) -- a local search technique -- with the space exploration capabilities of global search methods like bayesian optimization.
 BlendSearch starts with a low-cost initial point and utilizes several local searches to iteratively improve performance. However, BlendSearch doesn't wait for local search to fully converge before exploring new start points. Instead, it incorporates suggestions from the BO, filtering them based on their distance to existing points in cost-related dimensions. BlendSearch gradually increases the trial cost while prioritizing between global and local search threads based on optimism in the face of uncertainty. This strategy enables BlendSearch to effectively balance exploration and exploitation, leading to economical yet effective hyperparameter optimization.
-In this thesis, we leverage the implementation provided by the authors in the Python library FLAML \cite{wang2021flaml}.
+In this thesis, we leverage the implementation provided by the authors in the python library FLAML \cite{wang2021flaml}.
 
 
 \subsection{Multi-objective Optimization}
@@ -435,7 +435,7 @@ Once a custom loss function tailored to Pareto front indicators is employed, the
 \section{Machine Learning Pipelines}
 \label{automl-background-sec:pipelines}
 
-As in the CRISP-DM model, the learning process not only involves algorithm training -- i.e., modelling -- but also data preparation, better known as data pre-processing.
+As in the CRISP-DM model, the learning process not only involves algorithm training -- i.e., modeling -- but also data preparation, better known as data pre-processing.
 Data pre-processing transformations are applied to improve data quality and to ease algorithms in achieving good performance.
 In practice, transformations are proper ML algorithms that (i) take a dataset in input, (ii) perform a training process, (iii) expose hyperparameters, and (iv) output a model that can perform a certain (pre-processing) task.
 In this case, the nature of such a task is not the ultimate goal of the analysis (e.g., classification) but, rather, altering the original dataset (e.g., feature engineering) for a better result.
@@ -528,7 +528,7 @@ Hence, for the sake of the evaluation, we are interested in measuring the perfor
 Despite DPSO can be approached with the aforementioned optimization techniques for which CASH is addressed, different policies can be adopted to optimize the whole ML pipeline---the concatenation of a data pipeline with an ML algorithm $\langle P, A \rangle$.
 
 \paragraph{Split policy}
-The budget is split between pre-pocessing and modelling, allocated respectively for the data pipeline configuration search and the algorithm hyperparameter tuning.
+The budget is split between pre-pocessing and modeling, allocated respectively for the data pipeline configuration search and the algorithm hyperparameter tuning.
 
 \paragraph{Iterative Policy}
 Both the data pipeline and the ML algorithm alternate during a short runtime.

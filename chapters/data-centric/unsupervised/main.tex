@@ -179,10 +179,10 @@ Since we focus on \textit{crisp spherical} clustering algorithms, we consider KM
 The former separates the data items into groups so that each of them has an equal variance, minimizing a criterion known as the inertia or within-cluster sum-of-squares.
 The latter builds a hierarchy of clusters by merging smaller clusters into larger ones.
 As to the order of steps, in \Cref{data-centric-chap:supervised}, we reduce the combinations of the former steps; we further constrained the order of the steps by computing several experiments and observing the impact of different alternatives.
-Our implementation imports the algorithms from the Scikit-learn Python library \cite{scikit-learn}.
+Our implementation imports the algorithms from the Scikit-learn python library \cite{scikit-learn}.
 While the algorithms can require the assignment of additional hyperparameters (e.g., the maximum number of iterations in KMeans), we reduce the pipeline domain by considering only the most influential.
 
-To explore promising pipelines, we leverage the SMBO implementation from the Python library HyperOpt \cite{HyperOptICML13}.
+To explore promising pipelines, we leverage the SMBO implementation from the python library HyperOpt \cite{HyperOptICML13}.
 Selecting the optimal pipeline requires the relevance metric (i.e., $rel(C)$) to evaluate the goodness of the corresponding retrieved clustering.
 In AutoClues, such a metric is customizable.
 Well-known metrics leveraged for spherical clustering are: the silhouette index (SIL) \cite{zhu2010clustering}, contrasting the average distance to elements in the same cluster with the average distance to elements in other clusters, and the Davies-Bouldin Index (DBI) \cite{dbi}, computing the average similarity between clusters by comparing it with the size of the clusters themselves.

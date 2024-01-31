@@ -26,12 +26,12 @@ parse the LogicalKB into a human- and machine-readable medium called Problem Gra
 devise the AutoML search space from the Problem Graph;
 and leverage the Problem Graph to allow both the data scientist and an AutoML tool to revise the current knowledge.
 In this chapter, we commit to the following contributions.
-\begin{enumerate}
+\begin{itemize}
     \item We provide an innovative formalization of the AutoML problem, which considers ML pipelines of multiple lengths, Data Pre-processing steps and user-defined constraints.
     \item We design the formal foundation of HAMLET, supporting the injection of constraints to select ML pipelines as well as the resolution of possible arising inconsistencies.
     \item We implement a functioning prototype of HAMLET.
     \item We provide a preliminary empirical evaluation, including the overhead introduced by the argumentation process and the comparison against state-of-the-art algorithms.
-\end{enumerate}
+\end{itemize}
 
 The remainder of the paper is structured as follows. In \Cref{hamlet-sec:related}, we introduce the related works; we provide the problem formulation in \Cref{hamlet-sec:problem} and its implementation in \Cref{hamlet-sec:implementation}; finally, we provide some preliminary evaluation in \Cref{hamlet-sec:test}, and we draw the conclusions and future research directions in \Cref{hamlet-sec:conclusion}.
 
@@ -52,7 +52,7 @@ As to research contributions, we found plenty of visualization wrappers.
 In \cite{drozdal2020trust}, the authors raise the need of incorporating transparency into AutoML: after a session interview, they discover that -- out of all their proposed features -- model performance metrics and visualizations are the most important information to data scientists when establishing their trust in the proposed solutions.
 ATMSeer \cite{wang2019atmseer} provides different multi-granularity visualizations to enable users to monitor the AutoML process and analyze the searched models.
 PipelineProfiler \cite{ono2020pipelineprofiler} offers interactive visualizations of the AutoML outputs and enables the reproducibility of the results through a Jupiter notebook.
-Other contributions enhance current AutoML techniques towards easier human-interactions by: (i) supporting ethic and fair constraints in Bayesian Optimization through a mathematical encoding \cite{perrone2021fair, yaghini2021human}; (ii) simplifying the usage of AutoML with symbolic annotations \cite{peng2020pyglove} and declarative languages \cite{kraska2013mlbase}; (iii) supporting fast feed-backs from AutoML (i.e., runs that are less time-consuming) by leveraging well-known mechanisms of the DBMS (e.g., lineage optimization) \cite{vartak2015supporting, xin2018accelerating}.
+Other contributions enhance current AutoML techniques towards easier human-interactions by: (i) supporting ethic and fair constraints in bayesian optimization through a mathematical encoding \cite{perrone2021fair, yaghini2021human}; (ii) simplifying the usage of AutoML with symbolic annotations \cite{peng2020pyglove} and declarative languages \cite{kraska2013mlbase}; (iii) supporting fast feed-backs from AutoML (i.e., runs that are less time-consuming) by leveraging well-known mechanisms of the DBMS (e.g., lineage optimization) \cite{vartak2015supporting, xin2018accelerating}.
 Recently, MILE \cite{lee2020human} has proposed to perform AutoML analysis with an end-to-end framework that reflect a DBMS (i.e., a query language + a lineage optimization).
 
 Companies like Google and IBM are the ones most engaged in boosting the involvement of the human in the loop.
@@ -102,11 +102,11 @@ Then, domain understanding is conducted.
 The data scientist works in close cooperation with domain experts and enlists \emph{domain-related constraints} (i.e., intrinsic of the problem).
 Follows data understanding, devoted to data analysis, and to extract \emph{data-related constraints} (e.g., defined by the data format).
 Domain and data understanding might be repeated many times until the data scientist is satisfied by the acquired knowledge.
-Once confident, the data scientist investigates different solutions throughout data pre-processing, modelling, and evaluation.
-Data pre-processing and modelling are conducted to effectively build the solution, while evaluation offers a way to measure its performance.
+Once confident, the data scientist investigates different solutions throughout data pre-processing, modeling, and evaluation.
+Data pre-processing and modeling are conducted to effectively build the solution, while evaluation offers a way to measure its performance.
 Such a solution consists of a ML pipeline: a sequence of pre-processing steps ending with an ML algorithm that tackles the task.
 The data scientist instantiates different pipelines among a large set of transformations and algorithms; the performance are affected by both their implementation and some exposed hyperparameters.
-While seeking the best performing and valid solution, the data scientist should consider the already known constraints -- domain- and data-related -- and the ones she discovers during data pre-processing and modelling, respectively: \emph{transformation-} and \emph{algorithm-related constraints} (e.g., due to the intrinsic semantic of transformations and algorithms at hand).
+While seeking the best performing and valid solution, the data scientist should consider the already known constraints -- domain- and data-related -- and the ones she discovers during data pre-processing and modeling, respectively: \emph{transformation-} and \emph{algorithm-related constraints} (e.g., due to the intrinsic semantic of transformations and algorithms at hand).
 Finally, the process concludes with the deployment of the solution.
 
 HAMLET intersects CRISP-DM, allowing the data scientist to inject and augment her knowledge while automatizing the exploration towards the solution (i.e., instantiate the best ML pipeline).
@@ -383,7 +383,7 @@ HAMLET iterates over three phases (\Cref{hamlet-fig:approach}): (i) the generati
 The framework is available on GitHub\footnote{\url{https://github.com/QueueInc/HAMLET}}, and it is composed of two sub-modules.
 The first, written in Kotlin and running on the JVM, exposes a graphical interface on which the data scientists can compile and revise the LogicalKB.
 The module is also responsible for the generation and evaluation of the Problem Graph; it implements the Structured Argumentation functionalities using \argtup{} \cite{arg2p-jlc}, an ASPIC\textsuperscript{+}-based Kotlin library.
-The second module, written in Python, is responsible for performing the AutoML optimization and the extraction of the new constraints from the explored space.
+The second module, written in python, is responsible for performing the AutoML optimization and the extraction of the new constraints from the explored space.
 
 \subsubsection{Generation of Problem Graph and Search Space}
 We defined the LogicalKB as the set of rules specified by the data scientist using her knowledge.
@@ -475,16 +475,16 @@ As a consequence, we need to produce the entire search space first.
 
 The Problem Graph is not only used to build the entire search space but it is also evaluated to understand which pipelines are invalid and which constraints are valid.
 Hence -- through the Problem Graph -- we enhance AutoML exploration by combining the following techniques.
-\begin{itemize}
-    \item[(i)] Invalid pipelines are used to discourage the exploration of such a portion of the search space (we recall that a pipeline has a domain -- a region of the search space -- in which several pipeline instances are parametrized).
+\begin{enumerate}
+    \item Invalid pipelines are used to discourage the exploration of such a portion of the search space (we recall that a pipeline has a domain -- a region of the search space -- in which several pipeline instances are parametrized).
     First, we sample such regions of the search space, then we enforce a knowledge injection mechanism through warm-starting (i.e., the process of providing previous evaluations that help the model to converge faster).
     For instance, with reference to \Cref{ex:hard_coded_rules}, we sample some pipeline instances from the pipelines that have been discarded (from \texttt{\{p3\}} to \texttt{\{p7\}});
     then, we label such samples as invalid and provide them to the AutoML tool, helping the optimization algorithm to focus only on the valid portions of the space.
-    \item[(ii)] Valid constraints -- expressed as conjunctions of Boolean clauses -- are used to discard the invalid pipeline instances that still are encountered by the AutoML tool.
-    Indeed, since the sampling from (i) is non-exhaustive, it can happen that small portions of invalid regions could still be explored.
-\end{itemize}
+    \item Valid constraints -- expressed as conjunctions of Boolean clauses -- are used to discard the invalid pipeline instances that still are encountered by the AutoML tool.
+    Indeed, since the sampling from 1. is non-exhaustive, it can happen that small portions of invalid regions could still be explored.
+\end{enumerate}
 
-Our AutoML implementation is based on FLAML \cite{wang2021flaml}, which mixes Bayesian Optimization with CFO (Frugal Optimization for Cost-related Hyperparameters).
+Our AutoML implementation is based on FLAML \cite{wang2021flaml}, which mixes bayesian optimization with cost-related frugal optimization (CFO).
 In a standard Bayesian process, an increasingly accurate model is built on top of the previously explored pipeline instances to suggest the most promising ones among the remaining.
 The pipeline instances keep being explored, updating the model, until a budget in terms of either iterations or time is reached.
 With CFO, there is also an estimation of the evaluation time to consider the frugality of the suggested pipeline instances -- hence favoring the ones requiring a smaller amount of time.
@@ -508,8 +508,8 @@ For instance, given two frequent patterns, $\{a, b, c\}$ and $\{a, b\}$, the for
 itemsets.
 The recommendation depends on the constraint.
 \begin{itemize}
-    \item $mandatory$: we consider only the patterns with good performance (i.e., $0.7 \leq metric \leq 1.0$);
-    \item $forbidden$: we consider only the patterns with bad performance (i.e., $0.0 \leq metric \leq 0.3$);
+    \item $mandatory$: we consider only the patterns with good performance (i.e.,\\$0.7 \leq metric \leq 1.0$);
+    \item $forbidden$: we consider only the patterns with bad performance (i.e.,\\$0.0 \leq metric \leq 0.3$);
     \item $mandatory\_order$: the same considerations of the mandatory constraints stand, except that we look for (sub)sequences \cite{srikant1996mining} of length 2 to discover ordering dependencies in pairs of steps as in \Cref{data-centric-chap:supervised}.
 \end{itemize}
 We leveraged well-known implementations \cite{raschkas_2018_mlxtend} and \cite{seq2pat2022} for itemsets and sequences mining, respectively.
@@ -709,9 +709,9 @@ The preliminary evaluation of HAMLET shows promising results against state-of-th
 
 The directions for future work are plentiful, among them:
 \begin{itemize}
-    \item[(i)] the recommendation of more constraints out of the explored search space (e.g., rare or negative patterns);
-    \item[(ii)] the support to heterogeneous constraints on hyperparameter domains;
-    \item[(iii)] the injection of meta-learning into our Logical Knowledge Base to better identify when and how the constraints should be applied (e.g., this can be done after testing HAMLET on a multitude of datasets);
-    \item[(iv)] the introduction of a visual metaphor (e.g., based on the Problem Graph) to help Data Scientists' understanding;
-    \item[(v)] the study of automatic resolution/recommendation of conflicting constraints, also depending on the rules already embedded in the Logical Knowledge Base.
+    \item the recommendation of more constraints out of the explored search space (e.g., rare or negative patterns);
+    \item the support to heterogeneous constraints on hyperparameter domains;
+    \item the injection of meta-learning into our Logical Knowledge Base to better identify when and how the constraints should be applied (e.g., this can be done after testing HAMLET on a multitude of datasets);
+    \item the introduction of a visual metaphor (e.g., based on the Problem Graph) to help Data Scientists' understanding;
+    \item the study of automatic resolution/recommendation of conflicting constraints, also depending on the rules already embedded in the Logical Knowledge Base.
 \end{itemize}

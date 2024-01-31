@@ -20,12 +20,12 @@ In the subsequent stage, we run a state-of-the-art HPO tool
 instantiated with the learned Pareto front quality indicator to evaluate configurations and the corresponding Pareto fronts.
 
 In summary, we make the following contributions:
-\begin{enumerate}
+\begin{itemize}
     \item We propose an interactive approach to learn a Pareto front quality indicator from pairwise comparisons based on a latent utility function with methods from the field of preference learning. This quality indicator is customized to the user and can be learned from a small number of pairwise comparisons. 
     \item We combine the aforementioned learned quality indicator with an HPO tool 
     to provide a full-fledged HPO approach for multi-objective MO-ML algorithms, which frees the user to choose an appropriate Pareto front quality indicator offering less opportunity for a mistake and thus, bad optimization results.
     \item In an experimental case study, we demonstrate that our approach leads to substantially better Pareto fronts compared to optimizing based on a wrong indicator pre-selected by the user, and performs comparable in case of an advanced user knowing which indicator to pick. Thus, our approach makes HPO for MO-ML algorithms substantially more easily and robustly applicable in practice.
-\end{enumerate}
+\end{itemize}
 
 \section{Background}
 \label{moo-sec:background}
@@ -91,11 +91,11 @@ In the following, we give a short overview of related work in the areas of human
 The field of human-centric HPO/AutoML has gained increasing traction in the last years with approaches targeted at explaining the hyperparameter optimization process to increase the trust in automated tools \cite{pfisterer-arxiv2019a,moosbauer-neurips21a,moosbauer-arxiv22a,segel-automl23a}. This also includes concrete tools developed to help a user interpret the results such as XAutoML \cite{zoller-arxiv22a} or DeepCave \cite{sass-realml22a}. 
 
 Motivated from a similar stance that the user should be put back into the loop of the AutoML process to a certain extent; for instance, in \Cref{human-centric-chap:hamlet}, we propose to leverage structured argumentation to semi-automatically constrain search spaces based on user input. Further going into this direction, and most similar to the approach of this chapter, the work by \citet{kulbach-ecai20a} builds upon the observation that users are often unable to concretely configure a loss function in an AutoML tool fitting for their problem at hand. They suggest to learn a loss function customized to the user as a scalarization over several frequently used standard loss functions via PL methods. Our work differs from theirs in two main aspects: 
-\begin{itemize}
-    \item[(1)] First, we consider tuning the hyperparameters of MO-ML algorithms, while they try to find complete AutoML pipelines with standard classification/regression algorithms. Hence, there is not only a difference in the considered meta-problem (AutoML vs. HPO), but also in the types of machine learning algorithms to be composed / tuned (pipelines of standard ML algorithms vs MO-ML algorithms).
-    \item[(2)] Second, we demonstrate pairwise comparisons of Pareto fronts to the user compared to pairwise comparisons of feature vectors, targets and predictions presented by \citet{kulbach-ecai20a}. We believe that our comparisons are much easier to make for a user.
-    \item[(3)] Moreover, the Pareto front quality indicator learned by us is not constrained to be a scalarization of existing loss functions or quality indicators. Instead, we can, in principle, leverage any object ranking approach that allows for the extraction of a utility function.
-\end{itemize}
+\begin{enumerate}
+    \item First, we consider tuning the hyperparameters of MO-ML algorithms, while they try to find complete AutoML pipelines with standard classification/regression algorithms. Hence, there is not only a difference in the considered meta-problem (AutoML vs. HPO), but also in the types of machine learning algorithms to be composed / tuned (pipelines of standard ML algorithms vs MO-ML algorithms).
+    \item Second, we demonstrate pairwise comparisons of Pareto fronts to the user compared to pairwise comparisons of feature vectors, targets and predictions presented by \citet{kulbach-ecai20a}. We believe that our comparisons are much easier to make for a user.
+    \item Moreover, the Pareto front quality indicator learned by us is not constrained to be a scalarization of existing loss functions or quality indicators. Instead, we can, in principle, leverage any object ranking approach that allows for the extraction of a utility function.
+\end{enumerate}
 
 Lastly, our approach is not to be confused with multi-objective HPO \cite{moraleshernandez-arxiv21a,karl-arxiv22a}, where HPO problem itself features multiple loss functions to be optimized, but the ML algorithm itself only returns a single solution.
 

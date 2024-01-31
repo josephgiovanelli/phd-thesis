@@ -37,7 +37,7 @@ Among fruit trees, the kiwifruit (\emph{Actinidia deliciosa}) has been only part
 % content at levels higher than 50 \% of the degree of saturation
 % for optimal yield. Due to these high water consumptions kiwi is commonly an irrigated crop in most of the areas where it is cultivated such as New Zealand \cite{hall-etal-2001}, Chile \cite{holzapfel-etal-2000} and Italy \cite{xiloyannis-etal-90}.
 
-% Few research papers have been published on measuring and modeling kiwi water demand. Indeed, in a review on fruit tree crop models, \cite{grisafi-etal-2021} showed that only one research was published on modelling kiwi and with emphasis on carbon budget, but not on the soil water budget. Little has also been done in terms of modelling the plant's water use and transpiration. \cite{rallo-etal-2020} presented a review about FAO56 crop coefficients of fruit trees and vines, performed over the past twenty years, to update information and extend tabulated single and basal standard crop coefficients. Also in this review it appears that kiwi is highly under-represented with only one listed research by \cite{silva-etal-2008}, where kiwi's transpiration was measured with a sap flow method.
+% Few research papers have been published on measuring and modeling kiwi water demand. Indeed, in a review on fruit tree crop models, \cite{grisafi-etal-2021} showed that only one research was published on modeling kiwi and with emphasis on carbon budget, but not on the soil water budget. Little has also been done in terms of modeling the plant's water use and transpiration. \cite{rallo-etal-2020} presented a review about FAO56 crop coefficients of fruit trees and vines, performed over the past twenty years, to update information and extend tabulated single and basal standard crop coefficients. Also in this review it appears that kiwi is highly under-represented with only one listed research by \cite{silva-etal-2008}, where kiwi's transpiration was measured with a sap flow method.
 
 % The high water consumption of kiwi has raised concerns about groundwater depletion and it has fostered interest in developing increasingly efficient irrigation systems and scheduling to optimize water use. For instance, if excess irrigation water is applied, water resources are mismanaged with additional costs including energy to activate water pumps, leaching of mobile fertilizers (nitrates) into the groundwater and potential for soil erosion; on the other hand, if the soil is water depleted from lack of adequate irrigation, plant production may be reduced with financial costs for the farmers.
 
@@ -93,7 +93,7 @@ The online phase requires the grid of sensors to be in place. During this phase 
 
 The following subsections describe in more details each of the components reported in \Cref{orchard-fig:overview}.
 
-\begin{table}[H]
+\begin{table}[t]
 	\centering
 	\scriptsize
 	\begin{tabular}{p{1.2cm}p{5cm}p{7.5cm}}
@@ -191,7 +191,7 @@ The crop model solves Richards' equation \cite{richards1931capillary} to compute
 For each cell of soil in our 3D-matrix, it calculates the change of the water potential and volumetric water content in time.
 This demands information about: (i) the soil hydraulic properties, (ii) the amount of water to sink (e.g., for the root water uptake), (iii) the boundary conditions (i.e., behavior at the boundary of the soil volume at hand).
 In the following, \Cref{orchard-sec:soil_properties} provides the main equations leveraged by the crop model to estimate the soil hydraulic properties; \Cref{orchard-sec:evapotrans} and \Cref{orchard-sec:root} describe how to obtain the root water uptake for each portion of soil by, respectively, calculating the overall volume of water leaked for transpiration and splitting it according to the root system; finally, \Cref{orchard-sec:boundary} delves into the boundary conditions.
-% Surface runoff can be activated or de-activated. During the calibration procedure the surface runoff can be de-activated to reduce computation time, but during the operational phase of the modelling and forecasting it must be activated to properly partition the surface fluxes given by precipitation and irrigation.
+% Surface runoff can be activated or de-activated. During the calibration procedure the surface runoff can be de-activated to reduce computation time, but during the operational phase of the modeling and forecasting it must be activated to properly partition the surface fluxes given by precipitation and irrigation.
 % The model does not simulate preferential flow, solute transport, and channel flow.
 % Preferential flow can be emulated by using ``effective'' soil properties (e.g., increased porosity and hydraulic conductivity), if such data are available.
 
@@ -412,8 +412,8 @@ Due to the huge number of parameters (\Cref{tab:parameter}), manual or brute-for
 In the literature, there are numerous optimization methods that aim at finding the best configuration over huge search spaces \cite{luo2017automating}.
 All of them are constrained under an exploration budget in terms of execution time or configurations to visit.
 First they evaluate the performance of an initial (possibly random) configuration, then they converge to better configurations by smartly exploring a fraction of the search space.
-We leverage an approach based on Bayesian Optimization \cite{frazier2018tutorial} which learns a model of the search space to explore the most promising regions; while the configurations are explored, Bayesian Optimization updates its model until the exploration budget elapses and the best-explored configuration is returned.
-The chosen approach is based on the Blended-search \cite{wang2021flaml}, from the FLAML package, which enhances a common Bayesian Optimization model with the strengths of local search, and minimizes on the fly the total cost spent in finding bad configurations.
+We leverage an approach based on bayesian optimization \cite{frazier2018tutorial} which learns a model of the search space to explore the most promising regions; while the configurations are explored, bayesian optimization updates its model until the exploration budget elapses and the best-explored configuration is returned.
+The chosen approach is based on the Blended-search \cite{wang2021flaml}, from the FLAML package, which enhances a common bayesian optimization model with the strengths of local search, and minimizes on the fly the total cost spent in finding bad configurations.
 
 \begin{algorithm}[t]
 \caption{Parameter Tuner}
@@ -452,7 +452,7 @@ where $\overrightarrow{S_t}$ and  $\overrightarrow{SM_t}$ are the soil-moisture 
 The algorithm assimilates the initial state of the simulator from the first snapshot of the sampled soil moisture (Line 1) and initializes the history of explored configurations (initially empty; Line 2) and the number of iterations (Line 3).
 While the iteration budget is not exhausted (Line 4), 
 we increase the iterations (Line 5),
-optimize the tunable parameters through Bayesian Optimization (Line 6),
+optimize the tunable parameters through bayesian optimization (Line 6),
 forecast the soil moisture trend with the crop model (Line 7),
 compute the approximation error (Line 8),
 and add the explored configuration along with its error to the history (Line 9).
@@ -692,7 +692,7 @@ dark blue (in $[0, -30)$ cbar) and light blue (in $[-30, -100)$ cbar) show heavi
 While \Cref{orchard-fig:stacked} shows the soil moisture trend along the overall testing period, \Cref{orchard-fig:profiles} spatially details the profile on 10am July 26$^{th}$. The fine-grained spatial grid clearly shows how moisture changes depending on the dripper distance and according to the effect of the root system.
 %
 Forecasted profiles (sub-figures b,c,d) are very similar to the observed ones with slight differences appearing as the forecasting horizon increases.
-\begin{figure}[t]
+\begin{figure}[!h]
     \centering
     \includegraphics[scale=.27]{chapters/physics-aware/orchard/img/correlation_wc.pdf}
     \caption{Correlation between observed and forecasted  water content ($\%$).}
