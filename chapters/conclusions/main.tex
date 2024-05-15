@@ -1,0 +1,78 @@
+\chapter{Conclusions and Future Works}
+\label{epilogue:conclusions}
+
+% AutoML has markedly changed the landscape of AI by providing tools that automate the intricate processes of model selection and hyperparameter tuning, making advanced AI technologies accessible to a broader audience
+
+% This thesis has explored the diverse layers of automated machine learning (AutoML) to showcase its pivotal role in democratizing artificial intelligence (AI).
+%  th  detailed exploration across various domains—data-centric, human-centric, and physics-coupled AI—this final chapter seeks to synthesize the significant contributions from each segment into a coherent narrative, culminating in proposed future directions aimed at fostering ethical and inclusive AI development.
+
+This thesis has explored the growing field of automated machine learning (AutoML) to showcase solutions for democratizing artificial intelligence (AI).
+Throughout a research path across data-centric, human-centric, and physics-coupled AI, we have seen that AutoML not only simplifies the creation and tuning of machine learning models but also plays a pivotal role in making AI accessible to a broader range of users.
+This final chapter draws the conclusions, assessing the overall impact of AutoML on democratizing AI according to the distinct perspective explored throughout the thesis,
+% (\Cref{conclusions:conclusions}),
+and outlines the potential paths forward.
+% (\Cref{conclusions:future_works}).
+
+% \section{Overall Impact of AutoML on Democratizing AI}
+% \label{conclusions:conclusions}
+
+% By abstracting the complexities involved in designing, optimizing, and deploying machine learning models, AutoML empowers a wider array of users, ranging from seasoned data scientists to domain experts with minimal coding expertise.
+% Throughout the chapters, we explored AutoML’s impact from three distinct perspectives—data-centric, human-centric, and physics-coupled AI—each revealing unique contributions to the field. In data-centric applications, AutoML has proven to be an essential tool in optimizing data preprocessing and model selection, significantly enhancing model accuracy and efficiency while maintaining fairness.
+
+\paragraph{Data-centric AI}
+While algoritmic challenges are largely addressed, significant improvements in AI can be achieved from systematic choices in data preparation.
+
+The exploration of effective data pipelines in supervised learning (\Cref{data-centric-chap:supervised}) has underscored that there is no universal pipeline and pre-processing is not negligible.
+Results with well-established benchmarks confirmed that, in 73\% of the cases, it is worth it to allocate at least half of the budget to pre-processing instead of solely tuning the ML data-mining algorithm.
+Besides, we propose a methodology that can be adapted regardless of the (Auto)ML framework at hand.
+This allows us to obtain performance as good as 90\% in the median of the optimal ones, with 24 times less time budget.
+Finally, we provide meta-rules that can warm-start any optimization that instantiates pre-processing transformations.
+
+In the realm of unsupervised learning (\Cref{data-centric-chap:unsupervised}), AutoClues integrates AutoML into the clustering process, enabling the system to not only identify efficient clustering configurations but also ensure that these configurations are diverse and informative, providing different perspectives on the data.
+This diversification is crucial for exploratory data analysis, where understanding the multifaceted nature of data can lead to more insightful decisions and applications.
+
+\paragraph{Human-centric AI}
+The transformative shift towards a more human-centric approach in the development of AutoML systems is vital for democratizing AI while making it understandable and ethically sound, thereby without losing control over the learning process.
+% The contributions outlined in this section highlight the integration of user interactions, ethical considerations, and practical applications of AutoML in various advanced scenarios.
+
+% Human-centric AutoML via Structured Argumentation (HAMLET)
+We propose HAMLET (\Cref{human-centric-chap:hamlet}), a step forward in empowering AutoML with knowledge from data scientists and domain experts.
+Besides, by mining results from the optimization process, HAMLET enhances the transparency and accountability of AutoML.
+This approach not only democratizes the technology by making it more accessible to users with varying levels of expertise but also ensures that the systems developed are more aligned with human values and ethical standards.
+
+% Interactive Hyperparameter Optimization in Multi-Objective Problems
+% The contributions outlined in
+The development of a preference-learning approach for hyperparameter optimization in multi-objective settings (\Cref{human-centric-chap:moo}) further exemplifies the shift towards user-centric AI technologies.
+This approach allows users to directly influence the optimization process by providing preferences on the outcome, which are then used to guide the search for optimal model configurations.
+We effectively learn appropriate quality indicators for Pareto fronts, ensuring that the results are aligned with user-defined objectives.
+This not only makes the system more intuitive and responsive to user needs but also enhances the practical utility of AutoML in complex, real-world scenarios.
+
+% Finally, AutoML in the Age of Large Language Models
+Finally, exploring the interplay between AutoML and large language models (\Cref{human-centric-chap:llm}) opens new research paths for enhancing both fields.
+We investigate two complementing directions: (i) how AutoML can help in designing the tuning of LLMs, and (ii) how the strengths of LLMs can improve AutoML.
+The former would potentially lead to AI systems that are more robust, scalable, efficient, and aligned wrt. human desiderata.
+As to the latter, not only it would be possible to configure the AutoML tool -- through the meta-learning capabilities of transformers -- but also to provide human-centric interfaces.
+
+\paragraph{Physics-coupled AI}
+Enhancing process-based systems with AutoML techniques allowed us to leverage AI in environmental and agricultural challenges.
+% By making AI more accessible, we are equipped to better understand and support our planet, and when necessary, to make informed interventions that guide our environmental and agricultural practices toward a more sustainable future.
+Making AI more accessible AI can push the whole community forward to understand, support and, when necessary, steer the course with better interventions.
+
+In precision farming, soil moisture monitoring has found crucial for crop performance.
+PLUTO (\Cref{physics-aware-chap:pluto}) leverages a grid of sensors and combines process-based with machine-learning models to create detailed moisture profiles.
+When deployed and compared to traditional monitoring methods, our solution has proven superior.
+PLUTO's key advantages can be summarized as: (i) \textit{accuracy}, exploiting fine-grained 2D and 3D soil moisture profiles, PLUTO learns the hydraulic properties and better estimates the soil moisture behaviors;
+(ii) \textit{cost-effectiveness}, as sensor costs decline, the approach becomes increasingly viable for widespread adoption in precision farming;
+(iii) \textit{operational efficiency}, the system performs in real-time which is well-suited for real-world application, as demonstrated in tests on kiwi orchards, we achieved significant improvements in crop performance.
+
+% Enhancing Process-Based Models for Precision Soil Moisture Forecasting
+The development of enhanced soil moisture profiles through process-based models offers significant improvements also in forecasting, which -- analogously -- can be applied to smart-irrigation planning.
+We now further refined process-based models integrating: (i) AutoML techniques for tuning soil and plant parameters, and (ii) assimilating real-time data. This dual enhancement significantly reduces forecasting errors, leading to more accurate predictions of soil conditions.
+
+The solutions were deployed during a whole season for real-time monitoring, and have been leveraged to plan irrigations.
+In comparison with irrigations conducted by farmers, our approach saved 44\% of water, and the fruits from the corresponding crops also showed a higher soluble solid concentration at harvest---translating into economic profits.
+
+% \section{Future Works}
+% \label{conclusions:future_works}
+
+
