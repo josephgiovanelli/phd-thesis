@@ -211,12 +211,29 @@ Although we only explained the linear RankSVM, the kernel trick \cite{scholkopf-
 
 
 All in all, preference learning and in particular object ranking offers a way to quantify the quality of a Pareto front in terms of a single scalar value w.r.t. the user desiredata without asking the user for this concrete scalar value.
-The RankSVM idea leverages the robustness and effectiveness of support vector machines to operationalize this idea while offering a clear and interpretable ranking mechanism. 
+The RankSVM idea leverages the robustness and effectiveness of support vector machines to operationalize this idea while offering a clear and interpretable ranking mechanism.
 
 \subsection{Utility-driven HPO}
 \label{moo-ssec:utility_automl}
 
 As we learned the utility function $u: \altmathcal{P} \rightarrow \mathbb{R}$ from the user preferences, we want to leverage it as a Pareto front quality indicator to optimize with a standard HPO tool. To this end, we leverage the well-known HPO tool SMAC \cite{hutter-lion11a,lindauer-jmlr22a} instantiated with the learned utility function $u$ as a cost function. 
+
+
+\subsection{Approach Limitations}
+
+Naturally, our approach suffers from limitations, which we describe below together with potential remedies.
+
+First, as we rely on showing Pareto fronts to the user, we make the implicit assumption of optimizing the hyperparameters of MO-ML algorithms which optimize only two loss functions $\altmathcal{L}_1$ and $\altmathcal{L}_2$. Although our approach would in principle also work with more loss functions, obtaining the corresponding comparison results from users would be much more complicated as showing a user a $3$-dimensional, let alone more dimensional, Pareto fronts is infeasible. A possible remedy to this problem would be to deploy dimensionality reduction techniques for multi-objectives settings \cite{deb-kangal05} such as PCA \cite{jolliffe-ftrc16}, LDA \cite{balakrishnama-article98} mapping higher dimensional Pareto fronts to two dimensions for showing them to the user.
+
+Second, the feature representation as described in \Cref{moo-eq:feature_representation} could be improved in general to be independent of the number of loss functions. This would simplify the application of the subsequent object ranking algorithm as the replacement and imputation strategy might be discarded. On the downside, depending on the feature representation, the positional encoding, which we assume to be of importance for the learner, might get lost.
+
+Third, 
+% in Sec.~\ref{ssec:sampling}
+we note that -- ideally -- the sampled Pareto fronts used to generate pairwise comparisons with the help of the user should be sampled such that the space of possible Pareto fronts is covered to avoid generalization issues of the learned utility function. However, our current approach does not actively account for this. In fact, achieving such a coverage is a challenging task as we cannot directly sample the corresponding Pareto fronts, but instead rely on sampling hyperparameter configurations leading to the Pareto front. A potential remedy for this problem could be to meta-learn a model mapping from a hyperparameter $\vec{\lambda}$ configuration to the feature vector $\vec{f}_{P_{\altmathcal{D}_{\mathit{val}}}(A(\altmathcal{D}_\mathit{train}, \vec{\lambda}))}$ representing the Pareto front obtained by running $A$ with $\lambda$. If we had such a model with a quick evaluation time, we could leverage rejection sampling and sample until we have sufficient coverage in the feature space.
+
+Lastly, our approach is tailored towards MO-ML. However, single-objective ML is much more common in practice, limiting the applicability of our approach. As such, a generalization of our approach to doing MO-HPO of single objective ML algorithms is desirable.
+
+
 
 \section{Empirical Evaluation}
 \label{moo-sec:evaluation}
@@ -228,7 +245,7 @@ All code including detailed documentation can be found on Github\footnote{\url{h
 \subsection{General Experimental Setup}
 \label{moo-ssec:experimental_setup}
 
-The MO-ML algorithm, whose hyperparameters we want to tune, is a wrapper for a funnel-shaped artificial neural network (ANN)learning algorithm that exposes the same hyperparameters as the underlying ANN learning algorithm, but performs a grid-search over the number of epochs to train the ANN to return a Pareto front of models (\Cref{moo-fig:grid_search}).
+The MO-ML algorithm, whose hyperparameters we want to tune, is a wrapper for a funnel-shaped artificial neural network (ANN) learning algorithm that exposes the same hyperparameters as the underlying ANN learning algorithm, but performs a grid-search over the number of epochs to train the ANN to return a Pareto front of models (\Cref{moo-fig:grid_search}).
 Indeed, it is known that the \textit{number of epochs} has an obvious influence on the objectives, hence, on the shape of the retrieved Pareto front.
 
 \begin{figure}[h]

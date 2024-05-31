@@ -219,7 +219,7 @@ Implementing diversification in cluster analysis consists of evaluating the exte
 This affects how the dashboard of returned clusterings looks like, ensuring the goal of returning different dataset facets.
 It is crucial to rely on a metric that goes beyond the mere identification of shared cluster membership among different clusterings but, rather, takes into account structural interrelationships within them.
 
-Information theory introduces the concept of Mutual Information, quantifying the degree of dependence between two variables and, more specifically, Adjusted Mutual Information (AMI) allows for chance agreement\footnote{In statistics, it serves as a baseline for assessing the significance in random variations.}---providing more robust and meaningful measures.
+Information theory introduces the concept of Mutual Information, quantifying the degree of dependence between two variables and, among available metrics, Adjusted Mutual Information (AMI) allows for chance agreement\footnote{In statistics, it serves as a baseline for assessing the significance in random variations.}---providing more robust and meaningful measures.
 When applied to cluster analysis, AMI $\in [0, 1]$ considers the labels assigned to data points within clusters, assuming higher values when the clusters in one partition align with those in another.
 Since we need a diversity metric, we adapt the formula as in:
 $$div(C_i, C_j) = 1- AMI(C_i, C_j)$$

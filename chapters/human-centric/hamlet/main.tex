@@ -197,6 +197,7 @@ In a way, our approach follows the steps of the well known logical based expert 
 Logic provides the tools to cope with one of the distinctive features of the knowledge we want to deal with: inconsistency. Indeed, the ML process is the product of possible attempts, validated or refuted by a consequent evaluation. Hence, the mechanism used to encode the knowledge is required to manage this constant revision process.
 This is the role of argumentation---one of the main approaches for dealing with inconsistent knowledge and defeasible reasoning. 
 
+\newpage
 \begin{definition}[Argumentation Theory]\label{system}
 An argumentation theory is a tuple AS=$\langle L, R \rangle$ with:
 \begin{itemize}
@@ -210,7 +211,7 @@ The set of rules $R$ in the theory is used to define how elements from the langu
 In the following two definitions, we specialize $L$ into the language $L_{ML}$ expressing all the basic elements of an AutoML problem and $R$ into a LogicalKB written in the language $L_{ML}$.
 
 \begin{definition}[AutoML Language]
-Given an argumentation language $L$, we define the \emph{AutoML language} $L_{ML}$ as $L \cup W$, with $W$ the following set of predicates\footnote{For the sake of conciseness, when writing statements of the AutoML language, the letters $S$ (and $A$) refer to the name of the step (and algorithm)}:
+Given an argumentation language $L$, we define the \emph{AutoML language} $L_{ML}$ as $L \cup W$, with $W$ the following set of predicates\footnote{For the sake of conciseness, when writing statements of the AutoML language, the letters $S$ (and $A$) refer to the name of the step (and algorithm).}:
 \begin{itemize}
     \item step($S$) with $S \in L$, representing a step $S$ in the pipeline;
     \item algorithm($S$, $A$) with $S, A \in L$, representing an algorithm $A$ for the step $S$;
@@ -376,7 +377,7 @@ AutoML helps in identifying the new data-related constraint ``require Imputation
 The described process is compliant with and augments the CRISP-DM process.
 The inferred/learned knowledge is automatically handled throughout iterations, supporting the data scientist in the whole analysis in a continuous revision of the constraints.
 \vspace{2cm}
-
+\newpage
 \subsection{Framework Implementation}\label{hamlet-ssec:implementation}
 
 HAMLET iterates over three phases (\Cref{hamlet-fig:approach}): (i) the generation of problem graph and search space out of the LogicalKB, (ii) the exploration of the search space in compliance with the specified constraints, and (iii) the augmentation of the LogicalKB through a rule recommendation.
